@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.yanke.owneruser.dao.OwnerUserDao">
+<mapper namespace="com.gene.owneruser.dao.OwnerUserDao">
 
-	<select id="get" resultType="com.yanke.owneruser.domain.OwnerUserDO">
+	<select id="get" resultType="com.gene.owneruser.domain.OwnerUserDO">
 		select `id`,`user_id`,username,`open_id`,`nickname`,`password`,`phone`,`heard_url`,`name`,`identity_card`,`register_time`,`pay_num`,`serve_num`,`balance`,`restitution`,`pay_time`,`login_time`,`add_time`,`update_time`,`delete_flag`,`username`,`sex`,`birthday` from t_chector where id = #{value}	
 	</select>
 	
-	<select id="getbyname" resultType="com.yanke.owneruser.domain.OwnerUserDO">
+	<select id="getbyname" resultType="com.gene.owneruser.domain.OwnerUserDO">
 		select `chector_id`,username,`deleted`,`chector_name`,`doctor_num`,`sex`,`age`,`id_card`,`phone`,`email`,`headshot`,`add_time`,`update_time`,`remark`,`hospital`,`section` from t_chector where username = #{value}
 	</select>
 
-	<select id="list" resultType="com.yanke.owneruser.domain.OwnerUserDO">
+	<select id="list" resultType="com.gene.owneruser.domain.OwnerUserDO">
 		select `chector_id`,username,`deleted`,`chector_name`,`doctor_num`,`sex`,`age`,`id_card`,`phone`,`email`,`headshot`,`add_time`,`update_time`,`remark`,`hospital`,`section` from t_chector
         <where>  
 		  		<if test="chectorId != null and chectorId != ''"> and chector_id = #{chectorId} </if>
@@ -71,7 +71,7 @@
 		  		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.yanke.owneruser.domain.OwnerUserDO" useGeneratedKeys="true" keyProperty="chectorId">
+	<insert id="save" parameterType="com.gene.owneruser.domain.OwnerUserDO" useGeneratedKeys="true" keyProperty="chectorId">
 		insert into t_chector
 		(
 			`deleted`, 
@@ -112,7 +112,7 @@
 		)
 	</insert>
 	
-	<update id="update" parameterType="com.yanke.owneruser.domain.OwnerUserDO">
+	<update id="update" parameterType="com.gene.owneruser.domain.OwnerUserDO">
 		update t_chector 
 		<set>
 			<if test="deleted != null">`deleted` = #{deleted}, </if>

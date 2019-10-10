@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.yanke.users.dao.UserDao">
+<mapper namespace="com.gene.users.dao.UserDao">
 
-	<select id="get" resultType="com.yanke.users.domain.UserDO">
+	<select id="get" resultType="com.gene.users.domain.UserDO">
 		select `id`,`user_id`,`open_id`,`nickname`,`password`,`phone`,`heard_url`,`name`,`identity_card`,`register_time`,`pay_num`,`serve_num`,`balance`,`restitution`,`pay_time`,`login_time`,`add_time`,`update_time`,`delete_flag`,`username`,`sex`,`birthday`,date_format(t_user.birthday, '%Y-%m-%d') AS birthday1 from t_user where id = #{value}
 	</select>
-	<select id="list" resultType="com.yanke.users.domain.UserDO">
+	<select id="list" resultType="com.gene.users.domain.UserDO">
 		select `id`,`user_id`,`open_id`,`nickname`,`password`,`phone`,`heard_url`,`name`,`identity_card`,`register_time`,`pay_num`,`serve_num`,`balance`,`restitution`,`pay_time`,`login_time`,`add_time`,`update_time`,`delete_flag`,`username`,`sex`,`birthday` from t_user
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
@@ -73,7 +73,7 @@
 		  		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.yanke.users.domain.UserDO" useGeneratedKeys="true" keyProperty="id">
+	<insert id="save" parameterType="com.gene.users.domain.UserDO" useGeneratedKeys="true" keyProperty="id">
 		insert into t_user
 		(
 			`user_id`,
@@ -124,7 +124,7 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="com.yanke.users.domain.UserDO">
+	<update id="update" parameterType="com.gene.users.domain.UserDO">
 		update t_user 
 		<set>
 			<if test="userId != null">`user_id` = #{userId}, </if>
@@ -163,11 +163,11 @@
 		</foreach>
 	</delete>
 
-	<select id="getidbyphone" resultType="com.yanke.users.domain.UserDO">
+	<select id="getidbyphone" resultType="com.gene.users.domain.UserDO">
 		select `id`,`user_id`,`open_id`,`nickname`,`password`,`phone`,`heard_url`,`name`,`identity_card`,`register_time`,`pay_num`,`serve_num`,`balance`,`restitution`,`pay_time`,`login_time`,`add_time`,`update_time`,`delete_flag`,`username`,`car_num`,`car_type`,`car_size`,`car_status`,`desc`,`address`,`refuse`,`ontime` from t_user where phone = #{value}
 	</select>
 	
-	<select id="selectByName" parameterType="com.yanke.users.domain.UserDO" resultType="com.yanke.users.domain.UserDO">
+	<select id="selectByName" parameterType="com.gene.users.domain.UserDO" resultType="com.gene.users.domain.UserDO">
 	    select * from t_user
 	    <where>
 	        <if test="name != null">

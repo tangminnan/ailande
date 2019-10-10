@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.yanke.carousel.dao.BannerDao">
+<mapper namespace="com.gene.carousel.dao.BannerDao">
 
-	<select id="get" resultType="com.yanke.carousel.domain.BannerDO">
+	<select id="get" resultType="com.gene.carousel.domain.BannerDO">
 		SELECT
 			ba.`name` AS `name`,
 			ba.id AS id,
@@ -31,7 +31,7 @@
 		where id = #{value}
 	</select>
 
-	<select id="list" resultType="com.yanke.carousel.domain.BannerDO">
+	<select id="list" resultType="com.gene.carousel.domain.BannerDO">
 		SELECT
 			ba.`name` AS `name`,
 			ba.id AS id,
@@ -79,7 +79,7 @@
 		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.yanke.carousel.domain.BannerDO" useGeneratedKeys="true" keyProperty="id">
+	<insert id="save" parameterType="com.gene.carousel.domain.BannerDO" useGeneratedKeys="true" keyProperty="id">
 		INSERT into t_banner (name,place,type,start_time,end_time,is_enable,add_time,update_time,user_id,url)
 		values
 		(
@@ -96,7 +96,7 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="com.yanke.carousel.domain.BannerDO">
+	<update id="update" parameterType="com.gene.carousel.domain.BannerDO">
 		update t_banner 
 		<set>
 			<if test="name != null">`name` = #{name}, </if>

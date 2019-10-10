@@ -39,7 +39,7 @@ public class LogAspect {
     LogService logService;
 
 
-    @Pointcut("@annotation(com.yanke.common.annotation.Log)")
+    @Pointcut("@annotation(com.gene.common.annotation.Log)")
     public void logPointCut() {
     }
 
