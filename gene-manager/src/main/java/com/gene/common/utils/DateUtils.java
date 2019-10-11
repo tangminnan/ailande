@@ -88,4 +88,10 @@ public class DateUtils {
         r += "前";
         return r;
     }
+
+	public static String parseDateToStr(String string, Date date) {
+		if(!StringUtils.isBlank(string) && date!=null)
+			return new SimpleDateFormat("yyyyMMddHHmmss").format(date);
+		return "";
+	}
 }
