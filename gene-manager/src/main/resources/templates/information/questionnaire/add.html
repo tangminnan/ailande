@@ -1,0 +1,470 @@
+<!DOCTYPE HTML>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<head>
+	
+	<link rel="shortcut icon" href="favicon.ico">
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+	<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+	<!-- bootstrap-table 表格插件样式 -->
+	<link th:href="@{/ajax/libs/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet"/>
+	<link th:href="@{/ajax/libs/bootstrap-treetable/bootstrap-treetable.css}" rel="stylesheet"/>
+	<link th:href="@{/css/animate.css}" rel="stylesheet"/>
+	<link th:href="@{/css/style.css}" rel="stylesheet"/>
+	<link th:href="@{/ajax/libs/select/select2.css}" rel="stylesheet"/>
+	<link th:href="@{/ruoyi/css/ry-ui.css}" rel="stylesheet"/>
+    <link th:href="@{/ruoyi/css/correct.css}" rel="stylesheet"/>
+    <link th:href="@{/ajax/libs/steps/jquery.steps.css}" rel="stylesheet"/>
+    <script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	
+	<!-- bootstrap-table 表格插件 -->
+	<script th:src="@{/ajax/libs/bootstrap-table/bootstrap-table.min.js}"></script>
+	<script th:src="@{/ajax/libs/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+	<script th:src="@{/ajax/libs/bootstrap-table/extensions/mobile/bootstrap-table-mobile.js}"></script>
+	<script th:src="@{/ajax/libs/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.min.js}"></script>
+	<!-- jquery-validate 表单验证插件 -->
+	<script th:src="@{/ajax/libs/validate/jquery.validate.min.js}"></script>
+	<script th:src="@{/ajax/libs/validate/messages_zh.min.js}"></script>
+	<script th:src="@{/ajax/libs/validate/jquery.validate.extend.js}"></script>
+	<!-- jquery-validate 表单树插件 -->
+	<script th:src="@{/ajax/libs/bootstrap-treetable/bootstrap-treetable.js}"></script>
+	<!-- jquery-export 表格导出插件 -->
+	<script th:src="@{/ajax/libs/bootstrap-table/extensions/export/bootstrap-table-export.js}"></script>
+	<script th:src="@{/ajax/libs/bootstrap-table/extensions/export/tableExport.js}"></script>
+	<!-- 遮罩层 -->
+	<script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+	<script th:src="@{/ajax/libs/iCheck/icheck.min.js}"></script>
+	<script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+	<script th:src="@{/ajax/libs/layui/layui.js}"></script>
+	<script th:src="@{/ruoyi/js/common.js?v=3.2.0}"></script>
+	<script th:src="@{/ruoyi/js/ry-ui.js?v=3.2.0}"></script>
+    <!-- Vue.js -->
+    <script th:src="@{/ajax/libs/vue/vue.2.5.17.min.js}"></script>
+	<script src="http://tajs.qq.com/stats?sId=62048022"></script>
+	<script th:src="@{/js/jquery-ui-1.10.4.min.js}"></script>
+	<script th:inline="javascript"> var ctx = [[@{/}]]; </script>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form id="form-paper-add" class="form-horizontal m">
+        <h1>问卷</h1>
+        <fieldset>
+            <div class="col-sm-10">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">问卷名称 *</label>
+                    <div class="col-sm-6">
+                        <input id="name" name="name" type="text" class="form-control required">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">问卷简介 *</label>
+                    <div class="col-sm-6">
+                        <textarea id="description" name="description" type="text" class="form-control required"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">问卷备注&nbsp;&nbsp;</label>
+                    <div class="col-sm-6">
+                        <input id="remark" name="remark" type="text" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <div class="text-center">
+                    <div style="margin-top: 20px">
+                        <i class="fa fa-sign-in" style="font-size: 180px;color: #e5e5e5 "></i>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <h1>题集</h1>
+        <fieldset>
+            <div class="col-sm-10">
+                <div class="draggable">
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <button type="button" class="btn btn-primary btn-block" onclick="addQuestion(this)">添加</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <div class="text-center">
+                    <div style="margin-top: 20px">
+                        <i class="fa fa-sign-out" style="font-size: 180px;color: #e5e5e5 "></i>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<div id="temp" style="display: none">
+    <div class="ibox-content">
+    	<div class="question">
+        <div class="form-group ">
+            <label class="col-sm-1 control-label"><i class="fa fa-arrows"></i></label>
+            <div class="col-sm-6">
+                <input name="title" type="text" class="form-control required" placeholder="报告题目内容">
+            </div>
+            <div class="col-sm-2">
+              <!--   <input name="category" type="text" class="form-control required" placeholder="题目分类"> -->
+              <select name="category" type="text" class="form-control required">
+              	<option value="">题目分类</option>
+              	<option value="运动类">运动类</option>
+              	<option value="其他类">其他类</option>
+              </select>
+            </div>
+            <div class="col-sm-2">
+                <select name="type" class="form-control required">
+                    <option value="" disabled selected>请选择题目类型</option>
+                    <option th:value="0">单选</option>
+                    <option th:value="1">多选</option>
+                </select>
+            </div>
+            <div class="col-sm-1">
+                <a class="btn btn-danger" onclick="removeQuestion(this)">
+                    <i class="fa fa-remove"></i>
+                </a>
+            </div>
+        </div>
+        <div class="form-group">
+        <label class="col-sm-1 control-label"><i class="fa fa-arrows"></i></label>
+        	<div class="col-sm-8">
+                <input name="titlew" type="text" class="form-control required" placeholder="问卷题目内容">
+            </div>
+        </div>
+        </div>
+        <div class="appendchoice">
+        	<div class="form-group">
+            	<label class="col-sm-1 control-label">选项</label>
+            	<div class="col-sm-2">
+                	<input name="value" type="text" class="form-control required" placeholder="答案">
+            	</div>
+           	 	<div class="col-sm-2">
+                	<input name="score" type="number" class="form-control required" placeholder="分值">
+            	</div>
+            	<div class="col-sm-2">
+                	<input name="tadf" type="text" class="form-control required" placeholder="调整方向1">
+           		 </div>
+            	<div class="col-sm-2">
+                	<input name="tads" type="text" class="form-control required" placeholder="调整方向2">
+            	</div>
+         	</div>
+         	<div class="form-group">
+         		<label class="col-sm-1 control-label"></label>
+       			 <div class="col-sm-2">
+                	<input type="hidden" class="form-control required">
+           		 </div>
+        		<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         			<textarea name="tadreason" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
+       		 	</div> 
+     		</div>
+			<div class="form-group">
+				<label class="col-sm-1 control-label"></label>
+      			<div class="col-sm-2">
+                	<input type="hidden" class="form-control required">
+           		</div>
+       			<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         			<textarea name="tadjianyi" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
+       		 	</div> 
+       			<div class="col-sm-2" style="margin-bottom:0">
+               		<a class="btn btn-success" onclick="addChoice(this)">
+                   		<i class="fa fa-plus"></i>
+               		</a>
+               		<a class="btn btn-danger" onclick="removeChoice(this)">
+                  		 <i class="fa fa-remove"></i>
+              		</a>
+           	   </div>
+     		</div>
+        </div>
+      </div>
+      </div>  
+         
+        
+  
+  <div class="qitalei" style="display: none">
+  	<div class="form-group">
+            	<label class="col-sm-1 control-label">选项</label>
+            	<div class="col-sm-2">
+                	<input name="value" type="text" class="form-control required" placeholder="答案">
+            	</div>
+           	 	<div class="col-sm-2">
+                	<input name="score" type="number" class="form-control required" placeholder="分值">
+            	</div>
+            	<div class="col-sm-2">
+                	<input name="tadf" type="text" class="form-control required" placeholder="调整方向1">
+           		 </div>
+            	<div class="col-sm-2">
+                	<input name="tads" type="text" class="form-control required" placeholder="调整方向2">
+            	</div>
+         	</div>
+         	<div class="form-group">
+         		<label class="col-sm-1 control-label"></label>
+       			 <div class="col-sm-2">
+                	<input type="hidden" class="form-control required">
+           		 </div>
+        		<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         			<textarea name="tadreason" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
+       		 	</div> 
+       		 	
+     		</div>
+			<div class="form-group">
+				<label class="col-sm-1 control-label"></label>
+      			<div class="col-sm-2">
+                	<input type="hidden" class="form-control required">
+           		</div>
+       			<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         			<textarea name="tadjianyi" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
+       		 	</div> 
+       			<div class="col-sm-2" style="margin-bottom:0">
+               		<a class="btn btn-success" onclick="addChoice(this)">
+                   		<i class="fa fa-plus"></i>
+               		</a>
+               		<a class="btn btn-danger" onclick="removeChoice(this)">
+                  		 <i class="fa fa-remove"></i>
+              		</a>
+           	   </div>
+     		</div>
+  </div>
+  
+  <div class="yundonglei" style="display: none">
+        	<div class="form-group">
+        		<label class="col-sm-1 control-label">选项</label>
+            	<div class="col-sm-2">
+                	<input name="value" type="text" class="form-control required" placeholder="答案">
+            	</div>
+            	<div class="col-sm-2">
+                	<input name="bmi" type="text" value="BMI>=29" class="form-control required">
+            	</div>
+        	</div>
+        	<div class="form-group">
+            	<label class="col-sm-1 control-label"></label>
+            	<div class="col-sm-2">
+                	<input name="value" type="hidden" class="form-control required">
+            	</div>
+           	 	<div class="col-sm-2">
+                	<input name="score" type="number" class="form-control required" placeholder="分值">
+            	</div>
+            	<div class="col-sm-2">
+                	<input name="tadf" type="text" class="form-control required" placeholder="调整方向1">
+           		 </div>
+            	<div class="col-sm-2">
+                	<input name="tads" type="text" class="form-control required" placeholder="调整方向2">
+            	</div>
+         	</div>
+         	<div class="form-group">
+         		<label class="col-sm-1 control-label"></label>
+       			 <div class="col-sm-2">
+                	<input type="hidden" class="form-control required">
+           		 </div>
+        		<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         			<textarea name="tadreason" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
+       		 	</div> 
+     		</div>
+			<div class="form-group">
+				<label class="col-sm-1 control-label"></label>
+      			<div class="col-sm-2">
+                	<input type="hidden" class="form-control required">
+           		</div>
+       			<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         			<textarea name="tadjianyi" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
+       		 	</div> 
+     		</div>
+     	 	 <div class="form-group">
+        		<label class="col-sm-1 control-label"></label>
+            	<div class="col-sm-2">
+                	<input name="value" type="hidden" class="form-control required">
+            	</div>
+            	<div class="col-sm-2">
+                	<input name="bmis" type="text" value="BMI<29" class="form-control required">
+            	</div>
+        	</div>
+        	<div class="form-group">
+            	<label class="col-sm-1 control-label"></label>
+            	<div class="col-sm-2">
+                	<input name="value" type="hidden" class="form-control required">
+            	</div>
+           	 	<div class="col-sm-2">
+                	<input name="scores" type="number" class="form-control required" placeholder="分值">
+            	</div>
+            	<div class="col-sm-2">
+                	<input name="tadfs" type="text" class="form-control required" placeholder="调整方向1">
+           		 </div>
+            	<div class="col-sm-2">
+                	<input name="tadss" type="text" class="form-control required" placeholder="调整方向2">
+            	</div>
+         	</div>
+         	<div class="form-group">
+         		<label class="col-sm-1 control-label"></label>
+       			 <div class="col-sm-2">
+                	<input type="hidden" class="form-control required">
+           		 </div>
+        		<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         			<textarea name="tadreasons" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
+       		 	</div> 
+     		</div>
+			<div class="form-group">
+				<label class="col-sm-1 control-label"></label>
+      			<div class="col-sm-2">
+                	<input type="hidden" class="form-control required">
+           		</div>
+       			<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         			<textarea name="tadjianyis" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
+       		 	</div> 
+       			<div class="col-sm-2" style="margin-bottom:0">
+               		<a class="btn btn-success" onclick="addChoice(this)">
+                   		<i class="fa fa-plus"></i>
+               		</a>
+               		<a class="btn btn-danger" onclick="removeChoice(this)">
+                  		 <i class="fa fa-remove"></i>
+              		</a>
+           	   </div>
+     	 </div>   
+     </div>
+<script th:src="@{/ajax/libs/steps/jquery.steps.min.js}"></script>
+<script th:src="@{/js/jquery-ui-1.10.4.min.js}"></script>
+<script type="text/javascript">
+    var prefix = "/information/questionnaire";
+    $("#form-paper-add").validate({
+        rules: {
+            name: {
+                required: true,
+            },
+            description: {
+                required: true,
+            },
+            title: {
+                required: true,
+            },
+            value: {
+                required: true,
+            },
+            category: {
+                required: true,
+            },
+            type: {
+                required: true,
+            },
+            score: {
+                required: true,
+            },
+            trend: {
+                required: true,
+            }
+        }
+    });
+    function getData() {
+        var question = new Array();
+        $(".draggable .ibox-content").each(function (index, val) {
+            var choice = new Array();
+            $(val).find(".appendchoice").each(function (index, val) {
+                var answer = {
+                    content: $(val).find("input[name='value']").val(),
+                    score: $(val).find("input[name='score']").val(),
+                    tadf: $(val).find("input[name='tadf']").val(),//调整方向1
+                    bmi: $(val).find("input[name='bmi']").val(),//调整方向1
+                    tads: $(val).find("input[name='tads']").val(),//调整方向2
+                    tadreason:$(val).find("textarea[name='tadreason']").val(),//调整原因
+                	tadjianyi:$(val).find("textarea[name='tadjianyi']").val(),//营养补充及建议
+                	
+                	scores: $(val).find("input[name='scores']").val(),
+                    tadfs: $(val).find("input[name='tadfs']").val(),//调整方向1
+                    bmis: $(val).find("input[name='bmis']").val(),//调整方向1
+                    tadss: $(val).find("input[name='tadss']").val(),//调整方向2
+                    tadreasons:$(val).find("textarea[name='tadreasons']").val(),//调整原因
+                	tadjianyis:$(val).find("textarea[name='tadjianyis']").val()//营养补充及建议
+                };
+                choice.push(answer);
+            });
+            var obj = {
+                content: $(val).find(".question").find("input[name='title']").val(),
+                contenw: $(val).find(".question").find("input[name='titlew']").val(),
+               	category: $(val).find(".question").find("select[name='category']").val(),
+                type: $(val).find(".question").find("select[name='type']").val(),
+                choiceList: choice
+            };
+            question.push(obj);
+        });
+
+        var paper = {
+            code: $("#code").val(),
+            name: $("#name").val(),
+            description: $("#description").val(),
+            remark: $("#remark").val(),
+            questionList: question
+        };
+        return JSON.stringify(paper);
+    }
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.saveJson(prefix + "/addSave", getData());
+        }
+    }
+
+    $("#form-paper-add").steps({
+        bodyTag: "fieldset",
+        onStepChanging: function (event, currentIndex, newIndex) {
+            if (currentIndex > newIndex) {
+                return true
+            }
+            return $.validate.form();
+        },
+        onStepChanged: function (event, currentIndex, priorIndex) {
+        },
+        onFinishing: function (event, currentIndex) {
+            return $.validate.form();
+        },
+        onFinished: function (event, currentIndex) {
+            submitHandler();
+        }
+    });
+
+    function addQuestion() {
+        $(".draggable").append($("#temp .ibox-content").clone());
+    }
+    addQuestion();
+
+    $(".draggable").sortable({handle: "i"});
+
+    function removeQuestion(obj) {
+        if ($(".draggable").find(".ibox-content").size() > 1) {
+            $(obj).closest(".ibox-content").remove();
+        } else {
+            $.modal.msgError("题集不能为空");
+        }
+    }
+
+    function addChoice(obj) {
+//       $(obj).parent().parent().parent().parent().append($("#temp .appendchoice").clone());
+    	 $(obj).parent().parent().parent().parent().append($(obj).parent().parent().parent().clone());	
+     		
+     		
+    }
+
+    function removeChoice(obj) {
+        if ($(obj).parent().parent().parent().parent().children(".appendchoice").size() > 1) {
+            $(obj).closest(".appendchoice").remove();
+        } else {
+            $.modal.msgError("选项不能为空");
+        }
+    }
+
+
+    $("body").on("change","[name='category']",function(){
+    	if($(this).parent().parent().parent().siblings().size()>1)
+    		 $.modal.msgError("删除多余的选项  再做更改");
+    	else
+    		if($(this).val()=='运动类')
+    			$(this).parent().parent().parent().next().html($(".yundonglei").html());
+    		else
+    			$(this).parent().parent().parent().next().html($(".qitalei").html());
+    });
+
+</script>
+</body>
+</html>
