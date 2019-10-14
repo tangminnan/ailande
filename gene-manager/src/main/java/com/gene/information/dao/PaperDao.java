@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.gene.common.utils.R;
 import com.gene.information.domain.ChoiceDO;
 import com.gene.information.domain.PaperDO;
 import com.gene.information.domain.QuestionDO;
@@ -31,4 +32,12 @@ public interface PaperDao{
 	void saveChoiceDO(ChoiceDO choice);
 
 	PaperDO getPaperById(Integer id);
+
+	int  removeChoice(Integer id);
+
+	int removeQuestion(Integer id);
+
+	void updateQuestion(QuestionDO q);
+
+	void updateChoice(ChoiceDO choice);
 }

@@ -38,6 +38,8 @@
 	<script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
 	<script th:src="@{/ajax/libs/iCheck/icheck.min.js}"></script>
 	<script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+	<script src="/js/plugins/layer/layer.js"></script>
+	<script src="/js/plugins/validate/messages_zh.min.js"></script>
 	<script th:src="@{/ajax/libs/layui/layui.js}"></script>
 	<script th:src="@{/ruoyi/js/common.js?v=3.2.0}"></script>
 	<script th:src="@{/ruoyi/js/ry-ui.js?v=3.2.0}"></script>
@@ -98,14 +100,14 @@
                                        class="form-control required" placeholder="报告题目内容">
                             </div>
                             <div class="col-sm-2">
-                               <select name="category" class="form-control required">
+                               <select name="category" class="form-control">
               						<option value="">题目分类</option>
-              						<option value="运动类">运动类</option>
-              						<option value="其他类">其他类</option>
+              						<option th:selected="${question.category=='运动类'}" value="运动类">运动类</option>
+              						<option th:selected="${question.category=='其他类'}" value="其他类">其他类</option>
               					</select>
                             </div>
                             <div class="col-sm-2">
-                                <select name="type" class="form-control required">
+                                <select name="type" class="form-control">
                                     <option value="" disabled selected>请选择题目类型</option>
                                     <option th:value="0" th:selected="${question.type=='0'}">单选</option>
                                     <option th:value="1" th:selected="${question.type=='1'}">多选</option>
@@ -137,10 +139,10 @@
                                 	<input name="score" type="number" th:value="${choice.score}" class="form-control required" placeholder="分值">
                             	</div>
                            		<div class="col-sm-2">
-                					<input name="tadf" type="text" class="form-control required" th:value="${choice.tadf}" placeholder="调整方向1">
+                					<input name="tadf" type="text" class="form-control" th:value="${choice.tadf}" placeholder="调整方向1">
            		 				</div>
             					<div class="col-sm-2">
-                					<input name="tads" type="text" class="form-control required" th:value="${choice.tads}" placeholder="调整方向2">
+                					<input name="tads" type="text" class="form-control" th:value="${choice.tads}" placeholder="调整方向2">
             					</div>
             				</div>
             				<div class="form-group">
@@ -155,7 +157,7 @@
                             <div class="form-group">
 								<label class="col-sm-1 control-label"></label>
       							<div class="col-sm-2">
-                					<input type="hidden" class="form-control required">
+                					<input type="hidden" class="form-control">
            						</div>
        							<div class="col-sm-6" style="height: 60px;" id="tadreason">
          						<textarea name="tadjianyi" th:text="${choice.tadjianyi}" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
@@ -177,22 +179,22 @@
                 					<input name="value" type="text" th:value="${choice.content}"  class="form-control required" placeholder="答案">
             					</div>
             					<div class="col-sm-2">
-                					<input name="bmi" type="text"  th:value="${choice.bmi}" class="form-control required">
+                					<input name="bmi" type="text"  th:value="${choice.bmi}" class="form-control">
             					</div>
         					</div>
         				 <div class="form-group">
             				<label class="col-sm-1 control-label"></label>
             				<div class="col-sm-2">
-                				<input name="value" type="hidden" class="form-control required">
+                				<input name="value" type="hidden" class="form-control">
             				</div>
            	 				<div class="col-sm-2">
                 				<input name="score" type="number" th:value="${choice.score}" class="form-control required" placeholder="分值">
             				</div>
             				<div class="col-sm-2">
-                				<input name="tadf" type="text" th:value="${choice.tadf}" class="form-control required" placeholder="调整方向1">
+                				<input name="tadf" type="text" th:value="${choice.tadf}" class="form-control" placeholder="调整方向1">
            		 			</div>
             				<div class="col-sm-2">
-                				<input name="tads" type="text" th:value="${choice.tads}" class="form-control required" placeholder="调整方向2">
+                				<input name="tads" type="text" th:value="${choice.tads}" class="form-control" placeholder="调整方向2">
             				</div>
          				</div>
          				<div class="form-group">
@@ -207,7 +209,7 @@
 					 <div class="form-group">
 						<label class="col-sm-1 control-label"></label>
       					<div class="col-sm-2">
-                			<input type="hidden" class="form-control required">
+                			<input type="hidden" class="form-control">
            				</div>
        					<div class="col-sm-6" style="height: 60px;" id="tadreason">
          					<textarea name="tadjianyi" th:text="${choice.tadjianyi}" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
@@ -231,10 +233,10 @@
                 			<input name="scores" type="number" th:value="${choice.scores}" class="form-control required" placeholder="分值">
             			</div>
             			<div class="col-sm-2">
-                			<input name="tadfs" type="text" th:value="${choice.tadfs}" class="form-control required" placeholder="调整方向1">
+                			<input name="tadfs" type="text" th:value="${choice.tadfs}" class="form-control" placeholder="调整方向1">
            				</div>
             			<div class="col-sm-2">
-                			<input name="tadss" type="text" th:value="${choice.tadss}" class="form-control required" placeholder="调整方向2">
+                			<input name="tadss" type="text" th:value="${choice.tadss}" class="form-control" placeholder="调整方向2">
             			</div>
          			</div>
          			<div class="form-group">
@@ -297,10 +299,10 @@
                 	<input name="score" type="number" class="form-control required" placeholder="分值">
             	</div>
             	<div class="col-sm-2">
-                	<input name="tadf" type="text" class="form-control required" placeholder="调整方向1">
+                	<input name="tadf" type="text" class="form-control" placeholder="调整方向1">
            		 </div>
             	<div class="col-sm-2">
-                	<input name="tads" type="text" class="form-control required" placeholder="调整方向2">
+                	<input name="tads" type="text" class="form-control" placeholder="调整方向2">
             	</div>
          	</div>
          	<div class="form-group">
@@ -351,10 +353,10 @@
                 	<input name="score" type="number" class="form-control required" placeholder="分值">
             	</div>
             	<div class="col-sm-2">
-                	<input name="tadf" type="text" class="form-control required" placeholder="调整方向1">
+                	<input name="tadf" type="text" class="form-control" placeholder="调整方向1">
            		 </div>
             	<div class="col-sm-2">
-                	<input name="tads" type="text" class="form-control required" placeholder="调整方向2">
+                	<input name="tads" type="text" class="form-control" placeholder="调整方向2">
             	</div>
          	</div>
          	<div class="form-group">
@@ -393,10 +395,10 @@
                 	<input name="scores" type="number" class="form-control required" placeholder="分值">
             	</div>
             	<div class="col-sm-2">
-                	<input name="tadfs" type="text" class="form-control required" placeholder="调整方向1">
+                	<input name="tadfs" type="text" class="form-control" placeholder="调整方向1">
            		 </div>
             	<div class="col-sm-2">
-                	<input name="tadss" type="text" class="form-control required" placeholder="调整方向2">
+                	<input name="tadss" type="text" class="form-control" placeholder="调整方向2">
             	</div>
          	</div>
          	<div class="form-group">
@@ -430,7 +432,7 @@
 <script th:src="@{/js/jquery-ui-1.10.4.min.js}"></script>
 <script type="text/javascript">
 var prefix = "/information/questionnaire";
-    $("#form-paper-add").validate({
+     /* $("#form-paper-add").validate({
         rules: {
             name: {
                 required: true,
@@ -457,7 +459,7 @@ var prefix = "/information/questionnaire";
                 required: true,
             }
         }
-    });
+    }); */
 
     function getData() {
         var question = new Array();
@@ -540,7 +542,29 @@ var prefix = "/information/questionnaire";
 
     function removeQuestion(obj) {
         if ($(".draggable").find(".ibox-content").size() > 1) {
-            $(obj).closest(".ibox-content").remove();
+        	 layer.confirm('确定要删除这道题吗？', {
+     			btn : [ '确定', '取消' ]
+     		}, function(index) {
+     			var id=$(obj).parent().siblings().find("[name='questionIDID']").val();
+     			if(id!=undefined){
+     			  	$.ajax({
+     					url : prefix+"/removeQuestion",
+     					type : "post",
+     					data : {
+     						'id' : id
+     					},
+     					success : function(r) {
+     						if (r.code==0) {
+     						 	$(obj).closest(".ibox-content").remove();
+     						}
+     					}
+     				}); 
+     			}
+     			else 
+     				$(obj).closest(".ibox-content").remove();
+     			layer.close(index);
+     		})
+           
         } else {
             $.modal.msgError("题集不能为空");
         }
@@ -554,9 +578,31 @@ var prefix = "/information/questionnaire";
 
     function removeChoice(obj) {
     	if ($(obj).parent().parent().parent().parent().parent().find(".appendchoice").size() > 1) {
-            $(obj).closest(".appendchoice").parent().remove();
+    		 layer.confirm('确定要删除这条选项吗？', {
+    			btn : [ '确定', '取消' ]
+    		}, function(index) {
+    			 var id=$(obj).parent().parent().siblings().find("[name='choiceIDID']").val();
+    			 if(id!=undefined){
+    			 	$.ajax({
+    					url : prefix+"/removeChoice",
+    					type : "post",
+    					data : {
+    						'id' : id
+    					},
+    					success : function(r) {
+    						if (r.code==0) {
+    							$(obj).closest(".appendchoice").parent().remove();
+    						}
+    					}
+    				});
+    			}
+    			else 
+    				$(obj).closest(".appendchoice").parent().remove();
+    			 layer.close(index);
+    		});
+            
         } else {
-            $.modal.msgError("选项不能为空");
+            $.modal.msgError("选项不能为空"); 
         }
     }
 

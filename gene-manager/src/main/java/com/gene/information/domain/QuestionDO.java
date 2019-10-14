@@ -148,6 +148,13 @@ public class QuestionDO implements Serializable{
 	public void setContenw(String contenw) {
 		this.contenw = contenw;
 	}
+	@Override
+	public String toString() {
+		return "QuestionDO [id=" + id + ", paperId=" + paperId + ", category=" + category + ", content=" + content
+				+ ", contenw=" + contenw + ", type=" + type + ", sort=" + sort + ", delFlag=" + delFlag + ", createBy="
+				+ createBy + ", createTime=" + createTime + ", updateBy=" + updateBy + ", updateTime=" + updateTime
+				+ ", required=" + required + ", choiceList=" + choiceList + ", remark=" + remark + "]";
+	}
 	
 	
     

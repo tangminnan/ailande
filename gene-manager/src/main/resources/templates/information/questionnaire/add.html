@@ -113,14 +113,14 @@
             </div>
             <div class="col-sm-2">
               <!--   <input name="category" type="text" class="form-control required" placeholder="题目分类"> -->
-              <select name="category" type="text" class="form-control required">
+              <select name="category" type="text" class="form-control">
               	<option value="">题目分类</option>
               	<option value="运动类">运动类</option>
               	<option value="其他类">其他类</option>
               </select>
             </div>
             <div class="col-sm-2">
-                <select name="type" class="form-control required">
+                <select name="type" class="form-control">
                     <option value="" disabled selected>请选择题目类型</option>
                     <option th:value="0">单选</option>
                     <option th:value="1">多选</option>
@@ -149,10 +149,10 @@
                 	<input name="score" type="number" class="form-control required" placeholder="分值">
             	</div>
             	<div class="col-sm-2">
-                	<input name="tadf" type="text" class="form-control required" placeholder="调整方向1">
+                	<input name="tadf" type="text" class="form-control" placeholder="调整方向1">
            		 </div>
             	<div class="col-sm-2">
-                	<input name="tads" type="text" class="form-control required" placeholder="调整方向2">
+                	<input name="tads" type="text" class="form-control" placeholder="调整方向2">
             	</div>
          	</div>
          	<div class="form-group">
@@ -197,10 +197,10 @@
                 	<input name="score" type="number" class="form-control required" placeholder="分值">
             	</div>
             	<div class="col-sm-2">
-                	<input name="tadf" type="text" class="form-control required" placeholder="调整方向1">
+                	<input name="tadf" type="text" class="form-control" placeholder="调整方向1">
            		 </div>
             	<div class="col-sm-2">
-                	<input name="tads" type="text" class="form-control required" placeholder="调整方向2">
+                	<input name="tads" type="text" class="form-control" placeholder="调整方向2">
             	</div>
          	</div>
          	<div class="form-group">
@@ -251,10 +251,10 @@
                 	<input name="score" type="number" class="form-control required" placeholder="分值">
             	</div>
             	<div class="col-sm-2">
-                	<input name="tadf" type="text" class="form-control required" placeholder="调整方向1">
+                	<input name="tadf" type="text" class="form-control" placeholder="调整方向1">
            		 </div>
             	<div class="col-sm-2">
-                	<input name="tads" type="text" class="form-control required" placeholder="调整方向2">
+                	<input name="tads" type="text" class="form-control" placeholder="调整方向2">
             	</div>
          	</div>
          	<div class="form-group">
@@ -293,10 +293,10 @@
                 	<input name="scores" type="number" class="form-control required" placeholder="分值">
             	</div>
             	<div class="col-sm-2">
-                	<input name="tadfs" type="text" class="form-control required" placeholder="调整方向1">
+                	<input name="tadfs" type="text" class="form-control" placeholder="调整方向1">
            		 </div>
             	<div class="col-sm-2">
-                	<input name="tadss" type="text" class="form-control required" placeholder="调整方向2">
+                	<input name="tadss" type="text" class="form-control" placeholder="调整方向2">
             	</div>
          	</div>
          	<div class="form-group">
@@ -330,7 +330,7 @@
 <script th:src="@{/js/jquery-ui-1.10.4.min.js}"></script>
 <script type="text/javascript">
     var prefix = "/information/questionnaire";
-    $("#form-paper-add").validate({
+   /*  $("#form-paper-add").validate({
         rules: {
             name: {
                 required: true,
@@ -357,7 +357,7 @@
                 required: true,
             }
         }
-    });
+    }); */
     function getData() {
         var question = new Array();
         $(".draggable .ibox-content").each(function (index, val) {
@@ -401,9 +401,9 @@
         return JSON.stringify(paper);
     }
     function submitHandler() {
-        if ($.validate.form()) {
+       
             $.operate.saveJson(prefix + "/addSave", getData());
-        }
+       
     }
 
     $("#form-paper-add").steps({

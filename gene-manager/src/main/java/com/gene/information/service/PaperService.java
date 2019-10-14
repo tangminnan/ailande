@@ -28,4 +28,13 @@ public interface PaperService{
 
 
 	R save(PaperDO paper);
+
+
+	R removeChoice(Integer id);
+
+
+	R removeQuestion(Integer id);
+
+
+	R editSave(PaperDO paper);
 }

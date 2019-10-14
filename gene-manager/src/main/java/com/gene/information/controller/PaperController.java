@@ -94,9 +94,7 @@ public class PaperController{
       @PostMapping("/update")
     @ResponseBody
     public R editSave(@RequestBody PaperDO paper) {
-    	System.out.println(paper);
-		return null;
-      
+    	return paperService.editSave(paper);
     }
 
     /**
@@ -129,14 +127,15 @@ public class PaperController{
     	return R.error();
     }
 
-
-    /**
-     * 问卷状态修改
-     */
-    @PostMapping("/changeStatus")
     @ResponseBody
-    public R changeStatus(PaperDO paper) {
-		return null;
-//        return toAjax(paperService.updateById(paper));
+    @PostMapping("/removeChoice")
+    public R removeChoice(Integer id){
+    	return paperService.removeChoice(id);
+    }
+    
+    @ResponseBody
+    @PostMapping("/removeQuestion")
+    public R removeQuestion(Integer id){
+    	return paperService.removeQuestion(id);
     }
 }

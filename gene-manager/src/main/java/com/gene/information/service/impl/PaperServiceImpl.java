@@ -22,6 +22,7 @@ import com.gene.information.service.QuestionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
@@ -92,6 +93,8 @@ public class PaperServiceImpl implements PaperService{
 	                        choice.setQuestion(question.getId());
 	                        choice.setCreateBy(ShiroUtils.getUser().getUsername());
 	                        choice.setCreateTime(date);
+	                        choice.setBmi("0");
+							choice.setBmis("0");
 	                        paperDao.saveChoiceDO(choice);
 	                    }
 	                }
@@ -101,6 +104,70 @@ public class PaperServiceImpl implements PaperService{
 	        return R.ok();
 		}
 		return R.error();	
+	}
+
+	@Override
+	public R removeChoice(Integer id) {
+		if(paperDao.removeChoice(id)>0)
+			return R.ok();
+		return R.error();
+	}
+
+	@Override
+	public R removeQuestion(Integer id) {
+		if(paperDao.removeQuestion(id)>0)
+			return R.ok();
+		return R.error();
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
+	public R editSave(PaperDO paper) {
+		Date date = new Date();
+		paper.setUpdateBy(ShiroUtils.getUser().getUsername());
+		paper.setUpdateTime(date);
+		if(paperDao.update(paper)>0){
+			for(QuestionDO q :paper.getQuestionList()){
+				if(q.getId()!=null){
+					q.setUpdateBy(ShiroUtils.getUser().getName());
+					q.setUpdateTime(date);
+					paperDao.updateQuestion(q);
+					for (ChoiceDO choice : q.getChoiceList()) {
+						if(choice.getId()!=null){
+							choice.setUpdateBy(ShiroUtils.getUser().getUsername());
+							choice.setUpdateTime(date);
+							paperDao.updateChoice(choice);
+						}
+						else{
+							choice.setQuestion(q.getId());
+							choice.setCreateBy(ShiroUtils.getUser().getUsername());
+							choice.setCreateTime(date);
+							choice.setBmi("0");
+							choice.setBmis("0");
+							paperDao.saveChoiceDO(choice);
+						}
+                    }
+				}
+				else{
+					q.setCreateBy(ShiroUtils.getUser().getUsername());
+					q.setCreateTime(date);
+					q.setPaperId(paper.getId());
+					paperDao.saveQuestionDO(q);
+					if (!CollectionUtils.isEmpty(q.getChoiceList())) {
+	                    for (ChoiceDO choice : q.getChoiceList()) {
+	                        choice.setQuestion(q.getId());
+	                        choice.setCreateBy(ShiroUtils.getUser().getUsername());
+	                        choice.setCreateTime(date);
+	                        choice.setBmi("0");
+							choice.setBmis("0");
+	                        paperDao.saveChoiceDO(choice);
+	                    }
+	                }
+				}
+			}
+			return R.ok();
+		}
+		return R.error();
 	}
 
 }

@@ -57,6 +57,45 @@
 		where id=#{id}
 	</update>
 	
+	<update id="updateQuestion" parameterType="com.gene.information.domain.QuestionDO">
+		update qu_question
+		<set>
+			<if test="category!=null">category=#{category},</if>
+ 			<if test="content!=null">content=#{content},</if>
+ 			<if test="type!=null">type=#{type},</if>
+ 			<if test="sort!=null">sort=#{sort},</if>
+ 			<if test="required!=null">required=#{required},</if>
+ 			<if test="updateBy!=null">update_by=#{updateBy},</if>
+ 			<if test="updateTime!=null">update_time=#{updateTime},</if>
+ 			<if test="remark!=null">remark=#{remark},</if>
+ 			<if test="contenw!=null">contenw=#{contenw}</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<update id="updateChoice" parameterType="com.gene.information.domain.ChoiceDO">
+		update qu_choice
+		<set>
+			<if test="content!=null">content=#{content},</if>
+ 			<if test="score!=null">score=#{score},</if>
+ 			<if test="updateBy!=null">update_by=#{updateBy},</if>
+ 			<if test="updateTime!=null">update_time=#{updateTime},</if>
+ 			<if test="remark!=null">remark=#{remark},</if>
+ 			<if test="tadf!=null">tadf=#{tadf},</if>
+ 			<if test="tads!=null">tads=#{tads},</if>
+ 			<if test="tadreason!=null">tadreason=#{tadreason},</if>
+ 			<if test="tadjianyi!=null">tadjianyi=#{tadjianyi}</if>
+ 			<if test="bmi!=null">bmi=#{bmi}</if>
+ 			<if test="bmis!=null">bmis=#{bmis}</if>
+ 			<if test="scores!=null">scores=#{scores}</if>
+ 			<if test="tadfs!=null">tadfs=#{tadfs}</if>
+ 			<if test="tadss!=null">tadss=#{tadss}</if>
+ 			<if test="tadreasons!=null">tadreasons=#{tadreasons}</if>
+ 			<if test="tadjianyis!=null">tadjianyis=#{tadjianyis}</if>
+		</set>
+		where id=#{id}
+	</update>
+	
 	<insert id="saveQuPaper" parameterType="com.gene.information.domain.PaperDO" useGeneratedKeys="true" keyProperty="id">
 		insert into qu_paper
 		(
@@ -209,27 +248,13 @@
 	
 	</resultMap>
 	
-	<!-- <resultMap type="com.gene.information.domain.ChoiceDO" id="choiceMap">
-		<id column="cid" property="id"/>
-         <result column="ccontent" property="content"/>
-         <result column="cscore" property="score"/>
-         <result column="ccreateBy" property="createBy"/>
-         <result column="ccreateTime" property="createTime"/>
-         <result column="cupdateBy" property="updateBy"/>
-         <result column="cupdateTime" property="updateTime"/>
-         <result column="cremark" property="remark"/>
-        <result column="ctadf" property="tadf"/>
-        <result column="ctads" property="tads"/>
-         <result column="ctadreason" property="tadreason"/>
-         <result column="ctadjianyi" property="tadjianyi"/>
-         <result column="cbmi" property="bmi"/>
-         <result column="cbmis" property="bmis"/>
-         <result column="cscores" property="scores"/>
-        <result column="ctadfs" property="tadfs"/>
-         <result column="ctadss" property="tadss"/>
-         <result column="ctadreasons" property="tadreasons"/>
-         <result column="ctadjianyis" property="tadjianyis"/>
- </resultMap> -->
+	<delete id="removeChoice">
+		delete from qu_choice where id=#{value}
+	</delete>
+	
+	<delete id="removeQuestion">
+		delete from qu_question where id=#{value}
+	</delete>
 	
 	<select id="getPaperById" resultMap="paperMap">
 	SELECT
