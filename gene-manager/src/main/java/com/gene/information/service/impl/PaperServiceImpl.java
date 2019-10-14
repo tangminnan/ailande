@@ -43,12 +43,12 @@ public class PaperServiceImpl implements PaperService{
 		return paperDao.list(map);
 	}
 
-	
-
+	/**
+	 * 查询问卷
+	 */
 	@Override
 	public PaperDO getPaperById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return paperDao.getPaperById(id);
 	}
 
 	@Override

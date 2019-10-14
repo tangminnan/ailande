@@ -29,4 +29,6 @@ public interface PaperDao{
 	void saveQuestionDO(QuestionDO question);
 
 	void saveChoiceDO(ChoiceDO choice);
+
+	PaperDO getPaperById(Integer id);
 }

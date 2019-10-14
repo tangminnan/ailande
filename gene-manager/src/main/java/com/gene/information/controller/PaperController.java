@@ -91,9 +91,10 @@ public class PaperController{
      * 修改保存问卷
      */
     @RequiresPermissions("information:questionnaire:edit")
-      @PostMapping("/edit/{id}")
+      @PostMapping("/update")
     @ResponseBody
-    public R editSave(@PathVariable("id") Integer id,@RequestBody PaperDO paper) {
+    public R editSave(@RequestBody PaperDO paper) {
+    	System.out.println(paper);
 		return null;
       
     }

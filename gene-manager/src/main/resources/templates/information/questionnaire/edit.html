@@ -5,8 +5,7 @@
 <meta name="keywords" content="">
 <meta name="description" content="">
 <head>
-	
-	<link rel="shortcut icon" href="favicon.ico">
+<link rel="shortcut icon" href="favicon.ico">
 	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
 	<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
 	<!-- bootstrap-table 表格插件样式 -->
@@ -48,28 +47,31 @@
 	<script th:src="@{/js/jquery-ui-1.10.4.min.js}"></script>
 	<script th:inline="javascript"> var ctx = [[@{/}]]; </script>
 </head>
+<link th:href="@{/ajax/libs/steps/jquery.steps.css}" rel="stylesheet"/>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form id="form-paper-add" class="form-horizontal m">
+    <form id="form-paper-add" class="form-horizontal m" th:object="${paper}">
+        <input id="paperId" name="id" type="hidden" th:value="*{id}"/>
         <h1>问卷</h1>
         <fieldset>
             <div class="col-sm-10">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">问卷名称 *</label>
                     <div class="col-sm-6">
-                        <input id="name" name="name" type="text" class="form-control required">
+                        <input id="name" name="name" type="text" th:field="*{name}" class="form-control required">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">问卷简介 *</label>
                     <div class="col-sm-6">
-                        <textarea id="description" name="description" type="text" class="form-control required"></textarea>
+                        <textarea id="description" name="description" th:field="*{description}" type="text"
+                                  class="form-control required"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">问卷备注&nbsp;&nbsp;</label>
                     <div class="col-sm-6">
-                        <input id="remark" name="remark" type="text" class="form-control">
+                        <input id="remark" name="remark" type="text" th:field="*{remark}" class="form-control">
                     </div>
                 </div>
             </div>
@@ -86,6 +88,186 @@
         <fieldset>
             <div class="col-sm-10">
                 <div class="draggable">
+                    <div id="item" class="ibox-content" th:each="question : ${paper.questionList}">
+                     <div class="question">
+                        <div class="form-group" >
+                            <label class="col-sm-1 control-label"><i class="fa fa-arrows"></i></label>
+                            <div class="col-sm-6">
+                            	<input name="questionIDID" type="hidden" th:value="${question.id}"/>
+                                <input name="title" type="text" th:value="${question.content}"
+                                       class="form-control required" placeholder="报告题目内容">
+                            </div>
+                            <div class="col-sm-2">
+                               <select name="category" class="form-control required">
+              						<option value="">题目分类</option>
+              						<option value="运动类">运动类</option>
+              						<option value="其他类">其他类</option>
+              					</select>
+                            </div>
+                            <div class="col-sm-2">
+                                <select name="type" class="form-control required">
+                                    <option value="" disabled selected>请选择题目类型</option>
+                                    <option th:value="0" th:selected="${question.type=='0'}">单选</option>
+                                    <option th:value="1" th:selected="${question.type=='1'}">多选</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-1">
+                                <a class="btn btn-danger" onclick="removeQuestion(this)">
+                                    <i class="fa fa-remove"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+        					<label class="col-sm-1 control-label"><i class="fa fa-arrows"></i></label>
+        					<div class="col-sm-8">
+                				<input name="titlew" type="text" th:value="${question.contenw}" class="form-control required" placeholder="问卷题目内容">
+            				</div>
+      	  				</div>
+      	  			</div>
+      	  				<div th:each="choice:${question.choiceList}">
+      	  				 <div class="appendchoice" th:if="${choice.bmi=='0'}">
+      	  					
+                        	<div class="form-group answer">
+                           		<label class="col-sm-1 control-label">选项</label>
+                            	<div class="col-sm-2">
+                            		<input type="hidden" name="choiceIDID" th:value="${choice.id}">
+                                	<input name="value" type="text" th:value="${choice.content}" class="form-control required" placeholder="答案">
+                            	</div>
+                            	<div class="col-sm-2">
+                                	<input name="score" type="number" th:value="${choice.score}" class="form-control required" placeholder="分值">
+                            	</div>
+                           		<div class="col-sm-2">
+                					<input name="tadf" type="text" class="form-control required" th:value="${choice.tadf}" placeholder="调整方向1">
+           		 				</div>
+            					<div class="col-sm-2">
+                					<input name="tads" type="text" class="form-control required" th:value="${choice.tads}" placeholder="调整方向2">
+            					</div>
+            				</div>
+            				<div class="form-group">
+         						<label class="col-sm-1 control-label"></label>
+       			 				<div class="col-sm-2">
+                					<input type="hidden" class="form-control required">
+           		 				</div>
+        						<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         							<textarea name="tadreason" th:text="${choice.tadreason}" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
+       		 					</div> 
+     						</div>
+                            <div class="form-group">
+								<label class="col-sm-1 control-label"></label>
+      							<div class="col-sm-2">
+                					<input type="hidden" class="form-control required">
+           						</div>
+       							<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         						<textarea name="tadjianyi" th:text="${choice.tadjianyi}" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
+       		 				</div> 
+       						<div class="col-sm-2" style="margin-bottom:0">
+               					<a class="btn btn-success" onclick="addChoice(this)">
+                   					<i class="fa fa-plus"></i>
+               					</a>
+               					<a class="btn btn-danger" onclick="removeChoice(this)">
+                  		 			<i class="fa fa-remove"></i>
+              					</a>
+           	   				</div>
+     					</div>
+                        </div>
+                        <div class="appendchoice" th:if="${choice.bmi!='0'}">
+      	  					<div class="form-group">
+        						<label class="col-sm-1 control-label">选项</label>
+            					<div class="col-sm-2">
+                					<input name="value" type="text" th:value="${choice.content}"  class="form-control required" placeholder="答案">
+            					</div>
+            					<div class="col-sm-2">
+                					<input name="bmi" type="text"  th:value="${choice.bmi}" class="form-control required">
+            					</div>
+        					</div>
+        				 <div class="form-group">
+            				<label class="col-sm-1 control-label"></label>
+            				<div class="col-sm-2">
+                				<input name="value" type="hidden" class="form-control required">
+            				</div>
+           	 				<div class="col-sm-2">
+                				<input name="score" type="number" th:value="${choice.score}" class="form-control required" placeholder="分值">
+            				</div>
+            				<div class="col-sm-2">
+                				<input name="tadf" type="text" th:value="${choice.tadf}" class="form-control required" placeholder="调整方向1">
+           		 			</div>
+            				<div class="col-sm-2">
+                				<input name="tads" type="text" th:value="${choice.tads}" class="form-control required" placeholder="调整方向2">
+            				</div>
+         				</div>
+         				<div class="form-group">
+         					<label class="col-sm-1 control-label"></label>
+       			 			<div class="col-sm-2">
+                				<input type="hidden" class="form-control required">
+           		 			</div>
+        					<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         						<textarea name="tadreason" th:text="${choice.tadreason}" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
+       		 				</div> 
+     					</div>
+					 <div class="form-group">
+						<label class="col-sm-1 control-label"></label>
+      					<div class="col-sm-2">
+                			<input type="hidden" class="form-control required">
+           				</div>
+       					<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         					<textarea name="tadjianyi" th:text="${choice.tadjianyi}" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
+       		 			</div> 
+     				</div>
+     	 	 		<div class="form-group">
+        				<label class="col-sm-1 control-label"></label>
+            			<div class="col-sm-2">
+                			<input name="value" type="hidden" class="form-control required">
+            			</div>
+            			<div class="col-sm-2">
+                			<input name="bmis" type="text" th:value="${choice.bmis}" class="form-control required">
+            			</div>
+        			</div>
+        			<div class="form-group">
+            			<label class="col-sm-1 control-label"></label>
+            			<div class="col-sm-2">
+                			<input name="value" type="hidden"  class="form-control required">
+            			</div>
+           	 			<div class="col-sm-2">
+                			<input name="scores" type="number" th:value="${choice.scores}" class="form-control required" placeholder="分值">
+            			</div>
+            			<div class="col-sm-2">
+                			<input name="tadfs" type="text" th:value="${choice.tadfs}" class="form-control required" placeholder="调整方向1">
+           				</div>
+            			<div class="col-sm-2">
+                			<input name="tadss" type="text" th:value="${choice.tadss}" class="form-control required" placeholder="调整方向2">
+            			</div>
+         			</div>
+         			<div class="form-group">
+         				<label class="col-sm-1 control-label"></label>
+       			 		<div class="col-sm-2">
+                			<input type="hidden" class="form-control required">
+           		 		</div>
+        				<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         					<textarea name="tadreasons" th:text="${choice.tadreasons}" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
+       		 			</div> 
+     				</div>
+					<div class="form-group">
+						<label class="col-sm-1 control-label"></label>
+      					<div class="col-sm-2">
+                			<input type="hidden" class="form-control required">
+           				</div>
+       					<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         					<textarea name="tadjianyis" th:text="${choice.tadjianyis}" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
+       		 			</div> 
+       					<div class="col-sm-2" style="margin-bottom:0">
+               				<a class="btn btn-success" onclick="addChoice(this)">
+                   				<i class="fa fa-plus"></i>
+               				</a>
+               				<a class="btn btn-danger" onclick="removeChoice(this)">
+                  		 		<i class="fa fa-remove"></i>
+              				</a>
+           	   			</div>
+     	 			</div>   
+            				
+                           
+                        </div>
+                    </div>
+				</div>
                 </div>
                 <div class="row clearfix">
                     <div class="col-md-12 column">
@@ -103,91 +285,9 @@
         </fieldset>
     </form>
 </div>
-<div id="temp" style="display: none">
-    <div class="ibox-content">
-    	<div class="question">
-        <div class="form-group ">
-            <label class="col-sm-1 control-label"><i class="fa fa-arrows"></i></label>
-            <div class="col-sm-6">
-                <input name="title" type="text" class="form-control required" placeholder="报告题目内容">
-            </div>
-            <div class="col-sm-2">
-              <!--   <input name="category" type="text" class="form-control required" placeholder="题目分类"> -->
-              <select name="category" type="text" class="form-control required">
-              	<option value="">题目分类</option>
-              	<option value="运动类">运动类</option>
-              	<option value="其他类">其他类</option>
-              </select>
-            </div>
-            <div class="col-sm-2">
-                <select name="type" class="form-control required">
-                    <option value="" disabled selected>请选择题目类型</option>
-                    <option th:value="0">单选</option>
-                    <option th:value="1">多选</option>
-                </select>
-            </div>
-            <div class="col-sm-1">
-                <a class="btn btn-danger" onclick="removeQuestion(this)">
-                    <i class="fa fa-remove"></i>
-                </a>
-            </div>
-        </div>
-        <div class="form-group">
-        <label class="col-sm-1 control-label"><i class="fa fa-arrows"></i></label>
-        	<div class="col-sm-8">
-                <input name="titlew" type="text" class="form-control required" placeholder="问卷题目内容">
-            </div>
-        </div>
-        </div>
-        <div class="appendchoice">
-        	<div class="form-group">
-            	<label class="col-sm-1 control-label">选项</label>
-            	<div class="col-sm-2">
-                	<input name="value" type="text" class="form-control required" placeholder="答案">
-            	</div>
-           	 	<div class="col-sm-2">
-                	<input name="score" type="number" class="form-control required" placeholder="分值">
-            	</div>
-            	<div class="col-sm-2">
-                	<input name="tadf" type="text" class="form-control required" placeholder="调整方向1">
-           		 </div>
-            	<div class="col-sm-2">
-                	<input name="tads" type="text" class="form-control required" placeholder="调整方向2">
-            	</div>
-         	</div>
-         	<div class="form-group">
-         		<label class="col-sm-1 control-label"></label>
-       			 <div class="col-sm-2">
-                	<input type="hidden" class="form-control required">
-           		 </div>
-        		<div class="col-sm-6" style="height: 60px;" id="tadreason">
-         			<textarea name="tadreason" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
-       		 	</div> 
-     		</div>
-			<div class="form-group">
-				<label class="col-sm-1 control-label"></label>
-      			<div class="col-sm-2">
-                	<input type="hidden" class="form-control required">
-           		</div>
-       			<div class="col-sm-6" style="height: 60px;" id="tadreason">
-         			<textarea name="tadjianyi" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
-       		 	</div> 
-       			<div class="col-sm-2" style="margin-bottom:0">
-               		<a class="btn btn-success" onclick="addChoice(this)">
-                   		<i class="fa fa-plus"></i>
-               		</a>
-               		<a class="btn btn-danger" onclick="removeChoice(this)">
-                  		 <i class="fa fa-remove"></i>
-              		</a>
-           	   </div>
-     		</div>
-        </div>
-      </div>
-      </div>  
-         
-        
-  
-  <div class="qitalei" style="display: none">
+
+
+ <div class="qitalei" style="display: none">
   	<div class="form-group">
             	<label class="col-sm-1 control-label">选项</label>
             	<div class="col-sm-2">
@@ -329,7 +429,7 @@
 <script th:src="@{/ajax/libs/steps/jquery.steps.min.js}"></script>
 <script th:src="@{/js/jquery-ui-1.10.4.min.js}"></script>
 <script type="text/javascript">
-    var prefix = "/information/questionnaire";
+var prefix = "/information/questionnaire";
     $("#form-paper-add").validate({
         rules: {
             name: {
@@ -358,52 +458,58 @@
             }
         }
     });
+
     function getData() {
         var question = new Array();
         $(".draggable .ibox-content").each(function (index, val) {
             var choice = new Array();
             $(val).find(".appendchoice").each(function (index, val) {
                 var answer = {
-                    content: $(val).find("input[name='value']").val(),
-                    score: $(val).find("input[name='score']").val(),
-                    tadf: $(val).find("input[name='tadf']").val(),//调整方向1
-                    bmi: $(val).find("input[name='bmi']").val(),//调整方向1
-                    tads: $(val).find("input[name='tads']").val(),//调整方向2
-                    tadreason:$(val).find("textarea[name='tadreason']").val(),//调整原因
-                	tadjianyi:$(val).find("textarea[name='tadjianyi']").val(),//营养补充及建议
-                	
-                	scores: $(val).find("input[name='scores']").val(),
-                    tadfs: $(val).find("input[name='tadfs']").val(),//调整方向1
-                    bmis: $(val).find("input[name='bmis']").val(),//调整方向1
-                    tadss: $(val).find("input[name='tadss']").val(),//调整方向2
-                    tadreasons:$(val).find("textarea[name='tadreasons']").val(),//调整原因
-                	tadjianyis:$(val).find("textarea[name='tadjianyis']").val()//营养补充及建议
+                		id:$(val).find("input[name='choiceIDID']").val(),
+                		content: $(val).find("input[name='value']").val(),
+                        score: $(val).find("input[name='score']").val(),
+                        tadf: $(val).find("input[name='tadf']").val(),//调整方向1
+                        bmi: $(val).find("input[name='bmi']").val(),//调整方向1
+                        tads: $(val).find("input[name='tads']").val(),//调整方向2
+                        tadreason:$(val).find("textarea[name='tadreason']").val(),//调整原因
+                    	tadjianyi:$(val).find("textarea[name='tadjianyi']").val(),//营养补充及建议
+                    	
+                    	scores: $(val).find("input[name='scores']").val(),
+                        tadfs: $(val).find("input[name='tadfs']").val(),//调整方向1
+                        bmis: $(val).find("input[name='bmis']").val(),//调整方向1
+                        tadss: $(val).find("input[name='tadss']").val(),//调整方向2
+                        tadreasons:$(val).find("textarea[name='tadreasons']").val(),//调整原因
+                    	tadjianyis:$(val).find("textarea[name='tadjianyis']").val()//营养补充及建议
                 };
                 choice.push(answer);
             });
             var obj = {
-                content: $(val).find(".question").find("input[name='title']").val(),
-                contenw: $(val).find(".question").find("input[name='titlew']").val(),
-               	category: $(val).find(".question").find("select[name='category']").val(),
-                type: $(val).find(".question").find("select[name='type']").val(),
-                choiceList: choice
+            		id:$(val).find(".question").find("input[name='questionIDID']").val(),
+            		content: $(val).find(".question").find("input[name='title']").val(),
+                    contenw: $(val).find(".question").find("input[name='titlew']").val(),
+                   	category: $(val).find(".question").find("select[name='category']").val(),
+                    type: $(val).find(".question").find("select[name='type']").val(),
+                    choiceList: choice
             };
             question.push(obj);
         });
 
         var paper = {
-            code: $("#code").val(),
-            name: $("#name").val(),
-            description: $("#description").val(),
-            remark: $("#remark").val(),
-            questionList: question
+        		id:$("#paperId").val(),
+        		code: $("#code").val(),
+                name: $("#name").val(),
+                description: $("#description").val(),
+                remark: $("#remark").val(),
+                questionList: question
         };
         return JSON.stringify(paper);
     }
+
     function submitHandler() {
-        if ($.validate.form()) {
-            $.operate.saveJson(prefix + "/addSave", getData());
-        }
+       
+           
+            $.operate.saveJson(prefix + "/update", getData());
+       
     }
 
     $("#form-paper-add").steps({
@@ -425,10 +531,10 @@
     });
 
     function addQuestion() {
-    	
-        $(".draggable").append($("#temp .ibox-content").clone());
+    	var item=$("#item").clone();
+    	item.find("[name$=IDID]").remove();
+        $(".draggable").append(item);
     }
-    addQuestion();
 
     $(".draggable").sortable({handle: "i"});
 
@@ -441,31 +547,28 @@
     }
 
     function addChoice(obj) {
-//       $(obj).parent().parent().parent().parent().append($("#temp .appendchoice").clone());
-    	 $(obj).parent().parent().parent().parent().append($(obj).parent().parent().parent().clone());	
-     		
-     		
+    	 var $choice=$(obj).parent().parent().parent().parent().clone();
+    	     $choice.find("[name$=IDID]").remove();
+    	 $(obj).parent().parent().parent().parent().parent().append($choice);	
     }
 
     function removeChoice(obj) {
-        if ($(obj).parent().parent().parent().parent().children(".appendchoice").size() > 1) {
-            $(obj).closest(".appendchoice").remove();
+    	if ($(obj).parent().parent().parent().parent().parent().find(".appendchoice").size() > 1) {
+            $(obj).closest(".appendchoice").parent().remove();
         } else {
             $.modal.msgError("选项不能为空");
         }
     }
-
 
     $("body").on("change","[name='category']",function(){
     	if($(this).parent().parent().parent().siblings().size()>1)
     		 $.modal.msgError("删除多余的选项  再做更改");
     	else
     		if($(this).val()=='运动类')
-    			$(this).parent().parent().parent().next().html($(".yundonglei").html());
+    			$(this).parent().parent().parent().next().children().html($(".yundonglei").html());
     		else
-    			$(this).parent().parent().parent().next().html($(".qitalei").html());
+    			$(this).parent().parent().parent().next().children().html($(".qitalei").html());
     });
-
 </script>
 </body>
 </html>

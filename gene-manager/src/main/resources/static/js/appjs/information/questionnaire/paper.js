@@ -123,14 +123,15 @@ function add() {
 	layer.full(page);
 }
 function edit(id) {
-	layer.open({
+	var page=layer.open({
 		type : 2,
-		title : '编辑',
+		title : '编辑问卷',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
 		area : [ '800px', '520px' ],
 		content : prefix + '/edit/' + id // iframe的url
 	});
+	layer.full(page);
 }
 function remove(id) {
 	layer.confirm('确定要删除选中的记录？', {
