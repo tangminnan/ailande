@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gene.information.dao.CustomerPaperDao">
+
+	<select id="get" resultType="com.gene.information.domain.CustomerPaperDO">
+		select `id`,`username`,`high`,`sex`,`weight`,`age`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`,`del_flag`,`product_id`,`paper_id`,`code`,`source`,`bmi`,`phone`,`email`,`address` from biz_customer_paper where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.gene.information.domain.CustomerPaperDO">
+		select `id`,`username`,`high`,`sex`,`weight`,`age`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`,`del_flag`,`product_id`,`paper_id`,`code`,`source`,`bmi`,`phone`,`email`,`address` from biz_customer_paper
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="username != null and username != ''"> and username like concat('%', #{username},'%') </if>
+		  		  <if test="high != null and high != ''"> and high = #{high} </if>
+		  		  <if test="sex != null and sex != ''"> and sex = #{sex} </if>
+		  		  <if test="weight != null and weight != ''"> and weight = #{weight} </if>
+		  		  <if test="age != null and age != ''"> and age = #{age} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		  <if test="productId != null and productId != ''"> and product_id = #{productId} </if>
+		  		  <if test="paperId != null and paperId != ''"> and paper_id = #{paperId} </if>
+		  		  <if test="code != null and code != ''"> and code like concat('%', #{code},'%') </if>
+		  		  <if test="source != null and source != ''"> and source = #{source} </if>
+		  		  <if test="bmi != null and bmi != ''"> and bmi = #{bmi} </if>
+		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		  <if test="email != null and email != ''"> and email = #{email} </if>
+		  		  <if test="address != null and address != ''"> and address = #{address} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from biz_customer_paper
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="username != null and username != ''"> and username = #{username} </if>
+		  		  <if test="high != null and high != ''"> and high = #{high} </if>
+		  		  <if test="sex != null and sex != ''"> and sex = #{sex} </if>
+		  		  <if test="weight != null and weight != ''"> and weight = #{weight} </if>
+		  		  <if test="age != null and age != ''"> and age = #{age} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		  <if test="productId != null and productId != ''"> and product_id = #{productId} </if>
+		  		  <if test="paperId != null and paperId != ''"> and paper_id = #{paperId} </if>
+		  		  <if test="code != null and code != ''"> and code = #{code} </if>
+		  		  <if test="source != null and source != ''"> and source = #{source} </if>
+		  		  <if test="bmi != null and bmi != ''"> and bmi = #{bmi} </if>
+		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		  <if test="email != null and email != ''"> and email = #{email} </if>
+		  		  <if test="address != null and address != ''"> and address = #{address} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.gene.information.domain.CustomerPaperDO" useGeneratedKeys="true" keyProperty="id">
+		insert into biz_customer_paper
+		(
+			`username`, 
+			`high`, 
+			`sex`, 
+			`weight`, 
+			`age`, 
+			`status`, 
+			`create_by`, 
+			`create_time`, 
+			`update_by`, 
+			`update_time`, 
+			`remark`, 
+			`del_flag`, 
+			`product_id`, 
+			`paper_id`, 
+			`code`, 
+			`source`, 
+			`bmi`, 
+			`phone`, 
+			`email`, 
+			`address`
+		)
+		values
+		(
+			#{username}, 
+			#{high}, 
+			#{sex}, 
+			#{weight}, 
+			#{age}, 
+			#{status}, 
+			#{createBy}, 
+			#{createTime}, 
+			#{updateBy}, 
+			#{updateTime}, 
+			#{remark}, 
+			#{delFlag}, 
+			#{productId}, 
+			#{paperId}, 
+			#{code}, 
+			#{source}, 
+			#{bmi}, 
+			#{phone}, 
+			#{email}, 
+			#{address}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.gene.information.domain.CustomerPaperDO">
+		update biz_customer_paper 
+		<set>
+			<if test="username != null">`username` = #{username}, </if>
+			<if test="high != null">`high` = #{high}, </if>
+			<if test="sex != null">`sex` = #{sex}, </if>
+			<if test="weight != null">`weight` = #{weight}, </if>
+			<if test="age != null">`age` = #{age}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="remark != null">`remark` = #{remark}, </if>
+			<if test="delFlag != null">`del_flag` = #{delFlag}, </if>
+			<if test="productId != null">`product_id` = #{productId}, </if>
+			<if test="paperId != null">`paper_id` = #{paperId}, </if>
+			<if test="code != null">`code` = #{code}, </if>
+			<if test="source != null">`source` = #{source}, </if>
+			<if test="bmi != null">`bmi` = #{bmi}, </if>
+			<if test="phone != null">`phone` = #{phone}, </if>
+			<if test="email != null">`email` = #{email}, </if>
+			<if test="address != null">`address` = #{address}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from biz_customer_paper where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from biz_customer_paper where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<select id="queryUserQuestionDetails" resultType="com.gene.information.domain.CustomerPaperDO">
+		select qq.content questionContent,qc.content choiceContent from biz_answer ba,qu_question qq,qu_choice qc
+		where ba.choice_id = qc.id and ba.question_id = qq.id and ba.id = #{id}	
+	</select>
+
+</mapper>
