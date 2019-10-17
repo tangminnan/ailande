@@ -22,10 +22,6 @@ public class QuestionDO implements Serializable{
     private Long paperId;
     /**
     * 分类名称
-    * JIBEN_XINXI=基本信息
-	  SHENTI_ZHUNGKUANG=身体状况
-	  YINSHI_XIGUAN=饮食习惯
-	  SHENGHUO_XIGUAN=生活习惯
     */
     private String category;
     /**
@@ -53,11 +49,6 @@ public class QuestionDO implements Serializable{
     private String updateBy;
     //更新时间
     private Date updateTime;
-    /*  题型分类
-     *  YUN_DONG=运动题型
-     *  QI_TA=其他题型
-     */
-    private String ifStop;
     /**
     * 是否必填（0必填 1选填）
     */
@@ -156,13 +147,6 @@ public class QuestionDO implements Serializable{
 	}
 	public void setContenw(String contenw) {
 		this.contenw = contenw;
-	}
-	
-	public String getIfStop() {
-		return ifStop;
-	}
-	public void setIfStop(String ifStop) {
-		this.ifStop = ifStop;
 	}
 	@Override
 	public String toString() {

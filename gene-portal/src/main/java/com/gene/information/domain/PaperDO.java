@@ -43,6 +43,7 @@ public class PaperDO implements Serializable {
     private String updateBy;
     //更新时间
     private Date updateTime;
+    private String paperSort;
     private String remark;
 
     List<QuestionDO> questionList;
@@ -167,6 +168,15 @@ public class PaperDO implements Serializable {
 		this.remark = remark;
 	}
 
+
+	public String getPaperSort() {
+		return paperSort;
+	}
+
+
+	public void setPaperSort(String paperSort) {
+		this.paperSort = paperSort;
+	}
 
 
 	@Override

@@ -68,7 +68,8 @@
  			<if test="updateBy!=null">update_by=#{updateBy},</if>
  			<if test="updateTime!=null">update_time=#{updateTime},</if>
  			<if test="remark!=null">remark=#{remark},</if>
- 			<if test="contenw!=null">contenw=#{contenw}</if>
+ 			<if test="contenw!=null">contenw=#{contenw},</if>
+ 			<if test="ifStop!=null">if_stop=#{ifStop}</if>
 		</set>
 		where id=#{id}
 	</update>
@@ -137,7 +138,8 @@
   		`create_time`,
   		`update_by`,
   		`update_time`,
-  		`remark`
+  		`remark`,
+  		 if_stop
 		)values(
 			#{paperId},
   			#{category},
@@ -150,7 +152,8 @@
   			#{createTime},
   			#{updateBy},
   			#{updateTime},
-  			#{remark}
+  			#{remark},
+  			#{ifStop}
 		)
   
 	</insert>
@@ -212,6 +215,8 @@
        	
          <collection  property="questionList" ofType="com.gene.information.domain.QuestionDO">
          	 <id column="nid" property="id"/>
+         	 
+             <result column="nifStop" property="ifStop"/>
              <result column="ncategory" property="category"/>
              <result column="ncontent" property="content"/>
              <result column="ntype" property="type"/>
@@ -280,6 +285,7 @@
 	n.update_time nupdateTime,
 	n.remark nremark,
 	n.contenw ncontenw,
+	n.if_stop nifStop,
  	c.id cid,
 	c.content ccontent,
 	c.score cscore,

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gene.information.dao.PaperDao">
+	<select id="getAllProduct" resultType="com.gene.information.domain.ProductDO">
+		 select id,code,url,name,description,create_by,create_time,remark where del_flag='0'
+	</select>
+</mapper>
