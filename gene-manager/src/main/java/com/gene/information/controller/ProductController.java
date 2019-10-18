@@ -93,6 +93,7 @@ public class ProductController {
 			return R.error("编号已存在");
 		}
 		product.setCreateTime(new Date());
+		product.setDelFlag("0");
 		if(productService.save(product)>0){
 			ProductPaperDO productPaper = new ProductPaperDO();
 			productPaper.setProductId(product.getId());

@@ -13,7 +13,9 @@ import com.gene.common.utils.ShiroUtils;
 import com.gene.common.utils.StringUtils;
 import com.gene.information.dao.PaperDao;
 import com.gene.information.domain.ChoiceDO;
+import com.gene.information.domain.ChoiceProductDO;
 import com.gene.information.domain.PaperDO;
+import com.gene.information.domain.ProductDO;
 import com.gene.information.domain.QuestionDO;
 import com.gene.information.service.ChoiceService;
 import com.gene.information.service.PaperService;
@@ -86,17 +88,19 @@ public class PaperServiceImpl implements PaperService{
 	                question.setRequired("1");
 	                question.setCreateBy(ShiroUtils.getUser().getUsername());
 	                question.setCreateTime(date);
+	                if("".equals(question.getIfStop())) question.setIfStop("QI_TA");
 	                paperDao.saveQuestionDO(question);
 	                List<ChoiceDO> choiceList = question.getChoiceList();
-	                if (!CollectionUtils.isEmpty(choiceList)) {
-	                    for (ChoiceDO choice : choiceList) {
-	                        choice.setQuestion(question.getId());
-	                        choice.setCreateBy(ShiroUtils.getUser().getUsername());
-	                        choice.setCreateTime(date);
-	                        choice.setBmi("0");
-							choice.setBmis("0");
-	                        paperDao.saveChoiceDO(choice);
-	                    }
+	               for (ChoiceDO choice : choiceList) {
+	            	   choice.setQuestion(question.getId());
+	            	   choice.setCreateBy(ShiroUtils.getUser().getUsername());
+	            	   choice.setCreateTime(date);
+	            	   paperDao.saveChoiceDO(choice);
+	            	   List<ChoiceProductDO> choiceProductList = choice.getChoiceProductList();
+	                   for(ChoiceProductDO choiceProductDO :choiceProductList){
+	                	   choiceProductDO.setChoose(choice.getId());
+	                	   paperDao.saveChoiceProductDO(choiceProductDO);
+	                   }
 	                }
 	            }
 	        }
@@ -137,37 +141,57 @@ public class PaperServiceImpl implements PaperService{
 							choice.setUpdateBy(ShiroUtils.getUser().getUsername());
 							choice.setUpdateTime(date);
 							paperDao.updateChoice(choice);
+							 List<ChoiceProductDO> choiceProductList = choice.getChoiceProductList();
+							 for(ChoiceProductDO choiceProductDO :choiceProductList){
+								 paperDao.updateChoiceProductDO(choiceProductDO);
+							 }
 						}
 						else{
 							choice.setQuestion(q.getId());
 							choice.setCreateBy(ShiroUtils.getUser().getUsername());
-							choice.setCreateTime(date);
-							choice.setBmi("0");
-							choice.setBmis("0");
-							paperDao.saveChoiceDO(choice);
+			            	choice.setCreateTime(date);
+			            	paperDao.saveChoiceDO(choice);
+			            	List<ChoiceProductDO> choiceProductList = choice.getChoiceProductList();
+			                for(ChoiceProductDO choiceProductDO :choiceProductList){
+			                	choiceProductDO.setChoose(choice.getId());
+			                	paperDao.saveChoiceProductDO(choiceProductDO);
+			                }
 						}
                     }
 				}
-				else{
-					q.setCreateBy(ShiroUtils.getUser().getUsername());
-					q.setCreateTime(date);
-					q.setPaperId(paper.getId());
-					paperDao.saveQuestionDO(q);
-					if (!CollectionUtils.isEmpty(q.getChoiceList())) {
-	                    for (ChoiceDO choice : q.getChoiceList()) {
-	                        choice.setQuestion(q.getId());
-	                        choice.setCreateBy(ShiroUtils.getUser().getUsername());
-	                        choice.setCreateTime(date);
-	                        choice.setBmi("0");
-							choice.setBmis("0");
-	                        paperDao.saveChoiceDO(choice);
-	                    }
-	                }
-				}
+			
+			else{
+				q.setPaperId(paper.getId());
+		        q.setSort(0);
+		        q.setRequired("1");
+		        q.setCreateBy(ShiroUtils.getUser().getUsername());
+		        q.setCreateTime(date);
+		        if("".equals(q.getIfStop())) q.setIfStop("QI_TA");
+		        	paperDao.saveQuestionDO(q);
+		            List<ChoiceDO> choiceList = q.getChoiceList();
+		            for (ChoiceDO choice : choiceList) {
+		            	choice.setQuestion(q.getId());
+		            	choice.setCreateBy(ShiroUtils.getUser().getUsername());
+		            	choice.setCreateTime(date);
+		            	paperDao.saveChoiceDO(choice);
+		            	List<ChoiceProductDO> choiceProductList = choice.getChoiceProductList();
+		                for(ChoiceProductDO choiceProductDO :choiceProductList){
+		                	System.out.println(choiceProductDO);
+		                	choiceProductDO.setChoose(choice.getId());
+		                	paperDao.saveChoiceProductDO(choiceProductDO);
+		                }
+		           }
+		       }
+		        }
 			}
-			return R.ok();
-		}
-		return R.error();
+			
+	
+		return R.ok();
+	}
+
+	@Override
+	public List<ProductDO> listAll() {
+		return paperDao.listAll();
 	}
 
 }

@@ -15,7 +15,7 @@
 		select bp.id,bp.code,bp.url,bp.name,bp.description,bp.create_by,bp.create_time,bp.update_by,bp.update_time,bp.remark,bp.del_flag,
 		qp.name paperName
 		from biz_product bp , biz_product_paper bpp , qu_paper qp
-        <where>  
+        where  bp.del_flag='0'
 		  		  <if test="id != null and id != ''"> and bp.id = #{id} </if>
 		  		  <if test="code != null and code != ''"> and bp.code = #{code} </if>
 		  		  <if test="url != null and url != ''"> and bp.url = #{url} </if>
@@ -26,9 +26,8 @@
 		  		  <if test="updateBy != null and updateBy != ''"> and bp.update_by = #{updateBy} </if>
 		  		  <if test="updateTime != null and updateTime != ''"> and bp.update_time = #{updateTime} </if>
 		  		  <if test="remark != null and remark != ''"> and bp.remark = #{remark} </if>
-		  		  <if test="delFlag != null and delFlag != ''"> and bp.del_flag = #{delFlag} </if>
 		  		  and bp.id = bpp.product_id and bpp.paper_id = qp.id
-		  		</where>
+		  	
         <choose>
             <when test="sort != null and sort.trim() != ''">
                 order by ${sort} ${order}
@@ -42,9 +41,11 @@
 		</if>
 	</select>
 	
+	
+	
  	<select id="count" resultType="int">
 		select count(*) from biz_product
-		 <where>  
+		 where del_flag='0'  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="code != null and code != ''"> and code = #{code} </if>
 		  		  <if test="url != null and url != ''"> and url = #{url} </if>
@@ -56,7 +57,7 @@
 		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
 		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
 		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
-		  		</where>
+		  		
 	</select>
 	 
 	<insert id="save" parameterType="com.gene.information.domain.ProductDO" useGeneratedKeys="true" keyProperty="id">

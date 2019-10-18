@@ -3,6 +3,7 @@ import com.gene.common.utils.PageUtils;
 import com.gene.common.utils.Query;
 import com.gene.common.utils.R;
 import com.gene.information.domain.PaperDO;
+import com.gene.information.domain.ProductDO;
 import com.gene.information.service.PaperService;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Map;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +46,9 @@ public class PaperController{
      */
     @GetMapping("/add")
     @RequiresPermissions("information:questionnaire:add")
-    public String add() {
+    public String add(Model model) {
+    	List<ProductDO> productList = paperService.listAll();
+    	model.addAttribute("productList",productList);
         return "information/questionnaire/add";
     }
 
@@ -56,6 +60,9 @@ public class PaperController{
     public String edit(@PathVariable("id") Integer id, ModelMap mmap) {
         PaperDO paper = paperService.getPaperById(id);
         mmap.put("paper", paper);
+        
+        List<ProductDO> productList = paperService.listAll();
+        mmap.put("productList", productList);
         return "information/questionnaire/edit";
     }
 
@@ -94,6 +101,7 @@ public class PaperController{
       @PostMapping("/update")
     @ResponseBody
     public R editSave(@RequestBody PaperDO paper) {
+    	PaperDO p = paper;
     	return paperService.editSave(paper);
     }
 

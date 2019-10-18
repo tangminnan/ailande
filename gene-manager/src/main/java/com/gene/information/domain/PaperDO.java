@@ -176,6 +176,9 @@ public class PaperDO implements Serializable {
 				+ ", updateBy=" + updateBy + ", updateTime=" + updateTime + ", remark=" + remark + ", questionList="
 				+ questionList + "]";
 	}
+
+
+	
 	
 	
     

@@ -6,6 +6,7 @@ import java.util.Map;
 import com.gene.common.utils.Query;
 import com.gene.common.utils.R;
 import com.gene.information.domain.PaperDO;
+import com.gene.information.domain.ProductDO;
 
 /**
  * 问卷 服务层
@@ -37,4 +38,7 @@ public interface PaperService{
 
 
 	R editSave(PaperDO paper);
+
+
+	List<ProductDO> listAll();
 }
