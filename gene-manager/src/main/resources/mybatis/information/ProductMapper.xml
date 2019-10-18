@@ -42,9 +42,11 @@
 		</if>
 	</select>
 	
+	
+	
  	<select id="count" resultType="int">
 		select count(*) from biz_product
-		 <where>  
+		<where>
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="code != null and code != ''"> and code = #{code} </if>
 		  		  <if test="url != null and url != ''"> and url = #{url} </if>

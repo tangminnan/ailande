@@ -2,6 +2,7 @@ package com.gene.information.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 选项表 qu_choice
@@ -23,17 +24,13 @@ public class ChoiceDO implements Serializable {
     * 选项内容
     */
     private String content;
-    /**
-     * 选项分值
-     */
-    private Integer score;
    
     /**
      * 是否选中
      */
  
     private String isCheck;
-    private String delFlag;
+  
     //创建者
     private String  createBy;
     //创建时间
@@ -43,29 +40,7 @@ public class ChoiceDO implements Serializable {
     //更新时间
     private Date updateTime;
     private String remark;
-    //调整方向1
-    private String tadf;
-    //调整方向2
-    private String tads;
-    //调整原因
-    private String tadreason;
-    //营养补充及建议
-	private String tadjianyi;
-    /**
-     * 以下的选项只有涉及到运动的时候才有效
-     */
-    private String bmi;
-    private String bmis;
-    //选项分值
-  	private Integer scores;
-  	//调整方向1
-      private String tadfs;
-    //调整方向2
-    private String tadss;
-    //调整原因
-    private String tadreasons;
-    //营养补充及建议
-	private String tadjianyis;
+    private List<ChoiceProductDO> choiceProductList;
 	public Integer getId() {
 		return id;
 	}
@@ -84,12 +59,7 @@ public class ChoiceDO implements Serializable {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Integer getScore() {
-		return score;
-	}
-	public void setScore(Integer score) {
-		this.score = score;
-	}
+	
 	public String getIsCheck() {
 		return isCheck;
 	}
@@ -99,12 +69,7 @@ public class ChoiceDO implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public String getDelFlag() {
-		return delFlag;
-	}
-	public void setDelFlag(String delFlag) {
-		this.delFlag = delFlag;
-	}
+	
 	public String getCreateBy() {
 		return createBy;
 	}
@@ -135,70 +100,11 @@ public class ChoiceDO implements Serializable {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public String getTadf() {
-		return tadf;
+	public List<ChoiceProductDO> getChoiceProductList() {
+		return choiceProductList;
 	}
-	public void setTadf(String tadf) {
-		this.tadf = tadf;
+	public void setChoiceProductList(List<ChoiceProductDO> choiceProductList) {
+		this.choiceProductList = choiceProductList;
 	}
-	public String getTads() {
-		return tads;
-	}
-	public void setTads(String tads) {
-		this.tads = tads;
-	}
-	public String getTadreason() {
-		return tadreason;
-	}
-	public void setTadreason(String tadreason) {
-		this.tadreason = tadreason;
-	}
-	public String getTadjianyi() {
-		return tadjianyi;
-	}
-	public void setTadjianyi(String tadjianyi) {
-		this.tadjianyi = tadjianyi;
-	}
-	public Integer getScores() {
-		return scores;
-	}
-	public void setScores(Integer scores) {
-		this.scores = scores;
-	}
-	public String getTadfs() {
-		return tadfs;
-	}
-	public void setTadfs(String tadfs) {
-		this.tadfs = tadfs;
-	}
-	public String getBmi() {
-		return bmi;
-	}
-	public void setBmi(String bmi) {
-		this.bmi = bmi;
-	}
-	public String getBmis() {
-		return bmis;
-	}
-	public void setBmis(String bmis) {
-		this.bmis = bmis;
-	}
-	public String getTadss() {
-		return tadss;
-	}
-	public void setTadss(String tadss) {
-		this.tadss = tadss;
-	}
-	public String getTadreasons() {
-		return tadreasons;
-	}
-	public void setTadreasons(String tadreasons) {
-		this.tadreasons = tadreasons;
-	}
-	public String getTadjianyis() {
-		return tadjianyis;
-	}
-	public void setTadjianyis(String tadjianyis) {
-		this.tadjianyis = tadjianyis;
-	}
+	
 }

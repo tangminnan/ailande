@@ -29,7 +29,9 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
+	<select id="listAll" resultType="com.gene.information.domain.ProductDO">
+		select id,name from biz_product where del_flag='0'
+	</select>
  	<select id="count" resultType="int">
 		select count(*) from qu_paper
 				where  del_flag=0
@@ -74,25 +76,32 @@
 		where id=#{id}
 	</update>
 	
+	<update id="updateChoiceProductDO" parameterType="com.gene.information.domain.ChoiceProductDO">
+		update qu_choice_product
+		<set>
+ 			<if test="score!=null">score=#{score},</if>
+ 			<if test="tadf!=null">tadf=#{tadf},</if>
+ 			<if test="tads!=null">tads=#{tads},</if>
+ 			<if test="tadreason!=null">tadreason=#{tadreason},</if>
+ 			<if test="tadjianyi!=null">tadjianyi=#{tadjianyi},</if>
+ 			<if test="bmi!=null">bmi=#{bmi},</if>
+ 			<if test="bmis!=null">bmis=#{bmis},</if>
+ 			<if test="scores!=null">scores=#{scores},</if>
+ 			<if test="tadfs!=null">tadfs=#{tadfs},</if>
+ 			<if test="tadss!=null">tadss=#{tadss},</if>
+ 			<if test="tadreasons!=null">tadreasons=#{tadreasons},</if>
+ 			<if test="tadjianyis!=null">tadjianyis=#{tadjianyis}</if>
+		</set>
+		where id=#{id}
+	</update>
+	
 	<update id="updateChoice" parameterType="com.gene.information.domain.ChoiceDO">
 		update qu_choice
 		<set>
 			<if test="content!=null">content=#{content},</if>
- 			<if test="score!=null">score=#{score},</if>
  			<if test="updateBy!=null">update_by=#{updateBy},</if>
  			<if test="updateTime!=null">update_time=#{updateTime},</if>
  			<if test="remark!=null">remark=#{remark},</if>
- 			<if test="tadf!=null">tadf=#{tadf},</if>
- 			<if test="tads!=null">tads=#{tads},</if>
- 			<if test="tadreason!=null">tadreason=#{tadreason},</if>
- 			<if test="tadjianyi!=null">tadjianyi=#{tadjianyi}</if>
- 			<if test="bmi!=null">bmi=#{bmi}</if>
- 			<if test="bmis!=null">bmis=#{bmis}</if>
- 			<if test="scores!=null">scores=#{scores}</if>
- 			<if test="tadfs!=null">tadfs=#{tadfs}</if>
- 			<if test="tadss!=null">tadss=#{tadss}</if>
- 			<if test="tadreasons!=null">tadreasons=#{tadreasons}</if>
- 			<if test="tadjianyis!=null">tadjianyis=#{tadjianyis}</if>
 		</set>
 		where id=#{id}
 	</update>
@@ -157,18 +166,14 @@
 		)
   
 	</insert>
-	<insert id="saveChoiceDO" parameterType="com.gene.information.domain.ChoiceDO" useGeneratedKeys="true" keyProperty="id">
-		insert into qu_choice
+	<insert id="saveChoiceProductDO" parameterType="com.gene.information.domain.ChoiceProductDO" useGeneratedKeys="true" keyProperty="id">
+		insert into qu_choice_product
 		(
-		`question`,
-  		`content`,
+		
+  		choose,
+  		product,
   		`score`,
-  		`create_by`,
-  		`create_time`,
-  		`update_by`,
-  		`update_time`,
-  		`remark`,
-  		 tadf,
+  		tadf,
   		 tads,
   		 tadreason,
   		 tadjianyi,
@@ -178,16 +183,13 @@
   		`tadfs`,
   		`tadss`,
   		`tadreasons`,
-  		`tadjianyis`
+  		`tadjianyis`,
+  		 product_name
 		)values(
-			#{question},
-  			#{content},
+		
+  			#{choose},
+  			#{product},
   			#{score},
-  			#{createBy},
-  			#{createTime},
-  			#{updateBy},
-  			#{updateTime},
-  			#{remark},
   			#{tadf},
   		 	#{tads},
   		 	#{tadreason},
@@ -198,7 +200,29 @@
   			#{tadfs},
   			#{tadss},
   			#{tadreasons},
-  			#{tadjianyis}
+  			#{tadjianyis},
+  			#{productName}
+		)
+	</insert>
+	
+	<insert id="saveChoiceDO" parameterType="com.gene.information.domain.ChoiceDO" useGeneratedKeys="true" keyProperty="id">
+		insert into qu_choice
+		(
+		`question`,
+  		`content`,
+  		`create_by`,
+  		`create_time`,
+  		`update_by`,
+  		`update_time`,
+  		`remark`
+		)values(
+			#{question},
+  			#{content},
+  			#{createBy},
+  			#{createTime},
+  			#{updateBy},
+  			#{updateTime},
+  			#{remark}
 		)
 	</insert>
 	<resultMap type="com.gene.information.domain.PaperDO" id="paperMap">
@@ -231,26 +255,31 @@
              <collection property="choiceList" ofType="com.gene.information.domain.ChoiceDO">
              	<id column="cid" property="id"/>
          		<result column="ccontent" property="content"/>
-         		<result column="cscore" property="score"/>
          		<result column="ccreateBy" property="createBy"/>
          		<result column="ccreateTime" property="createTime"/>
          		<result column="cupdateBy" property="updateBy"/>
          		<result column="cupdateTime" property="updateTime"/>
          		<result column="cremark" property="remark"/>
-        		<result column="ctadf" property="tadf"/>
-       			 <result column="ctads" property="tads"/>
-         		<result column="ctadreason" property="tadreason"/>
-        		 <result column="ctadjianyi" property="tadjianyi"/>
-         		<result column="cbmi" property="bmi"/>
-         		<result column="cbmis" property="bmis"/>
-         		<result column="cscores" property="scores"/>
-        		<result column="ctadfs" property="tadfs"/>
-        		 <result column="ctadss" property="tadss"/>
-        		 <result column="ctadreasons" property="tadreasons"/>
-         		<result column="ctadjianyis" property="tadjianyis"/>
+         		<collection property="choiceProductList" ofType="com.gene.information.domain.ChoiceProductDO">
+         			<id column="tid" property="id"/>
+         			<result column="tscore" property="score"/>
+         			<result column="tchoose" property="choose"/>
+         			<result column="ttadf" property="tadf"/>
+         			<result column="tproduct" property="product"/>
+         			<result column="tproductName" property="productName"/>
+       				<result column="ttads" property="tads"/>
+         			<result column="ttadreason" property="tadreason"/>
+        			<result column="ttadjianyi" property="tadjianyi"/>
+         			<result column="tbmi" property="bmi"/>
+         			<result column="tbmis" property="bmis"/>
+         			<result column="tscores" property="scores"/>
+        			<result column="ttadfs" property="tadfs"/>
+        		 	<result column="ttadss" property="tadss"/>
+        		 	<result column="ttadreasons" property="tadreasons"/>
+         			<result column="ttadjianyis" property="tadjianyis"/>
+         		</collection>
              </collection>
          </collection >	
-	
 	</resultMap>
 	
 	<delete id="removeChoice">
@@ -288,27 +317,33 @@
 	n.if_stop nifStop,
  	c.id cid,
 	c.content ccontent,
-	c.score cscore,
+	
 	c.create_by ccreateBy,
 	c.create_time ccreateTime,
 	c.update_by cupdateBy,
 	c.update_time cupdateTime,
 	c.remark cremark,
-	c.tadf ctadf,
-	c.tads ctads,
-	c.tadreason ctadreason,
-	c.tadjianyi ctadjianyi,
-	c.bmi cbmi,
-	c.bmis cbmis,
-	c.scores cscores,
-	c.tadfs ctadfs,
-	c.tadss ctadss,
-	c.tadreasons ctadreasons,
-	c.tadjianyis ctadjianyis
+	t.id tid,
+	t.product tproduct,
+	t.score tscore,
+	t.tadf ttadf,
+	t.tads ttads,
+	t.tadreason ttadreason,
+	t.tadjianyi ttadjianyi,
+	t.bmi tbmi,
+	t.bmis tbmis,
+	t.scores tscores,
+	t.product_name tproductName,
+	t.tadfs ttadfs,
+	t.tadss ttadss,
+	t.tadreasons ttadreasons,
+	t.tadjianyis ttadjianyis,
+	t.choose tchoose
 FROM
 	qu_paper q
 LEFT JOIN qu_question n ON q.id = n.paper_id
 LEFT JOIN qu_choice c ON n.id = c.question
+LEFT JOIN qu_choice_product t on t.choose=c.id
 where q.id=#{value} and q.del_flag=0
 	</select>
 

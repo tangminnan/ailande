@@ -39,6 +39,9 @@ function validateRule() {
 			code : {
 				required : true
 			},
+			paperId：{
+				required : true
+			}
 			/*name : {
 				required : true
 			},
@@ -53,6 +56,9 @@ function validateRule() {
 			code : {
 				required : icon + "请输入编号"
 			},
+			paperId : {
+				required : icon + "问卷不能为空"
+			}
 			/*name : {
 				required : icon + "请输入名称"
 			},

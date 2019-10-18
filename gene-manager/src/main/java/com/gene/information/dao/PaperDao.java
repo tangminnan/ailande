@@ -7,7 +7,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.gene.common.utils.R;
 import com.gene.information.domain.ChoiceDO;
+import com.gene.information.domain.ChoiceProductDO;
 import com.gene.information.domain.PaperDO;
+import com.gene.information.domain.ProductDO;
 import com.gene.information.domain.QuestionDO;
 
 /**
@@ -40,4 +42,10 @@ public interface PaperDao{
 	void updateQuestion(QuestionDO q);
 
 	void updateChoice(ChoiceDO choice);
+
+	List<ProductDO> listAll();
+
+	void saveChoiceProductDO(ChoiceProductDO choiceProductDO);
+
+	void updateChoiceProductDO(ChoiceProductDO choiceProductDO);
 }

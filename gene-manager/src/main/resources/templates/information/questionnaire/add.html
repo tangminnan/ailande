@@ -115,7 +115,7 @@
             <div class="col-sm-2">
               <!--   <input name="category" type="text" class="form-control required" placeholder="题目分类"> -->
               <select name="category" type="text" class="form-control">
-              	<option value="">题目分类</option>
+              	<option value="">选择分类</option>
               	<option value="JIBEN_XINXI">基本信息</option>
               	<option value="SHENTI_ZHUNGKUANG">身体状况</option>
               	<option value="YINSHI_XIGUAN">饮食习惯</option>
@@ -143,55 +143,12 @@
              <div class="col-sm-2">
               <!--   <input name="category" type="text" class="form-control required" placeholder="题目分类"> -->
               <select name="ifStop" type="text" class="form-control">
-              	<option value="">题型分类</option>
+              	<option value="">选择题型</option>
               	<option value="YUN_DONG">运动题型</option>
               	<option value="QI_TA">其他题型</option>
               </select>
             </div>
         </div>
-        </div>
-        <div class="appendchoice">
-        	<div class="form-group">
-            	<label class="col-sm-1 control-label">选项</label>
-            	<div class="col-sm-2">
-                	<input name="value" type="text" class="form-control required" placeholder="答案">
-            	</div>
-           	 	<div class="col-sm-2">
-                	<input name="score" type="number" class="form-control required" placeholder="分值">
-            	</div>
-            	<div class="col-sm-2">
-                	<input name="tadf" type="text" class="form-control" placeholder="调整方向1">
-           		 </div>
-            	<div class="col-sm-2">
-                	<input name="tads" type="text" class="form-control" placeholder="调整方向2">
-            	</div>
-         	</div>
-         	<div class="form-group">
-         		<label class="col-sm-1 control-label"></label>
-       			 <div class="col-sm-2">
-                	<input type="hidden" class="form-control required">
-           		 </div>
-        		<div class="col-sm-6" style="height: 60px;" id="tadreason">
-         			<textarea name="tadreason" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
-       		 	</div> 
-     		</div>
-			<div class="form-group">
-				<label class="col-sm-1 control-label"></label>
-      			<div class="col-sm-2">
-                	<input type="hidden" class="form-control required">
-           		</div>
-       			<div class="col-sm-6" style="height: 60px;" id="tadreason">
-         			<textarea name="tadjianyi" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
-       		 	</div> 
-       			<div class="col-sm-2" style="margin-bottom:0">
-               		<a class="btn btn-success" onclick="addChoice(this)">
-                   		<i class="fa fa-plus"></i>
-               		</a>
-               		<a class="btn btn-danger" onclick="removeChoice(this)">
-                  		 <i class="fa fa-remove"></i>
-              		</a>
-           	   </div>
-     		</div>
         </div>
       </div>
       </div>  
@@ -199,199 +156,234 @@
         
   
   <div class="qitalei" style="display: none">
-  	<div class="form-group">
+  			<div class="appendchoice">
+  			<div class="form-group" >
             	<label class="col-sm-1 control-label">选项</label>
-            	<div class="col-sm-2">
+            	<div class="col-sm-8">
                 	<input name="value" type="text" class="form-control required" placeholder="答案">
             	</div>
-           	 	<div class="col-sm-2">
-                	<input name="score" type="number" class="form-control required" placeholder="分值">
-            	</div>
-            	<div class="col-sm-2">
-                	<input name="tadf" type="text" class="form-control" placeholder="调整方向1">
-           		 </div>
-            	<div class="col-sm-2">
-                	<input name="tads" type="text" class="form-control" placeholder="调整方向2">
-            	</div>
-         	</div>
-         	<div class="form-group">
-         		<label class="col-sm-1 control-label"></label>
-       			 <div class="col-sm-2">
-                	<input type="hidden" class="form-control required">
-           		 </div>
-        		<div class="col-sm-6" style="height: 60px;" id="tadreason">
-         			<textarea name="tadreason" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
-       		 	</div> 
-       		 	
-     		</div>
-			<div class="form-group">
-				<label class="col-sm-1 control-label"></label>
-      			<div class="col-sm-2">
-                	<input type="hidden" class="form-control required">
-           		</div>
-       			<div class="col-sm-6" style="height: 60px;" id="tadreason">
-         			<textarea name="tadjianyi" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
-       		 	</div> 
-       			<div class="col-sm-2" style="margin-bottom:0">
-               		<a class="btn btn-success" onclick="addChoice(this)">
-                   		<i class="fa fa-plus"></i>
-               		</a>
-               		<a class="btn btn-danger" onclick="removeChoice(this)">
-                  		 <i class="fa fa-remove"></i>
-              		</a>
-           	   </div>
-     		</div>
-  </div>
-  
+            	<!-- <div class="col-sm-2">
+              		<select name="chooseProduct" type="text" class="form-control">
+              			<option value="">选择产品</option>
+                        <option  th:each="list:${productList}" th:value="${list.id}" th:text="${list.name }"></option>
+              	  </select>
+           		</div> -->
+           		<div class="col-sm-2" style="margin-bottom:0">
+           
+               			 <a class="btn btn-success" onclick="addChoice(this)">
+                   			<i class="fa fa-plus"></i>
+               			</a>
+               			<a class="btn btn-danger" onclick="removeChoice(this)">
+                  			 <i class="fa fa-remove"></i>
+              			</a>
+              			<a class="btn btn-success" onclick="listAllChoice(this)">
+                   			<i class="fa fa-angle-double-down"></i>
+               			</a>
+           	   	</div>
+           	</div>
+           	<div th:each="product:${productList}" class="choiceProduct">
+           		<div class="form-group">
+           			<label class="col-sm-1 control-label"></label>
+           	 		<div class="col-sm-2">
+                		<input name="score" type="number" class="form-control required" placeholder="分值">
+            		</div>
+            		<div class="col-sm-2">
+                		<input name="tadf" type="text" class="form-control" placeholder="调整方向1">
+           		 	</div>
+            		<div class="col-sm-2">
+                		<input name="tads" type="text" class="form-control" placeholder="调整方向2">
+            		</div>
+            		<div class="col-sm-2">
+                		<input name="productName" th:value="${product.name}" readonly="readonly" type="text" class="form-control" placeholder="产品">
+                		<input name="product" th:value="${product.id}" type="hidden" >
+            		</div>
+            		
+         		</div>
+         		<div class="form-group">
+         			<label class="col-sm-1 control-label"></label>
+       				 <div class="col-sm-2">
+                		<input type="hidden" class="form-control required">
+           		 	</div>
+        			<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         				<textarea name="tadreason" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
+       		 		</div> 
+       		 	</div>
+				<div class="form-group">
+					<label class="col-sm-1 control-label"></label>
+      				<div class="col-sm-2">
+                		<input type="hidden" class="form-control required">
+           			</div>
+       				<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         				<textarea name="tadjianyi" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
+       		 		</div> 
+     			</div>
+ 			</div>
+ 		</div>
+ 		</div>
   <div class="yundonglei" style="display: none">
+  	<div class="appendchoice">
         	<div class="form-group">
         		<label class="col-sm-1 control-label">选项</label>
-            	<div class="col-sm-2">
+            	<div class="col-sm-8">
                 	<input name="value" type="text" class="form-control required" placeholder="答案">
+            	</div>
+            	<!-- <div class="col-sm-2">
+              		<select name="chooseProduct" type="text" class="form-control">
+              			<option value="">选择产品</option>
+                        <option  th:each="list:${productList}" th:value="${list.id}" th:text="${list.name }"></option>
+              	  </select>
+           		</div> -->
+           		<div class="col-sm-2" style="margin-bottom:0">
+           				<a class="btn btn-success" onclick="addChoice(this)">
+                   			<i class="fa fa-plus"></i>
+               			</a>
+               			<a class="btn btn-danger" onclick="removeChoice(this)">
+                  			<i class="fa fa-remove"></i>
+              			</a>
+               		<a class="btn btn-success" onclick="listAllChoice(this)">
+                   		<i class="fa fa-angle-double-down"></i><!-- fa-angle-double-up -->
+               		</a>
+           	   </div>
+            </div>
+            <div  th:each="product:${productList}" class="choiceProduct">
+           		<div class="form-group">
+           		<label class="col-sm-1 control-label"></label>
+           		 <div class="col-sm-6">
+           		 <input name="product" th:value="${product.id}" type="hidden" >
+                	<input name="tads" th:value="${product.name}" readonly="readonly" type="text" class="form-control" placeholder="产品">
+            	</div>
+            	</div>
+         <div class="form-group">
+            	<label class="col-sm-1 control-label"></label>
+            	<div class="col-sm-2">
+                	<input name="" type="hidden" class="form-control">
             	</div>
             	<div class="col-sm-2">
                 	<input name="bmi" type="text" value="BMI>=29" class="form-control required">
             	</div>
         	</div>
-        	<div class="form-group">
-            	<label class="col-sm-1 control-label"></label>
-            	<div class="col-sm-2">
-                	<input name="value" type="hidden" class="form-control required">
+        	
+        		<div class="form-group">
+            		<label class="col-sm-1 control-label"></label>
+            		<div class="col-sm-2">
+                		<input name="" type="hidden" class="form-control">
+            		</div>
+           	 		<div class="col-sm-2">
+                		<input name="score" type="number" class="form-control required" placeholder="分值">
+            		</div>
+            		<div class="col-sm-2">
+                		<input name="tadf" type="text" class="form-control" placeholder="调整方向1">
+           			 </div>
+            		<div class="col-sm-2">
+                		<input name="tads" type="text" class="form-control" placeholder="调整方向2">
+            		</div>
             	</div>
-           	 	<div class="col-sm-2">
-                	<input name="score" type="number" class="form-control required" placeholder="分值">
-            	</div>
-            	<div class="col-sm-2">
-                	<input name="tadf" type="text" class="form-control" placeholder="调整方向1">
-           		 </div>
-            	<div class="col-sm-2">
-                	<input name="tads" type="text" class="form-control" placeholder="调整方向2">
-            	</div>
-         	</div>
-         	<div class="form-group">
-         		<label class="col-sm-1 control-label"></label>
-       			 <div class="col-sm-2">
-                	<input type="hidden" class="form-control required">
-           		 </div>
-        		<div class="col-sm-6" style="height: 60px;" id="tadreason">
-         			<textarea name="tadreason" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
-       		 	</div> 
-     		</div>
-			<div class="form-group">
-				<label class="col-sm-1 control-label"></label>
-      			<div class="col-sm-2">
-                	<input type="hidden" class="form-control required">
-           		</div>
-       			<div class="col-sm-6" style="height: 60px;" id="tadreason">
-         			<textarea name="tadjianyi" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
-       		 	</div> 
-     		</div>
-     	 	 <div class="form-group">
-        		<label class="col-sm-1 control-label"></label>
-            	<div class="col-sm-2">
-                	<input name="value" type="hidden" class="form-control required">
-            	</div>
-            	<div class="col-sm-2">
-                	<input name="bmis" type="text" value="BMI<29" class="form-control required">
-            	</div>
-        	</div>
-        	<div class="form-group">
-            	<label class="col-sm-1 control-label"></label>
-            	<div class="col-sm-2">
-                	<input name="value" type="hidden" class="form-control required">
-            	</div>
-           	 	<div class="col-sm-2">
-                	<input name="scores" type="number" class="form-control required" placeholder="分值">
-            	</div>
-            	<div class="col-sm-2">
-                	<input name="tadfs" type="text" class="form-control" placeholder="调整方向1">
-           		 </div>
-            	<div class="col-sm-2">
-                	<input name="tadss" type="text" class="form-control" placeholder="调整方向2">
-            	</div>
-         	</div>
-         	<div class="form-group">
-         		<label class="col-sm-1 control-label"></label>
-       			 <div class="col-sm-2">
-                	<input type="hidden" class="form-control required">
-           		 </div>
-        		<div class="col-sm-6" style="height: 60px;" id="tadreason">
-         			<textarea name="tadreasons" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
-       		 	</div> 
-     		</div>
-			<div class="form-group">
-				<label class="col-sm-1 control-label"></label>
-      			<div class="col-sm-2">
-                	<input type="hidden" class="form-control required">
-           		</div>
-       			<div class="col-sm-6" style="height: 60px;" id="tadreason">
-         			<textarea name="tadjianyis" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
-       		 	</div> 
-       			<div class="col-sm-2" style="margin-bottom:0">
-               		<a class="btn btn-success" onclick="addChoice(this)">
-                   		<i class="fa fa-plus"></i>
-               		</a>
-               		<a class="btn btn-danger" onclick="removeChoice(this)">
-                  		 <i class="fa fa-remove"></i>
-              		</a>
-           	   </div>
-     	 </div>   
+         		<div class="form-group">
+         			<label class="col-sm-1 control-label"></label>
+       				 <div class="col-sm-2">
+                		<input type="hidden" class="form-control required">
+           		 	</div>
+        			<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         				<textarea name="tadreason" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
+       		 		</div> 
+     			</div>
+				<div class="form-group">
+					<label class="col-sm-1 control-label"></label>
+      				<div class="col-sm-2">
+                		<input type="hidden" class="form-control required">
+           			</div>
+       				<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         				<textarea name="tadjianyi" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
+       		 		</div> 
+     			</div>
+     	 	 	<div class="form-group">
+        			<label class="col-sm-1 control-label"></label>
+            		<div class="col-sm-2">
+                		<input name="value" type="hidden" class="form-control required">
+            		</div>
+            		<div class="col-sm-2">
+                		<input name="bmis" type="text" value="BMI<29" class="form-control required">
+            		</div>
+        		</div>
+        		<div class="form-group">
+            		<label class="col-sm-1 control-label"></label>
+            		<div class="col-sm-2">
+                		<input name="value" type="hidden" class="form-control required">
+            		</div>
+           	 		<div class="col-sm-2">
+                		<input name="scores" type="number" class="form-control required" placeholder="分值">
+            		</div>
+            		<div class="col-sm-2">
+                		<input name="tadfs" type="text" class="form-control" placeholder="调整方向1">
+           		 	</div>
+            		<div class="col-sm-2">
+                		<input name="tadss" type="text" class="form-control" placeholder="调整方向2">
+            		</div>
+         		</div>
+         		<div class="form-group">
+         			<label class="col-sm-1 control-label"></label>
+       			 	<div class="col-sm-2">
+                		<input type="hidden" class="form-control required">
+           			</div>
+        			<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         				<textarea name="tadreasons" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
+       		 		</div> 
+     			</div>
+				<div class="form-group">
+					<label class="col-sm-1 control-label"></label>
+      				<div class="col-sm-2">
+                		<input type="hidden" class="form-control required">
+           			</div>
+       				<div class="col-sm-6" style="height: 60px;" id="tadreason">
+         				<textarea name="tadjianyis" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
+       		 		</div> 
+       				<div class="col-sm-2" style="margin-bottom:0">
+               			<!-- <a class="btn btn-success" onclick="addChoice(this)">
+                   			<i class="fa fa-plus"></i>
+               			</a>
+               			<a class="btn btn-danger" onclick="removeChoice(this)">
+                  			<i class="fa fa-remove"></i>
+              			</a> -->
+           	   		</div>
+           	   	</div>
+           	  </div>
+           	 </div>
      </div>
 <script th:src="@{/ajax/libs/steps/jquery.steps.min.js}"></script>
 <script th:src="@{/js/jquery-ui-1.10.4.min.js}"></script>
 <script type="text/javascript">
     var prefix = "/information/questionnaire";
-   /*  $("#form-paper-add").validate({
-        rules: {
-            name: {
-                required: true,
-            },
-            description: {
-                required: true,
-            },
-            title: {
-                required: true,
-            },
-            value: {
-                required: true,
-            },
-            category: {
-                required: true,
-            },
-            type: {
-                required: true,
-            },
-            score: {
-                required: true,
-            },
-            trend: {
-                required: true,
-            }
-        }
-    }); */
     function getData() {
         var question = new Array();
         $(".draggable .ibox-content").each(function (index, val) {
-            var choice = new Array();
+        	var choice = new Array();
             $(val).find(".appendchoice").each(function (index, val) {
-                var answer = {
-                    content: $(val).find("input[name='value']").val(),
-                    score: $(val).find("input[name='score']").val(),
-                    tadf: $(val).find("input[name='tadf']").val(),//调整方向1
-                    bmi: $(val).find("input[name='bmi']").val(),//调整方向1
-                    tads: $(val).find("input[name='tads']").val(),//调整方向2
-                    tadreason:$(val).find("textarea[name='tadreason']").val(),//调整原因
-                	tadjianyi:$(val).find("textarea[name='tadjianyi']").val(),//营养补充及建议
-                	
-                	scores: $(val).find("input[name='scores']").val(),
-                    tadfs: $(val).find("input[name='tadfs']").val(),//调整方向1
-                    bmis: $(val).find("input[name='bmis']").val(),//调整方向1
-                    tadss: $(val).find("input[name='tadss']").val(),//调整方向2
-                    tadreasons:$(val).find("textarea[name='tadreasons']").val(),//调整原因
-                	tadjianyis:$(val).find("textarea[name='tadjianyis']").val()//营养补充及建议
-                };
-                choice.push(answer);
-            });
+            	var answer = {content: $(val).find("input[name='value']").val()};
+            	var choiceproductArray = new Array();
+    			$(val).find(".choiceProduct").each(function (index, val) {
+                      var choiceproduct = {
+                    	  product:$(val).find("input[name='product']").val(),
+                          score: $(val).find("input[name='score']").val(),
+                          tadf: $(val).find("input[name='tadf']").val(),//调整方向1
+                          bmi: $(val).find("input[name='bmi']").val(),//调整方向1
+                          tads: $(val).find("input[name='tads']").val(),//调整方向2
+                          tadreason:$(val).find("textarea[name='tadreason']").val(),//调整原因
+                      	  tadjianyi:$(val).find("textarea[name='tadjianyi']").val(),//营养补充及建议
+                      	  productName:$(val).find("input[name='productName']").val(),
+                      	  scores: $(val).find("input[name='scores']").val(),
+                          tadfs: $(val).find("input[name='tadfs']").val(),//调整方向1
+                          bmis: $(val).find("input[name='bmis']").val(),//调整方向1
+                          tadss: $(val).find("input[name='tadss']").val(),//调整方向2
+                          tadreasons:$(val).find("textarea[name='tadreasons']").val(),//调整原因
+                      	tadjianyis:$(val).find("textarea[name='tadjianyis']").val()//营养补充及建议
+                      };
+                      choiceproductArray.push(choiceproduct);
+                  });
+    			  answer.choiceProductList=choiceproductArray;
+                  choice.push(answer);
+              });
+        	 
+              
             var obj = {
                 content: $(val).find(".question").find("input[name='title']").val(),
                 contenw: $(val).find(".question").find("input[name='titlew']").val(),
@@ -437,9 +429,14 @@
     });
 
     function addQuestion() {
-    	
+    	if($("[name='ifStop']").val()=="YUN_DONG")
+    		$("#temp .ibox-content").append($(".yundonglei").html());
+    	if($("[name='ifStop']").val()=="QI_TA" || $("[name='ifStop']").val()=="")
+    		$("#temp .ibox-content").append($(".qitalei").html());
         $(".draggable").append($("#temp .ibox-content").clone());
+        $("#temp .ibox-content .appendchoice").remove();
     }
+    
     addQuestion();
 
     $(".draggable").sortable({handle: "i"});
@@ -453,10 +450,10 @@
     }
 
     function addChoice(obj) {
-//       $(obj).parent().parent().parent().parent().append($("#temp .appendchoice").clone());
-    	 $(obj).parent().parent().parent().parent().append($(obj).parent().parent().parent().clone());	
-     		
-     		
+    	if($("[name='ifStop']").val()=="YUN_DONG")
+    		$(obj).parent().parent().parent().parent().append($(".yundonglei").html());
+    	else
+			$(obj).parent().parent().parent().parent().append($(".qitalei").html());		
     }
 
     function removeChoice(obj) {
@@ -467,17 +464,27 @@
         }
     }
 
+    function listAllChoice(obj){
+    	if($(obj).children("i").hasClass("fa-angle-double-down")){//显示
+    		$(obj).children("i").removeClass("fa-angle-double-down").addClass("fa-angle-double-up")
+    		$(obj).parents(".appendchoice").find(".choiceProduct:gt(1)").hide();
+    	}
+    		
+    	else{//隐藏
+    		$(obj).children("i").removeClass("fa-angle-double-up").addClass("fa-angle-double-down");
+    		$(obj).parents(".appendchoice").find(".choiceProduct:gt(1)").show();
+    	}	
+    }
 
     $("body").on("change","[name='ifStop']",function(){
     	if($(this).parent().parent().parent().siblings().size()>1)
     		 $.modal.msgError("删除多余的选项  再做更改");
     	else
     		if($(this).val()=='YUN_DONG')
-    			$(this).parent().parent().parent().next().html($(".yundonglei").html());
+    			$(this).parent().parent().parent().next().html($(".yundonglei .appendchoice").html());
     		else
-    			$(this).parent().parent().parent().next().html($(".qitalei").html());
+    			$(this).parent().parent().parent().next().html($(".qitalei .appendchoice").html());
     });
-
 </script>
 </body>
 </html>

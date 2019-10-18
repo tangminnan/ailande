@@ -91,6 +91,7 @@ public class ProductController {
 		}
 		product.setDelFlag("0");
 		product.setCreateTime(new Date());
+		product.setDelFlag("0");
 		if(productService.save(product)>0){
 			return R.ok();
 		}
