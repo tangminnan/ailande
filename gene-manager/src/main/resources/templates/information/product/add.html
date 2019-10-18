@@ -34,11 +34,11 @@
 										type="text"> 
 								</div>
 							</div>
-							
+							<input id="paperName" name="paperName" class="form-control" type="hidden">
 							<div class="form-group">
 								<label class="col-sm-3 control-label">产品问卷：</label>
 								<div class="col-sm-8">
-								<select class="form-control" name="paperId">
+								<select class="form-control" name="paperId" id="paperId" onchange="sel();">
 										<option value="">请选择</option>
 										<option th:each="pl:${paperList}"
 										 th:text="${pl.name}"
@@ -104,6 +104,12 @@
 	<script type="text/javascript"
 		src="/js/appjs/information/product/add.js">
 		
+	</script>
+	<script type="text/javascript">
+		function sel(){
+			var paperName =  $("#paperId").find("option:selected").text();
+			$("input[name='paperName']").val(paperName);
+		}
 	</script>
 </body>
 </html>

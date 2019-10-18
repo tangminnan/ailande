@@ -5,16 +5,15 @@
 
 	<select id="get" resultType="com.gene.information.domain.ProductDO">
 		select bp.id,bp.code,bp.url,bp.name,bp.description,bp.create_by,bp.create_time,bp.update_by,bp.update_time,bp.remark,bp.del_flag,
-		qp.name paperName
-		from biz_product bp , biz_product_paper bpp , qu_paper qp
-		where bp.id = bpp.product_id and bpp.paper_id = qp.id
-		and bp.id = #{value}	
+		bp.paper_name ,bp.paper_id
+		from biz_product bp
+		where bp.id = #{value}	
 		</select>
 
 	<select id="list" resultType="com.gene.information.domain.ProductDO">
 		select bp.id,bp.code,bp.url,bp.name,bp.description,bp.create_by,bp.create_time,bp.update_by,bp.update_time,bp.remark,bp.del_flag,
-		qp.name paperName
-		from biz_product bp , biz_product_paper bpp , qu_paper qp
+		bp.paper_name ,bp.paper_id
+		from biz_product bp
         <where>  
 		  		  <if test="id != null and id != ''"> and bp.id = #{id} </if>
 		  		  <if test="code != null and code != ''"> and bp.code = #{code} </if>
@@ -27,7 +26,8 @@
 		  		  <if test="updateTime != null and updateTime != ''"> and bp.update_time = #{updateTime} </if>
 		  		  <if test="remark != null and remark != ''"> and bp.remark = #{remark} </if>
 		  		  <if test="delFlag != null and delFlag != ''"> and bp.del_flag = #{delFlag} </if>
-		  		  and bp.id = bpp.product_id and bpp.paper_id = qp.id
+		  		  <if test="paperName != null and paperName != ''"> and bp.paper_name = #{paperName} </if>
+		  		  <if test="paperId != null and paperId != ''"> and bp.paper_id = #{paperId} </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -56,6 +56,8 @@
 		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
 		  		  <if test="remark != null and remark != ''"> and remark = #{remark} </if>
 		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		  <if test="paperName != null and paperName != ''"> and bp.paper_name = #{paperName} </if>
+		  		  <if test="paperId != null and paperId != ''"> and bp.paper_id = #{paperId} </if>
 		  		</where>
 	</select>
 	 
@@ -71,7 +73,9 @@
 			`update_by`, 
 			`update_time`, 
 			`remark`, 
-			`del_flag`
+			`del_flag`,
+			paper_name ,
+			paper_id
 		)
 		values
 		(
@@ -84,7 +88,9 @@
 			#{updateBy}, 
 			#{updateTime}, 
 			#{remark}, 
-			#{delFlag}
+			#{delFlag},
+			#{paperName},
+			#{paperId}
 		)
 	</insert>
 	 
@@ -100,7 +106,9 @@
 			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
 			<if test="remark != null">`remark` = #{remark}, </if>
-			<if test="delFlag != null">`del_flag` = #{delFlag}</if>
+			<if test="delFlag != null">`del_flag` = #{delFlag},</if>
+			<if test="paperName != null">`paper_name` = #{paperName},</if>
+			<if test="paperId != null">`paper_id` = #{paperId}</if>
 		</set>
 		where id = #{id}
 	</update>
