@@ -22,8 +22,6 @@ import com.gene.common.utils.Query;
 import com.gene.common.utils.R;
 import com.gene.information.domain.PaperEntity;
 import com.gene.information.domain.ProductDO;
-import com.gene.information.domain.ProductPaperDO;
-import com.gene.information.service.ProductPaperService;
 import com.gene.information.service.ProductService;
 
 
@@ -40,8 +38,6 @@ import com.gene.information.service.ProductService;
 public class ProductController {
 	@Autowired
 	private ProductService productService;
-	@Autowired
-	private ProductPaperService productPaperService;
 	
 	@GetMapping()
 	@RequiresPermissions("information:product:product")
@@ -55,6 +51,7 @@ public class ProductController {
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
+        query.put("delFlag", "0");
 		List<ProductDO> productList = productService.list(query);
 		int total = productService.count(query);
 		PageUtils pageUtils = new PageUtils(productList, total);
@@ -92,14 +89,10 @@ public class ProductController {
 		if(list.size()>0){
 			return R.error("编号已存在");
 		}
+		product.setDelFlag("0");
 		product.setCreateTime(new Date());
 		product.setDelFlag("0");
 		if(productService.save(product)>0){
-			ProductPaperDO productPaper = new ProductPaperDO();
-			productPaper.setProductId(product.getId());
-			productPaper.setPaperId(product.getPaperId());
-			productPaper.setCreateTime(new Date());
-			productPaperService.save(productPaper);
 			return R.ok();
 		}
 		return R.error();
@@ -112,14 +105,6 @@ public class ProductController {
 	@RequiresPermissions("information:product:edit")
 	public R update( ProductDO product){
 		productService.update(product);
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("productId", product.getId());
-		List<ProductPaperDO> list = productPaperService.list(params);
-		Integer id = list.get(0).getId();
-		ProductPaperDO productPaper = new ProductPaperDO();
-		productPaper.setId(id);
-		productPaper.setPaperId(product.getPaperId());
-		productPaperService.update(productPaper);
 		return R.ok();
 	}
 	
@@ -130,19 +115,14 @@ public class ProductController {
 	@ResponseBody
 	@RequiresPermissions("information:product:remove")
 	public R remove( Integer id){
-		if(productService.remove(id)>0){
+	//	if(productService.remove(id)>0){
 			ProductDO product = new ProductDO();
 			product.setId(id);
 			product.setDelFlag("2");
 			productService.update(product);
-			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("productId", id);
-			List<ProductPaperDO> list = productPaperService.list(params);
-			Integer id2 = list.get(0).getId();
-			productPaperService.remove(id2);
-		return R.ok();
-		}
-		return R.error();
+			return R.ok();
+	//	}
+	//	return R.error();
 	}
 	
 	/**
