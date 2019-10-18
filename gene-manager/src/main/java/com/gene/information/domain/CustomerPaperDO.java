@@ -61,8 +61,24 @@ public class CustomerPaperDO implements Serializable {
 	private String questionContent;
 	//答案内容
 	private String choiceContent;
+	//答案Id
+	private String choiceId;
+	//JIBEN_XINXI=基本信息  SHENTI_ZHUNGKUANG=身体状况  YINSHI_XIGUAN=饮食习惯  SHENGHUO_XIGUAN=生活习惯
+	private String category;
 	
 	
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getChoiceId() {
+		return choiceId;
+	}
+	public void setChoiceId(String choiceId) {
+		this.choiceId = choiceId;
+	}
 	public String getQuestionContent() {
 		return questionContent;
 	}

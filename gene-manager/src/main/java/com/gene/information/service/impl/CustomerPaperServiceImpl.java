@@ -59,5 +59,10 @@ public class CustomerPaperServiceImpl implements CustomerPaperService {
 		return customerPaperDao.queryUserQuestionDetails(id);
 	}
 
+	@Override
+	public CustomerPaperDO getChoiceContent(Integer id) {
+		return customerPaperDao.getChoiceContent(id);
+	}
+
 	
 }

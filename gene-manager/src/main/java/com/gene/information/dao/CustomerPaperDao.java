@@ -31,5 +31,7 @@ public interface CustomerPaperDao{
 	int batchRemove(Integer[] ids);
 	
 	List<CustomerPaperDO> queryUserQuestionDetails(Integer id);
+	
+	CustomerPaperDO getChoiceContent(Integer id);
 
 }
