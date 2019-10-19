@@ -160,8 +160,12 @@
 	</delete>
 	
 	<select id="queryUserQuestionDetails" resultType="com.gene.information.domain.CustomerPaperDO">
-		select qq.content questionContent,qc.content choiceContent from biz_answer ba,qu_question qq,qu_choice qc
-		where ba.choice_id = qc.id and ba.question_id = qq.id and ba.id = #{id}	
+		select qq.content questionContent,ba.choice_id choiceId,qq.category from biz_answer ba,qu_question qq
+		where ba.question_id = qq.id and ba.customer_paper_id = #{id}	
+	</select>
+	
+	<select id="getChoiceContent" resultType="com.gene.information.domain.CustomerPaperDO">
+		select id,content choiceContent from qu_choice where id = #{id}
 	</select>
 
 </mapper>

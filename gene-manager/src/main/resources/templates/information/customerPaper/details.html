@@ -34,9 +34,9 @@
 							</tbody>
 						</table>
 					</div> 
-					<div>测试信息</div>
+					<div>身体状况</div>
 					<div>&nbsp;</div>
-					<div style="width: 100%; height: 350px; overflow: scroll;"
+					<div style="width: 100%; height: 300px; overflow: scroll;"
 						align="center">
 						<table class="table table-bordered">
 							<thead>
@@ -47,7 +47,53 @@
 							</thead>
 							<tbody>
 								<label th:each="qd:${questionDetails}" class="checkbox-inline">
-									<tr>
+									<tr th:if ="${qd.category eq 'SHENTI_ZHUNGKUANG'}">
+										<td th:text="${qd.questionContent}"></td>
+										<td th:text="${qd.choiceContent}"></td>
+									</tr>
+								
+								</label>	
+							</tbody>
+						</table>
+					</div> 
+					<div>&nbsp;</div>
+					<div>饮食习惯</div>
+					<div>&nbsp;</div>
+					<div style="width: 100%; height: 300px; overflow: scroll;"
+						align="center">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>题目</th>
+									<th>答案</th>
+								</tr>
+							</thead>
+							<tbody>
+								<label th:each="qd:${questionDetails}" class="checkbox-inline">
+									<tr th:if ="${qd.category eq 'YINSHI_XIGUAN'}">
+										<td th:text="${qd.questionContent}"></td>
+										<td th:text="${qd.choiceContent}"></td>
+									</tr>
+								
+								</label>	
+							</tbody>
+						</table>
+					</div> 
+					<div>&nbsp;</div>
+					<div>生活习惯</div>
+					<div>&nbsp;</div>
+					<div style="width: 100%; height: 300px; overflow: scroll;"
+						align="center">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>题目</th>
+									<th>答案</th>
+								</tr>
+							</thead>
+							<tbody>
+								<label th:each="qd:${questionDetails}" class="checkbox-inline">
+									<tr th:if ="${qd.category eq 'SHENGHUO_XIGUAN'}">
 										<td th:text="${qd.questionContent}"></td>
 										<td th:text="${qd.choiceContent}"></td>
 									</tr>

@@ -74,6 +74,14 @@ public class CustomerPaperController {
 	String details(@PathVariable("id") Integer id,Model model){
 		CustomerPaperDO customerPaper = customerPaperService.get(id);
 		List<CustomerPaperDO> questionDetails = customerPaperService.queryUserQuestionDetails(id);
+		for (CustomerPaperDO customerPaperDO : questionDetails) {
+			String choiceId = customerPaperDO.getChoiceId();
+			String[] split = choiceId.split(",");
+			for (String string : split) {
+				CustomerPaperDO choiceContent = customerPaperService.getChoiceContent(Integer.valueOf(string));
+				customerPaperDO.setChoiceContent(choiceContent.getChoiceContent());
+			}
+		}
 		model.addAttribute("customerPaper", customerPaper);
 		model.addAttribute("questionDetails", questionDetails);
 	    return "information/customerPaper/details";

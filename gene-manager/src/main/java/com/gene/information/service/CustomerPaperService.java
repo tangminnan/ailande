@@ -30,4 +30,6 @@ public interface CustomerPaperService{
 	
 	List<CustomerPaperDO> queryUserQuestionDetails(Integer id);
 	
+	CustomerPaperDO getChoiceContent(Integer id);
+	
 }
