@@ -7,34 +7,114 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="format-detection" content="telephone=no">
-<link rel="stylesheet" href="css/css.css" type="text/css">
+<link rel="stylesheet" href="../css/css.css" type="text/css">
 <title>基本信息</title>
-<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="js/Font.js"></script>
+<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../js/Font.js"></script>
+<style type="text/css">
+	.imgChoose{border:.04rem solid #228DCD;}
+</style>
 </head>
 <body class="bg-cc">
 	<div class="tit">
 		<a href="" class="fanhui" title="返回"></a>
 		<h3 class="space center">基本信息</h3>
 		<p>
-			<a href="" title="点击前面的按钮"></a>
-			<a href="" title="点击后面的按钮"></a>
+			<a title="点击前面的按钮"></a>
+			<a  title="点击后面的按钮"></a>
 		</p>
 	</div>
 	<div class="name">
 		<div class="pre">
-			<a href="">< 上一题</a>
+			<a >< 上一题</a>
 			<progress value="50" max="100"></progress>
 			<span>50%</span>
 		</div>
 		<div class="sex center">
 			<h2>性别</h2>
 			<p>
-				<input type="button" value="男"/>
+				<input type="button" value="男" class="imgChoose"/>
 				<input type="button" value="女"/>
 			</p>
 		</div>
 	</div>
+	
+	<div id="jibenxinxi" style="display: none">
+		<div>
+			<p align="center">年龄</p>
+		 	<div class="yes center">
+				<input name="age" type="text" placeholder="请输入您的年龄"/>
+			</div> 
+			<div class="beizhu center">*暂不对18周岁一下的未成年人提供营养服务</div>
+		</div>
+		<div>
+			<p align="center">身高（米）</p>
+		 	<div class="yes center">
+				<input name="high" type="text" placeholder="请输入您的身高"/>
+			</div> 
+		</div>
+		<div>
+			<p align="center">体重（公斤）</p>
+		 	<div class="yes center">
+				<input name="weight" type="text" placeholder="请输入您的体重"/>
+			</div> 
+		</div>
+		<div>
+			<p align="center">手机</p>
+		 	<div class="yes center">
+				<input name="phone" type="text" placeholder="请输入您的手机"/>
+			</div> 
+		</div>
+		<div>
+			<p align="center">邮箱</p>
+		 	<div class="yes center">
+				<input name="email" type="text" placeholder="请输入您的邮箱"/>
+			</div> 
+		</div>
+	</div>
 </body>
+<script type="text/javascript">
+	var num=1,obj={},nodearry=[];
+	$("p a").first().click(function(){
+		if($(".name").find("input").attr("name")=="email"){
+			obj.email=$("[name='email']").val();
+			$.ajax({
+				type : "POST",
+				url : "/paper/saveJiBenXinxi",
+				data : obj,// 你的formid
+				async : false,
+				success : function(data) {
+					if(data.code==0)
+						window.location.href="/paper/fenlei?flag=1";
+					else
+						alert(data.msg);
+				}
+			});
+		}
+		else{
+			if($(".name").find("input").hasClass("imgChoose"))
+				obj.sex=$(".imgChoose").val();//性别特殊处理
+			else{
+				var name=$(".name").find("input").attr("name");
+				var val=$(".name").find("input").val();
+				obj[name]=val;
+			}
+			nodearry.push($(".name").children().last().remove());
+			$(".name").append($("#jibenxinxi div:nth-child("+num+")"));
+		}
+	});
+	
+	$(":button").click(function(){
+		$(this).addClass("imgChoose").siblings().removeClass("imgChoose");
+	});
+	
+	$(".pre a").click(function(){
+		if(!$(".name").find("input").hasClass("imgChoose")){
+			$("#jibenxinxi").prepend($(".name").children().last().remove());
+			
+			$(".name").append(nodearry.pop());
+		}
+	});
+</script>
 </html>
 

@@ -7,19 +7,24 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="format-detection" content="telephone=no">
-<link rel="stylesheet" href="css/css.css" type="text/css">
+<link rel="stylesheet" href="../css/css.css" type="text/css">
 <title>饮食与生活方式问卷</title>
-<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="js/Font.js"></script>
+<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../js/Font.js"></script>
 </head>
 <body class="bg-cc">
 	<div class="yinshi">
-		<img src="images/wenjuan_bg.png" alt=""/>
+		<img src="../images/wenjuan_bg.png;" alt=""/>
 		<div class="cl"></div>
 		<p class="space">完成问卷大约需要5分钟，然后您将立即获得营养健康专家团队为您定制的方案。</p>
 		<span class="space">*问卷与方案由中英两国注册营养师团队设计，参考欧美发达国家与中国官方膳食指南，并结合了中国人现状。</span>
 	</div>
 	<input class="btn" type="button" value="开始答题"/>
+	
+	<script type="text/javascript">
+		$(":button").click(function(){
+			window.location.href="/paper/enterName"
+		})
+	</script>
 </body>
 </html>
-

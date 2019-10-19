@@ -25,20 +25,15 @@ public class ProductDO implements Serializable {
 	private String name;
 	//产品简介
 	private String description;
-	//创建者
-	private String createBy;
-	//备注
-	private String remark;
-	//删除标志（0代表存在 2代表删除）
-	private String delFlag;
-	//问卷ID
-	private Integer paperIds;
 	
-	public Integer getPaperIds() {
-		return paperIds;
+	//问卷ID
+	private Integer paperId;
+	
+	public Integer getPaperId() {
+		return paperId;
 	}
-	public void setPaperIds(Integer paperIds) {
-		this.paperIds = paperIds;
+	public void setPaperId(Integer paperId) {
+		this.paperId = paperId;
 	}
 	/**
 	 * 设置：产品ID
@@ -99,41 +94,5 @@ public class ProductDO implements Serializable {
 	 */
 	public String getDescription() {
 		return description;
-	}
-	/**
-	 * 设置：创建者
-	 */
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
-	/**
-	 * 获取：创建者
-	 */
-	public String getCreateBy() {
-		return createBy;
-	}
-	/**
-	 * 设置：备注
-	 */
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-	/**
-	 * 获取：备注
-	 */
-	public String getRemark() {
-		return remark;
-	}
-	/**
-	 * 设置：删除标志（0代表存在 2代表删除）
-	 */
-	public void setDelFlag(String delFlag) {
-		this.delFlag = delFlag;
-	}
-	/**
-	 * 获取：删除标志（0代表存在 2代表删除）
-	 */
-	public String getDelFlag() {
-		return delFlag;
 	}
 }

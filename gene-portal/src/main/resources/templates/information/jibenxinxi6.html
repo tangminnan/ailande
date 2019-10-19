@@ -7,37 +7,95 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="format-detection" content="telephone=no">
-<link rel="stylesheet" href="css/css.css" type="text/css">
+<link rel="stylesheet" href="../css/css.css" type="text/css">
 <title>基本信息</title>
-<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="js/Font.js"></script>
+<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../js/Font.js"></script>
+<style type="text/css">
+	.imgChoose{border:.04rem solid #228DCD;}
+</style>
 </head>
 <body class="bg-cc">
 	<div class="tit">
 		<a href="" class="fanhui" title="返回"></a>
 		<h3 class="space center">基本信息</h3>
 		<p>
-			<a href="" title="点击前面的按钮"></a>
-			<a href="" title="点击后面的按钮"></a>
+			<a title="点击前面的按钮"></a>
+			<a title="点击后面的按钮"></a>
 		</p>
 	</div>
 	<div class="name">
 		<div class="pre">
-			<a href="">< 上一题</a>
+			<a>< 上一题</a>
 			<progress value="50" max="100"></progress>
 			<span>50%</span>
 		</div>
-		<div class="bianbian">
-			<h3 align="center">大便频率（最近一个月）</h3>
-			<ul>
-				<li>1-3 次/天</li>
-				<li>大于 3 次/天</li>
-				<li>1-2 次/天</li>
-				<li>大于 2 次/天</li>
-			</ul>
-		</div>
 			
 	</div>
+	<div style="display: none;" id="allQuestion">
+		<div class="bianbian" th:each="question:${list}">
+			<input name="type" type="hidden" th:value="${question.type}"/>
+			<h3 align="center" th:text="${question.contenw}"></h3>
+			<ul>
+				<li th:each="choice:${question.choiceList}">
+					<span th:text="${choice.content}"></span>
+					<span name="choseID" style="display:none;" th:text="${choice.id}"></span>
+					<span name="questionID" th:text="${question.id}"></span>
+					<span name="paperID" th:text="${question.paperId}"></span>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var questionArry=[];
+		$(".name").append($("#allQuestion div:first-child"));
+		$("p a").first().click(function(){
+			var count=$("#allQuestion").children().length;
+			if(count>0){
+				questionArry.push($(".name div:last-child").remove());
+				$(".name").append($("#allQuestion div:first-child"));
+			}
+			//触发ajax请求
+			var arry=[];
+			$(".imgChoose").each(function(){
+				var chooseId=$(this).children("[name='choseID']").text();//选项id
+				var questionId=$(this).children("[name='questionID']").text();//问题id
+				var customerPaperId=$(this).children("[name='customerPaperId']").text();
+				var paperId=$(this).children("[name='paperID']").text();
+				var obj={'choiceId':chooseId,'questionId':questionId,'customerPaperId':customerPaperId,'paperId':paperId};
+				arry.push(obj);
+			});
+			$.ajax({
+				type : "POST",
+				url : "/paper/saveWenJuan",
+				traditional:true,
+				data:{objs:JSON.stringify(arry)},
+				success : function(data) {
+					if(data.code==0)
+						window.location.href="/paper/fenlei?flag=2";
+					else
+						alert(data.msg);
+				}
+			});
+		});
+		
+		
+		$(".pre a").last().click(function(){
+			if(questionArry.length>0){
+				$("#allQuestion").prepend($(".name div:last-child").remove());
+				$(".name").append(questionArry.pop());
+			}
+		});
+		
+		$(".name").on('click','li',function(){
+			if($(this).parents(".bianbian").children("input").val()==0){//单选
+				$(this).addClass("imgChoose").siblings().removeClass("imgChoose");
+			}
+			else{//多选
+				$(this).toggleClass("imgChoose");
+			}
+		});
+	</script>
 </body>
 </html>
 

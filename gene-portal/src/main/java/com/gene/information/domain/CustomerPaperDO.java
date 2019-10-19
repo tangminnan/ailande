@@ -1,7 +1,9 @@
 package com.gene.information.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 
@@ -21,15 +23,20 @@ public class CustomerPaperDO implements Serializable {
 	private String username;
 	//性别
 	private String sex;
+	//身高
+	private String high;
+	//体重
+	private Integer weight;
+	//邮箱
+	private String email;
 	//年龄
 	private Integer age;
-	//状态（0未完成 1已完成）
-	private String status;
-	private Integer productId;
-	//检测码
-	private String code;
 	//联系方式
 	private String phone;
+	//创建时间
+	private Date createTime;
+	
+	private List<Integer> list = new ArrayList<Integer>();
 	/**
 	 * 设置：客户ID
 	 */
@@ -79,42 +86,6 @@ public class CustomerPaperDO implements Serializable {
 		return age;
 	}
 	/**
-	 * 设置：状态（0未完成 1已完成）
-	 */
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	/**
-	 * 获取：状态（0未完成 1已完成）
-	 */
-	public String getStatus() {
-		return status;
-	}
-	/**
-	 * 设置：产品ID
-	 */
-	public void setProductId(Integer productId) {
-		this.productId = productId;
-	}
-	/**
-	 * 获取：产品ID
-	 */
-	public Integer getProductId() {
-		return productId;
-	}
-	/**
-	 * 设置：检测码
-	 */
-	public void setCode(String code) {
-		this.code = code;
-	}
-	/**
-	 * 获取：检测码
-	 */
-	public String getCode() {
-		return code;
-	}
-	/**
 	 * 设置：联系方式
 	 */
 	public void setPhone(String phone) {
@@ -126,4 +97,36 @@ public class CustomerPaperDO implements Serializable {
 	public String getPhone() {
 		return phone;
 	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	public String getHigh() {
+		return high;
+	}
+	public void setHigh(String high) {
+		this.high = high;
+	}
+	public Integer getWeight() {
+		return weight;
+	}
+	public void setWeight(Integer weight) {
+		this.weight = weight;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public List<Integer> getList() {
+		return list;
+	}
+	public void setList(List<Integer> list) {
+		this.list = list;
+	}
+	
+	
 }

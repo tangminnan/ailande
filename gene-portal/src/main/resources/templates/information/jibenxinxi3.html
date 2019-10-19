@@ -7,20 +7,21 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="format-detection" content="telephone=no">
-<link rel="stylesheet" href="css/css.css" type="text/css">
+<link rel="stylesheet" href="../css/css.css" type="text/css">
 <title>基本信息</title>
-<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="js/Font.js"></script>
+<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../js/Font.js"></script>
 </head>
 <body class="bg-cc">
 	<div class="tit">
 		<a href="" class="fanhui" title="返回"></a>
 		<h3 class="space center">基本信息</h3>
 		<p>
-			<a href="" title="点击前面的按钮"></a>
-			<a href="" title="点击后面的按钮"></a>
+			<a  title="点击前面的按钮"></a>
+			<a  title="点击后面的按钮"></a>
 		</p>
 	</div>
+	<input type="hidden" th:value="${flag}" id="flag">
 	<div class="name">
 		<div class="pre">
 			<a href="">< 上一题</a>
@@ -28,13 +29,24 @@
 			<span>50%</span>
 		</div>
 		<ul class="xuanxiang center space">
-			<li class="on">基本信息</li>
-			<li class="on">身体状况</li>
+			<li>基本信息</li>
+			<li>身体状况</li>
 			<li>饮食状况</li>
 			<li class="pot">生活习惯</li>
 		</ul>	
 	</div>
-	<img class="miqi car" src="images/car.png" alt=""/>
+	<img class="miqi car" src="../images/car.png" alt=""/>
+	<script type="text/javascript">
+		$(".xuanxiang li").each(function(index,dom){
+			if(index<=$("#flag").val())
+				$(dom).addClass("on");
+		});
+		
+		$("p a").first().click(function(){
+			
+			window.location.href="/paper/beginAnswer?flag="+$("#flag").val();
+		});
+	</script>
 </body>
 </html>
 

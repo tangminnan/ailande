@@ -3,6 +3,139 @@
 
 <mapper namespace="com.gene.information.dao.PaperDao">
 	<select id="getAllProduct" resultType="com.gene.information.domain.ProductDO">
-		 select id,code,url,name,description,create_by,create_time,remark where del_flag='0'
+		 select id,code,url,name,description,create_by,create_time,remark from biz_product where del_flag='0'
+	</select>
+	
+	<select id="getProductByProductId" resultType="com.gene.information.domain.ProductDO">
+		 select id,paper_id,code,url,name,description,create_by,create_time,remark from biz_product where id=#{value}
+	</select>
+	
+	<insert id="saveProductPaperDO" parameterType="com.gene.information.domain.ProductpaperDO" useGeneratedKeys="true" keyProperty="id">
+		insert into qu_product_paper
+		(
+  			paper,
+  			product,
+  			user,
+  			status,
+  			answer_time,
+  			remark
+		)values(
+			#{paper},
+  			#{product},
+  			#{user},
+  			#{status},
+  			#{answerTime},
+  			#{remark}
+		)
+	</insert>
+	
+	<insert id="saveCustomerPaperDO" parameterType="com.gene.information.domain.CustomerPaperDO" useGeneratedKeys="true" keyProperty="id">
+		insert into biz_customer_paper(
+			username,
+  			create_time
+		)
+		values(
+			#{username},
+			#{createTime}
+		)
+	</insert>
+	
+	<update id="updateCustomerPaperDO" parameterType="com.gene.information.domain.CustomerPaperDO">
+		update biz_customer_paper set high=#{high},sex=#{sex},weight=#{weight},age=#{age},phone=#{phone},email=#{email}
+  		where id=#{id}
+	</update>
+	
+	<resultMap type="com.gene.information.domain.QuestionDO" id="paperMap">
+		 
+         	 <id column="nid" property="id"/>
+         	 <result column="nifStop" property="ifStop"/>
+             <result column="npaperId" property="paperId"/>
+             <result column="ncategory" property="category"/>
+             <result column="ncontent" property="content"/>
+             <result column="ntype" property="type"/>
+             <result column="nsort" property="sort"/>
+             <result column="nrequired" property="required"/>
+             <result column="ncreateBy" property="createBy"/>
+             <result column="ncreateTime" property="createTime"/>
+             <result column="nupdateBy" property="updateBy"/>
+             <result column="nupdateTime" property="updateTime"/>
+             <result column="nremark" property="remark"/>
+             <result column="ncontenw" property="contenw"/>
+             <collection property="choiceList" ofType="com.gene.information.domain.ChoiceDO">
+             	<id column="cid" property="id"/>
+         		<result column="ccontent" property="content"/>
+         		<result column="ccreateBy" property="createBy"/>
+         		<result column="ccreateTime" property="createTime"/>
+         		<result column="cupdateBy" property="updateBy"/>
+         		<result column="cupdateTime" property="updateTime"/>
+         		<result column="cremark" property="remark"/>
+         		<collection property="choiceProductList" ofType="com.gene.information.domain.ChoiceProductDO">
+         			<id column="tid" property="id"/>
+         			<result column="tscore" property="score"/>
+         			<result column="tchoose" property="choose"/>
+         			<result column="ttadf" property="tadf"/>
+         			<result column="tproduct" property="product"/>
+         			<result column="tproductName" property="productName"/>
+       				<result column="ttads" property="tads"/>
+         			<result column="ttadreason" property="tadreason"/>
+        			<result column="ttadjianyi" property="tadjianyi"/>
+         			<result column="tbmi" property="bmi"/>
+         			<result column="tbmis" property="bmis"/>
+         			<result column="tscores" property="scores"/>
+        			<result column="ttadfs" property="tadfs"/>
+        		 	<result column="ttadss" property="tadss"/>
+        		 	<result column="ttadreasons" property="tadreasons"/>
+         			<result column="ttadjianyis" property="tadjianyis"/>
+         		</collection>
+             </collection>
+       
+	</resultMap>
+	
+	<select id="getQuestionDOType" resultMap="paperMap"> 
+		SELECT
+	n.id nid,
+	n.category ncategory,
+	n.content ncontent,
+	n.type ntype,
+	n.sort nsort,
+	n.required nrequired,
+	n.create_by ncreateBy,
+	n.create_time ncreateTime,
+	n.update_by nupdateBy,
+	n.update_time nupdateTime,
+	n.remark nremark,
+	n.contenw ncontenw,
+	n.if_stop nifStop,
+	n.paper_id npaperId,
+ 	c.id cid,
+	c.content ccontent,
+	
+	c.create_by ccreateBy,
+	c.create_time ccreateTime,
+	c.update_by cupdateBy,
+	c.update_time cupdateTime,
+	c.remark cremark,
+	t.id tid,
+	t.product tproduct,
+	t.score tscore,
+	t.tadf ttadf,
+	t.tads ttads,
+	t.tadreason ttadreason,
+	t.tadjianyi ttadjianyi,
+	t.bmi tbmi,
+	t.bmis tbmis,
+	t.scores tscores,
+	t.product_name tproductName,
+	t.tadfs ttadfs,
+	t.tadss ttadss,
+	t.tadreasons ttadreasons,
+	t.tadjianyis ttadjianyis,
+	t.choose tchoose
+FROM
+ qu_question n 
+LEFT JOIN qu_choice c ON n.id = c.question
+LEFT JOIN qu_choice_product t on t.choose=c.id
+where n.paper_id=#{integer} and n.category=#{flag}
+	
 	</select>
 </mapper>

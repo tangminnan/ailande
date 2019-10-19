@@ -11,14 +11,17 @@
 <title>健康方案</title>
 <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="../js/Font.js"></script>
+<style type="text/css">
+	.imgChoose{border:.04rem solid #228DCD;}
+</style>
 </head>
 <body class="bg-cc">
 	<div class="goon">
 		<img class="logo" src="../images/logo.png" alt=""/>
 		<p class="p-more space center">请选择您本次想要获取的<br/>健康方案（可多选）</p>
 		<ul class="center">
-			<li><a href=""><img src="../images/changwei.png" alt=""/>肠胃调理</a></li>
-			<li><a href=""><img src="../images/shoushen.png" alt=""/>科学瘦身</a></li>
+			<!--  <li><a href=""><img src="../images/changwei.png" alt=""/>肠胃调理</a></li>
+			<li><a href=""><img src="../images/shoushen.png" alt=""/>科学瘦身</a></li> -->
 		</ul>
 		<p class="p-txt space">以上您选择每一个项目会为您分别出具一份个性化健康方案报告，由中英两国注册营养师制作。</p>
 	</div>
@@ -31,10 +34,34 @@
 $.ajax({
 	url: "/paper/getAllProduct",
 	type: "GET",
-	success: function(r){console.info(r);
-		
+	success: function(r){
+		if(r.data!=null){
+			var li="";
+			for(var i=0;i<r.data.length;i++){
+				var d=r.data[i];
+				if(d.url==null) d.url="../images/changwei.png;";//此处为临时使用户   后台录入产品时 应有图片
+				li+='<li><a><img src="'+d.url+'" alt=""/>'+d.name+'</a><input type="hidden" value="'+d.id+'"/></li>';
+			}
+		 	$("ul.center").html(li); 
+		}
 	}
 });
+
+$(".goon").on("click","li img",function(){
+	$(this).toggleClass("imgChoose");
+})
+
+$("input.btn").click(function(){
+	var products=new Array();
+	$("li img.imgChoose").each(function(){
+		products.push($(this).parent().next().val());
+	});
+	if(products.length==0){
+		alert("要先选择一个或多个产品");
+		return;
+	}
+	window.location.href="/paper/saveChoosedProduct?products="+products;
+})
 </script>
 </html>
 

@@ -9,20 +9,15 @@ import java.util.Date;
  * @author gene
  * @date 2019-08-27
  */
-public class ChoiceDO implements Serializable {
+public class ChoiceProductDO implements Serializable {
     private static final long serialVersionUID = 1L;
-
-   
     private Integer id;
-	
+    private Integer choose;
+	private Integer product;
     /**
     * 所属题目ID
     */
     private Integer question;
-    /**
-    * 选项内容
-    */
-    private String content;
     /**
      * 选项分值
      */
@@ -32,7 +27,6 @@ public class ChoiceDO implements Serializable {
      * 是否选中
      */
  
-    private String isCheck;
     private String delFlag;
     //创建者
     private String  createBy;
@@ -66,6 +60,8 @@ public class ChoiceDO implements Serializable {
     private String tadreasons;
     //营养补充及建议
 	private String tadjianyis;
+	//产品名字
+	private String productName;
 	public Integer getId() {
 		return id;
 	}
@@ -78,23 +74,18 @@ public class ChoiceDO implements Serializable {
 	public void setQuestion(Integer question) {
 		this.question = question;
 	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
 	public Integer getScore() {
 		return score;
 	}
 	public void setScore(Integer score) {
 		this.score = score;
 	}
-	public String getIsCheck() {
-		return isCheck;
+	
+	public String getProductName() {
+		return productName;
 	}
-	public void setIsCheck(String isCheck) {
-		this.isCheck = isCheck;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -201,4 +192,27 @@ public class ChoiceDO implements Serializable {
 	public void setTadjianyis(String tadjianyis) {
 		this.tadjianyis = tadjianyis;
 	}
+	public Integer getChoose() {
+		return choose;
+	}
+	public void setChoose(Integer choose) {
+		this.choose = choose;
+	}
+	public Integer getProduct() {
+		return product;
+	}
+	public void setProduct(Integer product) {
+		this.product = product;
+	}
+	@Override
+	public String toString() {
+		return "ChoiceProductDO [id=" + id + ", choose=" + choose + ", product=" + product + ", question=" + question
+				+ ", score=" + score + ", delFlag=" + delFlag + ", createBy=" + createBy + ", createTime=" + createTime
+				+ ", updateBy=" + updateBy + ", updateTime=" + updateTime + ", remark=" + remark + ", tadf=" + tadf
+				+ ", tads=" + tads + ", tadreason=" + tadreason + ", tadjianyi=" + tadjianyi + ", bmi=" + bmi
+				+ ", bmis=" + bmis + ", scores=" + scores + ", tadfs=" + tadfs + ", tadss=" + tadss + ", tadreasons="
+				+ tadreasons + ", tadjianyis=" + tadjianyis + ", productName=" + productName + "]";
+	}
+	
+	
 }

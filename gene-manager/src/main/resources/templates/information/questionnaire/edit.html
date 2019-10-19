@@ -97,7 +97,7 @@
                             <div class="col-sm-6">
                             	<input name="questionIDID" type="hidden" th:value="${question.id}"/>
                                 <input name="title" type="text" th:value="${question.content}"
-                                       class="form-control required" placeholder="报告题目内容">
+                                       class="form-control" placeholder="报告题目内容">
                             </div>
                             <div class="col-sm-2">
                                <select name="category" class="form-control">
@@ -113,6 +113,7 @@
                                     <option value=""  >请选择题目类型</option>
                                     <option th:value="0" th:selected="${question.type=='0'}">单选</option>
                                     <option th:value="1" th:selected="${question.type=='1'}">多选</option>
+                                    <option th:value="2" th:selected="${question.type=='2'}">填空</option>
                                 </select>
                             </div>
                             <div class="col-sm-1">
@@ -124,7 +125,7 @@
                         <div class="form-group">
         					<label class="col-sm-1 control-label"><i class="fa fa-arrows"></i></label>
         					<div class="col-sm-6">
-                				<input name="titlew" type="text" th:value="${question.contenw}" class="form-control required" placeholder="问卷题目内容">
+                				<input name="titlew" type="text" th:value="${question.contenw}" class="form-control" placeholder="问卷题目内容">
             				</div>
             				<div class="col-sm-2">
             					<select name="ifStop" type="text" disabled="true" class="form-control">
@@ -140,7 +141,7 @@
                            		<label class="col-sm-1 control-label">选项</label>
             					<div class="col-sm-8">
             						<input type="hidden" name="choiceIDID" th:value="${choice.id}">
-                					<input name="value" th:value="${choice.content}" type="text" class="form-control required" placeholder="答案">
+                					<input name="value" th:value="${choice.content}" type="text" class="form-control" placeholder="答案">
             					</div>
             					<!-- <div class="col-sm-2">
               						<select name="chooseProduct" type="text" class="form-control">
@@ -182,7 +183,7 @@
          					<div class="form-group">
          						<label class="col-sm-1 control-label"></label>
        				 			<div class="col-sm-2">
-                					<input type="hidden" class="form-control required">
+                					<input type="hidden" class="form-control">
            		 				</div>
         						<div class="col-sm-6" style="height: 60px;" id="tadreason">
          							<textarea name="tadreason" th:text="${product.tadreason}" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
@@ -191,7 +192,7 @@
 							<div class="form-group">
 								<label class="col-sm-1 control-label"></label>
       							<div class="col-sm-2">
-                					<input type="hidden" class="form-control required">
+                					<input type="hidden" class="form-control">
            						</div>
        							<div class="col-sm-6" style="height: 60px;" id="tadreason">
          							<textarea name="tadjianyi" th:text="${product.tadjianyi}" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
@@ -214,7 +215,7 @@
                 						<input name="" type="hidden" class="form-control">
             						</div>
             						<div class="col-sm-2">
-                						<input name="bmi" type="text" th:value="${product.bmi}" value="BMI>=29" class="form-control required">
+                						<input name="bmi" type="text" th:value="${product.bmi}" value="BMI>=29" class="form-control">
             						</div>
         						</div>
         						<div class="form-group">
@@ -223,7 +224,7 @@
                 						<input name="" type="hidden" class="form-control">
             						</div>
            	 						<div class="col-sm-2">
-                						<input name="score" type="number" th:value="${product.score}" class="form-control required" placeholder="分值">
+                						<input name="score" type="number" th:value="${product.score}" class="form-control" placeholder="分值">
             						</div>
             						<div class="col-sm-2">
                 						<input name="tadf" type="text" th:value="${product.tadf}" class="form-control" placeholder="调整方向1">
@@ -235,7 +236,7 @@
          						<div class="form-group">
          							<label class="col-sm-1 control-label"></label>
        				 				<div class="col-sm-2">
-                						<input type="hidden" class="form-control required">
+                						<input type="hidden" class="form-control">
            		 					</div>
         							<div class="col-sm-6" style="height: 60px;" id="tadreason">
          								<textarea name="tadreason" th:text="${product.tadreason}" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
@@ -244,7 +245,7 @@
 								<div class="form-group">
 									<label class="col-sm-1 control-label"></label>
       									<div class="col-sm-2">
-                							<input type="hidden" class="form-control required">
+                							<input type="hidden" class="form-control">
            								</div>
        									<div class="col-sm-6" style="height: 60px;" id="tadreason">
          									<textarea name="tadjianyi" th:text="${product.tadjianyi}" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
@@ -253,7 +254,7 @@
      	 	 					<div class="form-group">
         							<label class="col-sm-1 control-label"></label>
             						<div class="col-sm-2">
-                						<input name="value" type="hidden" class="form-control required">
+                						<input name="value" type="hidden" class="form-control">
             						</div>
             						<div class="col-sm-2">
                 						<input name="bmis" th:value="${product.bmis}" type="text" value="BMI<29" class="form-control required">
@@ -262,7 +263,7 @@
         						<div class="form-group">
             						<label class="col-sm-1 control-label"></label>
             						<div class="col-sm-2">
-                						<input name="value" type="hidden" class="form-control required">
+                						<input name="value" type="hidden" class="form-control">
             						</div>
            	 						<div class="col-sm-2">
                 						<input name="scores" th:value="${product.scores}" type="number" class="form-control required" placeholder="分值">
@@ -277,7 +278,7 @@
          						<div class="form-group">
          							<label class="col-sm-1 control-label"></label>
        			 					<div class="col-sm-2">
-                						<input type="hidden" class="form-control required">
+                						<input type="hidden" class="form-control">
            							</div>
         							<div class="col-sm-6" style="height: 60px;" id="tadreason">
          								<textarea name="tadreasons" th:text="${product.tadreasons}" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
@@ -286,7 +287,7 @@
 								<div class="form-group">
 									<label class="col-sm-1 control-label"></label>
       								<div class="col-sm-2">
-                						<input type="hidden" class="form-control required">
+                						<input type="hidden" class="form-control">
            							</div>
        								<div class="col-sm-6" style="height: 60px;" id="tadreason">
          								<textarea name="tadjianyis" th:value="${product.tadjianyis}" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
@@ -322,7 +323,7 @@
   			<div class="form-group" >
             	<label class="col-sm-1 control-label">选项</label>
             	<div class="col-sm-8">
-                	<input name="value" type="text" class="form-control required" placeholder="答案">
+                	<input name="value" type="text" class="form-control" placeholder="答案">
             	</div>
             	<!-- <div class="col-sm-2">
               		<select name="chooseProduct" disabled="true" type="text" class="form-control">
@@ -347,7 +348,7 @@
            		<div class="form-group">
            			<label class="col-sm-1 control-label"></label>
            	 		<div class="col-sm-2">
-                		<input name="score" type="number" class="form-control required" placeholder="分值">
+                		<input name="score" type="number" class="form-control" placeholder="分值">
             		</div>
             		<div class="col-sm-2">
                 		<input name="tadf" type="text" class="form-control" placeholder="调整方向1">
@@ -364,7 +365,7 @@
          		<div class="form-group">
          			<label class="col-sm-1 control-label"></label>
        				 <div class="col-sm-2">
-                		<input type="hidden" class="form-control required">
+                		<input type="hidden" class="form-control">
            		 	</div>
         			<div class="col-sm-6" style="height: 60px;" id="tadreason">
          				<textarea name="tadreason" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
@@ -373,7 +374,7 @@
 				<div class="form-group">
 					<label class="col-sm-1 control-label"></label>
       				<div class="col-sm-2">
-                		<input type="hidden" class="form-control required">
+                		<input type="hidden" class="form-control">
            			</div>
        				<div class="col-sm-6" style="height: 60px;" id="tadreason">
          				<textarea name="tadjianyi" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
@@ -387,7 +388,7 @@
         	<div class="form-group">
         		<label class="col-sm-1 control-label">选项</label>
             	<div class="col-sm-8">
-                	<input name="value" type="text" class="form-control required" placeholder="答案">
+                	<input name="value" type="text" class="form-control" placeholder="答案">
             	</div>
             	<!-- <div class="col-sm-2">
               		<select name="chooseProduct" type="text" class="form-control">
@@ -421,7 +422,7 @@
                 	<input name="" type="hidden" class="form-control">
             	</div>
             	<div class="col-sm-2">
-                	<input name="bmi" type="text" value="BMI>=29" class="form-control required">
+                	<input name="bmi" type="text" value="BMI>=29" class="form-control">
             	</div>
         	</div>
         	
@@ -431,7 +432,7 @@
                 		<input name="" type="hidden" class="form-control">
             		</div>
            	 		<div class="col-sm-2">
-                		<input name="score" type="number" class="form-control required" placeholder="分值">
+                		<input name="score" type="number" class="form-control" placeholder="分值">
             		</div>
             		<div class="col-sm-2">
                 		<input name="tadf" type="text" class="form-control" placeholder="调整方向1">
@@ -443,7 +444,7 @@
          		<div class="form-group">
          			<label class="col-sm-1 control-label"></label>
        				 <div class="col-sm-2">
-                		<input type="hidden" class="form-control required">
+                		<input type="hidden" class="form-control">
            		 	</div>
         			<div class="col-sm-6" style="height: 60px;" id="tadreason">
          				<textarea name="tadreason" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
@@ -452,7 +453,7 @@
 				<div class="form-group">
 					<label class="col-sm-1 control-label"></label>
       				<div class="col-sm-2">
-                		<input type="hidden" class="form-control required">
+                		<input type="hidden" class="form-control">
            			</div>
        				<div class="col-sm-6" style="height: 60px;" id="tadreason">
          				<textarea name="tadjianyi" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
@@ -461,7 +462,7 @@
      	 	 	<div class="form-group">
         			<label class="col-sm-1 control-label"></label>
             		<div class="col-sm-2">
-                		<input name="value" type="hidden" class="form-control required">
+                		<input name="value" type="hidden" class="form-control">
             		</div>
             		<div class="col-sm-2">
                 		<input name="bmis" type="text" value="BMI<29" class="form-control required">
@@ -470,10 +471,10 @@
         		<div class="form-group">
             		<label class="col-sm-1 control-label"></label>
             		<div class="col-sm-2">
-                		<input name="value" type="hidden" class="form-control required">
+                		<input name="value" type="hidden" class="form-control">
             		</div>
            	 		<div class="col-sm-2">
-                		<input name="scores" type="number" class="form-control required" placeholder="分值">
+                		<input name="scores" type="number" class="form-control" placeholder="分值">
             		</div>
             		<div class="col-sm-2">
                 		<input name="tadfs" type="text" class="form-control" placeholder="调整方向1">
@@ -485,7 +486,7 @@
          		<div class="form-group">
          			<label class="col-sm-1 control-label"></label>
        			 	<div class="col-sm-2">
-                		<input type="hidden" class="form-control required">
+                		<input type="hidden" class="form-control">
            			</div>
         			<div class="col-sm-6" style="height: 60px;" id="tadreason">
          				<textarea name="tadreasons" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
@@ -494,7 +495,7 @@
 				<div class="form-group">
 					<label class="col-sm-1 control-label"></label>
       				<div class="col-sm-2">
-                		<input type="hidden" class="form-control required">
+                		<input type="hidden" class="form-control">
            			</div>
        				<div class="col-sm-6" style="height: 60px;" id="tadreason">
          				<textarea name="tadjianyis" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
@@ -519,7 +520,7 @@
         <div class="form-group ">
             <label class="col-sm-1 control-label"><i class="fa fa-arrows"></i></label>
             <div class="col-sm-6">
-                <input name="title" type="text" class="form-control required" placeholder="报告题目内容">
+                <input name="title" type="text" class="form-control" placeholder="报告题目内容">
             </div>
             <div class="col-sm-2">
               <!--   <input name="category" type="text" class="form-control required" placeholder="题目分类"> -->
@@ -536,6 +537,7 @@
                     <option value="" disabled selected>请选择题目类型</option>
                     <option th:value="0">单选</option>
                     <option th:value="1">多选</option>
+                    <option th:value="2">填空</option>
                 </select>
             </div>
             <div class="col-sm-1">
@@ -547,7 +549,7 @@
         <div class="form-group">
         <label class="col-sm-1 control-label"><i class="fa fa-arrows"></i></label>
         	<div class="col-sm-6">
-                <input name="titlew" type="text" class="form-control required" placeholder="问卷题目内容">
+                <input name="titlew" type="text" class="form-control" placeholder="问卷题目内容">
             </div>
              <div class="col-sm-2">
               <!--   <input name="category" type="text" class="form-control required" placeholder="题目分类"> -->

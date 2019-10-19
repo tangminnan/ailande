@@ -7,18 +7,21 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="format-detection" content="telephone=no">
-<link rel="stylesheet" href="css/css.css" type="text/css">
+<link rel="stylesheet" href="../css/css.css" type="text/css">
 <title>基本信息</title>
-<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="js/Font.js"></script>
+<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../js/Font.js"></script>
+<style type="text/css">
+.nameyes{background:url(../images/yes.png) no-repeat 5.9rem .6rem;-webkit-background-size:.74rem .74rem;background-size:.74rem .74rem;}
+</style>
 </head>
 <body class="bg-cc">
 	<div class="tit">
 		<a href="" class="fanhui" title="返回"></a>
 		<h3 class="space center">基本信息</h3>
 		<p>
-			<a href="" title="点击前面的按钮"></a>
-			<a href="" title="点击后面的按钮"></a>
+			<a title="点击前面的按钮"></a>
+			<a  title="点击后面的按钮"></a>
 		</p>
 	</div>
 	<div class="name">
@@ -28,10 +31,20 @@
 			<span>50%</span>
 		</div>
 		<p align="center">姓名</p>
-		<div class="yes center">
-			<input type="text" placeholder="请输入您的姓名"/>
-		</div>
+		 <div class="yes center">
+			<input id="name" type="text" placeholder="请输入您的姓名"/>
+		</div> 
 	</div>
+	<script type="text/javascript">
+		$("p a").first().click(function(){
+			if($("#name").val()==''){
+				alert("请输入姓名");
+				return;
+			}
+			
+			window.location.href="/paper/saveYourName?name="+$("#name").val();
+		});
+	</script>
 </body>
 </html>
 

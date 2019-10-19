@@ -6,7 +6,7 @@ import java.util.Date;
 
 
 /**
- * 用户答题表
+ * 答题表
  * 
  * @author wjl
  * @email bushuo@163.com
@@ -17,17 +17,16 @@ public class AnswerDO implements Serializable {
 	
 	//ID
 	private Integer id;
+	//记录表ID
+	private Integer productpaper;
 	//问卷ID
 	private Integer customerPaperId;
-	//答案ID
-	private String choiceId;
 	//问题ID
 	private Integer questionId;
-	//创建者
-	private String createBy;
-	//创建时间
-	private Date createTime;
-
+	//答案ID
+	private String choiceId;
+	//分值 
+	private Integer score;
 	/**
 	 * 设置：ID
 	 */
@@ -76,28 +75,17 @@ public class AnswerDO implements Serializable {
 	public Integer getQuestionId() {
 		return questionId;
 	}
-	/**
-	 * 设置：创建者
-	 */
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
+	public Integer getScore() {
+		return score;
 	}
-	/**
-	 * 获取：创建者
-	 */
-	public String getCreateBy() {
-		return createBy;
+	public void setScore(Integer score) {
+		this.score = score;
 	}
-	/**
-	 * 设置：创建时间
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public Integer getProductpaper() {
+		return productpaper;
 	}
-	/**
-	 * 获取：创建时间
-	 */
-	public Date getCreateTime() {
-		return createTime;
+	public void setProductpaper(Integer productpaper) {
+		this.productpaper = productpaper;
 	}
+	
 }

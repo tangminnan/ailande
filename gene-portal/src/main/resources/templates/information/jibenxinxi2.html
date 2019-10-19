@@ -7,10 +7,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="format-detection" content="telephone=no">
-<link rel="stylesheet" href="css/css.css" type="text/css">
+<link rel="stylesheet" href="../css/css.css" type="text/css">
 <title>基本信息</title>
-<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="js/Font.js"></script>
+<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../js/Font.js"></script>
 </head>
 <body class="bg-cc">
 	<div class="tit">
@@ -22,10 +22,14 @@
 		</p>
 	</div>
 	<div class="HI">
-		<h1>HI<span>你好，靓仔仔</span></h1>
+		<h1>HI<span th:text="'你好，'+${name}">你好，靓仔仔</span></h1>
 		<p class="space">欢迎来到BioCare营养健康<br/>方案定制服务</p>
 	</div>
-	<img class="miqi" src="images/miqi.png" alt=""/>
+	<img class="miqi" src="../images/miqi.png" alt=""/>
+	
+	<script type="text/javascript">
+	 window.setTimeout("window.location.href='/paper/fenlei?flag=0'",1500);
+	</script>
 </body>
 </html>
 
