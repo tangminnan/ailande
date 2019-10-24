@@ -63,7 +63,14 @@ public class QuestionDO implements Serializable{
     */
     private String required;
     private List<ChoiceDO> choiceList;
+    //题目图片
+    private String img;
+ 
+    //用户所选择的选项
+    private List<ChoiceProductDO> choiceProductDOList;
     private String remark;
+    //调整方向（仅供页面展示）
+    private String tiaozheng;
 	public Integer getId() {
 		return id;
 	}
@@ -163,6 +170,27 @@ public class QuestionDO implements Serializable{
 	}
 	public void setIfStop(String ifStop) {
 		this.ifStop = ifStop;
+	}
+	
+	
+	public String getTiaozheng() {
+		return tiaozheng;
+	}
+	public void setTiaozheng(String tiaozheng) {
+		this.tiaozheng = tiaozheng;
+	}
+	public List<ChoiceProductDO> getChoiceProductDOList() {
+		return choiceProductDOList;
+	}
+	public void setChoiceProductDOList(List<ChoiceProductDO> choiceProductDOList) {
+		this.choiceProductDOList = choiceProductDOList;
+	}
+	
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
 	}
 	@Override
 	public String toString() {

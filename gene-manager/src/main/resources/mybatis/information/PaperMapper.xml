@@ -71,7 +71,8 @@
  			<if test="updateTime!=null">update_time=#{updateTime},</if>
  			<if test="remark!=null">remark=#{remark},</if>
  			<if test="contenw!=null">contenw=#{contenw},</if>
- 			<if test="ifStop!=null">if_stop=#{ifStop}</if>
+ 			<if test="ifStop!=null">if_stop=#{ifStop},</if>
+ 			<if test="img!=null">img=#{img}</if>
 		</set>
 		where id=#{id}
 	</update>
@@ -148,7 +149,8 @@
   		`update_by`,
   		`update_time`,
   		`remark`,
-  		 if_stop
+  		 if_stop,
+  		 img
 		)values(
 			#{paperId},
   			#{category},
@@ -162,7 +164,8 @@
   			#{updateBy},
   			#{updateTime},
   			#{remark},
-  			#{ifStop}
+  			#{ifStop},
+  			#{img}
 		)
   
 	</insert>
@@ -252,6 +255,7 @@
              <result column="nupdateTime" property="updateTime"/>
              <result column="nremark" property="remark"/>
              <result column="ncontenw" property="contenw"/>
+             <result column="nimg" property="img"/>
              <collection property="choiceList" ofType="com.gene.information.domain.ChoiceDO">
              	<id column="cid" property="id"/>
          		<result column="ccontent" property="content"/>
@@ -315,6 +319,7 @@
 	n.remark nremark,
 	n.contenw ncontenw,
 	n.if_stop nifStop,
+	n.img nimg,
  	c.id cid,
 	c.content ccontent,
 	

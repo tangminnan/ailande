@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="../css/css.css" type="text/css">
+<title>检测报告</title>
+<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../js/Font.js"></script>
+</head>
+<body class="bg-cc">
+	<div class="care">
+		<img class="logo logoImg" src="../images/logo.png" alt=""/>
+		<img class="txtImg" src="../images/fangan.png" alt=""/>
+	</div>
+	<div class="careBox">
+		<!-- <div class="box">
+			<img src="../images/changwei-jiance.png" alt=""/>
+			<input type="button" value="您已检测"/>
+			<input class="blue" type="button" value="点击查看"/>
+		</div>
+		<div class="box">
+			<img src="../images/shoushen-jiance.png" alt=""/>
+			<input type="button" value="您未检测"/>
+			<input class="blue" type="button" value="点击检测"/>
+		</div> -->
+	</div>	
+</body>
+	<script type="text/javascript">
+	/**
+	 * 获取所有的方案
+	 */
+	$.ajax({
+		url: "/paper/getAllProduct",
+		type: "GET",
+		async : false,
+		success: function(r){
+			if(r.data!=null){
+				var box="";
+				for(var i=0;i<r.data.length;i++){
+					var d=r.data[i];
+					box+='<div class="box">';
+					box+='<img src="'+d.url+'" alt=""/>';
+					box+='<input name="id" type="hidden" value="'+d.id+'"/>';
+					box+='<input name="productName" type="hidden" value="'+d.name+'"/>';
+					if(d.ifCheck===1){
+						box+='<input type="button" value="您已检测"/>';
+						box+='<input class="blue" type="button" value="点击查看"/>';
+					}
+					if(d.ifCheck===0){
+						box+='<input type="button" value="您未检测"/>';
+						box+='<input class="blue" type="button" value="点击检测"/>';
+					}
+					box+='</div>';
+				}
+				//以下的数据是写死的
+				$(".careBox").html(box);
+			}
+		}
+	});
+	
+	$(".box").each(function(){
+		  if($(this).find("[name='productName']").val()=='肠胃调理')
+			$(this).children("img").attr("src","../images/changwei-jiance.png"); 
+		 else
+			 $(this).children("img").attr("src","../images/shoushen-jiance.png"); 
+	});
+	
+	$("body").on("click","input.blue",function(){
+		if($(this).val()=="点击检测"){
+			alert("功能待开发");
+		}
+			
+		if($(this).val()=="点击查看"){
+			var product=$(this).parent().find("[name='id']").val();
+			window.location.href="/paper/lookCheckLog?product="+product;
+		}
+	});
+	
+	$("body").on("click","")
+	</script>
+</html>
+

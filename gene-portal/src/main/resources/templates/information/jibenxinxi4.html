@@ -72,12 +72,14 @@
 			</div> 
 		</div>
 	</div>
+	<input id="lei" th:value="${LEI}" type="hidden">
 </body>
 <script type="text/javascript">
 	var num=1,obj={},nodearry=[];
 	$("p a").first().click(function(){
 		if($(".name").find("input").attr("name")=="email"){
 			obj.email=$("[name='email']").val();
+		/* 	obj.fenlei=$("#lei").val(); 此处以后再处理*/
 			$.ajax({
 				type : "POST",
 				url : "/paper/saveJiBenXinxi",

@@ -51,6 +51,7 @@
 </head>
 <link th:href="@{/ajax/libs/steps/jquery.steps.css}" rel="stylesheet"/>
 <body class="white-bg">
+  <input id="xFile" type="file" accept="image/png, image/jpeg, image/gif, image/jpg" name="xFile" style="display: none;">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
     <form id="form-paper-add" class="form-horizontal m" th:object="${paper}">
         <input id="paperId" name="id" type="hidden" th:value="*{id}"/>
@@ -101,11 +102,13 @@
                             </div>
                             <div class="col-sm-2">
                                <select name="category" class="form-control">
-              						<option value="">题目分类</option>
+                               		<option value="">题目分类</option>
               						<option th:selected="${question.category=='JIBEN_XINXI'}" value="JIBEN_XINXI">基本信息</option>
-              						<option th:selected="${question.category=='SHENTI_ZHUNGKUANG'}" value="SHENTI_ZHUNGKUANG">身体状况</option>
-              						<option th:selected="${question.category=='YINSHI_XIGUAN'}" value="YINSHI_XIGUAN">饮食习惯</option>
-              						<option th:selected="${question.category=='SHENGHUO_XIGUAN'}" value="SHENGHUO_XIGUAN">生活习惯</option>
+              						<option th:selected="${question.category=='SHANSHI_XIGUAN'}" value="SHANSHI_XIGUAN">膳食习惯</option>
+              						<option th:selected="${question.category=='SHENGHUO_FANGSHI'}" value="SHENGHUO_FANGSHI">生活方式</option>
+              						<option th:selected="${question.category=='SHUIMIAN_XIGUAN'}" value="SHUIMIAN_XIGUAN">睡眠与压力</option>
+              						<option th:selected="${question.category=='YUNDONG_XIGUANG'}" value="YUNDONG_XIGUANG">运动习惯</option>
+              						<option th:selected="${question.category=='SHENTI_ZHUANG'}" value="SHENTI_ZHUANG">身体状况</option>
               					</select>
                             </div>
                             <div class="col-sm-2">
@@ -135,6 +138,12 @@
              					</select>
            				</div>
       	  				</div>
+      	  				<div class="form-group">
+        	 					<label class="col-sm-1 control-label"><i class="fa fa-arrows"></i></label>
+         						<div class="col-sm-6">
+        							<img th:src="${question.img}" style="width: 100px;height: 100px;" alt="" name="uploadBtn"/>
+        						</div>
+       					 </div>
       	  			</div>
       	  				<div  class="appendchoice" th:each="choice:${question.choiceList}">
       	  					<div class="form-group">
@@ -314,6 +323,7 @@
                 </div>
             </div>
         </fieldset>
+      
     </form>
 </div>
 
@@ -413,7 +423,7 @@
            		<label class="col-sm-1 control-label"></label>
            		 <div class="col-sm-6">
            		 	<input name="product" th:value="${product.id}" type="hidden" >
-                	<input name="tads" th:value="${product.name}" readonly="readonly" type="text" class="form-control" placeholder="产品">
+                	<input name="productName" th:value="${product.name}" readonly="readonly" type="text" class="form-control" placeholder="产品">
             	</div>
             	</div>
          <div class="form-group">
@@ -525,11 +535,13 @@
             <div class="col-sm-2">
               <!--   <input name="category" type="text" class="form-control required" placeholder="题目分类"> -->
               <select name="category" type="text" class="form-control">
-              	<option value="">选择分类</option>
+              	<option value="">题目分类</option>
               	<option value="JIBEN_XINXI">基本信息</option>
-              	<option value="SHENTI_ZHUNGKUANG">身体状况</option>
-              	<option value="YINSHI_XIGUAN">饮食习惯</option>
-              	<option value="SHENGHUO_XIGUAN">生活习惯</option>
+              	<option value="SHANSHI_XIGUAN">膳食习惯</option>
+              	<option value="SHENGHUO_FANGSHI">生活方式</option>
+              	<option value="SHUIMIAN_XIGUAN">睡眠与压力</option>
+              	<option value="YUNDONG_XIGUANG">运动习惯</option>
+              	<option value="SHENTI_ZHUANG">身体状况</option>
               </select>
             </div>
             <div class="col-sm-2">
@@ -560,6 +572,12 @@
               </select>
             </div>
         </div>
+        <div class="form-group">
+        	 					<label class="col-sm-1 control-label"><i class="fa fa-arrows"></i></label>
+         						<div class="col-sm-6">
+        							<img src="../../img/tousu-pic1.jpg" style="width: 100px;height: 100px;" alt="" name="uploadBtn"/>
+        						</div>
+       					 </div>
         </div>
       </div>
       </div>  
@@ -612,6 +630,7 @@ function getData() {
            	category: $(val).find(".question").find("select[name='category']").val(),
             type: $(val).find(".question").find("select[name='type']").val(),
             ifStop:$(val).find(".question").find("select[name='ifStop']").val(),
+            img:$(val).find(".question").find(".showPic").attr("src"),
             choiceList: choice
         };
         question.push(obj);
@@ -696,10 +715,10 @@ function getData() {
     }
 
     function addChoice(obj) {
-    	if($("[name='ifStop']").val()=="YUN_DONG")
+    	if($(obj).parents(".ibox-content").find("[name='ifStop']").val()=="YUN_DONG")
     		$(obj).parent().parent().parent().parent().append($(".yundonglei").html());
     	else
-			$(obj).parent().parent().parent().parent().append($(".qitalei").html());	
+			$(obj).parent().parent().parent().parent().append($(".yundonglei").html());	
     }
 
     function removeChoice(obj) {
@@ -754,6 +773,61 @@ function getData() {
    		else
    			$(this).parent().parent().parent().next().html($(".qitalei .appendchoice").html());
     });
+    
+    
+    /*
+     *图片上传
+     */
+     
+     function compress(param){
+     	var setting = {
+     		width: 100,
+     		height: 100,
+     		afterComplete: function(data){
+     			
+     		}
+     	};
+     	
+     	setting = $.extend(setting,param);
+         var reader = new FileReader();
+         reader.onload = function (e) {
+             //加载图片完成，取得图片的base64                
+             imgObj = e.target.result;
+             var image = new Image();
+             image.src = imgObj;
+             image.onload = function () {  //创建一个image对象，给canvas绘制使用  
+                 var cvs = document.createElement('canvas');
+                 var scale = 1;
+                 if (this.width > setting.width || this.height > setting.height) {  //1000只是示例，可以根据具体的要求去设定    
+                     if (this.width > this.height) {
+                         scale = setting.width / this.width;
+                     } else {
+                         scale = setting.height / this.height;
+                     }
+                 }
+                 cvs.width = this.width * scale;
+                 cvs.height = this.height * scale;     //计算等比缩小后图片宽高  
+                 var ctx = cvs.getContext('2d');
+                 ctx.drawImage(this, 0, 0, cvs.width, cvs.height);
+                 setting.afterComplete(cvs.toDataURL('image/png'));
+             }    
+         }
+         reader.readAsDataURL(xFile.files[0]);
+     }
+    	var node; 
+     $("body").on("click","[name='uploadBtn']",function(){
+     	node=$(this);
+ 		$("#xFile").click();
+ 	});
+     
+     
+     $("#xFile").bind('change',function(){
+ 		compress({afterComplete: function(imgData){
+ 			var imgLi = $('<li><img src="" alt="" class="showPic" name="uploadBtn"/></li>');
+ 			imgLi.find("img").attr("src",imgData);
+ 			node.replaceWith(imgLi);
+ 		}});
+ 	});
 </script>
 </body>
 </html>

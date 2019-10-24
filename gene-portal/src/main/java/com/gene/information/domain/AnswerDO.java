@@ -24,9 +24,11 @@ public class AnswerDO implements Serializable {
 	//问题ID
 	private Integer questionId;
 	//答案ID
-	private String choiceId;
+	private Integer choiceId;
 	//分值 
 	private Integer score;
+	//题目分类
+	private String fenlei;
 	/**
 	 * 设置：ID
 	 */
@@ -54,13 +56,13 @@ public class AnswerDO implements Serializable {
 	/**
 	 * 设置：答案ID
 	 */
-	public void setChoiceId(String choiceId) {
+	public void setChoiceId(Integer choiceId) {
 		this.choiceId = choiceId;
 	}
 	/**
 	 * 获取：答案ID
 	 */
-	public String getChoiceId() {
+	public Integer getChoiceId() {
 		return choiceId;
 	}
 	/**
@@ -87,5 +89,12 @@ public class AnswerDO implements Serializable {
 	public void setProductpaper(Integer productpaper) {
 		this.productpaper = productpaper;
 	}
+	public String getFenlei() {
+		return fenlei;
+	}
+	public void setFenlei(String fenlei) {
+		this.fenlei = fenlei;
+	}
+	
 	
 }

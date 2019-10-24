@@ -24,8 +24,10 @@ public class QuestionDO implements Serializable{
     * 分类名称
     * JIBEN_XINXI=基本信息
 	  SHENTI_ZHUNGKUANG=身体状况
-	  YINSHI_XIGUAN=饮食习惯
-	  SHENGHUO_XIGUAN=生活习惯
+	  SHANSHI_XIGUAN=膳食习惯
+	  SHENGHUO_FANGSHI=生活方式
+	  YUNDONG_XIGUANG=运动习惯
+	  SHUIMIAN_XIGUANG=睡眠与压力
     */
     private String category;
     /**
@@ -40,6 +42,8 @@ public class QuestionDO implements Serializable{
     * 题目类型（0单选 1多选）
     */
     private String type;
+    //图片
+    private String img; 
     /**
     * 排序
     */
@@ -163,6 +167,13 @@ public class QuestionDO implements Serializable{
 	}
 	public void setIfStop(String ifStop) {
 		this.ifStop = ifStop;
+	}
+	
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
 	}
 	@Override
 	public String toString() {

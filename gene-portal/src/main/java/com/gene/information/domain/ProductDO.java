@@ -29,6 +29,9 @@ public class ProductDO implements Serializable {
 	//问卷ID
 	private Integer paperId;
 	
+	//是否检测 0=未检测  1=已检测
+	private Integer ifCheck;
+	
 	public Integer getPaperId() {
 		return paperId;
 	}
@@ -95,4 +98,12 @@ public class ProductDO implements Serializable {
 	public String getDescription() {
 		return description;
 	}
+	public Integer getIfCheck() {
+		return ifCheck;
+	}
+	public void setIfCheck(Integer ifCheck) {
+		this.ifCheck = ifCheck;
+	}
+	
+	
 }

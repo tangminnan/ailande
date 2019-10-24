@@ -1,5 +1,5 @@
-gene:
-  uploadPath: /www/uploaded_files/
+ailande:
+  uploadPath: D:/var/uploaded_files/
 logging:
   level:
     root: info

@@ -18,7 +18,7 @@
 <body class="bg-cc">
 	<div class="tit">
 		<a href="" class="fanhui" title="返回"></a>
-		<h3 class="space center">基本信息</h3>
+		<h3 class="space center title">基本信息</h3>
 		<p>
 			<a title="点击前面的按钮"></a>
 			<a title="点击后面的按钮"></a>
@@ -40,44 +40,59 @@
 				<li th:each="choice:${question.choiceList}">
 					<span th:text="${choice.content}"></span>
 					<span name="choseID" style="display:none;" th:text="${choice.id}"></span>
-					<span name="questionID" th:text="${question.id}"></span>
-					<span name="paperID" th:text="${question.paperId}"></span>
+					<span name="questionID" th:text="${question.id}" style="display:none;"></span>
+					<span name="customerPaperId" th:text="${question.paperId}" style="display:none;"></span>
 				</li>
 			</ul>
 		</div>
 	</div>
+	<input name="flagg" th:value="${flag}" type="hidden">
+	<input id="lei" th:value="${LEI}" type="hidden">
 	<script type="text/javascript">
-		var questionArry=[];
+		var flag=$("[name='flagg']").val();
+		if(flag==0) $("h3.title").text("基本信息");
+		if(flag==1) $("h3.title").text("身体状况");
+		if(flag==2) $("h3.title").text("膳食习惯");
+		if(flag==3) $("h3.title").text("生活方式");
+		if(flag==4) $("h3.title").text("睡眠与压力");
+		if(flag==5) $("h3.title").text("运动习惯");
+		
+		
+		var questionArry=[], arry=[];
 		$(".name").append($("#allQuestion div:first-child"));
 		$("p a").first().click(function(){
+			$(".imgChoose").each(function(){
+				var chooseId=$(this).children("[name='choseID']").text();//选项id
+				var questionId=$(this).children("[name='questionID']").text();//问题id
+				var customerPaperId=$(this).children("[name='customerPaperId']").text();
+				var fenlei=$("#lei").val();
+				/* 	var paperId=$(this).children("[name='paperID']").text(); */
+				var obj={'choiceId':chooseId,'questionId':questionId,'customerPaperId':customerPaperId,'fenlei':fenlei};
+				arry.push(obj);
+			});
 			var count=$("#allQuestion").children().length;
 			if(count>0){
 				questionArry.push($(".name div:last-child").remove());
 				$(".name").append($("#allQuestion div:first-child"));
 			}
 			//触发ajax请求
-			var arry=[];
-			$(".imgChoose").each(function(){
-				var chooseId=$(this).children("[name='choseID']").text();//选项id
-				var questionId=$(this).children("[name='questionID']").text();//问题id
-				var customerPaperId=$(this).children("[name='customerPaperId']").text();
-				var paperId=$(this).children("[name='paperID']").text();
-				var obj={'choiceId':chooseId,'questionId':questionId,'customerPaperId':customerPaperId,'paperId':paperId};
-				arry.push(obj);
+			else{
+				$.ajax({
+					type : "POST",
+					url : "/paper/saveWenJuan",
+					traditional:true,
+					data:{objs:JSON.stringify(arry)},
+					success : function(data) {
+						if(data.code==0){
+							flag++;
+							window.location.href="/paper/fenlei?flag="+flag;
+						}
+						else
+							alert(data.msg);
+					}
+				});
+			}
 			});
-			$.ajax({
-				type : "POST",
-				url : "/paper/saveWenJuan",
-				traditional:true,
-				data:{objs:JSON.stringify(arry)},
-				success : function(data) {
-					if(data.code==0)
-						window.location.href="/paper/fenlei?flag=2";
-					else
-						alert(data.msg);
-				}
-			});
-		});
 		
 		
 		$(".pre a").last().click(function(){

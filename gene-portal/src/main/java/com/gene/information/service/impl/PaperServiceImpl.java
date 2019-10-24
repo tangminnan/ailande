@@ -22,6 +22,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.gene.common.utils.R;
 import com.gene.information.dao.PaperDao;
+import com.gene.information.domain.AnswerDO;
 import com.gene.information.domain.ChoiceProductDO;
 import com.gene.information.domain.CustomerPaperDO;
 import com.gene.information.domain.ProductDO;
@@ -39,8 +40,21 @@ public class PaperServiceImpl implements PaperService{
 	 * 获取所有的产品
 	 */
 	@Override
-	public Map<String, Object> getAllProduct() {
+	public Map<String, Object> getAllProduct(HttpServletRequest request) {
 		List<ProductDO> list=paperDao.getAllProduct();
+		CustomerPaperDO customerPaperDO= (CustomerPaperDO) request.getSession().getAttribute("customerPaperDO");
+		if(customerPaperDO!=null){
+			Integer user = customerPaperDO.getId();
+			for(ProductDO productDO :list){
+				ProductpaperDO productpaperDO = new ProductpaperDO();
+				productpaperDO.setUser(user);
+				productpaperDO.setProduct(productDO.getId());
+				if(paperDao.listProductPaperDO(productpaperDO).size()>0)
+					productDO.setIfCheck(1);//已检测
+				else
+					productDO.setIfCheck(0);//未检测
+			}
+		}
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("code", 0);
 		map.put("msg", "success");
@@ -104,13 +118,58 @@ public class PaperServiceImpl implements PaperService{
 		JSONArray jsonArray = JSON.parseArray(objs);
 		for(int i=0;i<jsonArray.size();i++){
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
-			Integer choiceId=jsonObject.getInteger("choiceId");
-			Integer questionId=jsonObject.getInteger("questionId");
-			Integer customerPaperId=jsonObject.getInteger("customerPaperId");
-			Integer paperId=jsonObject.getInteger("paperId");
+			Integer choiceId=jsonObject.getInteger("choiceId");//选项ID
+			Integer questionId=jsonObject.getInteger("questionId");//题目ID
+			Integer customerPaperId=jsonObject.getInteger("customerPaperId");//问卷ID
+			String fenlei=jsonObject.getString("fenlei");
 			CustomerPaperDO customerPaperDO= (CustomerPaperDO) request.getSession().getAttribute("customerPaperDO");
-			
+			List<Integer> list=  customerPaperDO.getList();
+			for(int j=0;j<list.size();j++){
+				AnswerDO answerDO = new AnswerDO();
+				answerDO.setProductpaper(list.get(j));//记录的ID
+				answerDO.setChoiceId(choiceId);//选项ID
+				answerDO.setCustomerPaperId(customerPaperId);//问卷ID
+				answerDO.setQuestionId(questionId);//问题ID
+			    answerDO.setFenlei(fenlei);
+				/***************以下的代码有点垃圾，执行效率慢，时间紧张，有空的时候优化下*****/
+				ProductpaperDO productpaperDO = paperDao.getProductpaperDO(answerDO.getProductpaper());
+				if(productpaperDO!=null){
+					Integer product = productpaperDO.getProduct();
+					ChoiceProductDO choiceProductDO = paperDao.getChoiceProductDO(product,answerDO.getChoiceId());
+					answerDO.setScore(choiceProductDO.getScore());
+				}
+				/***************以下的代码有点垃圾，执行效率慢，时间紧张，有空的时候优化下*****/
+				paperDao.saveAnswerDO(answerDO);
+				
+			}
 		}
-		return null;
+		return R.ok();
+	}
+
+	@Override
+	public ProductpaperDO getProductPaperDO(Integer user, Integer product) {
+		return paperDao.getProductPaperDO(user,product);
+	}
+
+	
+
+	@Override
+	public List<QuestionDO> getQuestionDOList(Integer productpaper, String fenlei) {
+		return paperDao.getQuestionDOList(productpaper,fenlei);
+	}
+	/**
+	 * 计算得分
+	 */
+	@Override
+	public Integer getChoicedScores(Integer productpaper, String fenlei) {
+		return paperDao.getChoicedScores(productpaper,fenlei);
+	}
+
+	/**
+	 * 计算分类总分
+	 */
+	@Override
+	public Integer getAllChoicedScores(Integer productpaper,Integer product, String fenlei) {
+		return paperDao.getAllChoicedScores(productpaper,product,fenlei);
 	}
 }

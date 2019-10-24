@@ -62,6 +62,8 @@ public class ChoiceProductDO implements Serializable {
 	private String tadjianyis;
 	//产品名字
 	private String productName;
+	//选项内容
+	private String choicecontent;
 	public Integer getId() {
 		return id;
 	}
@@ -203,6 +205,13 @@ public class ChoiceProductDO implements Serializable {
 	}
 	public void setProduct(Integer product) {
 		this.product = product;
+	}
+	
+	public String getChoicecontent() {
+		return choicecontent;
+	}
+	public void setChoicecontent(String choicecontent) {
+		this.choicecontent = choicecontent;
 	}
 	@Override
 	public String toString() {
