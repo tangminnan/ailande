@@ -59,5 +59,9 @@ public interface PaperDao {
 	Integer getChoicedScores(@Param("productpaper") Integer productpaper,@Param("fenlei") String fenlei);
 	
 	Integer getAllChoicedScores(@Param("productpaper") Integer productpaper,@Param("product") Integer product,@Param("fenlei") String fenlei);
+	/**
+	 * 获取问卷的题目数量
+	 */
+	int countPaperQuestion(Integer i);
 
 }

@@ -28,8 +28,23 @@
 		<div class="pre">
 			<a >< 上一题</a>
 			<progress value="50" max="100"></progress>
-			<span>50%</span>
+			<span class="baifen">50%</span>
 		</div>
+		
+	</div>
+	
+	<div id="jibenxinxi" style="display: none">
+		<div th:each="question:${list}">
+			<p align="center" th:text="${question.contenw}"></p>
+		 	<div class="yes center">
+		 		<input name="questionId" type="hidden" th:value="${question.id}"/>
+		 		<input name="customerPaperId" th:value="${question.paperId}" type="hidden">
+				<input name="tiankonganswer" type="text" placeholder=""/>
+			</div> 
+		</div>
+	</div>
+	
+	<div id="xingbie" style="display: none;">
 		<div class="sex center">
 			<h2>性别</h2>
 			<p>
@@ -38,83 +53,80 @@
 			</p>
 		</div>
 	</div>
-	
-	<div id="jibenxinxi" style="display: none">
-		<div>
-			<p align="center">年龄</p>
-		 	<div class="yes center">
-				<input name="age" type="text" placeholder="请输入您的年龄"/>
-			</div> 
-			<div class="beizhu center">*暂不对18周岁一下的未成年人提供营养服务</div>
-		</div>
-		<div>
-			<p align="center">身高（米）</p>
-		 	<div class="yes center">
-				<input name="high" type="text" placeholder="请输入您的身高"/>
-			</div> 
-		</div>
-		<div>
-			<p align="center">体重（公斤）</p>
-		 	<div class="yes center">
-				<input name="weight" type="text" placeholder="请输入您的体重"/>
-			</div> 
-		</div>
-		<div>
-			<p align="center">手机</p>
-		 	<div class="yes center">
-				<input name="phone" type="text" placeholder="请输入您的手机"/>
-			</div> 
-		</div>
-		<div>
-			<p align="center">邮箱</p>
-		 	<div class="yes center">
-				<input name="email" type="text" placeholder="请输入您的邮箱"/>
-			</div> 
-		</div>
-	</div>
 	<input id="lei" th:value="${LEI}" type="hidden">
+	<input id="count" th:value="${count}" type="hidden">
+	<input id="index" th:value="${index}" type="hidden">
 </body>
 <script type="text/javascript">
-	var num=1,obj={},nodearry=[];
+ $("#jibenxinxi div").each(function(){
+	 var text=$(this).children("p").text();
+	 if(text=='性别'){
+		 $("#xingbie").find("p").append($(this).find("[name='questionId']")).append($(this).find("[name='customerPaperId']"));
+		$(this).replaceWith($("#xingbie").html());
+		
+	 }
+	if(text=='年龄')
+		$(this).append('<div class="beizhu center">*暂不对18周岁一下的未成年人提供营养服务</div>');
+	$(this).find("[name='tiankonganswer']").attr("placeholder","请输入你的"+text);
+}); 
+
+  
+
+
+	var questionArry=[], arry=[],index=$("#index").val();
+
+		  var countb=$("#count").val();
+		  var baifen = Math.round(index*100/countb);
+		  $(".baifen").text(baifen+'%');
+		  $(".baifen").prev().val(baifen);
+	 
+	$(".name").append($("#jibenxinxi div:first-child"));
 	$("p a").first().click(function(){
-		if($(".name").find("input").attr("name")=="email"){
-			obj.email=$("[name='email']").val();
-		/* 	obj.fenlei=$("#lei").val(); 此处以后再处理*/
+		var customerPaperId=$(".name").find("[name='customerPaperId']").val();
+		var questionId=$(".name").find("[name='questionId']").val();
+		var tiankonganswer=$(".name").find(".imgChoose").val();
+	    if(tiankonganswer==undefined)
+	    	tiankonganswer=$(".name").find("[name='tiankonganswer']").val();
+	    var obj={'questionId':questionId,'tiankonganswer':tiankonganswer,'fenlei':'JIBEN_XINXI','customerPaperId':customerPaperId};
+		arry.push(obj);
+		var count=$("#jibenxinxi").children().length;
+		if(count>0){
+			questionArry.push($(".name").children().last().remove());
+			$(".name").append($("#jibenxinxi div:first-child"));
+			console.info(questionArry);
+			 
+			 index++;
+			 countb=$("#count").val();
+			 baifen = Math.round(index*100/countb);
+			 $(".baifen").text(baifen+'%');
+			 $(".baifen").prev().val(baifen);
+		}
+		else{
 			$.ajax({
 				type : "POST",
-				url : "/paper/saveJiBenXinxi",
-				data : obj,// 你的formid
+				url : "/paper/saveWenJuan",
+				data : {objs:JSON.stringify(arry)},// 你的formid
 				async : false,
 				success : function(data) {
 					if(data.code==0)
-						window.location.href="/paper/fenlei?flag=1";
+						window.location.href="/paper/fenlei?flag=1&index="+index+"&count="+countb;
 					else
 						alert(data.msg);
 				}
 			});
 		}
-		else{
-			if($(".name").find("input").hasClass("imgChoose"))
-				obj.sex=$(".imgChoose").val();//性别特殊处理
-			else{
-				var name=$(".name").find("input").attr("name");
-				var val=$(".name").find("input").val();
-				obj[name]=val;
-			}
-			nodearry.push($(".name").children().last().remove());
-			$(".name").append($("#jibenxinxi div:nth-child("+num+")"));
-		}
 	});
 	
+	//性别处理
 	$(":button").click(function(){
 		$(this).addClass("imgChoose").siblings().removeClass("imgChoose");
 	});
 	
 	$(".pre a").click(function(){
-		if(!$(".name").find("input").hasClass("imgChoose")){
+		if(questionArry.length>0){
 			$("#jibenxinxi").prepend($(".name").children().last().remove());
 			
-			$(".name").append(nodearry.pop());
+			$(".name").append(questionArry.pop());
 		}
 	});
 </script>

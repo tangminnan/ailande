@@ -175,7 +175,7 @@
            							<div class="form-group">
            								<label class="col-sm-1 control-label"></label>
            	 							<div class="col-sm-2">
-                							<input name="score" th:value="${product.score}" type="number" class="form-control required" placeholder="分值">
+                							<input name="score" th:value="${product.score}" type="number" class="form-control" placeholder="分值">
             							</div>
             							<div class="col-sm-2">
                 							<input name="tadf" th:value="${product.tadf}" type="text" class="form-control" placeholder="调整方向1">
@@ -275,7 +275,7 @@
                 						<input name="value" type="hidden" class="form-control">
             						</div>
            	 						<div class="col-sm-2">
-                						<input name="scores" th:value="${product.scores}" type="number" class="form-control required" placeholder="分值">
+                						<input name="scores" th:value="${product.scores}" type="number" class="form-control" placeholder="分值">
             						</div>
             						<div class="col-sm-2">
                 						<input name="tadfs" type="text" th:value="${product.tadfs}" class="form-control" placeholder="调整方向1">
@@ -718,7 +718,7 @@ function getData() {
     	if($(obj).parents(".ibox-content").find("[name='ifStop']").val()=="YUN_DONG")
     		$(obj).parent().parent().parent().parent().append($(".yundonglei").html());
     	else
-			$(obj).parent().parent().parent().parent().append($(".yundonglei").html());	
+			$(obj).parent().parent().parent().parent().append($(".qitalei").html());	
     }
 
     function removeChoice(obj) {

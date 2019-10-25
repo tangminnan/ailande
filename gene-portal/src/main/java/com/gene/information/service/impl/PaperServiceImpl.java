@@ -122,18 +122,21 @@ public class PaperServiceImpl implements PaperService{
 			Integer questionId=jsonObject.getInteger("questionId");//题目ID
 			Integer customerPaperId=jsonObject.getInteger("customerPaperId");//问卷ID
 			String fenlei=jsonObject.getString("fenlei");
+			String tiankonganswer=jsonObject.getString("tiankonganswer");
 			CustomerPaperDO customerPaperDO= (CustomerPaperDO) request.getSession().getAttribute("customerPaperDO");
 			List<Integer> list=  customerPaperDO.getList();
 			for(int j=0;j<list.size();j++){
 				AnswerDO answerDO = new AnswerDO();
 				answerDO.setProductpaper(list.get(j));//记录的ID
+				
 				answerDO.setChoiceId(choiceId);//选项ID
 				answerDO.setCustomerPaperId(customerPaperId);//问卷ID
 				answerDO.setQuestionId(questionId);//问题ID
 			    answerDO.setFenlei(fenlei);
+			    answerDO.setTiankonganswer(tiankonganswer);
 				/***************以下的代码有点垃圾，执行效率慢，时间紧张，有空的时候优化下*****/
 				ProductpaperDO productpaperDO = paperDao.getProductpaperDO(answerDO.getProductpaper());
-				if(productpaperDO!=null){
+				if(productpaperDO!=null && !"JIBEN_XINXI".equals(fenlei)){
 					Integer product = productpaperDO.getProduct();
 					ChoiceProductDO choiceProductDO = paperDao.getChoiceProductDO(product,answerDO.getChoiceId());
 					answerDO.setScore(choiceProductDO.getScore());
@@ -171,5 +174,23 @@ public class PaperServiceImpl implements PaperService{
 	@Override
 	public Integer getAllChoicedScores(Integer productpaper,Integer product, String fenlei) {
 		return paperDao.getAllChoicedScores(productpaper,product,fenlei);
+	}
+	
+	/**
+	 * 获取题目数量
+	 */
+	@Override
+	public int getgetQuestionDOSize(Integer[] products) {
+		Set<Integer> set = new HashSet<Integer>();
+		for(int i=0;i<products.length;i++){
+			ProductDO productDO=paperDao.getProductByProductId(products[i]);
+			set.add(productDO.getPaperId());
+		}
+		int count=0;
+		for(Integer i:set){
+			count+=paperDao.countPaperQuestion(i);
+		}
+		
+		return count;
 	}
 }

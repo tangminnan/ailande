@@ -40,7 +40,7 @@
 					<dl>
 						<dt>您的健康行为评估</dt>
 						<dd class="more"><a id="ccc">查看详情</a></dd>
-						<dd class="score"><span th:text="${yinshi60}"></span>分（一般）</dd>
+						<dd class="score"><span th:text="${yinshi60}"></span><span class="yyy">分（一般）</span></dd>
 					</dl>
 					<div class="biaoqing shufu"><!--默认一般，“buhao”，“shufu”--></div>
 				</div>
@@ -86,7 +86,7 @@
   	  			<div class="center">
   	   				<img src="../images/henhao.png" alt=""/>
   	  				<p class="p2">饮食与生活习惯得分</p>
-  	  				<p class="p3"><span th:text="${yinshi60}"></span>分（一般）</p>
+  	  				<p class="p3"><span th:text="${yinshi60}"></span><span class="yyy">分（一般）</span></p>
   	 			</div>
   	 			<p class="zhanbi space center">肠道问题成因占比</p>
   	  			<ul class="zhanbi-lt center">
@@ -168,17 +168,17 @@
 	
 	
 	var yinshi = $("#yinshi60").val();
-	if(yinshi>=80) $(".biaoqing").removeClass("buhao shufu").addClass("shufu");
-	if(yinshi<80 && fenshua>=60) $(".biaoqing").removeClass("buhao shufu").addClass("yiban");
-	if(yinshi<60) $(".biaoqing").removeClass("buhao shufu");
+	if(yinshi>=80){ $(".biaoqing").removeClass("buhao shufu").addClass("shufu");$(".yyy").text("分（较好）")}
+	if(yinshi<80 && fenshua>=60){ $(".biaoqing").removeClass("buhao shufu").addClass("yiban");$(".yyy").text("分（一般）")}
+	if(yinshi<60){ $(".biaoqing").removeClass("buhao shufu");$(".yyy").text("分（较低）")}
 	
 	$("body").on("click",".list_dt",function () {
 	$('.list_dd').stop();
 	$(this).siblings("dt").removeAttr("id");
 	if($(this).attr("id")=="open"){
-		$(this).removeAttr("id").siblings("dd").slideUp();
+		$(this).removeAttr("id").siblings("dd").not(".jbs").slideUp();
 	}else{
-		$(this).attr("id","open").next().slideDown().siblings("dd").slideUp();
+		$(this).attr("id","open").next().slideDown().siblings("dd").not(".jbs").slideUp();
 	}
 });
 	/**
@@ -275,7 +275,7 @@ $(".zhidao input").last().click(function(){
 		}
 	});
 
-  
+ 
 </script>
 </body>
 </html>

@@ -27,23 +27,36 @@
 	<div class="name">
 		<div class="pre">
 			<a href="">< 上一题</a>
-			<progress value="50" max="100"></progress>
-			<span>50%</span>
+			<progress value="0" max="100"></progress>
+			<span>0%</span>
 		</div>
 		<p align="center">姓名</p>
 		 <div class="yes center">
 			<input id="name" type="text" placeholder="请输入您的姓名"/>
 		</div> 
 	</div>
+	<input id="count" th:value="${count}" type="hidden">
+	<input id="index" th:value="${index}" type="hidden">
 	<script type="text/javascript">
+	  var countb=$("#count").val();
+	  var index=$("#index").val();
+	  index++;
+	  var baifen = Math.round(index*100/countb);
+	 
+	  $(".baifen").text(baifen+'%');
+	  $(".baifen").prev().val(baifen);
 		$("p a").first().click(function(){
 			if($("#name").val()==''){
 				alert("请输入姓名");
 				return;
 			}
 			
-			window.location.href="/paper/saveYourName?name="+$("#name").val();
+			window.location.href="/paper/saveYourName?name="+$("#name").val()+"&index="+index+"&count="+countb;
 		});
+		
+		
+			 
+		 
 	</script>
 </body>
 </html>

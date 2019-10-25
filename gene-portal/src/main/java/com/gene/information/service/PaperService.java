@@ -50,5 +50,7 @@ public interface PaperService {
 	 * 计算分类总分
 	 */
 	Integer getAllChoicedScores(Integer productpaper,Integer product, String fenlei);
+	
+	int getgetQuestionDOSize(Integer[] products);
 
 }

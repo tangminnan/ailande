@@ -26,9 +26,20 @@
 		<p class="space">欢迎来到BioCare营养健康<br/>方案定制服务</p>
 	</div>
 	<img class="miqi" src="../images/miqi.png" alt=""/>
+	<input id="count" th:value="${count}" type="hidden">
+	<input id="index" th:value="${index}" type="hidden">
 	
 	<script type="text/javascript">
-	 window.setTimeout("window.location.href='/paper/fenlei?flag=0'",1500);
+	  var countb=$("#count").val();
+	  var index=$("#index").val();
+	  var baifen = Math.round(index*100/countb);
+	  $(".baifen").text(baifen+'%');
+	  $(".baifen").prev().val(baifen);
+	 var url='/paper/fenlei?flag=0&index='+index+'&count='+countb
+	 window.setTimeout("window.location.href='/paper/fenlei?flag=0&index="+index+"&count="+countb+"'",1500);
+	
+		  
+	
 	</script>
 </body>
 </html>

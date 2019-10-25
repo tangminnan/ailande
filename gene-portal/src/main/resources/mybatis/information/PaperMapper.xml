@@ -41,7 +41,7 @@
 	</insert>
 	
 	<update id="updateCustomerPaperDO" parameterType="com.gene.information.domain.CustomerPaperDO">
-		update biz_customer_paper set high=#{high},sex=#{sex},weight=#{weight},age=#{age},phone=#{phone},email=#{email}
+		update biz_customer_paper set high=#{high},sex=#{sex},bmi=#{bmi},weight=#{weight},age=#{age},phone=#{phone},email=#{email}
   		where id=#{id}
 	</update>
 	
@@ -53,7 +53,8 @@
   			question_id,
   			productpaper,
   			score,
-  			fenlei
+  			fenlei,
+  			tiankonganswer
   		)
   		values(
   			#{customerPaperId},
@@ -61,7 +62,8 @@
   			#{questionId},
   			#{productpaper},
   			#{score},
-  			#{fenlei}
+  			#{fenlei},
+  			#{tiankonganswer}
   		)
 	</insert>
 	
@@ -261,5 +263,9 @@ where n.paper_id=#{integer} and n.category=#{flag}
 				productpaper = #{productpaper})
 
 		
+	</select>
+	
+	<select id="countPaperQuestion" resultType="int">
+		select count(1) from qu_question where paper_id=#{value}
 	</select>
 </mapper>

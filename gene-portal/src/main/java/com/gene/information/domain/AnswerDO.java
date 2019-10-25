@@ -29,6 +29,8 @@ public class AnswerDO implements Serializable {
 	private Integer score;
 	//题目分类
 	private String fenlei;
+	//填空题答案
+	private String tiankonganswer;
 	/**
 	 * 设置：ID
 	 */
@@ -94,6 +96,12 @@ public class AnswerDO implements Serializable {
 	}
 	public void setFenlei(String fenlei) {
 		this.fenlei = fenlei;
+	}
+	public String getTiankonganswer() {
+		return tiankonganswer;
+	}
+	public void setTiankonganswer(String tiankonganswer) {
+		this.tiankonganswer = tiankonganswer;
 	}
 	
 	

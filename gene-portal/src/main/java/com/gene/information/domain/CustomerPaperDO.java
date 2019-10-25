@@ -35,6 +35,7 @@ public class CustomerPaperDO implements Serializable {
 	private String phone;
 	//创建时间
 	private Date createTime;
+	private Integer bmi;
 	
 	private List<Integer> list = new ArrayList<Integer>();
 	/**
@@ -127,6 +128,10 @@ public class CustomerPaperDO implements Serializable {
 	public void setList(List<Integer> list) {
 		this.list = list;
 	}
-	
-	
+	public Integer getBmi() {
+		return bmi;
+	}
+	public void setBmi(Integer bmi) {
+		this.bmi = bmi;
+	}
 }

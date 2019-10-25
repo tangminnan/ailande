@@ -27,8 +27,8 @@
 	<div class="name">
 		<div class="pre">
 			<a>< 上一题</a>
-			<progress value="50" max="100"></progress>
-			<span>50%</span>
+			<progress value="0" max="100"></progress>
+			<span class="baifen">0</span>
 		</div>
 			
 	</div>
@@ -48,7 +48,12 @@
 	</div>
 	<input name="flagg" th:value="${flag}" type="hidden">
 	<input id="lei" th:value="${LEI}" type="hidden">
+	<input id="count" th:value="${count}" type="hidden">
+	<input id="index" th:value="${index}" type="hidden">
+	
 	<script type="text/javascript">
+	
+	
 		var flag=$("[name='flagg']").val();
 		if(flag==0) $("h3.title").text("基本信息");
 		if(flag==1) $("h3.title").text("身体状况");
@@ -59,6 +64,14 @@
 		
 		
 		var questionArry=[], arry=[];
+		
+			  var countb=$("#count").val();
+			  var index=$("#index").val();
+			  index=parseInt(index)+1;
+			  var baifen = Math.round(index*100/countb);
+			  $(".baifen").text(baifen+'%');
+			  $(".baifen").prev().val(baifen);
+		
 		$(".name").append($("#allQuestion div:first-child"));
 		$("p a").first().click(function(){
 			$(".imgChoose").each(function(){
@@ -74,6 +87,12 @@
 			if(count>0){
 				questionArry.push($(".name div:last-child").remove());
 				$(".name").append($("#allQuestion div:first-child"));
+				
+				 index++;
+				 countb=$("#count").val();
+				 baifen = Math.round(index*100/countb);
+				 $(".baifen").text(baifen+'%');
+				 $(".baifen").prev().val(baifen);
 			}
 			//触发ajax请求
 			else{
@@ -81,11 +100,11 @@
 					type : "POST",
 					url : "/paper/saveWenJuan",
 					traditional:true,
-					data:{objs:JSON.stringify(arry)},
+					data:{objs:JSON.stringify(arry),'index':index},
 					success : function(data) {
 						if(data.code==0){
 							flag++;
-							window.location.href="/paper/fenlei?flag="+flag;
+							window.location.href="/paper/fenlei?flag="+flag+"&index="+index+"&count="+countb;
 						}
 						else
 							alert(data.msg);

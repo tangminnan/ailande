@@ -58,34 +58,47 @@ public class PaperController {
 	
 	@Log("输入姓名")
 	@GetMapping("/enterName")
-	public String enterName(){
+	public String enterName(Model model,HttpServletRequest request){
+		Integer[] products = (Integer[])request.getSession().getAttribute("products");
+		int count = paperService.getgetQuestionDOSize(products);
+		model.addAttribute("count", count);
+		model.addAttribute("index", 0);
 		return "information/jibenxinxi";
 	}
     
 	@Log("保存")
 	@GetMapping("/saveYourName")
-	public String saveYourName(String name,HttpServletRequest request,Model model){
+	public String saveYourName(String name,Integer index,Integer count,HttpServletRequest request,Model model){
 		Integer[] products = (Integer[])request.getSession().getAttribute("products");
 		CustomerPaperDO customerPaperDO = paperService.saveChoosedProduct(products,name);
 		request.getSession().setAttribute("customerPaperDO", customerPaperDO);
 		model.addAttribute("name", name);
+		model.addAttribute("index",index);
+		model.addAttribute("count", count);
 		return "information/jibenxinxi2";
 	}
 	
 	@Log("跳转答题分类页面")
 	@GetMapping("/fenlei")
-	public String fenlei(int flag,Model model){
+	public String fenlei(int flag,Integer count,Model model,Integer index,HttpServletRequest request){
+	
 		model.addAttribute("flag",flag);
+		model.addAttribute("count", count);
+		model.addAttribute("index", index);
 		return "information/jibenxinxi3";
 	}
 	
 	@Log("开始答题")
 	@GetMapping("/beginAnswer")
-	public String beginAnswer(Integer flag,Model model,HttpServletRequest request){
+	public String beginAnswer(Integer flag,Integer count,Integer index,Model model,HttpServletRequest request){
 		Integer[] products = (Integer[])request.getSession().getAttribute("products");
+		model.addAttribute("index", index);
 		List<QuestionDO> list=null;
-		String fenlei="";
+		
+		model.addAttribute("count", count);
 		if(flag==0){//基本信息
+			list=paperService.getQuestionDOType(products,"JIBEN_XINXI");
+			model.addAttribute("list",list);
 			model.addAttribute("LEI","JIBEN_XINXI");
 			return "information/jibenxinxi4";
 		}
@@ -113,6 +126,7 @@ public class PaperController {
 			return "information/baogao-1";
 		}
 		model.addAttribute("list",list);
+		
 		model.addAttribute("flag", flag);
 		return "information/jibenxinxi6";
 	}
