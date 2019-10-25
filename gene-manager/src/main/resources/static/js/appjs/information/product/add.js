@@ -39,9 +39,22 @@ function validateRule() {
 			code : {
 				required : true
 			},
-			paperId：{
+			paperId : {
 				required : true
+
 			}
+
+		
+			/*name : {
+				required : true
+			},
+			description : {
+				required : true
+			},
+			paperId : {
+				required : true
+			},*/
+
 		},
 		messages : {
 			code : {
@@ -49,7 +62,20 @@ function validateRule() {
 			},
 			paperId : {
 				required : icon + "问卷不能为空"
-			}
+
+
+
+			},
+			/*name : {
+				required : icon + "请输入名称"
+			},
+			description : {
+				required : icon + "请输入简介"
+			},
+			paperId : {
+				required : icon + "请选择问卷"
+			},*/
+
 		}
 	})
 }
