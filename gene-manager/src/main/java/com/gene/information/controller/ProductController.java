@@ -51,7 +51,6 @@ public class ProductController {
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
-        query.put("delFlag", "0");
 		List<ProductDO> productList = productService.list(query);
 		int total = productService.count(query);
 		PageUtils pageUtils = new PageUtils(productList, total);

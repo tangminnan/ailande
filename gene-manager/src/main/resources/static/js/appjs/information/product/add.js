@@ -39,9 +39,9 @@ function validateRule() {
 			code : {
 				required : true
 			},
-			paperId：{
+			paperId : {
 				required : true
-			}
+			},
 			/*name : {
 				required : true
 			},
@@ -58,7 +58,7 @@ function validateRule() {
 			},
 			paperId : {
 				required : icon + "问卷不能为空"
-			}
+			},
 			/*name : {
 				required : icon + "请输入名称"
 			},
