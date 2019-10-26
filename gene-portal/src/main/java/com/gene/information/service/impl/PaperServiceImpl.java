@@ -67,11 +67,19 @@ public class PaperServiceImpl implements PaperService{
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
-	public CustomerPaperDO saveChoosedProduct(Integer[] products,String name) {
-		CustomerPaperDO customerPaperDO=new CustomerPaperDO();
-		customerPaperDO.setUsername(name);
-		customerPaperDO.setCreateTime(new Date());
-		paperDao.saveCustomerPaperDO(customerPaperDO);
+	public CustomerPaperDO saveChoosedProduct(Integer[] products,String name,HttpServletRequest request) {
+		CustomerPaperDO customerPaperDO=null;
+		Integer user=null;
+		if(name!=null){
+			customerPaperDO=new CustomerPaperDO();
+			customerPaperDO.setUsername(name);
+			customerPaperDO.setCreateTime(new Date());
+			paperDao.saveCustomerPaperDO(customerPaperDO);
+		}
+		else
+			 customerPaperDO = (CustomerPaperDO) request.getSession().getAttribute("customerPaperDO");
+		
+			user=customerPaperDO.getId();
 		List<Integer> list = new ArrayList<Integer>();
 		for(int i=0;i<products.length;i++){
 			ProductDO productDO=paperDao.getProductByProductId(products[i]);
@@ -82,7 +90,7 @@ public class PaperServiceImpl implements PaperService{
 				productpaperDO.setStatus("0");//未完成
 				productpaperDO.setAnswerTime(new Date());
 				productpaperDO.setRemark("用户答题");
-				productpaperDO.setUser(customerPaperDO.getId());
+				productpaperDO.setUser(user);
 				paperDao.saveProductPaperDO(productpaperDO);
 				list.add(productpaperDO.getId());
 			}

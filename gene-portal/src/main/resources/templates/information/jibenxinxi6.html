@@ -13,11 +13,12 @@
 <script type="text/javascript" src="../js/Font.js"></script>
 <style type="text/css">
 	.imgChoose{border:.04rem solid #228DCD;}
+	
 </style>
 </head>
 <body class="bg-cc">
 	<div class="tit">
-		<a href="" class="fanhui" title="返回"></a>
+		<a href="javascript:history.back(-1)" class="fanhui" title="返回"></a>
 		<h3 class="space center title">基本信息</h3>
 		<p>
 			<a title="点击前面的按钮"></a>
@@ -32,13 +33,19 @@
 		</div>
 			
 	</div>
+	<div class="nev">
+			<a > 下一题  <i class="xiti">></i></a>
+			
+		</div>
 	<div style="display: none;" id="allQuestion">
 		<div class="bianbian" th:each="question:${list}">
 			<input name="type" type="hidden" th:value="${question.type}"/>
+			<input type="hidden" name="bt" th:value="${question.img}">
 			<h3 align="center" th:text="${question.contenw}"></h3>
 			<ul>
 				<li th:each="choice:${question.choiceList}">
 					<span th:text="${choice.content}"></span>
+					
 					<span name="choseID" style="display:none;" th:text="${choice.id}"></span>
 					<span name="questionID" th:text="${question.id}" style="display:none;"></span>
 					<span name="customerPaperId" th:text="${question.paperId}" style="display:none;"></span>
@@ -63,34 +70,37 @@
 		if(flag==5) $("h3.title").text("运动习惯");
 		
 		
-		var questionArry=[], arry=[];
-		
+			var questionArry=[], arry=[];
 			  var countb=$("#count").val();
 			  var index=$("#index").val();
 			  index=parseInt(index)+1;
-			  var baifen = Math.round(index*100/countb);
+			  var baifen = Math.floor(index*100/countb);
 			  $(".baifen").text(baifen+'%');
 			  $(".baifen").prev().val(baifen);
 		
 		$(".name").append($("#allQuestion div:first-child"));
-		$("p a").first().click(function(){
+		var ur=$(".name").find("[name='bt']").val();
+		$(".name h3").css('background','url('+ur+') no-repeat top center');
+		$(".nev a").click(function(){
 			$(".imgChoose").each(function(){
 				var chooseId=$(this).children("[name='choseID']").text();//选项id
 				var questionId=$(this).children("[name='questionID']").text();//问题id
 				var customerPaperId=$(this).children("[name='customerPaperId']").text();
 				var fenlei=$("#lei").val();
-				/* 	var paperId=$(this).children("[name='paperID']").text(); */
+				
 				var obj={'choiceId':chooseId,'questionId':questionId,'customerPaperId':customerPaperId,'fenlei':fenlei};
 				arry.push(obj);
 			});
 			var count=$("#allQuestion").children().length;
 			if(count>0){
 				questionArry.push($(".name div:last-child").remove());
-				$(".name").append($("#allQuestion div:first-child"));
+				var node=$("#allQuestion div:first-child");
+				$(".name").append(node);
+				$(".name h3").css('background','url('+node.find("[name='bt']").val()+') no-repeat top center');
 				
 				 index++;
 				 countb=$("#count").val();
-				 baifen = Math.round(index*100/countb);
+				 baifen = Math.floor(index*100/countb);
 				 $(".baifen").text(baifen+'%');
 				 $(".baifen").prev().val(baifen);
 			}
@@ -117,7 +127,10 @@
 		$(".pre a").last().click(function(){
 			if(questionArry.length>0){
 				$("#allQuestion").prepend($(".name div:last-child").remove());
-				$(".name").append(questionArry.pop());
+				var node=questionArry.pop();
+				$(".name").append(node);
+				$(".name h3").css('background','url('+node.find("[name='bt']").val()+') no-repeat top center');
+				index--;
 			}
 		});
 		

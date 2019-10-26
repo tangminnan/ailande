@@ -14,7 +14,7 @@
 </head>
 <body class="bg-cc">
 	<div class="tit">
-		<a href="" class="fanhui" title="返回"></a>
+		<a href="javascript:history.back(-1)" class="fanhui" title="返回"></a>
 		<h3 class="space center">基本信息</h3>
 		<p>
 			<a  title="点击前面的按钮"></a>
@@ -46,7 +46,7 @@
 	
 	  var countb=$("#count").val();
 	  var index=$("#index").val();
-	  var baifen = Math.round(index*100/countb);
+	  var baifen = Math.floor(index*100/countb);
 	  $(".baifen").text(baifen+'%');
 	  $(".baifen").prev().val(baifen);
 	
@@ -57,10 +57,10 @@
 		
 		$("p a").first().click(function(){
 			
-			window.location.href="/paper/beginAnswer?flag="+$("#flag").val()+"&index="+index+"&count="+countb;
+	//		window.location.href="/paper/beginAnswer?flag="+$("#flag").val()+"&index="+index+"&count="+countb;
 		});
-		
-		
+		window.setTimeout("window.location.href='/paper/beginAnswer?flag="+$("#flag").val()+"&index="+index+"&count="+countb+"'",1500);
+	//	window.setTimeout("window.location.href='/paper/fenlei?flag=0&index="+index+"&count="+countb+"'",1500);
 	</script>
 </body>
 </html>

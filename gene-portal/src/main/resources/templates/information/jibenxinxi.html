@@ -17,7 +17,7 @@
 </head>
 <body class="bg-cc">
 	<div class="tit">
-		<a href="" class="fanhui" title="返回"></a>
+		<a href="javascript:history.back(-1)" class="fanhui" title="返回"></a>
 		<h3 class="space center">基本信息</h3>
 		<p>
 			<a title="点击前面的按钮"></a>
@@ -26,7 +26,7 @@
 	</div>
 	<div class="name">
 		<div class="pre">
-			<a href="">< 上一题</a>
+			<a href="">&#8195;&#8195;&#8195;&#8195;</a>
 			<progress value="0" max="100"></progress>
 			<span>0%</span>
 		</div>
@@ -35,17 +35,21 @@
 			<input id="name" type="text" placeholder="请输入您的姓名"/>
 		</div> 
 	</div>
+	<div class="nev">
+			<a > 下一题  <i class="xiti">></i></a>
+			
+		</div>
 	<input id="count" th:value="${count}" type="hidden">
 	<input id="index" th:value="${index}" type="hidden">
 	<script type="text/javascript">
 	  var countb=$("#count").val();
 	  var index=$("#index").val();
 	  index++;
-	  var baifen = Math.round(index*100/countb);
+	  var baifen = Math.floor(index*100/countb);
 	 
 	  $(".baifen").text(baifen+'%');
 	  $(".baifen").prev().val(baifen);
-		$("p a").first().click(function(){
+		$(".nev a").click(function(){
 			if($("#name").val()==''){
 				alert("请输入姓名");
 				return;

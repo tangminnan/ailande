@@ -34,6 +34,7 @@
 $.ajax({
 	url: "/paper/getAllProduct",
 	type: "GET",
+	async : false,
 	success: function(r){
 		if(r.data!=null){
 			var li="";
@@ -46,6 +47,9 @@ $.ajax({
 		}
 	}
 });
+//以下数据是写死的
+$("a").last().find("img").attr("src","../images/shoushen.png");
+//以上数据是写死的
 
 $(".goon").on("click","li img",function(){
 	$(this).toggleClass("imgChoose");

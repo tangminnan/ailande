@@ -18,7 +18,7 @@ public interface PaperService {
      */
 	Map<String, Object> getAllProduct(HttpServletRequest request);
 
-	CustomerPaperDO saveChoosedProduct(Integer[] products,String name);
+	CustomerPaperDO saveChoosedProduct(Integer[] products,String name,HttpServletRequest request);
     /**
      * 保存用户的基本信息
      */

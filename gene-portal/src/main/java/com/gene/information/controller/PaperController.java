@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
@@ -70,7 +71,7 @@ public class PaperController {
 	@GetMapping("/saveYourName")
 	public String saveYourName(String name,Integer index,Integer count,HttpServletRequest request,Model model){
 		Integer[] products = (Integer[])request.getSession().getAttribute("products");
-		CustomerPaperDO customerPaperDO = paperService.saveChoosedProduct(products,name);
+		CustomerPaperDO customerPaperDO = paperService.saveChoosedProduct(products,name,request);
 		request.getSession().setAttribute("customerPaperDO", customerPaperDO);
 		model.addAttribute("name", name);
 		model.addAttribute("index",index);
@@ -80,8 +81,11 @@ public class PaperController {
 	
 	@Log("跳转答题分类页面")
 	@GetMapping("/fenlei")
-	public String fenlei(int flag,Integer count,Model model,Integer index,HttpServletRequest request){
-	
+	public String fenlei(@RequestParam(value="products",required=false) Integer[] products,int flag,Integer count,Model model,Integer index,HttpServletRequest request){
+		if(products!=null){
+			request.getSession().setAttribute("products", products);
+			paperService.saveChoosedProduct(products,null,request);
+		}
 		model.addAttribute("flag",flag);
 		model.addAttribute("count", count);
 		model.addAttribute("index", index);
@@ -173,7 +177,9 @@ public class PaperController {
 	    	Integer productpaper = productpaperDO.getId();
 	    	List<String> fenleiList = Arrays.asList("SHENTI_ZHUANG","SHANSHI_XIGUAN","SHENGHUO_FANGSHI","SHUIMIAN_XIGUAN","YUNDONG_XIGUANG");//身体状况  膳食习惯  生活方式  睡眠压力  运动习惯
 	    	for(String fenlei :fenleiList){
-	    		mapD.put(fenlei,paperService.getChoicedScores(productpaper,fenlei));
+	    		Integer rt=paperService.getChoicedScores(productpaper,fenlei);
+	    		if(rt==null) rt=0;
+	    		mapD.put(fenlei,rt);
 	    		mapT.put(fenlei,paperService.getAllChoicedScores(productpaper,product,fenlei));
 	    	}	
 	    	/**

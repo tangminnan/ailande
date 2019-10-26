@@ -84,7 +84,7 @@
 			</dt>
 			<dd class="jbs">
   	  			<div class="center">
-  	   				<img src="../images/henhao.png" alt=""/>
+  	   				<img id="biaoqingaaa" src="../images/henhao.png" alt=""/>
   	  				<p class="p2">饮食与生活习惯得分</p>
   	  				<p class="p3"><span th:text="${yinshi60}"></span><span class="yyy">分（一般）</span></p>
   	 			</div>
@@ -168,9 +168,9 @@
 	
 	
 	var yinshi = $("#yinshi60").val();
-	if(yinshi>=80){ $(".biaoqing").removeClass("buhao shufu").addClass("shufu");$(".yyy").text("分（较好）")}
-	if(yinshi<80 && fenshua>=60){ $(".biaoqing").removeClass("buhao shufu").addClass("yiban");$(".yyy").text("分（一般）")}
-	if(yinshi<60){ $(".biaoqing").removeClass("buhao shufu");$(".yyy").text("分（较低）")}
+	if(yinshi>=80){ $(".biaoqing").removeClass("buhao shufu").addClass("shufu");$(".yyy").text("分（较好）");$("#biaoqingaaa").attr("src","../images/henhao.png");}
+	if(yinshi<80 && fenshua>=60){ $(".biaoqing").removeClass("buhao shufu").addClass("yiban");$(".yyy").text("分（一般）");$("#biaoqingaaa").attr("src","../images/yiban.png");}
+	if(yinshi<60){ $(".biaoqing").removeClass("buhao shufu");$(".yyy").text("分（较低）");$("#biaoqingaaa").attr("src","../images/buhao.png");}
 	
 	$("body").on("click",".list_dt",function () {
 	$('.list_dd').stop();
@@ -226,7 +226,10 @@ $(".zhidao input").last().click(function(){
 				for(var i=0;i<datas.length;i++){
 					var data=datas[i];
 					l+='<dt class="list_dt">';
-					l+='<span class="fl"><img src="'+data.img+'" alt=""/>'+data.content+'</span>';
+					if(data.content.length>7)
+						l+='<span class="fl"><img src="'+data.img+'" alt=""/><span>'+data.content+'</span></span>';
+					else
+						l+='<span class="fl"><img src="'+data.img+'" alt=""/>'+data.content+'</span>';
 					if(data.tiaozheng=='请保持' && key !='SHENTI_ZHUANG'){
 						l+='<span class="fr bgn">请保持</span><i class="list_dt_icon bgn_bg"></i>';
 					}

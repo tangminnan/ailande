@@ -13,11 +13,12 @@
 <script type="text/javascript" src="../js/Font.js"></script>
 <style type="text/css">
 	.imgChoose{border:.04rem solid #228DCD;}
+	
 </style>
 </head>
 <body class="bg-cc">
 	<div class="tit">
-		<a href="" class="fanhui" title="返回"></a>
+		<a href="javascript:history.back(-1)" class="fanhui" title="返回"></a>
 		<h3 class="space center">基本信息</h3>
 		<p>
 			<a title="点击前面的按钮"></a>
@@ -31,8 +32,13 @@
 			<span class="baifen">50%</span>
 		</div>
 		
+		
+		
 	</div>
-	
+	<div class="nev">
+			<a > 下一题  <i class="xiti">></i></a>
+			
+		</div>
 	<div id="jibenxinxi" style="display: none">
 		<div th:each="question:${list}">
 			<p align="center" th:text="${question.contenw}"></p>
@@ -76,12 +82,12 @@
 	var questionArry=[], arry=[],index=$("#index").val();
 
 		  var countb=$("#count").val();
-		  var baifen = Math.round(index*100/countb);
+		  var baifen = Math.floor(index*100/countb);
 		  $(".baifen").text(baifen+'%');
 		  $(".baifen").prev().val(baifen);
 	 
 	$(".name").append($("#jibenxinxi div:first-child"));
-	$("p a").first().click(function(){
+	$(".nev a").click(function(){
 		var customerPaperId=$(".name").find("[name='customerPaperId']").val();
 		var questionId=$(".name").find("[name='questionId']").val();
 		var tiankonganswer=$(".name").find(".imgChoose").val();
@@ -97,7 +103,7 @@
 			 
 			 index++;
 			 countb=$("#count").val();
-			 baifen = Math.round(index*100/countb);
+			 baifen = Math.floor(index*100/countb);
 			 $(".baifen").text(baifen+'%');
 			 $(".baifen").prev().val(baifen);
 		}
@@ -127,6 +133,7 @@
 			$("#jibenxinxi").prepend($(".name").children().last().remove());
 			
 			$(".name").append(questionArry.pop());
+			index--;
 		}
 	});
 </script>

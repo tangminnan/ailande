@@ -29,6 +29,7 @@
 			<input class="blue" type="button" value="点击检测"/>
 		</div> -->
 	</div>	
+	<input type="hidden" id="count" th:value="${count}">
 </body>
 	<script type="text/javascript">
 	/**
@@ -72,7 +73,11 @@
 	
 	$("body").on("click","input.blue",function(){
 		if($(this).val()=="点击检测"){
-			alert("功能待开发");
+			var product=$(this).parent().find("[name='id']").val();
+			var products=new Array();
+			products.push(product);
+			var countb=$("#count").val();
+			window.setTimeout("window.location.href='/paper/fenlei?flag=0&index=1&count="+countb+"&products="+products+"'",1500);
 		}
 			
 		if($(this).val()=="点击查看"){
