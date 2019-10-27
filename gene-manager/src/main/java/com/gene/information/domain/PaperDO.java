@@ -46,7 +46,14 @@ public class PaperDO implements Serializable {
     private String remark;
 
     List<QuestionDO> questionList;
-
+    /**
+     * 编辑中待删除的题目
+     */
+    private Integer[] removedQuestions;
+    /**
+     * 编辑中待删除的选项
+     */
+    private Integer[] removedChooses;
 
 	public Long getId() {
 		return id;
@@ -175,6 +182,26 @@ public class PaperDO implements Serializable {
 				+ status + ", delFlag=" + delFlag + ", createBy=" + createBy + ", createTime=" + createTime
 				+ ", updateBy=" + updateBy + ", updateTime=" + updateTime + ", remark=" + remark + ", questionList="
 				+ questionList + "]";
+	}
+
+
+	public Integer[] getRemovedQuestions() {
+		return removedQuestions;
+	}
+
+
+	public void setRemovedQuestions(Integer[] removedQuestions) {
+		this.removedQuestions = removedQuestions;
+	}
+
+
+	public Integer[] getRemovedChooses() {
+		return removedChooses;
+	}
+
+
+	public void setRemovedChooses(Integer[] removedChooses) {
+		this.removedChooses = removedChooses;
 	}
 
 

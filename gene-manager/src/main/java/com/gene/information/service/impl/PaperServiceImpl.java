@@ -139,6 +139,12 @@ public class PaperServiceImpl implements PaperService{
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
 	public R editSave(PaperDO paper) {
+		for(int i=0;i<paper.getRemovedQuestions().length;i++){
+			paperDao.removeQuestion(paper.getRemovedQuestions()[i]);
+		}
+		for(int i=0;i<paper.getRemovedChooses().length;i++){
+			paperDao.removeChoice(paper.getRemovedChooses()[i]);
+		}
 		Date date = new Date();
 		paper.setUpdateBy(ShiroUtils.getUser().getUsername());
 		paper.setUpdateTime(date);

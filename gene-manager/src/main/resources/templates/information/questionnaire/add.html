@@ -440,9 +440,9 @@
     });
 
     function addQuestion() {
-    	if($("[name='ifStop']").val()=="YUN_DONG")
+    	/* if($("[name='ifStop']").val()=="YUN_DONG")
     		$("#temp .ibox-content").append($(".yundonglei").html());
-    	if($("[name='ifStop']").val()=="QI_TA" || $("[name='ifStop']").val()=="")
+    	if($("[name='ifStop']").val()=="QI_TA" || $("[name='ifStop']").val()=="") */
     		$("#temp .ibox-content").append($(".qitalei").html());
         $(".draggable").append($("#temp .ibox-content").clone());
         $("#temp .ibox-content .appendchoice").remove();
@@ -461,7 +461,7 @@
     }
 
     function addChoice(obj) {
-    	if($("[name='ifStop']").val()=="YUN_DONG")
+    	if($(obj).parent().parent().parent().parent().find("[name='ifStop']").val()=="YUN_DONG")
     		$(obj).parent().parent().parent().parent().append($(".yundonglei").html());
     	else
 			$(obj).parent().parent().parent().parent().append($(".qitalei").html());		
