@@ -82,6 +82,10 @@
 		var ur=$(".name").find("[name='bt']").val();
 		$(".name h3").css('background','url('+ur+') no-repeat top center');
 		$(".nev a").click(function(){
+			if($(".imgChoose").length==0){
+				alert("请选择");
+				return;
+			}
 			$(".imgChoose").each(function(){
 				var chooseId=$(this).children("[name='choseID']").text();//选项id
 				var questionId=$(this).children("[name='questionID']").text();//问题id

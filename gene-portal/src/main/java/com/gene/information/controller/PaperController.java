@@ -234,7 +234,61 @@ public class PaperController {
 	@Log("阅读检测报告--科学瘦身")
 	@GetMapping("/kexueshoushens")
 	public String kexueshoushen(Model model,Integer product,String name,HttpServletRequest request) {
+		CustomerPaperDO c = (CustomerPaperDO) request.getSession().getAttribute("customerPaperDO");
+		ProductpaperDO productpaperDO = paperService.getProductPaperDO(c.getId(),product);
+	    Map<String,Integer> mapD  = new HashMap<String,Integer>();
+	    Map<String,Integer> mapT = new HashMap<String,Integer>();
+	    DecimalFormat df = new DecimalFormat("0.0");
+	    if(productpaperDO!=null){//统计分值
+	    	Integer productpaper = productpaperDO.getId();
+	    	List<String> fenleiList = Arrays.asList("SHENTI_ZHUANG","SHANSHI_XIGUAN","SHENGHUO_FANGSHI","SHUIMIAN_XIGUAN","YUNDONG_XIGUANG");//身体状况  膳食习惯  生活方式  睡眠压力  运动习惯
+	    	for(String fenlei :fenleiList){
+	    		Integer rt=paperService.getChoicedScores(productpaper,fenlei);
+	    		if(rt==null) rt=0;
+	    		mapD.put(fenlei,rt);
+	    		mapT.put(fenlei,paperService.getAllChoicedScores(productpaper,product,fenlei));
+	    	}	
+	    	/**
+	    	 * 计算身体现状80分得分
+	    	 */
+	    	String shenti80=df.format((float)mapD.get("SHENTI_ZHUANG")/mapT.get("SHENTI_ZHUANG")*100);
+	    	model.addAttribute("shenti80", shenti80);
+	    	/**
+	    	 * 计算饮食状况 60分得分
+	    	 */
+	    	Integer defen=0,zongfen=0;
+	    	for(String fenlei :fenleiList){
+	    		
+	    		if(!"SHENTI_ZHUANG".equals(fenlei)){
+	    			defen+=mapD.get(fenlei);
+	    			zongfen+=mapT.get(fenlei);
+	    		}
+	    	}
+	    	String yinshi60 =df.format((float)defen/zongfen*100);
+    		model.addAttribute("yinshi60",yinshi60);
+	    	/**
+	    	 * 计算各个分类得分占比
+	    	 */
+	    	Integer zongfenzhanbi=0;
+	    	Map<String,Integer> mapa = new HashMap<String,Integer>();
+	    	for(String fenlei :fenleiList){
+	    		mapa.put(fenlei+"zhanbi",0);
+	    	}
+	    	for(String fenlei :fenleiList){
+	    		if(!"SHENTI_ZHUANG".equals(fenlei)){
+	    			mapa.put(fenlei+"zhanbi",mapa.get(fenlei+"zhanbi")+mapT.get(fenlei)-mapD.get(fenlei));
+	    			zongfenzhanbi+=(mapT.get(fenlei)-mapD.get(fenlei));
+	    		}
+	    	}
+	    	
+	    	for(String fenlei :fenleiList){
+	    		if(!"SHENTI_ZHUANG".equals(fenlei)){
+	    			model.addAttribute(fenlei+"zhanbi",df.format((float)mapa.get(fenlei+"zhanbi")/zongfenzhanbi*100));
+	    		}
+	    	}
+	    }
 		model.addAttribute("product", product);
+	    
 		
 		return "information/baogao-jianfei";
 	}

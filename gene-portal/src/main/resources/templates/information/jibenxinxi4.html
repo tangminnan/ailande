@@ -88,11 +88,17 @@
 	 
 	$(".name").append($("#jibenxinxi div:first-child"));
 	$(".nev a").click(function(){
+		
 		var customerPaperId=$(".name").find("[name='customerPaperId']").val();
 		var questionId=$(".name").find("[name='questionId']").val();
 		var tiankonganswer=$(".name").find(".imgChoose").val();
-	    if(tiankonganswer==undefined)
+	    if(tiankonganswer==undefined){
 	    	tiankonganswer=$(".name").find("[name='tiankonganswer']").val();
+	    	if(tiankonganswer.trim()==""){
+	    		alert("请您输入");
+	    		return;
+	    	}
+	    }
 	    var obj={'questionId':questionId,'tiankonganswer':tiankonganswer,'fenlei':'JIBEN_XINXI','customerPaperId':customerPaperId};
 		arry.push(obj);
 		var count=$("#jibenxinxi").children().length;

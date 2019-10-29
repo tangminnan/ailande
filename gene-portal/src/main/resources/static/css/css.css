@@ -78,7 +78,7 @@ progress::-moz-progress-bar {
     border-radius: .3rem;
   }
 .pre span{float:right;}
-.name p{font-size: .46rem;margin-bottom: 1.24rem;} .name .yes{background:url(../images/yes.png) no-repeat 5.9rem .6rem;-webkit-background-size:.74rem .74rem;background-size:.74rem .74rem;}
+.name p{font-size: .46rem;margin-bottom: 1.24rem;} 
 .name .yes input{width: 3.65rem;height: 1.04rem;border-radius:.5rem;font-size: .28rem;border:.04rem solid #231815;background: none;text-align: center;}
 
 .HI{padding:1.3rem .96rem;}
