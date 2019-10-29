@@ -1,5 +1,6 @@
 package com.gene.information.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.gene.common.utils.PageUtils;
 import com.gene.common.utils.Query;
 import com.gene.common.utils.R;
@@ -45,6 +47,18 @@ public class CustomerPaperController {
 	}
 	
 	@ResponseBody
+	@GetMapping("/userList")
+	public List userList(@RequestParam Map<String, Object> params){
+		//查询列表数据
+//		Query query = new Query(params);
+		List<Object> userList = customerPaperService.userList();
+//		PageUtils pageUtils = new PageUtils(userList, userList.size());
+		return userList;
+			
+	}
+	
+	
+	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("information:customerPaper:customerPaper")
 	public PageUtils list(@RequestParam Map<String, Object> params){
@@ -64,24 +78,43 @@ public class CustomerPaperController {
 
 	@GetMapping("/edit/{id}")
 	@RequiresPermissions("information:customerPaper:edit")
-	String edit(@PathVariable("id") Integer id,Model model){
+	String edit(@PathVariable("id") Integer id,Model model){	
 		CustomerPaperDO customerPaper = customerPaperService.get(id);
 		model.addAttribute("customerPaper", customerPaper);
 	    return "information/customerPaper/edit";
 	}
 	
+	@ResponseBody
+	@GetMapping("/useredit/{id}")
+	List<Object> edit2(@PathVariable("id") Long id){
+		List<Object> list2 = new ArrayList<>();
+		List<CustomerPaperDO> list = customerPaperService.getUserList(id);
+		if(list.size()>0){
+			Map<String, Object> params = new HashMap<String, Object>();
+//			System.out.println(JSON.toJSONString(list));
+			for (CustomerPaperDO customerPaperDO2 : list) {
+				params.put(customerPaperDO2.getContent(), customerPaperDO2.getTiankonganswer());
+			}
+			params.put("userId", id);
+			params.put("昵称", list.get(0).getUsername());
+		list2.add(params);
+		}
+		return list2;		
+	}
+	
+	
 	@GetMapping("/details/{id}")
 	String details(@PathVariable("id") Integer id,Model model){
 		CustomerPaperDO customerPaper = customerPaperService.get(id);
 		List<CustomerPaperDO> questionDetails = customerPaperService.queryUserQuestionDetails(id);
-		for (CustomerPaperDO customerPaperDO : questionDetails) {
+		/*for (CustomerPaperDO customerPaperDO : questionDetails) {
 			String choiceId = customerPaperDO.getChoiceId();
 			String[] split = choiceId.split(",");
 			for (String string : split) {
 				CustomerPaperDO choiceContent = customerPaperService.getChoiceContent(Integer.valueOf(string));
 				customerPaperDO.setChoiceContent(choiceContent.getChoiceContent());
 			}
-		}
+		}*/
 		model.addAttribute("customerPaper", customerPaper);
 		model.addAttribute("questionDetails", questionDetails);
 	    return "information/customerPaper/details";
@@ -113,6 +146,12 @@ public class CustomerPaperController {
 	@RequestMapping("/update")
 	@RequiresPermissions("information:customerPaper:edit")
 	public R update( CustomerPaperDO customerPaper){
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("code", customerPaper.getCode());
+		List<CustomerPaperDO> list = customerPaperService.list(params);
+		if(list.size()>0){
+			return R.error("检测码已存在");
+		}
 		customerPaperService.update(customerPaper);
 		return R.ok();
 	}

@@ -1,10 +1,89 @@
 
 var prefix = "/information/customerPaper"
 $(function() {
-	load();
+	//load();
+	load2();
 });
 
-function load() {
+function load2() {
+    $('#exampleTable').bootstrapTable({
+        ajax: function (request) {
+            $.ajax({
+                type: "GET",
+                url: "/information/customerPaper/userList",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                json: 'callback',
+                success: function (json) {
+                	console.info(json);
+                    var dynamicHeader = [];
+                    /*dynamicHeader.push({
+                        field: "state",
+                        check: true
+                    });*/
+
+                    for (var i = 0; i<(Object.keys(json[0])).length; i++) {
+                        var property = (Object.keys(json[0]))[i];
+                       // console.log(property);
+                        dynamicHeader.push({
+                            "title": property,
+                            "field": property,
+                            switchable: true,
+                            sortable: false
+                        });
+                    }
+                     dynamicHeader.push({
+                        title : '操作',
+    					field : 'id',
+    					align : 'center',
+    					formatter : function(value, row, index) {
+    						var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="edit(\''
+    								+ row.userId
+    								+ '\')"><i class="fa fa-edit"></i></a> ';
+    						var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
+    								+ row.userId
+    								+ '\')"><i class="fa fa-remove"></i></a> ';
+    						var f = '<a class="btn btn-success btn-sm" href="#" title="详情"  mce_href="#" onclick="details(\''
+    								+ row.userId
+    								+ '\')"><i class="fa fa-key"></i></a> ';
+    						return d + f;
+    					}
+                      });
+                    
+                    
+                    //console.log(Object.keys(json[0]));
+
+                    $('#exampleTable').bootstrapTable('destroy').bootstrapTable({
+                        data: json,
+                        toolbar: '#toolbar',
+                        cache: false,
+                        striped: true,
+                        sidePagination: "client",
+                        sortOrder: "desc",
+                        pageSize: 25,
+                        pageNumber: 1,
+                        pageList: "[25, 50, 100]",
+                        showToggle: false,
+                        showColumns: false,
+                        showExport: true,
+                        exportDataType: "basic",
+                        pagination: true,
+                        strictSearch: false,
+                        search: true,
+                        columns: dynamicHeader
+                    });
+                },
+                error: function () {
+                    alert("SQL查询错误，请输入正确的SQL语句！");
+                    location.reload();
+                }
+            });
+        }
+    });
+}
+
+
+/*function load() {
 	$('#exampleTable')
 			.bootstrapTable(
 					{
@@ -60,10 +139,10 @@ function load() {
 									field : 'username', 
 									title : '姓名' 
 								},
-								/*								{
+																{
 									field : 'high', 
 									title : '身高' 
-								},*/
+								},
 																{
 									field : 'sex', 
 									title : '性别' ,
@@ -76,7 +155,7 @@ function load() {
 									    }
 									}	
 								},
-								/*								{
+																{
 									field : 'weight', 
 									title : '体重' 
 								},
@@ -91,12 +170,12 @@ function load() {
 																{
 									field : 'createBy', 
 									title : '创建者' 
-								},*/
+								},
 																{
 									field : 'createTime', 
 									title : '创建时间' 
 								},
-								/*								{
+																{
 									field : 'updateBy', 
 									title : '更新者' 
 								},
@@ -128,18 +207,18 @@ function load() {
 									field : 'bmi', 
 									title : 'BMI' 
 								},
-								*/								{
+																{
 									field : 'phone', 
 									title : '联系方式' 
 								},
-								/*								{
+																{
 									field : 'email', 
 									title : '邮箱' 
 								},
 																{
 									field : 'address', 
 									title : '地址' 
-								},*/
+								},
 																{
 									title : '操作',
 									field : 'id',
@@ -158,7 +237,7 @@ function load() {
 									}
 								} ]
 					});
-}
+}*/
 function reLoad() {
 	$('#exampleTable').bootstrapTable('refresh');
 }
@@ -178,7 +257,7 @@ function edit(id) {
 		title : '编辑',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
-		area : [ '800px', '520px' ],
+		area : [ '800px', '320px' ],
 		content : prefix + '/edit/' + id // iframe的url
 	});
 }
