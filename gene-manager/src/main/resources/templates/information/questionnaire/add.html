@@ -141,7 +141,7 @@
         <div class="form-group">
         <label class="col-sm-1 control-label"><i class="fa fa-arrows"></i></label>
         	<div class="col-sm-6">
-                <input name="titlew" type="text" class="form-control required" placeholder="问卷题目内容">
+                <input name="titlew" type="text" class="form-control" placeholder="问卷题目内容">
             </div>
              <div class="col-sm-2">
               <!--   <input name="category" type="text" class="form-control required" placeholder="题目分类"> -->
@@ -151,6 +151,7 @@
               	<option value="QI_TA">其他题型</option>
               </select>
             </div>
+             
         </div>
         <div class="form-group">
         	 <label class="col-sm-1 control-label"><i class="fa fa-arrows"></i></label>
@@ -192,9 +193,9 @@
            	</div>
            	<div th:each="product:${productList}" class="choiceProduct">
            		<div class="form-group">
-           			<label class="col-sm-1 control-label"></label>
+          			 <label class="col-sm-1 control-label"></label>
            	 		<div class="col-sm-2">
-                		<input name="score" type="number" class="form-control required" placeholder="分值">
+                		<input name="score" type="number" class="form-control" placeholder="分值">
             		</div>
             		<div class="col-sm-2">
                 		<input name="tadf" type="text" class="form-control" placeholder="调整方向1">
@@ -214,7 +215,7 @@
                 		<input type="hidden" class="form-control">
            		 	</div>
         			<div class="col-sm-6" style="height: 60px;" id="tadreason">
-         				<textarea name="tadreason" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
+         				<textarea name="tadreason" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;" placeholder="调整原因"></textarea>
        		 		</div> 
        		 	</div>
 				<div class="form-group">
@@ -223,7 +224,7 @@
                 		<input type="hidden" class="form-control">
            			</div>
        				<div class="col-sm-6" style="height: 60px;" id="tadreason">
-         				<textarea name="tadjianyi" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
+         				<textarea name="tadjianyi" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;" placeholder="营养建议补充"></textarea>
        		 		</div> 
      			</div>
  			</div>
@@ -256,7 +257,7 @@
             </div>
             <div  th:each="product:${productList}" class="choiceProduct">
            		<div class="form-group">
-           		<label class="col-sm-1 control-label"></label>
+           		 <label class="col-sm-1 control-label"></label>
            		 <div class="col-sm-6">
            		 <input name="product" th:value="${product.id}" type="hidden" >
                 	<input name="productName" th:value="${product.name}" readonly="readonly" type="text" class="form-control" placeholder="产品">
@@ -293,7 +294,7 @@
                 		<input type="hidden" class="form-control">
            		 	</div>
         			<div class="col-sm-6" style="height: 60px;" id="tadreason">
-         				<textarea name="tadreason" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
+         				<textarea name="tadreason" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;" placeholder="调整原因"></textarea>
        		 		</div> 
      			</div>
 				<div class="form-group">
@@ -302,7 +303,7 @@
                 		<input type="hidden" class="form-control">
            			</div>
        				<div class="col-sm-6" style="height: 60px;" id="tadreason">
-         				<textarea name="tadjianyi" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
+         				<textarea name="tadjianyi" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;" placeholder="营养建议补充"></textarea>
        		 		</div> 
      			</div>
      	 	 	<div class="form-group">
@@ -335,7 +336,7 @@
                 		<input type="hidden" class="form-control">
            			</div>
         			<div class="col-sm-6" style="height: 60px;" id="tadreason">
-         				<textarea name="tadreasons" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">调整原因</textarea>
+         				<textarea name="tadreasons" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;" placeholder="调整原因"></textarea>
        		 		</div> 
      			</div>
 				<div class="form-group">
@@ -344,7 +345,7 @@
                 		<input type="hidden" class="form-control">
            			</div>
        				<div class="col-sm-6" style="height: 60px;" id="tadreason">
-         				<textarea name="tadjianyis" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;">营养建议补充</textarea>
+         				<textarea name="tadjianyis" class="col-sm-6" style="height: 60px;resize:none;padding: 0px;" placeholder="营养建议补充"></textarea>
        		 		</div> 
        				<div class="col-sm-2" style="margin-bottom:0">
                			<!-- <a class="btn btn-success" onclick="addChoice(this)">
@@ -371,6 +372,7 @@
             	var choiceproductArray = new Array();
     			$(val).find(".choiceProduct").each(function (index, val) {
                       var choiceproduct = {
+                    	// $(val).find("input[name='products']").val(),
                     	  product:$(val).find("input[name='product']").val(),
                           score: $(val).find("input[name='score']").val(),
                           tadf: $(val).find("input[name='tadf']").val(),//调整方向1

@@ -158,16 +158,22 @@ public class PaperController {
 	
 	@Log("查看报告")
 	@GetMapping("/lookCheckLog")
-	public String lookCheckLog(Integer product, Model model,HttpServletRequest request){
+	public String lookCheckLog(Integer product,String name, Model model,HttpServletRequest request){
 		CustomerPaperDO c = (CustomerPaperDO) request.getSession().getAttribute("customerPaperDO");
 		model.addAttribute("userName",c.getUsername());
 		model.addAttribute("product", product);
-		return "information/baogao-2";
+		model.addAttribute("name",name);
+		if("肠胃调理".equals(name))
+			return"information/baogao-2";
+		if("科学瘦身".equals(name))
+			return "information/baogao-5";
+		return "";
+		
 	}
 	
-	@Log("阅读检测报告")
+	@Log("阅读检测报告--肠胃调理")
 	@GetMapping("/readMyReport")
-	public String readMyReport(Model model,Integer product,HttpServletRequest request){
+	public String readMyReport(Model model,Integer product,String name,HttpServletRequest request){
 		CustomerPaperDO c = (CustomerPaperDO) request.getSession().getAttribute("customerPaperDO");
 		ProductpaperDO productpaperDO = paperService.getProductPaperDO(c.getId(),product);
 	    Map<String,Integer> mapD  = new HashMap<String,Integer>();
@@ -224,6 +230,17 @@ public class PaperController {
 		model.addAttribute("product", product);
 	    return "information/baogao-3";
 	}
+	
+	@Log("阅读检测报告--科学瘦身")
+	@GetMapping("/kexueshoushens")
+	public String kexueshoushen(Model model,Integer product,String name,HttpServletRequest request) {
+		model.addAttribute("product", product);
+		
+		return "information/baogao-jianfei";
+	}
+
+
+	
 	
 	@Log("获取检测的数据")
 	@GetMapping("/getMyReportData")

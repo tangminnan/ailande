@@ -147,7 +147,8 @@ public class PaperServiceImpl implements PaperService{
 				if(productpaperDO!=null && !"JIBEN_XINXI".equals(fenlei)){
 					Integer product = productpaperDO.getProduct();
 					ChoiceProductDO choiceProductDO = paperDao.getChoiceProductDO(product,answerDO.getChoiceId());
-					answerDO.setScore(choiceProductDO.getScore());
+					if(choiceProductDO!=null)
+						answerDO.setScore(choiceProductDO.getScore());
 				}
 				/***************以下的代码有点垃圾，执行效率慢，时间紧张，有空的时候优化下*****/
 				paperDao.saveAnswerDO(answerDO);

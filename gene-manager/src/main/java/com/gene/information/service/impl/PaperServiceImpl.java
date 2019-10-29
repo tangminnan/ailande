@@ -111,7 +111,7 @@ public class PaperServiceImpl implements PaperService{
 	            	   List<ChoiceProductDO> choiceProductList = choice.getChoiceProductList();
 	                   for(ChoiceProductDO choiceProductDO :choiceProductList){
 	                	   choiceProductDO.setChoose(choice.getId());
-	                	   paperDao.saveChoiceProductDO(choiceProductDO);
+	                	   paperDao.saveChoiceProductDO(choiceProductDO); 
 	                   }
 	                }
 	            }
@@ -121,6 +121,19 @@ public class PaperServiceImpl implements PaperService{
 		}
 		return R.error();	
 	}
+
+	//放弃
+	/*private boolean checkIfSaveUpdate(ChoiceProductDO choiceProductDO) {
+		if(choiceProductDO==null)
+			return false;
+		if(choiceProductDO.getScore()==null 
+				&&  org.apache.commons.lang3.StringUtils.isBlank(choiceProductDO.getTadf())
+				&&  org.apache.commons.lang3.StringUtils.isBlank(choiceProductDO.getTadreason()) 
+				&&  org.apache.commons.lang3.StringUtils.isBlank(choiceProductDO.getTadjianyi())
+				&&  org.apache.commons.lang3.StringUtils.isBlank(choiceProductDO.getTadfs()))
+					return false;
+		return true;
+	}*/
 
 	@Override
 	public R removeChoice(Integer id) {
@@ -207,6 +220,7 @@ public class PaperServiceImpl implements PaperService{
 		                	System.out.println(choiceProductDO);
 		                	choiceProductDO.setChoose(choice.getId());
 		                	paperDao.saveChoiceProductDO(choiceProductDO);
+		                	
 		                }
 		           }
 		       }

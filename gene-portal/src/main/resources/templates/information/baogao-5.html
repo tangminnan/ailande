@@ -15,7 +15,7 @@
 <body class="hello">
 	<h3 th:text="'尊敬的'+${userName}">尊敬的张靓颖</h3>
 	<div class="box space">
-		<p>欢迎阅读BioCare营养健康专家团队为您量身定制的《肠胃调理方案》。</p>
+		<p>欢迎阅读BioCare营养健康专家团队为您量身定制的《科学瘦身方案》。</p>
 		<p>BioCare是英国老字号营养保健品牌，有<span class="sp1">30余年</span>临床营养专业知识及经验，致力于为消费者提高品质全方位的专业营养解决方案。</p>
 		<p><span class="sp2">BioCare的专家</span>团队由来自剑桥、牛津、北大的中英两国人才构成，包括自然医学、生物学、</p>
 		<input style="width:100%; margin-bottom:0;" class="btn" type="button" value="点击阅读"/>
@@ -25,7 +25,7 @@
 	<script type="text/javascript">
 		$(".btn").click(function(){
 			var name=$("[name='name']").val();
-			window.location.href="/paper/readMyReport?product="+$("[name='product']").val()+"&name="+name;
+			window.location.href="/paper/kexueshoushens?product="+$("[name='product']").val()+"&name="+name;
 		});
 	</script>
 </body>

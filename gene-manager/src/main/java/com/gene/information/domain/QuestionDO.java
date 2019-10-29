@@ -62,6 +62,8 @@ public class QuestionDO implements Serializable{
      *  QI_TA=其他题型
      */
     private String ifStop;
+    //问题关联的产品Id
+    private String products;
     /**
     * 是否必填（0必填 1选填）
     */
@@ -174,6 +176,13 @@ public class QuestionDO implements Serializable{
 	}
 	public void setImg(String img) {
 		this.img = img;
+	}
+	
+	public String getProducts() {
+		return products;
+	}
+	public void setProducts(String products) {
+		this.products = products;
 	}
 	@Override
 	public String toString() {

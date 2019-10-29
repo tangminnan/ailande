@@ -82,7 +82,8 @@
 			
 		if($(this).val()=="点击查看"){
 			var product=$(this).parent().find("[name='id']").val();
-			window.location.href="/paper/lookCheckLog?product="+product;
+			var name=$(this).parent().find("[name='productName']").val();
+			window.location.href="/paper/lookCheckLog?product="+product+"&name="+name;
 		}
 	});
 	
