@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +22,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.gene.common.utils.R;
+import com.gene.common.utils.StringUtils;
 import com.gene.information.dao.PaperDao;
 import com.gene.information.domain.AnswerDO;
+import com.gene.information.domain.ChoiceDO;
 import com.gene.information.domain.ChoiceProductDO;
 import com.gene.information.domain.CustomerPaperDO;
 import com.gene.information.domain.ProductDO;

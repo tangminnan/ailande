@@ -79,21 +79,8 @@
 	</update>
 	
 	<update id="updateChoiceProductDO" parameterType="com.gene.information.domain.ChoiceProductDO">
-		update qu_choice_product
-		<set>
- 			<if test="score!=null">score=#{score},</if>
- 			<if test="tadf!=null">tadf=#{tadf},</if>
- 			<if test="tads!=null">tads=#{tads},</if>
- 			<if test="tadreason!=null">tadreason=#{tadreason},</if>
- 			<if test="tadjianyi!=null">tadjianyi=#{tadjianyi},</if>
- 			<if test="bmi!=null">bmi=#{bmi},</if>
- 			<if test="bmis!=null">bmis=#{bmis},</if>
- 			<if test="scores!=null">scores=#{scores},</if>
- 			<if test="tadfs!=null">tadfs=#{tadfs},</if>
- 			<if test="tadss!=null">tadss=#{tadss},</if>
- 			<if test="tadreasons!=null">tadreasons=#{tadreasons},</if>
- 			<if test="tadjianyis!=null">tadjianyis=#{tadjianyis}</if>
-		</set>
+		update qu_choice_product set score=#{score},tadf=#{tadf},tads=#{tads},tadreason=#{tadreason},tadjianyi=#{tadjianyi},bmi=#{bmi},bmis=#{bmis},scores=#{scores},tadfs=#{tadfs},
+ 		tadss=#{tadss},tadreasons=#{tadreasons},tadjianyis=#{tadjianyis}
 		where id=#{id}
 	</update>
 	

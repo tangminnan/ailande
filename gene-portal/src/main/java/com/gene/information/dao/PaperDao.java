@@ -64,4 +64,6 @@ public interface PaperDao {
 	 */
 	int countPaperQuestion(Integer i);
 
+	void checkIfShow(QuestionDO questionDO);
+
 }

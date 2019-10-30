@@ -111,6 +111,7 @@ public class PaperServiceImpl implements PaperService{
 	            	   List<ChoiceProductDO> choiceProductList = choice.getChoiceProductList();
 	                   for(ChoiceProductDO choiceProductDO :choiceProductList){
 	                	   choiceProductDO.setChoose(choice.getId());
+	                	   clearNull(choiceProductDO);
 	                	   paperDao.saveChoiceProductDO(choiceProductDO); 
 	                   }
 	                }
@@ -121,7 +122,35 @@ public class PaperServiceImpl implements PaperService{
 		}
 		return R.error();	
 	}
-
+   /**
+    * 没有多少时间了  写出的代码  一个字  吐
+    * @param choiceProductDO
+    */
+	public void clearNull(ChoiceProductDO choiceProductDO){
+ 	   if(StringUtils.isBlank(choiceProductDO.getTadf()))
+ 		   choiceProductDO.setTadf("");
+ 	   if(StringUtils.isBlank(choiceProductDO.getTadfs()))
+ 		   choiceProductDO.setTadfs("");
+ 	   if(StringUtils.isBlank(choiceProductDO.getTadjianyi()))
+ 		   choiceProductDO.setTadjianyi("");
+ 	   if(StringUtils.isBlank(choiceProductDO.getTadreason()))
+ 		   choiceProductDO.setTadreason("");
+ 	   if(StringUtils.isBlank(choiceProductDO.getTads()))
+ 		   choiceProductDO.setTads("");
+ 	   if(StringUtils.isBlank(choiceProductDO.getTadss()))
+ 		   choiceProductDO.setTadss("");
+ 	   if(StringUtils.isBlank(choiceProductDO.getTadreasons()))
+ 		   choiceProductDO.setTadreasons("");
+ 	   if(StringUtils.isBlank(choiceProductDO.getTadjianyis()))
+ 		   choiceProductDO.setTadreasons("");
+ 	   if(StringUtils.isBlank(choiceProductDO.getTadjianyis()))
+ 		   choiceProductDO.setTadjianyis("");
+ 	   if(StringUtils.isBlank(choiceProductDO.getBmi()))
+ 		   choiceProductDO.setBmi("");
+ 	   if(StringUtils.isBlank(choiceProductDO.getBmis()))
+ 		   choiceProductDO.setBmis("");
+	}
+	
 	//放弃
 	/*private boolean checkIfSaveUpdate(ChoiceProductDO choiceProductDO) {
 		if(choiceProductDO==null)
@@ -179,6 +208,7 @@ public class PaperServiceImpl implements PaperService{
 							paperDao.updateChoice(choice);
 							 List<ChoiceProductDO> choiceProductList = choice.getChoiceProductList();
 							 for(ChoiceProductDO choiceProductDO :choiceProductList){
+								 clearNull(choiceProductDO);
 								 paperDao.updateChoiceProductDO(choiceProductDO);
 							 }
 						}
@@ -190,6 +220,7 @@ public class PaperServiceImpl implements PaperService{
 			            	List<ChoiceProductDO> choiceProductList = choice.getChoiceProductList();
 			                for(ChoiceProductDO choiceProductDO :choiceProductList){
 			                	choiceProductDO.setChoose(choice.getId());
+			                	clearNull(choiceProductDO);
 			                	paperDao.saveChoiceProductDO(choiceProductDO);
 			                }
 						}
@@ -219,6 +250,7 @@ public class PaperServiceImpl implements PaperService{
 		                for(ChoiceProductDO choiceProductDO :choiceProductList){
 		                	System.out.println(choiceProductDO);
 		                	choiceProductDO.setChoose(choice.getId());
+		                	 clearNull(choiceProductDO);
 		                	paperDao.saveChoiceProductDO(choiceProductDO);
 		                	
 		                }

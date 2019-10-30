@@ -71,6 +71,14 @@ public class QuestionDO implements Serializable{
     private String remark;
     //调整方向（仅供页面展示）
     private String tiaozheng;
+    private Integer product;
+    
+	public Integer getProduct() {
+		return product;
+	}
+	public void setProduct(Integer product) {
+		this.product = product;
+	}
 	public Integer getId() {
 		return id;
 	}
