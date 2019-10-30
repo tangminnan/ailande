@@ -13,10 +13,22 @@
 		(select id userId,username,code from biz_customer_paper ) as b 
 		where a.user= b.userId and b.userId = #{userId} 
 		GROUP BY a.content,a.user ORDER BY a.user desc
+	</select> 
+	
+	<select id="queryAnswer" resultType="com.gene.information.domain.CustomerPaperDO">
+		select qq.id,qq.content,bz.tiankonganswer,qpp.user 
+		from qu_question qq , biz_answer bz,qu_product_paper qpp 
+		where qq.id= bz.question_id and bz.productpaper = qpp.id and qq.category='JIBEN_XINXI'
+		and qpp.user = #{userId}
+		
 	</select>
 	
-	<select id="getUserListId" resultType="com.gene.information.domain.CustomerPaperDO">
-		select user userId from qu_product_paper GROUP BY user ORDER BY user desc
+	<select id="queryUserList" resultType="com.gene.information.domain.CustomerPaperDO">
+		select id,content,tiankonganswer,user,userId,username from 
+		(select qq.id,qq.content,bz.tiankonganswer,qpp.user from qu_question qq , biz_answer bz,qu_product_paper qpp where qq.id= bz.question_id and bz.productpaper = qpp.id and qq.category='JIBEN_XINXI') as a,
+		(select id userId,username,code from biz_customer_paper ) as b 
+		where a.user= b.userId
+		GROUP BY a.user ORDER BY a.user desc		
 	</select>
 	
 	<select id="list" resultType="com.gene.information.domain.CustomerPaperDO">

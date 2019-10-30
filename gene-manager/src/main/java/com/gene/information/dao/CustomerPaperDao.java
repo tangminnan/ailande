@@ -35,7 +35,9 @@ public interface CustomerPaperDao{
 	/*CustomerPaperDO getChoiceContent(Integer id);*/
 	
 	List<CustomerPaperDO> getUserList(Long userId);
+		
+	List<CustomerPaperDO> queryAnswer(Long userId);
 	
-	List<CustomerPaperDO> getUserListId();
+	List<CustomerPaperDO> queryUserList();
 
 }
