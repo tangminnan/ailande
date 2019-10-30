@@ -6,7 +6,19 @@
 	<select id="get" resultType="com.gene.information.domain.CustomerPaperDO">
 		select `id`,`username`,`high`,`sex`,`weight`,`age`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`,`del_flag`,`product_id`,`paper_id`,`code`,`source`,`bmi`,`phone`,`email`,`address` from biz_customer_paper where id = #{value}
 	</select>
-
+	
+	<select id="getUserList" resultType="com.gene.information.domain.CustomerPaperDO">
+		select id,content,tiankonganswer,user,userId,username from 
+		(select qq.id,qq.content,bz.tiankonganswer,qpp.user from qu_question qq , biz_answer bz,qu_product_paper qpp where qq.id= bz.question_id and bz.productpaper = qpp.id and qq.category='JIBEN_XINXI') as a,
+		(select id userId,username,code from biz_customer_paper ) as b 
+		where a.user= b.userId and b.userId = #{userId} 
+		GROUP BY a.content,a.user ORDER BY a.user desc
+	</select>
+	
+	<select id="getUserListId" resultType="com.gene.information.domain.CustomerPaperDO">
+		select user userId from qu_product_paper GROUP BY user ORDER BY user desc
+	</select>
+	
 	<select id="list" resultType="com.gene.information.domain.CustomerPaperDO">
 		select `id`,`username`,`high`,`sex`,`weight`,`age`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`remark`,`del_flag`,`product_id`,`paper_id`,`code`,`source`,`bmi`,`phone`,`email`,`address` from biz_customer_paper
         <where>  
@@ -160,12 +172,20 @@
 	</delete>
 	
 	<select id="queryUserQuestionDetails" resultType="com.gene.information.domain.CustomerPaperDO">
+		select qc.content choiceContent,qq.content questionContent,qq.category from biz_answer ba,qu_choice qc , qu_question qq , qu_product_paper qpp
+		where ba.choice_id=qc.id and qq.id = ba.question_id and ba.productpaper = qpp.id
+		and qpp.`user` = #{userId}
+		
+	</select>
+	
+	
+	<!-- <select id="queryUserQuestionDetails" resultType="com.gene.information.domain.CustomerPaperDO">
 		select qq.content questionContent,ba.choice_id choiceId,qq.category from biz_answer ba,qu_question qq
 		where ba.question_id = qq.id and ba.customer_paper_id = #{id}	
 	</select>
 	
 	<select id="getChoiceContent" resultType="com.gene.information.domain.CustomerPaperDO">
 		select id,content choiceContent from qu_choice where id = #{id}
-	</select>
+	</select> -->
 
 </mapper>

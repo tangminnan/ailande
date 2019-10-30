@@ -8,10 +8,11 @@
 			<div class="col-sm-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
+					<input id="id" name="id" th:value="${customerPaper.id}" type="hidden">
 					<div>基本信息</div>
 						<div style="width: 100%; height: 200px;  "
-						align="center">
-						<table class="table table-bordered">
+						align="center" id="jiben">
+						<!-- <table class="table table-bordered">
 							<thead>
 								<tr>
 									<th>姓名</th>
@@ -32,7 +33,7 @@
 								
 								</label>	
 							</tbody>
-						</table>
+						</table> -->
 					</div> 
 					<div>身体状况</div>
 					<div>&nbsp;</div>
@@ -47,7 +48,7 @@
 							</thead>
 							<tbody>
 								<label th:each="qd:${questionDetails}" class="checkbox-inline">
-									<tr th:if ="${qd.category eq 'SHENTI_ZHUNGKUANG'}">
+									<tr th:if ="${qd.category eq 'SHENTI_ZHUANG'}">
 										<td th:text="${qd.questionContent}"></td>
 										<td th:text="${qd.choiceContent}"></td>
 									</tr>
@@ -70,7 +71,7 @@
 							</thead>
 							<tbody>
 								<label th:each="qd:${questionDetails}" class="checkbox-inline">
-									<tr th:if ="${qd.category eq 'YINSHI_XIGUAN'}">
+									<tr th:if ="${qd.category eq 'SHANSHI_XIGUAN'}">
 										<td th:text="${qd.questionContent}"></td>
 										<td th:text="${qd.choiceContent}"></td>
 									</tr>
@@ -93,7 +94,7 @@
 							</thead>
 							<tbody>
 								<label th:each="qd:${questionDetails}" class="checkbox-inline">
-									<tr th:if ="${qd.category eq 'SHENGHUO_XIGUAN'}">
+									<tr th:if ="${qd.category eq 'SHENGHUO_FANGSHI'}">
 										<td th:text="${qd.questionContent}"></td>
 										<td th:text="${qd.choiceContent}"></td>
 									</tr>
@@ -102,14 +103,104 @@
 							</tbody>
 						</table>
 					</div> 
-					
+					<div>&nbsp;</div>
+					<div>睡眠习惯</div>
+					<div>&nbsp;</div>
+					<div style="width: 100%; height: 300px; overflow: scroll;"
+						align="center">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>题目</th>
+									<th>答案</th>
+								</tr>
+							</thead>
+							<tbody>
+								<label th:each="qd:${questionDetails}" class="checkbox-inline">
+									<tr th:if ="${qd.category eq 'SHUIMIAN_XIGUAN'}">
+										<td th:text="${qd.questionContent}"></td>
+										<td th:text="${qd.choiceContent}"></td>
+									</tr>
+								
+								</label>	
+							</tbody>
+						</table>
+					</div> 
+					<div>&nbsp;</div>
+					<div>运动习惯</div>
+					<div>&nbsp;</div>
+					<div style="width: 100%; height: 300px; overflow: scroll;"
+						align="center">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>题目</th>
+									<th>答案</th>
+								</tr>
+							</thead>
+							<tbody>
+								<label th:each="qd:${questionDetails}" class="checkbox-inline">
+									<tr th:if ="${qd.category eq 'YUNDONG_XIGUANG'}">
+										<td th:text="${qd.questionContent}"></td>
+										<td th:text="${qd.choiceContent}"></td>
+									</tr>
+								
+								</label>	
+							</tbody>
+						</table>
+					</div> 
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div th:include="include::footer"></div>
-	<script type="text/javascript">
+	<script type="text/javascript">		
+	var id = $("input[name='id']").val();
+	$.ajax({
+		cache : true,
+		type : "get",
+		url : "/information/customerPaper/useredit/"+id,
+		async : false,
+		error : function(request) {
+			parent.layer.alert("Connection error");
+		},
+		success : function(data) {
+			var html = "";	
+                	html += '<table class="table table-bordered">'
+        			html += '<thead>'
+        	    	html += '	<tr>'
+        	    for (var i = 0; i<(Object.keys(data[0])).length; i++) {
+        	                var key = (Object.keys(data[0]))[i];
+        	        html += '		<th>'+key+'</th>'
+        	    }
+        			html += '		</tr>'
+        			html += '	</thead>'
+        			html += '	<tbody>'
+        			html += '		<label class="checkbox-inline">'
+        			html += '			<tr>'
+        		for (var i = 0; i<(Object.keys(data[0])).length; i++) {
+        	                var values = (Object.values(data[0]))[i];
+        	         if(values==null){
+        	        	 html += '	<td></td>'
+        	         }else{
+        	        	 html += '	<td>'+values+'</td>'
+        	         }
+        	    }
+        			html += '			</tr>'
+        			html += '		</label>'
+        			html += '	</tbody>'
+        			html += '</table>'
+            
+			$('#jiben').html(html);
+			
+
+		}
+	});
+	
+	
+	
+/* 	
 		$(document).ready( function () {
 		    $(".sex").each(function(i,item){
 		        var text = $(this).text();
@@ -119,7 +210,7 @@
 		            $(this).text("女");
 		        }
 		    })
-		})
+		}) */
 	</script>
 </body>
 </html>
