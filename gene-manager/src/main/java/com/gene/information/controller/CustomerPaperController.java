@@ -86,7 +86,7 @@ public class CustomerPaperController {
 	
 	@ResponseBody
 	@GetMapping("/useredit/{id}")
-	List<Object> edit2(@PathVariable("id") Long id){
+	List<Object> edit2(@PathVariable("id") String id){
 		List<Object> list2 = new ArrayList<>();
 		List<CustomerPaperDO> list = customerPaperService.getUserList(id);
 		if(list.size()>0){
@@ -96,7 +96,7 @@ public class CustomerPaperController {
 				params.put(customerPaperDO2.getContent(), customerPaperDO2.getTiankonganswer());
 			}
 			params.put("userId", id);
-			params.put("昵称", list.get(0).getUsername());
+			//params.put("昵称", list.get(0).getUsername());
 		list2.add(params);
 		}
 		return list2;		
@@ -104,8 +104,8 @@ public class CustomerPaperController {
 	
 	
 	@GetMapping("/details/{id}")
-	String details(@PathVariable("id") Integer id,Model model){
-		CustomerPaperDO customerPaper = customerPaperService.get(id);
+	String details(@PathVariable("id") String id,Model model){
+	//	CustomerPaperDO customerPaper = customerPaperService.get(Integer.valueOf(id));
 		List<CustomerPaperDO> questionDetails = customerPaperService.queryUserQuestionDetails(id);
 		/*for (CustomerPaperDO customerPaperDO : questionDetails) {
 			String choiceId = customerPaperDO.getChoiceId();
@@ -115,8 +115,9 @@ public class CustomerPaperController {
 				customerPaperDO.setChoiceContent(choiceContent.getChoiceContent());
 			}
 		}*/
-		model.addAttribute("customerPaper", customerPaper);
+	//	model.addAttribute("customerPaper", customerPaper);
 		model.addAttribute("questionDetails", questionDetails);
+		model.addAttribute("id", id);
 	    return "information/customerPaper/details";
 	}
 	

@@ -28,14 +28,10 @@ public interface CustomerPaperService{
 	
 	int batchRemove(Integer[] ids);
 	
-	List<CustomerPaperDO> queryUserQuestionDetails(Integer id);
+	List<CustomerPaperDO> queryUserQuestionDetails(String id);
 	
-	/*CustomerPaperDO getChoiceContent(Integer id);*/
-	
-	List<CustomerPaperDO> getUserList(Long userId);
-	
-	List<CustomerPaperDO> getUserListId();
-	
+	List<CustomerPaperDO> getUserList(String userId);
+				
 	List<Object> userList();
 	
 }

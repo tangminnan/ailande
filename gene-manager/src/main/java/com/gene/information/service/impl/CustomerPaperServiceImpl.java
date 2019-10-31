@@ -60,45 +60,35 @@ public class CustomerPaperServiceImpl implements CustomerPaperService {
 	}
 
 	@Override
-	public List<CustomerPaperDO> queryUserQuestionDetails(Integer id) {
+	public List<CustomerPaperDO> queryUserQuestionDetails(String id) {
 		return customerPaperDao.queryUserQuestionDetails(id);
 	}
-
-	/*@Override
-	public CustomerPaperDO getChoiceContent(Integer id) {
-		return customerPaperDao.getChoiceContent(id);
-	}*/
-
+	
 	@Override
-	public List<CustomerPaperDO> getUserList(Long userId) {
+	public List<CustomerPaperDO> getUserList(String userId) {
 		return customerPaperDao.getUserList(userId);
-	}
-
-	@Override
-	public List<CustomerPaperDO> getUserListId() {
-		return customerPaperDao.getUserListId();
 	}
 
 	@Override
 	public List<Object> userList() {
 		List<Object> list2 = new ArrayList<>();
-		List<CustomerPaperDO> userListId = customerPaperDao.getUserListId();
-		for (int i = 0; i < userListId.size(); i++) {
-			Long userId = userListId.get(i).getUserId();
-			List<CustomerPaperDO> list = customerPaperDao.getUserList(userId);
-			if(list.size()>0){
+		List<CustomerPaperDO> userList = customerPaperDao.queryUserList();
+		for (CustomerPaperDO customerPaperDO : userList) {
+			List<CustomerPaperDO> answer = customerPaperDao.queryAnswer(customerPaperDO.getUserId());
+			if(answer.size()>0){
 				Map<String, Object> params = new HashMap<String, Object>();
-//				System.out.println(JSON.toJSONString(list));
-				for (int j = 0; j < list.size(); j++) {
-					params.put(list.get(j).getContent(), list.get(j).getTiankonganswer());
+				for (CustomerPaperDO customerPaperDO2 : answer) {
+					params.put(customerPaperDO2.getContent(), customerPaperDO2.getTiankonganswer());
 				}
-				params.put("userId", userId);
-				params.put("username", list.get(0).getUsername());
-			list2.add(params);
-			}	
-		}			
-		return list2;
+				params.put("userId", customerPaperDO.getUserId());
+				list2.add(params);
+			}
+			
+		}
+		return list2;				
+		
 	}
+
 
 	
 }
