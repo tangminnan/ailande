@@ -67,7 +67,7 @@ public class CustomerPaperDO implements Serializable {
 	private String category;
 	private String content;
 	private String tiankonganswer;
-	private Long userId;
+	private String userId;
 	
 	
 	
@@ -83,10 +83,10 @@ public class CustomerPaperDO implements Serializable {
 	public void setTiankonganswer(String tiankonganswer) {
 		this.tiankonganswer = tiankonganswer;
 	}
-	public Long getUserId() {
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(Long userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	public String getCategory() {

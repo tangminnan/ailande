@@ -60,12 +60,12 @@ public class CustomerPaperServiceImpl implements CustomerPaperService {
 	}
 
 	@Override
-	public List<CustomerPaperDO> queryUserQuestionDetails(Integer id) {
+	public List<CustomerPaperDO> queryUserQuestionDetails(String id) {
 		return customerPaperDao.queryUserQuestionDetails(id);
 	}
 	
 	@Override
-	public List<CustomerPaperDO> getUserList(Long userId) {
+	public List<CustomerPaperDO> getUserList(String userId) {
 		return customerPaperDao.getUserList(userId);
 	}
 
@@ -81,7 +81,6 @@ public class CustomerPaperServiceImpl implements CustomerPaperService {
 					params.put(customerPaperDO2.getContent(), customerPaperDO2.getTiankonganswer());
 				}
 				params.put("userId", customerPaperDO.getUserId());
-				params.put("username", customerPaperDO.getUsername());
 				list2.add(params);
 			}
 			
