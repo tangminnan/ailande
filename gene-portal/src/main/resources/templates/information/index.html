@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="../css/css.css" type="text/css">
+<title>健康方案</title>
+<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../js/Font.js"></script>
+</head>
+<body class="bg-cc">
+	<div class="goon">
+		<img class="logo" src="../images/logo.png" alt=""/>
+		<p class="p-more space center">请选择您本次想要获取的<br/>健康方案（可多选）</p>
+		<ul class="changweishoushen">
+			 <li>
+				<img class="fl" src="../images/CW-txt.png" alt="">
+				<img class="fr" src="../images/changwei.png" alt=""/>
+			</li>
+			<li style="border-bottom:none;">
+				<img class="fl" src="../images/SS-txt.png" alt="">
+				<img class="fr" src="../images/shoushen.png" alt=""/>
+			</li>
+		</ul>
+		<div class="center"><a id="jixu">继续</a></div>
+	</div>
+</body>
+<script type="text/javascript" >
+/**
+ * 获取所有的方案
+ */
+$.ajax({
+	url: "/paper/getAllProduct",
+	type: "GET",
+	async : false,
+	success: function(r){
+		if(r.data!=null){
+			var li="";
+			for(var i=0;i<r.data.length;i++){
+				var d=r.data[i];
+				var li='<input name="id" type="hidden" value="'+d.id+'"/>';
+				if(d.name=="肠胃调理"){
+					$(".changweishoushen li:nth-child(1)").append(li);
+				}
+				else if(d.name=="科学瘦身"){
+					$(".changweishoushen li:nth-child(2)").append(li);
+				}
+				
+			}
+		 	 
+		}
+	}
+});
+
+
+$(".changweishoushen li").click(function(){
+	$(this).toggleClass("on");
+});
+
+$("#jixu").click(function(){
+	var products=new Array();
+	$(".changweishoushen li.on").each(function(){
+		products.push($(this).children('[name="id"]').val());
+	});
+	if(products.length==0){
+		alert("要先选择一个或多个产品");
+		return;
+	}
+	window.location.href="/paper/saveChoosedProduct?products="+products;
+});
+</script>
+</html>
+
