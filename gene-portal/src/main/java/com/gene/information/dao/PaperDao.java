@@ -37,7 +37,7 @@ public interface PaperDao {
 	/**
 	 * 查询题目
 	 */
-	Collection<? extends QuestionDO> getQuestionDOType(@Param("integer") Integer integer,@Param("flag") String flag);
+	/*Collection<? extends QuestionDO> getQuestionDOType(@Param("integer") Integer integer,@Param("flag") String flag);*/
 
 	int saveAnswerDO(AnswerDO answerDO);
 
@@ -49,7 +49,7 @@ public interface PaperDao {
 	 */
 	List<ProductpaperDO> listProductPaperDO(ProductpaperDO productpaperDO);
 
-	ProductpaperDO getProductPaperDO(@Param("user") Integer user,@Param("product") Integer product);
+	List<ProductpaperDO> getProductPaperDO2(@Param("user") String user,@Param("product") Integer product);
 	
 	/**
 	 * 按题目的分类查询用户答题及答案
@@ -65,5 +65,20 @@ public interface PaperDao {
 	int countPaperQuestion(Integer i);
 
 	void checkIfShow(QuestionDO questionDO);
+	/**
+	 * 获取单个的基本信息
+	 */
+	List<Float> getSingleJiBenXinxi(@Param("user") String user,@Param("product") Integer product, @Param("string") String string);
+
+	/**
+	 * 查询用户选择的内容
+	 */
+	List<String> getChoosedContent(@Param("user") String user,@Param("product") Integer product,@Param("string") String string);
+
+	/**
+	 * 根据产品查询题目
+	 */
+	List<QuestionDO> getQuestionDOType(@Param("product") Integer product,@Param("flag") String flag);
+    
 
 }

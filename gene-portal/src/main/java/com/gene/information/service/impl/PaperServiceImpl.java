@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.druid.sql.visitor.functions.Lcase;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -45,18 +46,14 @@ public class PaperServiceImpl implements PaperService{
 	@Override
 	public Map<String, Object> getAllProduct(HttpServletRequest request) {
 		List<ProductDO> list=paperDao.getAllProduct();
-		CustomerPaperDO customerPaperDO= (CustomerPaperDO) request.getSession().getAttribute("customerPaperDO");
-		if(customerPaperDO!=null){
-			Integer user = customerPaperDO.getId();
-			for(ProductDO productDO :list){
-				ProductpaperDO productpaperDO = new ProductpaperDO();
-				productpaperDO.setUser(user);
-				productpaperDO.setProduct(productDO.getId());
-				if(paperDao.listProductPaperDO(productpaperDO).size()>0)
-					productDO.setIfCheck(1);//已检测
-				else
-					productDO.setIfCheck(0);//未检测
-			}
+		for(ProductDO productDO :list){
+			ProductpaperDO productpaperDO = new ProductpaperDO();
+			productpaperDO.setUser(request.getSession().getId());
+			productpaperDO.setProduct(productDO.getId());
+			if(paperDao.listProductPaperDO(productpaperDO).size()>0)
+				productDO.setIfCheck(1);//已检测
+			else
+				productDO.setIfCheck(0);//未检测
 		}
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("code", 0);
@@ -70,19 +67,7 @@ public class PaperServiceImpl implements PaperService{
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
-	public CustomerPaperDO saveChoosedProduct(Integer[] products,String name,HttpServletRequest request) {
-		CustomerPaperDO customerPaperDO=null;
-		Integer user=null;
-		if(name!=null){
-			customerPaperDO=new CustomerPaperDO();
-			customerPaperDO.setUsername(name);
-			customerPaperDO.setCreateTime(new Date());
-			paperDao.saveCustomerPaperDO(customerPaperDO);
-		}
-		else
-			 customerPaperDO = (CustomerPaperDO) request.getSession().getAttribute("customerPaperDO");
-		
-			user=customerPaperDO.getId();
+	public void saveChoosedProduct(Integer[] products,HttpServletRequest request) {
 		List<Integer> list = new ArrayList<Integer>();
 		for(int i=0;i<products.length;i++){
 			ProductDO productDO=paperDao.getProductByProductId(products[i]);
@@ -93,13 +78,12 @@ public class PaperServiceImpl implements PaperService{
 				productpaperDO.setStatus("0");//未完成
 				productpaperDO.setAnswerTime(new Date());
 				productpaperDO.setRemark("用户答题");
-				productpaperDO.setUser(user);
+				productpaperDO.setUser(request.getSession().getId());
 				paperDao.saveProductPaperDO(productpaperDO);
 				list.add(productpaperDO.getId());
 			}
 		}
-		customerPaperDO.setList(list);
-		return customerPaperDO;
+		request.getSession().setAttribute("productpaper", list);
 	}
 
 	@Override
@@ -112,16 +96,15 @@ public class PaperServiceImpl implements PaperService{
 	 */
 	@Override
 	public List<QuestionDO> getQuestionDOType(Integer[] products, String flag) {
-		Set<Integer> set = new HashSet<Integer>();
+		Map<Integer,QuestionDO> map = new HashMap<Integer,QuestionDO>();
 		for(int i=0;i<products.length;i++){
-			ProductDO productDO=paperDao.getProductByProductId(products[i]);
-			set.add(productDO.getPaperId());
+			List<QuestionDO> questionDOList = paperDao.getQuestionDOType(products[i],flag);
+			for(QuestionDO questionDO :questionDOList){
+				map.put(questionDO.getId(), questionDO);
+			}
 		}
-		List<QuestionDO> list = new ArrayList<QuestionDO>();
-		for(Integer i:set){
-			list.addAll(paperDao.getQuestionDOType(i,flag));
-		}
-		return list;
+		List<QuestionDO> list =new ArrayList<QuestionDO>(map.values());
+		return list; 
 	}
 
 	@Override
@@ -134,9 +117,18 @@ public class PaperServiceImpl implements PaperService{
 			Integer customerPaperId=jsonObject.getInteger("customerPaperId");//问卷ID
 			String fenlei=jsonObject.getString("fenlei");
 			String tiankonganswer=jsonObject.getString("tiankonganswer");
-			CustomerPaperDO customerPaperDO= (CustomerPaperDO) request.getSession().getAttribute("customerPaperDO");
-			List<Integer> list=  customerPaperDO.getList();
+			String contenw=jsonObject.getString("contenw");
+			if(contenw!=null){
+				if(contenw.contains("身高")) request.getSession().setAttribute("total", tiankonganswer);
+				if(contenw.contains("体重")) request.getSession().setAttribute("weight",tiankonganswer );
+				if(contenw.contains("姓名")) request.getSession().setAttribute("name",tiankonganswer );
+				if(contenw.contains("手机号")) request.getSession().setAttribute("phone",tiankonganswer );}
+			List<Integer> list=  (List<Integer>) request.getSession().getAttribute("productpaper");
 			for(int j=0;j<list.size();j++){
+				ProductpaperDO productpaperDO2 = paperDao.getProductpaperDO(list.get(j));
+				ChoiceProductDO choiceProductDO2 = paperDao.getChoiceProductDO(productpaperDO2.getProduct(), choiceId);
+				if(choiceProductDO2!=null && choiceProductDO2.getScore()==null && !"JIBEN_XINXI".equals(fenlei))
+					continue;
 				AnswerDO answerDO = new AnswerDO();
 				answerDO.setProductpaper(list.get(j));//记录的ID
 				
@@ -162,8 +154,8 @@ public class PaperServiceImpl implements PaperService{
 	}
 
 	@Override
-	public ProductpaperDO getProductPaperDO(Integer user, Integer product) {
-		return paperDao.getProductPaperDO(user,product);
+	public List<ProductpaperDO> getProductPaperDO2(String user, Integer product) {
+		return paperDao.getProductPaperDO2(user,product);
 	}
 
 	
@@ -204,5 +196,21 @@ public class PaperServiceImpl implements PaperService{
 		}
 		
 		return count;
+	}
+
+	/**
+	 * 获取单个的基本信息
+	 */
+	@Override
+	public List<Float> getSingleJiBenXinxi(String user,Integer product,String string) {
+		return paperDao.getSingleJiBenXinxi(user,product,  string);
+	}
+
+	/**
+	 * 查询用户的选项内容
+	 */
+	@Override
+	public List<String> getChoosedContent(String id, Integer product, String string) {
+		return paperDao.getChoosedContent(id,product,string);
 	}
 }

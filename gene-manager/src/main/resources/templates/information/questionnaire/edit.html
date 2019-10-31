@@ -188,6 +188,11 @@
                 							<input name="id" th:value="${product.id}" type="hidden" >
                 							<input name="choose" th:value="${product.choose}" type="hidden" >
             							</div>
+            							<div class="col-sm-2">
+                		 					<a class="btn btn-success" onclick="addISON(this)">
+                   								添加图标
+               								</a>
+            							</div>
             					</div>
          					<div class="form-group">
          						<label class="col-sm-1 control-label"></label>
@@ -217,6 +222,7 @@
            		 						<input name="choose" th:value="${product.choose}" type="hidden" >
                 					 	<input name="productName" th:value="${product.productName}" readonly="readonly" type="text" class="form-control" placeholder="产品">
             						</div>
+            						
             					</div>
          						<div class="form-group">
             						<label class="col-sm-1 control-label"></label>
@@ -241,6 +247,11 @@
             						<div class="col-sm-2">
                 						<input name="tads" type="text" th:value="${product.tads}" class="form-control" placeholder="调整方向2">
             						</div>
+            						<div class="col-sm-2">
+                		 					<a class="btn btn-success" onclick="addISON(this)">
+                   								添加图标
+               								</a>
+            							</div>
             					</div>
          						<div class="form-group">
          							<label class="col-sm-1 control-label"></label>
@@ -283,6 +294,11 @@
             						<div class="col-sm-2">
                 						<input name="tadss" type="text" th:value="${product.tadss}" class="form-control" placeholder="调整方向2">
             						</div>
+            						<div class="col-sm-2">
+                		 					<a class="btn btn-success" onclick="addISON(this)">
+                   								添加图标
+               								</a>
+            							</div>
          						</div>
          						<div class="form-group">
          							<label class="col-sm-1 control-label"></label>
@@ -370,7 +386,11 @@
                 		<input name="productName" th:value="${product.name}" readonly="readonly" type="text" class="form-control" placeholder="产品">
                 		<input name="product" th:value="${product.id}" type="hidden" >
             		</div>
-            		
+            		<div class="col-sm-2">
+                		 					<a class="btn btn-success" onclick="addISON(this)">
+                   								添加图标
+               								</a>
+            							</div>
          		</div>
          		<div class="form-group">
          			<label class="col-sm-1 control-label"></label>
@@ -425,6 +445,7 @@
            		 	<input name="product" th:value="${product.id}" type="hidden" >
                 	<input name="productName" th:value="${product.name}" readonly="readonly" type="text" class="form-control" placeholder="产品">
             	</div>
+            	
             	</div>
          <div class="form-group">
             	<label class="col-sm-1 control-label"></label>
@@ -450,6 +471,11 @@
             		<div class="col-sm-2">
                 		<input name="tads" type="text" class="form-control" placeholder="调整方向2">
             		</div>
+            		<div class="col-sm-2">
+                		 					<a class="btn btn-success" onclick="addISON(this)">
+                   								添加图标
+               								</a>
+            							</div>
             	</div>
          		<div class="form-group">
          			<label class="col-sm-1 control-label"></label>
@@ -492,6 +518,11 @@
             		<div class="col-sm-2">
                 		<input name="tadss" type="text" class="form-control" placeholder="调整方向2">
             		</div>
+            		<div class="col-sm-2">
+                		 					<a class="btn btn-success" onclick="addISON(this)">
+                   								添加图标
+               								</a>
+            							</div>
          		</div>
          		<div class="form-group">
          			<label class="col-sm-1 control-label"></label>
@@ -835,6 +866,19 @@ function getData() {
  			node.replaceWith(imgLi);
  		}});
  	});
+     
+     //选择图标
+     function addISON(){
+     	  layer.open({
+               type: 2,
+   			title:'图标列表',
+               content: '/FontIcoList.html',
+               area: ['480px', '90%'],
+               success: function(layero, index){
+                
+               }
+           });
+     }
 </script>
 </body>
 </html>

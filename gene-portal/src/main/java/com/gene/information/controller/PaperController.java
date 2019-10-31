@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.gene.common.annotation.Log;
 import com.gene.common.utils.R;
+import com.gene.common.utils.StringUtils;
 import com.gene.information.domain.ChoiceProductDO;
 import com.gene.information.domain.CustomerPaperDO;
 import com.gene.information.domain.ProductpaperDO;
@@ -54,32 +56,30 @@ public class PaperController {
 	@GetMapping("/saveChoosedProduct")
 	public String saveChoosedProduct( Integer[] products,HttpServletRequest request){
 		request.getSession().setAttribute("products", products);
+		paperService.saveChoosedProduct(products,request);
 		return "information/yinshixiguan";
 	}
 	
-	@Log("输入姓名")
-	@GetMapping("/enterName")
-	public String enterName(Model model,HttpServletRequest request){
+	/*@Log("输入姓名")
+	@GetMapping("/enterName")*/
+	/*public String enterName(Model model,HttpServletRequest request){
 		Integer[] products = (Integer[])request.getSession().getAttribute("products");
 		int count = paperService.getgetQuestionDOSize(products);
 		model.addAttribute("count", count);
 		model.addAttribute("index", 0);
 		return "information/jibenxinxi";
-	}
+	}*/
     
 	@Log("保存")
 	@GetMapping("/saveYourName")
 	public String saveYourName(String name,Integer index,Integer count,HttpServletRequest request,Model model){
-		Integer[] products = (Integer[])request.getSession().getAttribute("products");
-		CustomerPaperDO customerPaperDO = paperService.saveChoosedProduct(products,name,request);
-		request.getSession().setAttribute("customerPaperDO", customerPaperDO);
-		model.addAttribute("name", name);
+		model.addAttribute("name", request.getSession().getAttribute("name"));
 		model.addAttribute("index",index);
 		model.addAttribute("count", count);
 		return "information/jibenxinxi2";
 	}
 	
-	@Log("跳转答题分类页面")
+	/*@Log("跳转答题分类页面")
 	@GetMapping("/fenlei")
 	public String fenlei(@RequestParam(value="products",required=false) Integer[] products,int flag,Integer count,Model model,Integer index,HttpServletRequest request){
 		if(products!=null){
@@ -90,52 +90,51 @@ public class PaperController {
 		model.addAttribute("count", count);
 		model.addAttribute("index", index);
 		return "information/jibenxinxi3";
-	}
+	}*/
 	
 	@Log("开始答题")
 	@GetMapping("/beginAnswer")
-	public String beginAnswer(Integer flag,Integer count,Integer index,Model model,HttpServletRequest request){
+	public String beginAnswer(Integer flag,
+							 @RequestParam(value="count",required=false) Integer count,
+							 @RequestParam(value="index",required=false) Integer index,
+							 Model model,
+							 HttpServletRequest request){
 		Integer[] products = (Integer[])request.getSession().getAttribute("products");
+		if(count==null){
+			 count = paperService.getgetQuestionDOSize(products);
+		}
+		if(index==null) index=1;
 		model.addAttribute("index", index);
-		List<QuestionDO> list=null;
-		
 		model.addAttribute("count", count);
+		
+		List<QuestionDO> list=new ArrayList<QuestionDO>();
 		if(flag==0){//基本信息
 			list=paperService.getQuestionDOType(products,"JIBEN_XINXI");
 			model.addAttribute("list",list);
 			model.addAttribute("LEI","JIBEN_XINXI");
 			return "information/jibenxinxi4";
 		}
-		else if(flag==1){//身体状况
-			model.addAttribute("LEI","SHENTI_ZHUANG");
-			list=paperService.getQuestionDOType(products,"SHENTI_ZHUANG");
+		else if(flag==1){//身体状况  膳食习惯 生活方式 睡眠与压力 运动习惯
+			List<String> fenleiList = Arrays.asList("SHENTI_ZHUANG","SHANSHI_XIGUAN","SHENGHUO_FANGSHI","SHUIMIAN_XIGUAN","YUNDONG_XIGUANG");
+			for(String fenlei :fenleiList)
+				list.addAll(paperService.getQuestionDOType(products,fenlei));
+			model.addAttribute("list",list);
 		}
-		else if(flag==2){//膳食习惯
-			model.addAttribute("LEI","SHANSHI_XIGUAN");
-			list=paperService.getQuestionDOType(products,"SHANSHI_XIGUAN");
-		}
-		else if(flag==3){//生活方式
-			model.addAttribute("LEI","SHENGHUO_FANGSHI");
-			list=paperService.getQuestionDOType(products,"SHENGHUO_FANGSHI");
-		}
-		else if(flag==4){//睡眠与压力
-			model.addAttribute("LEI","SHUIMIAN_XIGUAN");
-			list=paperService.getQuestionDOType(products,"SHUIMIAN_XIGUAN");
-		}
-		else if(flag==5){//运动习惯
-			model.addAttribute("LEI","YUNDONG_XIGUANG");
-			list=paperService.getQuestionDOType(products,"YUNDONG_XIGUANG");
-		}
-		else if(flag==6){//查看报告
-			return "information/baogao-1";
-		}
-		model.addAttribute("list",list);
 		
-		model.addAttribute("flag", flag);
 		return "information/jibenxinxi6";
 	}
 	
-	@Log("保存基本信息")
+	/**
+	 * 进入报告页面
+	
+	 */
+	
+	@GetMapping("/getReportPage")
+	public String getReportPage(){
+		return "information/baogao-1";
+	}
+	
+	/*@Log("保存基本信息")
 	@ResponseBody
 	@PostMapping("/saveJiBenXinxi")
 	public R saveJiBenXinxi(CustomerPaperDO customerPaperDO,HttpServletRequest request){
@@ -147,7 +146,7 @@ public class PaperController {
 		}
 		else
 			return R.error("当前页面停留时间太长，请重新进入...");
-	}
+	}*/
 	
 	@Log("保存问卷答题")
 	@PostMapping("/saveWenJuan")
@@ -159,8 +158,8 @@ public class PaperController {
 	@Log("查看报告")
 	@GetMapping("/lookCheckLog")
 	public String lookCheckLog(Integer product,String name, Model model,HttpServletRequest request){
-		CustomerPaperDO c = (CustomerPaperDO) request.getSession().getAttribute("customerPaperDO");
-		model.addAttribute("userName",c.getUsername());
+		
+		model.addAttribute("userName","wewwe");
 		model.addAttribute("product", product);
 		model.addAttribute("name",name);
 		if("肠胃调理".equals(name))
@@ -174,8 +173,9 @@ public class PaperController {
 	@Log("阅读检测报告--肠胃调理")
 	@GetMapping("/readMyReport")
 	public String readMyReport(Model model,Integer product,String name,HttpServletRequest request){
-		CustomerPaperDO c = (CustomerPaperDO) request.getSession().getAttribute("customerPaperDO");
-		ProductpaperDO productpaperDO = paperService.getProductPaperDO(c.getId(),product);
+		
+		List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId(),product);
+		ProductpaperDO productpaperDO=productpaperDOList.get(0);
 	    Map<String,Integer> mapD  = new HashMap<String,Integer>();
 	    Map<String,Integer> mapT = new HashMap<String,Integer>();
 	    DecimalFormat df = new DecimalFormat("0.0");
@@ -191,7 +191,7 @@ public class PaperController {
 	    	/**
 	    	 * 计算身体现状80分得分
 	    	 */
-	    	String shenti80=df.format((float)mapD.get("SHENTI_ZHUANG")/mapT.get("SHENTI_ZHUANG")*100);
+	    	int shenti80=(int)((float)mapD.get("SHENTI_ZHUANG")/mapT.get("SHENTI_ZHUANG")*100);
 	    	model.addAttribute("shenti80", shenti80);
 	    	/**
 	    	 * 计算饮食状况 60分得分
@@ -204,7 +204,7 @@ public class PaperController {
 	    			zongfen+=mapT.get(fenlei);
 	    		}
 	    	}
-	    	String yinshi60 =df.format((float)defen/zongfen*100);
+	    	int yinshi60 =(int)((float)defen/zongfen*100);
     		model.addAttribute("yinshi60",yinshi60);
 	    	/**
 	    	 * 计算各个分类得分占比
@@ -234,9 +234,9 @@ public class PaperController {
 	@Log("阅读检测报告--科学瘦身")
 	@GetMapping("/kexueshoushens")
 	public String kexueshoushen(Model model,Integer product,String name,HttpServletRequest request) {
-		CustomerPaperDO c = (CustomerPaperDO) request.getSession().getAttribute("customerPaperDO");
-		ProductpaperDO productpaperDO = paperService.getProductPaperDO(c.getId(),product);
-	    Map<String,Integer> mapD  = new HashMap<String,Integer>();
+		List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId(),product);
+		ProductpaperDO productpaperDO = productpaperDOList.get(0);
+		Map<String,Integer> mapD  = new HashMap<String,Integer>();
 	    Map<String,Integer> mapT = new HashMap<String,Integer>();
 	    DecimalFormat df = new DecimalFormat("0.0");
 	    if(productpaperDO!=null){//统计分值
@@ -290,6 +290,22 @@ public class PaperController {
 		model.addAttribute("product", product);
 	    
 		
+		/**
+		 * 计算bmi
+		 */
+		float high = paperService.getSingleJiBenXinxi(request.getSession().getId(),product, "身高").get(0);
+		float weight =paperService.getSingleJiBenXinxi(request.getSession().getId(),product, "体重").get(0);
+		String bmi=  df.format(weight/high/high*10000);
+		model.addAttribute("high",high);
+		model.addAttribute("weight",weight);
+		model.addAttribute("bmi",bmi);
+		/**
+		 * 是否有赘肉
+		 */
+		
+		List<String> str  = paperService.getChoosedContent(request.getSession().getId(),product,"赘肉");
+			
+		model.addAttribute("zhuirou",str.size()>0?str.get(0):"没有赘肉");
 		return "information/baogao-jianfei";
 	}
 
@@ -300,8 +316,8 @@ public class PaperController {
 	@GetMapping("/getMyReportData")
 	@ResponseBody
 	public Map<String,List<QuestionDO>> getMyReportData(Integer product,HttpServletRequest request){
-		CustomerPaperDO c = (CustomerPaperDO) request.getSession().getAttribute("customerPaperDO");
-		ProductpaperDO productpaperDO = paperService.getProductPaperDO(c.getId(),product);
+		List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId(),product);
+		ProductpaperDO productpaperDO = productpaperDOList.get(0);
 	    Map<String,List<QuestionDO>> map  = new HashMap<String,List<QuestionDO>>();
 	    if(productpaperDO!=null){
 	    	Integer productpaper = productpaperDO.getId();

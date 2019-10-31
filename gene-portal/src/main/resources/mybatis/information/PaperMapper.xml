@@ -115,7 +115,10 @@
 	</resultMap>
 	
 	<select id="getQuestionDOType" resultMap="paperMap"> 
-		SELECT
+	
+
+
+	SELECT
 	n.id nid,
 	n.category ncategory,
 	n.content ncontent,
@@ -156,11 +159,16 @@
 	t.tadjianyis ttadjianyis,
 	t.choose tchoose
 FROM
- qu_question n 
-LEFT JOIN qu_choice c ON n.id = c.question
-LEFT JOIN qu_choice_product t on t.choose=c.id
-where n.paper_id=#{integer} and n.category=#{flag}
-	
+ (select * from qu_question   where category=#{flag} and paper_id=(SELECT paper_id FROM biz_product WHERE id=#{product})) n
+ JOIN qu_choice c ON n.id = c.question
+ JOIN (SELECT * FROM qu_choice_product WHERE PRODUCT=#{product}  
+ 
+ 
+ <if test="flag != 'JIBEN_XINXI'">and score is not null </if>
+ ) t on t.choose=c.id
+ 	
+ 	
+ 	
 	</select>
 	
 	<select id="getProductpaperDO" resultType="com.gene.information.domain.ProductpaperDO">
@@ -175,8 +183,9 @@ where n.paper_id=#{integer} and n.category=#{flag}
 		select  id,paper,product,user,status,answer_time,remark from qu_product_paper where user=#{user} and product=#{product}
 	</select>
 	
-	<select id="getProductPaperDO" resultType="com.gene.information.domain.ProductpaperDO">
+	<select id="getProductPaperDO2" resultType="com.gene.information.domain.ProductpaperDO">
 		select  id,paper,product,user,status,answer_time,remark from qu_product_paper where user=#{user} and product=#{product}
+		
 	</select>
 	
 	<resultMap type="com.gene.information.domain.QuestionDO" id="questionMap">
@@ -244,7 +253,7 @@ where n.paper_id=#{integer} and n.category=#{flag}
 	
 	<select id="getAllChoicedScores" resultType="int">
 				SELECT
-			sum(qp.score)
+			sum(ifnull(qp.score,0))
 		FROM
 			qu_question qq,
 			qu_choice qc,
@@ -267,5 +276,45 @@ where n.paper_id=#{integer} and n.category=#{flag}
 	
 	<select id="countPaperQuestion" resultType="int">
 		select count(1) from qu_question where paper_id=#{value}
+	</select>
+	
+	<select id="getSingleJiBenXinxi" resultType="float">
+					SELECT
+				b.tiankonganswer
+			FROM
+				biz_answer b,
+				qu_question q,
+				qu_product_paper qp
+			WHERE
+				b.question_id = q.id
+			AND b.productpaper = qp.id
+			AND qp.product = #{product}
+			AND qp.USER = #{user}
+			AND q.content like concat('%', #{string},'%')
+	</select>
+	
+	<select id="getChoosedContent" resultType="string">
+					select c.content from biz_answer b,qu_question q,qu_choice c,qu_product_paper qp
+			where b.question_id=q.id and q.content like concat('%', #{string},'%')
+			
+			AND b.choice_id = c.id
+			AND b.productpaper = qp.id
+			AND qp.product = #{product} AND qp.user=#{user}
+	</select>
+	
+	<select id="getQuestionByProduct" resultType="com.gene.information.domain.QuestionDO">
+					SELECT
+				*
+			FROM
+				qu_question q,
+				biz_product b
+			WHERE
+				q.category = #{flag}
+			AND q.paper_id = b.paper_id
+			AND b.id = #{product}
+	</select>
+	
+	<select id="getProductDO" resultType="com.gene.information.domain.ProductpaperDO">
+		select * from qu_product_paper where id=#{value}
 	</select>
 </mapper>

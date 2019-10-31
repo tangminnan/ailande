@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="format-detection" content="telephone=no">
 <link rel="stylesheet" href="../css/css.css" type="text/css">
+<link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
 <title>检测报告</title>
 <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="../js/Font.js"></script>
@@ -18,50 +19,37 @@
 <body class="bg-cc">
 	<div id="baogao-3" >
 		<div class="Healthy">
-			<div  class="boxes">
-				<div class="txt">
-					<dl>
-						<dt>您的肠道现状</dt>
-						<dd class="more"><a id="test">查看详情</a></dd>
-					</dl>
-					<img src="../images/changdao.png" alt=""/>
-				</div>
-				<div class="jieguo">
-				
-					<ul class="ppty">
-						<li>不大好</li>
-						<li class="on">一般般</li>
-						<li>很舒服</li>
-					</ul>
-				</div>
-			</div>
-			<div class="boxes">
-				<div class="txt">
-					<dl>
-						<dt>您的健康行为评估</dt>
-						<dd class="more"><a id="ccc">查看详情</a></dd>
-						<dd class="score"><span th:text="${yinshi60}"></span><span class="yyy">分（一般）</span></dd>
-					</dl>
-					<div class="biaoqing shufu"><!--默认一般，“buhao”，“shufu”--></div>
-				</div>
-				<div class="jieguo space">
-					<p>肠道问题成因占比</p>
-				</div>
-			</div>
-			<div class="boxes">
-				<h3>您的饮食和营养补充指导</h3>
-				<ul class="zhidao">
-					<li>
-						<img src="../images/yinshi.png" alt=""/>
-						<input type="button" value="饮食原则"/>
-					</li>
-					<li>
-						<img src="../images/buchongji.png" alt=""/>
-						<input type="button" value="补充剂方案"/>
-					</li>
-				</ul>
-			</div>
+		<div class="boxes center">
+			<p>您的肠道现状</p>
+			<ul class="xianZ">
+				<li>不大好</li>
+				<li class="on">一般般</li>
+				<li>很舒服</li>
+			</ul>
+			<a id="test">查看详情</a>
 		</div>
+		
+		<div class="boxes center">
+			<p>您的健康行为评估</p>
+			<span><em th:text="${yinshi60}+'分'"></em></span>
+			<a id="ccc">查看详情</a>
+		</div>
+		
+		<div class="boxes">
+			<h3>您的饮食和营养补充指导</h3>
+			<ul class="zhidao">
+				<li>
+					<img src="../images/yinshi.png" alt=""/>
+					<input type="button" value="> 饮食原则"/>
+				</li>
+				<li>
+					<img src="../images/buchongji.png" alt=""/>
+					<input type="button" value="> 补充剂方案"/>
+				</li>
+			</ul>
+		</div>
+		
+	</div>
 	</div>
 	
 	<div id="baogao-4" style="display: none">
@@ -70,7 +58,7 @@
 		<div class="ztai center">
 			<img src="../images/bao-cw.png" alt=""/>
 			<p>您的肠道现状</p>
-			<ul class="ppty">
+			<ul class="xianZ">
 				<li>不大好</li>
 				<li class="on">一般般</li>
 				<li>很舒服</li>
@@ -118,26 +106,26 @@
 				<img class="jsBg" src="../images/goumai.png" alt=""/>
 				<p class="name space"><span>速七活力益生菌胶囊</span>200亿以上活菌，<br/>Lab4专利菌群配方，<br/>快速改善腹泻便秘。</p>
 				<img class="yaoM" src="../images/lei1.png" alt=""/>
-				<input type="button" value="点击购买"/>
+				<input type="button" value="点击购买" onclick="goumai('https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=66585330179')"/>
 			</div>
 			<div class="jyiBox">
 				<img class="jsBg" src="../images/goumai.png" alt=""/>
 				<p class="name space"><span>榆树养胃胶囊</span>修复胃粘膜，提高胃动力，调理消化酶分泌，改善消化不良引起的胃痛胃胀。</p>
 				<img class="yaoM" src="../images/lei2.png" alt=""/>
-				<input type="button" value="点击购买"/>
+				<input type="button" value="点击购买" onclick="goumai('https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843270179')"/>
 			</div>
 			<div class="jyiBox">
 				<img class="jsBg" src="../images/goumai.png" alt=""/>
 				<p class="name space"><span>安益胶囊</span>修复肠粘膜，温和调理肠胃菌群，改善消化不良引起的腹痛腹胀。</p>
 				<img class="yaoM" src="../images/lei3.png" alt=""/>
-				<input type="button" value="点击购买"/>
+				<input type="button" value="点击购买" onclick="goumai('https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843200179')"/>
 			</div>
 			<p class="jianyi center"><span>您还可以选择</span></p>
 			<div class="jyiBox">
 				<img class="jsBg" src="../images/goumai.png" alt=""/>
 				<p class="name space"><span>低聚果糖益生元粉</span>益生元，帮助肠道有益菌增长，促进肠蠕动，改善便秘腹泻。</p>
 				<img class="yaoM" src="../images/lei4.png" alt=""/>
-				<input type="button" value="点击购买"/>
+				<input type="button" value="点击购买" onclick="goumai('https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59844980179')"/>
 			</div>
 		</div><!-- sideMenu End -->
 	</div>
@@ -162,17 +150,17 @@
 	<script type="text/javascript">
 	
 	var fenshua  = $("#shenti80").val();
-	if(fenshua>=80) $("ul.ppty li:nth-child(3)").addClass("on").siblings().removeClass("on");
-	if(fenshua<80 && fenshua>=60) $("ul.ppty li:nth-child(2)").addClass("on").siblings().removeClass("on");
-	if(fenshua<60) $("ul.ppty li:nth-child(1)").addClass("on").siblings().removeClass("on");
+	if(fenshua>=80) $("ul.xianZ li:nth-child(3)").addClass("on").siblings().removeClass("on");
+	if(fenshua<80 && fenshua>=60) $("ul.xianZ li:nth-child(2)").addClass("on").siblings().removeClass("on");
+	if(fenshua<60) $("ul.xianZ li:nth-child(1)").addClass("on").siblings().removeClass("on");
 	
 	
 	var yinshi = $("#yinshi60").val();
-	if(yinshi>=80){ $(".biaoqing").removeClass("buhao shufu").addClass("shufu");$(".yyy").text("分（较好）");$("#biaoqingaaa").attr("src","../images/henhao.png");}
-	if(yinshi<80 && fenshua>=60){ $(".biaoqing").removeClass("buhao shufu").addClass("yiban");$(".yyy").text("分（一般）");$("#biaoqingaaa").attr("src","../images/yiban.png");}
-	if(yinshi<60){ $(".biaoqing").removeClass("buhao shufu");$(".yyy").text("分（较低）");$("#biaoqingaaa").attr("src","../images/buhao.png");}
+	if(yinshi>=80){$("#ccc").prev().append(" (较好) ");$(".yyy").text("分（较好）");$("#biaoqingaaa").attr("src","../images/henhao.png");}
+	if(yinshi<80 && yinshi>=60){ $("#ccc").prev().append(" (一般) ");$(".yyy").text("分（一般）");$("#biaoqingaaa").attr("src","../images/yiban.png");}
+	if(yinshi<60){$("#ccc").prev().append(" (较低) ");$(".yyy").text("分（较低）");$("#biaoqingaaa").attr("src","../images/buhao.png");}
 	
-	$("body").on("click",".list_dt",function () {
+	/* $("body").on("click",".list_dt",function () {
 	$('.list_dd').stop();
 	$(this).siblings("dt").removeAttr("id");
 	if($(this).attr("id")=="open"){
@@ -180,7 +168,7 @@
 	}else{
 		$(this).attr("id","open").next().slideDown().siblings("dd").not(".jbs").slideUp();
 	}
-});
+}); */
 	/**
 	*  跳转
 	*/
@@ -214,7 +202,28 @@ $(".zhidao input").last().click(function(){
 	  window.location.hash = "#buchongjifangantiaozhuan";
   });
   
-  	 
+  //点击图片触发跳转
+  
+  $(".fotNav li:nth-child(1)").click(function(){
+	  window.location.hash = "#changdaoxianzhuang";
+  });
+  $(".fotNav li:nth-child(2)").click(function(){
+	  window.location.hash = "#SHANSHI_XIGUAN";
+  });
+  $(".fotNav li:nth-child(3)").click(function(){
+	  window.location.hash = "#yinshiyuanzetiaozhuan";
+  });
+  $(".fotNav li:nth-child(4)").click(function(){
+	  window.location.hash = "#buchongjifangantiaozhuan";
+  });
+  
+  //鼠标悬浮放大
+  
+  $(".fotNav li").mouseenter(function(){
+	 $(this).css("font-size",".36rem");
+  }).mouseout(function(){
+	  $(this).css("font-size","");
+  });
   
   $.ajax({
 		type : "GET",
@@ -278,6 +287,10 @@ $(".zhidao input").last().click(function(){
 		}
 	});
 
+  //购买链接
+  function goumai(url){
+	 window.location.href=url; 
+  }
  
 </script>
 </body>

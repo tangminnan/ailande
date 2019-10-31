@@ -35,8 +35,7 @@
 	  var baifen = Math.floor(index*100/countb);
 	  $(".baifen").text(baifen+'%');
 	  $(".baifen").prev().val(baifen);
-	  var url='/paper/fenlei?flag=0&index='+index+'&count='+countb
-	  window.setTimeout("window.location.href='/paper/fenlei?flag=0&index="+index+"&count="+countb+"'",1500);
+	  window.setTimeout("window.location.href='/paper/beginAnswer?flag=1&index="+index+"&count="+countb+"'",1500);
 	
 		  
 	

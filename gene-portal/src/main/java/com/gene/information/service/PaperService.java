@@ -18,7 +18,7 @@ public interface PaperService {
      */
 	Map<String, Object> getAllProduct(HttpServletRequest request);
 
-	CustomerPaperDO saveChoosedProduct(Integer[] products,String name,HttpServletRequest request);
+	void saveChoosedProduct(Integer[] products,HttpServletRequest request);
     /**
      * 保存用户的基本信息
      */
@@ -36,7 +36,7 @@ public interface PaperService {
 	/**
 	 *获取记录
 	 */
-	ProductpaperDO getProductPaperDO(Integer user, Integer product);
+	List<ProductpaperDO> getProductPaperDO2(String user, Integer product);
 	
 	
 	
@@ -52,5 +52,11 @@ public interface PaperService {
 	Integer getAllChoicedScores(Integer productpaper,Integer product, String fenlei);
 	
 	int getgetQuestionDOSize(Integer[] products);
+
+	List<Float> getSingleJiBenXinxi(String user,Integer product, String string);
+	/**\
+	 * 是否有赘肉
+	 */
+	List<String> getChoosedContent(String id, Integer product, String string);
 
 }

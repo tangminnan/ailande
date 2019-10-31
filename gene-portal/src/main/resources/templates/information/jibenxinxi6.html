@@ -41,6 +41,7 @@
 		<div class="bianbian" th:each="question:${list}">
 			<input name="type" type="hidden" th:value="${question.type}"/>
 			<input type="hidden" name="bt" th:value="${question.img}">
+			<input type="hidden" name="category" th:value="${question.category}">
 			<h3 align="center" th:text="${question.contenw}"></h3>
 			<ul>
 				<li th:each="choice:${question.choiceList}">
@@ -53,23 +54,10 @@
 			</ul>
 		</div>
 	</div>
-	<input name="flagg" th:value="${flag}" type="hidden">
-	<input id="lei" th:value="${LEI}" type="hidden">
 	<input id="count" th:value="${count}" type="hidden">
 	<input id="index" th:value="${index}" type="hidden">
 	
 	<script type="text/javascript">
-	
-	
-		var flag=$("[name='flagg']").val();
-		if(flag==0) $("h3.title").text("基本信息");
-		if(flag==1) $("h3.title").text("身体状况");
-		if(flag==2) $("h3.title").text("膳食习惯");
-		if(flag==3) $("h3.title").text("生活方式");
-		if(flag==4) $("h3.title").text("睡眠与压力");
-		if(flag==5) $("h3.title").text("运动习惯");
-		
-		
 			var questionArry=[], arry=[];
 			  var countb=$("#count").val();
 			  var index=$("#index").val();
@@ -79,9 +67,19 @@
 			  $(".baifen").prev().val(baifen);
 		
 		$(".name").append($("#allQuestion div:first-child"));
+		if($(".name").find("[name='type']").val()==0)
+			$(".nev a").hide();
+		else
+			$(".nev a").show();
+		$("h3.title").text(getFenlei($(".name").find("[name='category']").val()));
 		var ur=$(".name").find("[name='bt']").val();
 		$(".name h3").css('background','url('+ur+') no-repeat top center');
 		$(".nev a").click(function(){
+				danxuanduoxuanxuazne();
+			});
+		
+		
+		function danxuanduoxuanxuazne(){
 			if($(".imgChoose").length==0){
 				alert("请选择");
 				return;
@@ -90,7 +88,7 @@
 				var chooseId=$(this).children("[name='choseID']").text();//选项id
 				var questionId=$(this).children("[name='questionID']").text();//问题id
 				var customerPaperId=$(this).children("[name='customerPaperId']").text();
-				var fenlei=$("#lei").val();
+				var fenlei=$(".name").find("[name='category']").val();//分类
 				
 				var obj={'choiceId':chooseId,'questionId':questionId,'customerPaperId':customerPaperId,'fenlei':fenlei};
 				arry.push(obj);
@@ -100,6 +98,11 @@
 				questionArry.push($(".name div:last-child").remove());
 				var node=$("#allQuestion div:first-child");
 				$(".name").append(node);
+				if($(".name").find("[name='type']").val()==0)
+					$(".nev a").hide();
+				else
+					$(".nev a").show();
+				$("h3.title").text(getFenlei($(".name").find("[name='category']").val()));
 				$(".name h3").css('background','url('+node.find("[name='bt']").val()+') no-repeat top center');
 				
 				 index++;
@@ -117,35 +120,53 @@
 					data:{objs:JSON.stringify(arry),'index':index},
 					success : function(data) {
 						if(data.code==0){
-							flag++;
-							window.location.href="/paper/fenlei?flag="+flag+"&index="+index+"&count="+countb;
+						
+							window.location.href="/paper/getReportPage";
 						}
 						else
 							alert(data.msg);
 					}
 				});
 			}
-			});
-		
+		}
 		
 		$(".pre a").last().click(function(){
 			if(questionArry.length>0){
 				$("#allQuestion").prepend($(".name div:last-child").remove());
 				var node=questionArry.pop();
 				$(".name").append(node);
+				if($(".name").find("[name='type']").val()==0)
+					$(".nev a").hide();
+				else
+					$(".nev a").show();
+				$("h3.title").text(getFenlei($(".name").find("[name='category']").val()));
 				$(".name h3").css('background','url('+node.find("[name='bt']").val()+') no-repeat top center');
 				index--;
+				if($(".name").find("[name='type']").val()==0)
+					$(".nev a").hide();
+				else
+					$(".nev a").show();
 			}
 		});
 		
 		$(".name").on('click','li',function(){
 			if($(this).parents(".bianbian").children("input").val()==0){//单选
 				$(this).addClass("imgChoose").siblings().removeClass("imgChoose");
+				setTimeout(function(){danxuanduoxuanxuazne()},1000);
 			}
 			else{//多选
 				$(this).toggleClass("imgChoose");
 			}
 		});
+		
+		function getFenlei(fenlei){
+			"SHENTI_ZHUANG","SHANSHI_XIGUAN","SHENGHUO_FANGSHI","SHUIMIAN_XIGUAN","YUNDONG_XIGUANG"
+			if(fenlei=="SHENTI_ZHUANG")     return  "身体现状";
+			if(fenlei=="SHANSHI_XIGUAN")    return "膳食习惯";
+			if(fenlei=="SHENGHUO_FANGSHI")  return "生活方式";
+			if(fenlei=="SHUIMIAN_XIGUAN")   return "睡眠与压力";
+			if(fenlei=="YUNDONG_XIGUANG")   return "运动习惯";
+		}
 	</script>
 </body>
 </html>

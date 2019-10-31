@@ -11,7 +11,7 @@ public class ProductpaperDO {
 	//产品ID
 	private Integer  product ;
 	//用户ID
-    private Integer user;
+    private String user;
     //状态   0=未完成  1=已完成 未生成报告  2=已生成报告
     private String status;
     //创建时间
@@ -36,10 +36,10 @@ public class ProductpaperDO {
 	public void setProduct(Integer product) {
 		this.product = product;
 	}
-	public Integer getUser() {
+	public String getUser() {
 		return user;
 	}
-	public void setUser(Integer user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 	public String getStatus() {
