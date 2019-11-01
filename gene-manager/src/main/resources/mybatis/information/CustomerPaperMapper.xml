@@ -16,7 +16,7 @@
 		select qq.id,qq.content,bz.tiankonganswer,qpp.user userId
 		from qu_question qq , biz_answer bz,qu_product_paper qpp 
 		where qq.id= bz.question_id and bz.productpaper = qpp.id and qq.category='JIBEN_XINXI' and qpp.user = #{userId}
-		GROUP BY qq.content,qpp.user ORDER BY qpp.user desc
+		GROUP BY qq.content,qpp.user ORDER BY qpp.answer_time desc
 	</select> 
 	
 	<select id="queryAnswer" resultType="com.gene.information.domain.CustomerPaperDO">
@@ -31,7 +31,7 @@
 		select qq.id,qq.content,bz.tiankonganswer,qpp.user userId
 		from qu_question qq , biz_answer bz,qu_product_paper qpp 
 		where qq.id= bz.question_id and bz.productpaper = qpp.id and qq.category='JIBEN_XINXI'
-		GROUP BY qpp.user ORDER BY qpp.user desc		
+		GROUP BY qpp.user ORDER BY qpp.answer_time desc		
 	</select>
 	
 	<select id="list" resultType="com.gene.information.domain.CustomerPaperDO">
@@ -189,7 +189,7 @@
 	<select id="queryUserQuestionDetails" resultType="com.gene.information.domain.CustomerPaperDO">
 		select qc.content choiceContent,qq.content questionContent,qq.category from biz_answer ba,qu_choice qc , qu_question qq , qu_product_paper qpp
 		where ba.choice_id=qc.id and qq.id = ba.question_id and ba.productpaper = qpp.id
-		and qpp.`user` = #{userId}
+		and qpp.`user` = #{userId} GROUP BY qq.content ,qc.content
 		
 	</select>
 	

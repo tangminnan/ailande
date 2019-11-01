@@ -20,7 +20,7 @@
     </style>
 </head>
 <body>
-<div class="ico-list">
+<div class="ico-list" id="ico-list">
      <i class="fa fa-address-book" aria-hidden="true"></i>
 
      <i class="fa fa-address-book-o" aria-hidden="true"></i>
@@ -927,11 +927,18 @@
 
 <script type="text/javascript">
     var index = parent.layer.getFrameIndex(window.name);
-    
+    var zhi = parent.$('#tubiao').siblings().val();
     //给父页面传值
     $('.ico-list i').on('click', function(){
-    	alert(layer.node);
-    	parent.$(this).parent().siblings().children("[name*='tads']").val($(this).attr('class'));
+    	parent.$('#tubiao').siblings().val(zhi + '<i class="'+$(this).attr('class')+'" aria-hidden="true"></i>');
+        //parent.layer.tips('Look here', '#parentIframe', {time: 5000});
+        parent.$('#tubiao').removeAttr("id");
+        parent.layer.close(index);
+    });
+    
+  //给父页面传值
+    $('#ico-list i').on('click', function(){
+    	parent.$('#icon').val($(this).attr('class'));
         //parent.layer.tips('Look here', '#parentIframe', {time: 5000});
         parent.layer.close(index);
     });
