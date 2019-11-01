@@ -1,8 +1,10 @@
 package com.gene.information.controller;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +41,9 @@ public class PaperController {
 
 	@Log("跳转首页")
 	@GetMapping("/index")
-	public String index(){
+	public String index(HttpServletRequest request){
+		String str= new SimpleDateFormat("yyyyMMddhhMmss").format(new Date());//请求时间戳
+		request.getSession().setAttribute("timeString", str);
 		return "information/index";
 	}
 	
@@ -103,7 +107,7 @@ public class PaperController {
 		if(count==null){
 			 count = paperService.getgetQuestionDOSize(products);
 		}
-		if(index==null) index=1;
+		if(index==null) index=0;
 		model.addAttribute("index", index);
 		model.addAttribute("count", count);
 		
@@ -114,7 +118,13 @@ public class PaperController {
 			model.addAttribute("LEI","JIBEN_XINXI");
 			return "information/jibenxinxi4";
 		}
-		else if(flag==1){//身体状况  膳食习惯 生活方式 睡眠与压力 运动习惯
+		if(flag==1){//基本信息 （身高  体重）
+			list=paperService.getQuestionDOType(products,"JIBEN_XINXI");
+			model.addAttribute("list",list);
+			model.addAttribute("LEI","JIBEN_XINXI");
+			return "information/jibenxinxi44";
+		}
+		else if(flag==2){//身体状况  膳食习惯 生活方式 睡眠与压力 运动习惯
 			List<String> fenleiList = Arrays.asList("SHENTI_ZHUANG","SHANSHI_XIGUAN","SHENGHUO_FANGSHI","SHUIMIAN_XIGUAN","YUNDONG_XIGUANG");
 			for(String fenlei :fenleiList)
 				list.addAll(paperService.getQuestionDOType(products,fenlei));
@@ -173,8 +183,8 @@ public class PaperController {
 	@Log("阅读检测报告--肠胃调理")
 	@GetMapping("/readMyReport")
 	public String readMyReport(Model model,Integer product,String name,HttpServletRequest request){
-		
-		List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId(),product);
+		String timeString= (String)request.getSession().getAttribute("timeString");
+		List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId()+timeString,product);
 		ProductpaperDO productpaperDO=productpaperDOList.get(0);
 	    Map<String,Integer> mapD  = new HashMap<String,Integer>();
 	    Map<String,Integer> mapT = new HashMap<String,Integer>();
@@ -234,7 +244,8 @@ public class PaperController {
 	@Log("阅读检测报告--科学瘦身")
 	@GetMapping("/kexueshoushens")
 	public String kexueshoushen(Model model,Integer product,String name,HttpServletRequest request) {
-		List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId(),product);
+		String timeString= (String)request.getSession().getAttribute("timeString");
+		List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId()+timeString,product);
 		ProductpaperDO productpaperDO = productpaperDOList.get(0);
 		Map<String,Integer> mapD  = new HashMap<String,Integer>();
 	    Map<String,Integer> mapT = new HashMap<String,Integer>();
@@ -251,7 +262,7 @@ public class PaperController {
 	    	/**
 	    	 * 计算身体现状80分得分
 	    	 */
-	    	String shenti80=df.format((float)mapD.get("SHENTI_ZHUANG")/mapT.get("SHENTI_ZHUANG")*100);
+	    	int shenti80=(int)((float)mapD.get("SHENTI_ZHUANG")/mapT.get("SHENTI_ZHUANG")*100);
 	    	model.addAttribute("shenti80", shenti80);
 	    	/**
 	    	 * 计算饮食状况 60分得分
@@ -264,7 +275,7 @@ public class PaperController {
 	    			zongfen+=mapT.get(fenlei);
 	    		}
 	    	}
-	    	String yinshi60 =df.format((float)defen/zongfen*100);
+	    	int yinshi60 =(int)((float)defen/zongfen*100);
     		model.addAttribute("yinshi60",yinshi60);
 	    	/**
 	    	 * 计算各个分类得分占比
@@ -293,8 +304,8 @@ public class PaperController {
 		/**
 		 * 计算bmi
 		 */
-		float high = paperService.getSingleJiBenXinxi(request.getSession().getId(),product, "身高").get(0);
-		float weight =paperService.getSingleJiBenXinxi(request.getSession().getId(),product, "体重").get(0);
+		float high = paperService.getSingleJiBenXinxi(request.getSession().getId()+timeString,product, "身高").get(0);
+		float weight =paperService.getSingleJiBenXinxi(request.getSession().getId()+timeString,product, "体重").get(0);
 		String bmi=  df.format(weight/high/high*10000);
 		model.addAttribute("high",high);
 		model.addAttribute("weight",weight);
@@ -303,7 +314,7 @@ public class PaperController {
 		 * 是否有赘肉
 		 */
 		
-		List<String> str  = paperService.getChoosedContent(request.getSession().getId(),product,"赘肉");
+		List<String> str  = paperService.getChoosedContent(request.getSession().getId()+timeString,product,"赘肉");
 			
 		model.addAttribute("zhuirou",str.size()>0?str.get(0):"没有赘肉");
 		return "information/baogao-jianfei";
@@ -316,7 +327,9 @@ public class PaperController {
 	@GetMapping("/getMyReportData")
 	@ResponseBody
 	public Map<String,List<QuestionDO>> getMyReportData(Integer product,HttpServletRequest request){
-		List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId(),product);
+		float bmi=  Float.parseFloat((String) request.getSession().getAttribute("bmi"));
+		String timeString= (String)request.getSession().getAttribute("timeString");
+		List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId()+timeString,product);
 		ProductpaperDO productpaperDO = productpaperDOList.get(0);
 	    Map<String,List<QuestionDO>> map  = new HashMap<String,List<QuestionDO>>();
 	    if(productpaperDO!=null){
@@ -325,7 +338,14 @@ public class PaperController {
 	    	for(String fenlei:fenleiList){
 	    		List<QuestionDO> list = paperService.getQuestionDOList(productpaper,fenlei);
 	    		for(QuestionDO questionDO :list){
-	    			questionDO.setTiaozheng(questionDO.getChoiceProductDOList().get(0).getTadf());
+	    			if("YUN_DONG".equals(questionDO.getIfStop()) && bmi<29){
+	    				questionDO.setTiaozheng(questionDO.getChoiceProductDOList().get(0).getTadfs());
+	    				questionDO.getChoiceProductDOList().get(0).setTadreason(questionDO.getChoiceProductDOList().get(0).getTadreasons());
+	    				questionDO.getChoiceProductDOList().get(0).setTadjianyi(questionDO.getChoiceProductDOList().get(0).getTadjianyis());
+	    			}
+	    			else
+	    				questionDO.setTiaozheng(questionDO.getChoiceProductDOList().get(0).getTadf());
+	    			
 	    		}
 	    		map.put(fenlei,list);
 	    	}

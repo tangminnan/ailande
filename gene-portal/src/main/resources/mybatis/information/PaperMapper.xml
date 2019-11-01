@@ -193,6 +193,7 @@ FROM
          	 <result column="qpcontent" property="content"/>
              <result column="qpcategory" property="category"/>
              <result column="qpimg" property="img"/>
+             <result column="qpifStop" property="ifStop"/>
              <collection property="choiceProductDOList" ofType="com.gene.information.domain.ChoiceProductDO">
              	<id column="qid" property="id"/>
              	<result column="choicecontent" property="choicecontent"/>
@@ -231,7 +232,8 @@ FROM
 			qp.id qpid,
 			qp.content qpcontent,
 			qp.category qpcategory,
-			qp.img qpimg
+			qp.img qpimg,
+			qp.if_stop qpifStop
 		FROM
 			qu_question qp,
 			biz_answer b,

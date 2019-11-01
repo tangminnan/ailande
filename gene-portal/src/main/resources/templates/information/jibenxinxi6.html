@@ -41,6 +41,7 @@
 		<div class="bianbian" th:each="question:${list}">
 			<input name="type" type="hidden" th:value="${question.type}"/>
 			<input type="hidden" name="bt" th:value="${question.img}">
+			<input type="hidden" name="ifStop" th:value="${question.ifStop}">
 			<input type="hidden" name="category" th:value="${question.category}">
 			<h3 align="center" th:text="${question.contenw}"></h3>
 			<ul>
@@ -87,10 +88,11 @@
 			$(".imgChoose").each(function(){
 				var chooseId=$(this).children("[name='choseID']").text();//选项id
 				var questionId=$(this).children("[name='questionID']").text();//问题id
+				var questionId=$(this).children("[name='questionID']").text();//问题id
 				var customerPaperId=$(this).children("[name='customerPaperId']").text();
 				var fenlei=$(".name").find("[name='category']").val();//分类
-				
-				var obj={'choiceId':chooseId,'questionId':questionId,'customerPaperId':customerPaperId,'fenlei':fenlei};
+				var ifStop=$(".name").find("[name='ifStop']").val();//分类
+				var obj={'choiceId':chooseId,'questionId':questionId,'customerPaperId':customerPaperId,'fenlei':fenlei,'ifStop':ifStop};
 				arry.push(obj);
 			});
 			var count=$("#allQuestion").children().length;

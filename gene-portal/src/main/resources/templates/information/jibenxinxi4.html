@@ -60,10 +60,14 @@
 		var text=$(this).children("span").text();
 		if(text.indexOf("性别")>=0)
 			$(this).children("[name='tiankonganswer']").replaceWith($(".ppyuy").children("p")); 
-		if(text.indexOf("身高")>=0)
-			$(this).children("[name='tiankonganswer']").attr('placeholder','请输入身高（厘米）');
-		if(text.indexOf("体重")>=0)
-			$(this).children("[name='tiankonganswer']").attr('placeholder','请输入体重（公斤）');
+		if(text.indexOf("身高")>=0){
+			/* $(this).children("[name='tiankonganswer']").attr('placeholder','请输入身高（厘米）'); */
+			$(this).remove();
+		}
+		if(text.indexOf("体重")>=0){
+		/* 	$(this).children("[name='tiankonganswer']").attr('placeholder','请输入体重（公斤）'); */
+			$(this).remove();
+		}
 		if(text.indexOf("年龄")>=0)
 			$(this).children("[name='tiankonganswer']").attr('placeholder','请输入年龄');
 		if(text.indexOf("手机")>=0)
@@ -75,6 +79,7 @@
 	
 
 		  var countb=$("#count").val(),index=$("#index").val();
+		  index=parseInt(index)+$(".box").length;
 		  var baifen = Math.floor(index*100/countb);
 		  $(".baifen").text(baifen+'%');
 		  $(".baifen").prev().val(baifen);
@@ -111,11 +116,7 @@
 			
 			
 			 
-			 /* index++;
-			 countb=$("#count").val();
-			 baifen = Math.floor(index*100/countb);
-			 $(".baifen").text(baifen+'%');
-			 $(".baifen").prev().val(baifen); */
+			
 		
 		if(!flag){console.info(arry);
 			$.ajax({
