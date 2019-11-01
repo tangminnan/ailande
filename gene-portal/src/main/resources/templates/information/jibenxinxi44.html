@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="../css/css.css" type="text/css">
+<title>基本信息</title>
+<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../js/Font.js"></script>
+<style type="text/css">
+
+</style>
+</head>
+<body class="bg-cc">
+	<div class="tit">
+		<a href="" class="fanhui" title="返回"></a>
+		<h3 class="space center">基本信息</h3>
+		<p>
+			<a href="" title="点击前面的按钮"></a>
+			<a href="" title="点击后面的按钮"></a>
+		</p>
+	</div>
+	
+	<div class="pre">
+		<a href="">&#8195;&#8195;&#8195;&#8195;</a>
+		<progress value="50" max="100"></progress>
+		<span class="baifen"></span>
+	</div>
+	
+	<div class="basicMsg">
+	
+		<div class="box" th:each="question:${list}">
+			<span th:text="${question.contenw}"></span>
+			<input name="questionId" type="hidden" th:value="${question.id}"/>
+		 	<input name="customerPaperId" th:value="${question.paperId}" type="hidden">
+			<input name="tiankonganswer" type="text" placeholder=""/>
+	   </div>
+	
+		<!-- <div class="box"><span>姓名</span><input type="text" placeholder=""/></div>
+		<div class="box"><span>年龄</span><input type="text" placeholder=""/></div>
+		<div class="box"><span>手机</span><input type="text" placeholder=""/></div>-->
+		<div class=" ppyuy" style="display: none;">
+			<span>性别</span>
+			<p><em>男</em><input type="radio" value="男" name="1"></p>
+			<p><em>女</em><input type="radio" value="女" name="1"></p>
+		</div> 
+	</div>
+	<div class="nev">
+			<a > 下一题  <i class="xiti">></i></a>
+			
+		</div>
+	
+	
+	<input id="count" th:value="${count}" type="hidden">
+	<input id="index" th:value="${index}" type="hidden">
+	
+</body>
+
+<script type="text/javascript">
+	var  nodeHigh//身高
+		,nodeWeight;//体重
+	$(".box").each(function(){
+		var text=$(this).children("span").text();
+		 if(text.indexOf("身高")>=0){
+			 $(this).children("[name='tiankonganswer']").attr('placeholder','请输入身高（厘米）');
+			 nodeHigh=$(this);
+		 }
+		if(text.indexOf("体重")>=0){
+			$(this).children("[name='tiankonganswer']").attr('placeholder','请输入体重（公斤）');
+			nodeWeight=$(this);
+		}
+		$(this).remove();
+	});
+	$(".basicMsg").prepend(nodeWeight).prepend(nodeHigh);
+		  var countb=$("#count").val(),index=$("#index").val();
+		  index=parseInt(index)+2;
+		  var baifen = Math.floor(index*100/countb);
+		  $(".baifen").text(baifen+'%');
+		  $(".baifen").prev().val(baifen);
+	 
+	$
+	$(".nev a").click(function(){
+		var arry=[],flag=false;
+		$(".box").each(function(){
+			var text=$(this).children("span").text();
+			var bitianneirong=$(this).children("[name='tiankonganswer']").val();
+			if(bitianneirong=="" || isNaN(bitianneirong)){
+				alert("请输入 数字");
+				flag=true
+				return false;
+			}
+			if(text.indexOf("身高")>=0 && (bitianneirong>=300 || bitianneirong<=100) ){
+				alert("输入的数值在100到300之间");
+				flag=true;
+				return false;
+			}
+			
+			var customerPaperId=$(this).find("[name='customerPaperId']").val();
+			var questionId=$(this).find("[name='questionId']").val();
+			var tiankonganswer=$(this).find("[name='tiankonganswer']").val();
+			var contenw=$(this).find("span").text();
+		    var obj={'questionId':questionId,'tiankonganswer':tiankonganswer,'fenlei':'JIBEN_XINXI','customerPaperId':customerPaperId,'contenw':contenw};
+			arry.push(obj);
+		});
+		
+		
+	
+			
+			
+			 
+			 /* index++;
+			 countb=$("#count").val();
+			 baifen = Math.floor(index*100/countb);
+			 $(".baifen").text(baifen+'%');
+			 $(".baifen").prev().val(baifen); */
+		
+		if(!flag){console.info(arry);
+			$.ajax({
+				type : "POST",
+				url : "/paper/saveWenJuan",
+				data : {objs:JSON.stringify(arry)},// 你的formid
+				async : false,
+				success : function(data) {
+					if(data.code==0)
+						window.location.href="/paper/beginAnswer?flag=2&index="+index+"&count="+countb;
+					else
+						alert(data.msg);
+				}
+			});
+		}
+	});
+	
+	
+	
+	
+</script>
+</html>
+
