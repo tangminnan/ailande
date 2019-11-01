@@ -79,6 +79,8 @@ public interface PaperDao {
 	 * 根据产品查询题目
 	 */
 	List<QuestionDO> getQuestionDOType(@Param("product") Integer product,@Param("flag") String flag);
+
+	ProductpaperDO getProductPaperDO33(ProductpaperDO productpaperDO2);
     
 
 }

@@ -169,7 +169,7 @@ public class PaperController {
 	@GetMapping("/lookCheckLog")
 	public String lookCheckLog(Integer product,String name, Model model,HttpServletRequest request){
 		
-		model.addAttribute("userName","wewwe");
+		model.addAttribute("userName",request.getSession().getAttribute("name"));
 		model.addAttribute("product", product);
 		model.addAttribute("name",name);
 		if("肠胃调理".equals(name))

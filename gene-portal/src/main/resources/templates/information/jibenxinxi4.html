@@ -49,17 +49,21 @@
 		</div> 
 	</div>
 	
-	
+	<div class="linshicunfangde" style="display: none;"></div>
 	<input id="count" th:value="${count}" type="hidden">
 	<input id="index" th:value="${index}" type="hidden">
 	<input style="width:75%; margin-top:15%;" class="btn" type="button" value="继续"/>
 </body>
 
 <script type="text/javascript">
+	var xingming,nianling,shouji,xingbie;
 	$(".box").each(function(){
 		var text=$(this).children("span").text();
-		if(text.indexOf("性别")>=0)
+		if(text.indexOf("性别")>=0){
 			$(this).children("[name='tiankonganswer']").replaceWith($(".ppyuy").children("p")); 
+			xingbie=$(this);
+			$(this).remove();
+		}
 		if(text.indexOf("身高")>=0){
 			/* $(this).children("[name='tiankonganswer']").attr('placeholder','请输入身高（厘米）'); */
 			$(this).remove();
@@ -68,15 +72,28 @@
 		/* 	$(this).children("[name='tiankonganswer']").attr('placeholder','请输入体重（公斤）'); */
 			$(this).remove();
 		}
-		if(text.indexOf("年龄")>=0)
+		if(text.indexOf("年龄")>=0){
 			$(this).children("[name='tiankonganswer']").attr('placeholder','请输入年龄');
-		if(text.indexOf("手机")>=0)
+			nianling=$(this);
+			$(this).remove();
+		}
+			
+		if(text.indexOf("手机")>=0){
 			$(this).children("[name='tiankonganswer']").attr('placeholder','请输入手机');
-		if(text.indexOf("姓名")>=0)
+			shouji=$(this);
+			$(this).remove();
+		}
+			
+		if(text.indexOf("姓名")>=0){
 			$(this).children("[name='tiankonganswer']").attr('placeholder','请输入姓名 ');
-	})
-
+			xingming=$(this);
+			$(this).remove();
+		}
+	});
 	
+	$(".linshicunfangde").prepend(xingbie).prepend(shouji).prepend(nianling).prepend(xingming);
+	$(".basicMsg").prepend($(".linshicunfangde").html());
+	$(".linshicunfangde").html('');
 
 		  var countb=$("#count").val(),index=$("#index").val();
 		  index=parseInt(index)+$(".box").length;
@@ -84,7 +101,7 @@
 		  $(".baifen").text(baifen+'%');
 		  $(".baifen").prev().val(baifen);
 	 
-	$
+	
 	$(".btn").click(function(){
 		var arry=[],flag=false;
 		$(".box").each(function(){

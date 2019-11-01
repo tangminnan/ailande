@@ -23,6 +23,7 @@
 		<div class="boxes center">
 			<p>您的体型现状</p>
 			<ul class="xianZ">
+				<li>偏瘦 </li>
 				<li>体型标准体脂偏高</li>
 				<li>标准身材</li>
 				<li>脂肪型肥胖</li>
@@ -57,7 +58,7 @@
 </div>	
 	<div id="baogao-JF"  style="display: none" >
 		<!--肠道现状-->
-	<div class="cdxzBox" >
+	<div class="cdxzBox" id="tixingxianzhuang">
 		<div class="ztai center">
 			<img  src="../images/shoushenXX.png" alt=""/>
 			<p>您的体型现状</p>
@@ -153,7 +154,7 @@
 	<!--固定底部-->
 	<div class="fotNav center">
 		<ul>
-			<li><a href="#changdaoxianzhuang">肠道现状</a></li>
+			<li><a href="#tixingxianzhuang">体型现状</a></li>
 			<li><a href="#SHANSHI_XIGUAN">健康行为评估</a></li>
 			<li><a href="#yinshiyuanzetiaozhuan">饮食大原则</a></li>
 			<li><a href="#buchongjifangantiaozhuan">补充剂方案</a></li>
@@ -174,41 +175,42 @@
 	 var zhuirou= $("#yaobu").text();
 	 if(bmi>=24 && zhuirou=="赘肉较多"){
 		 $(".ppyuyy").html("脂肪型肥胖");
-		 $("ul.xianZ li:nth-child(3)").addClass("on");
+		 $("ul.xianZ li:nth-child(4)").addClass("on");
 		 $(".tiXing").addClass("tzFP")
 		 $("#ooowewqwqw").attr("src", "../images/tixing4.png");
 		 $(".fenbuRed").addClass("fenbu4");
 	 }
 	 else if(bmi>=24 && zhuirou=="有点赘肉"){
 		 $(".ppyuyy").html("混合型肥胖");
-		 $("ul.xianZ li:nth-child(4)").addClass("on");
+		 $("ul.xianZ li:nth-child(5)").addClass("on");
 		 $(".tiXing").addClass("hhFP")
 		 $("#ooowewqwqw").attr("src","../images/tixing5.png");
 		 $(".fenbuRed").addClass("fenbu5");
 	 }
 	 else if(bmi>=24 && zhuirou=="没有赘肉"){
 		$(".ppyuyy").html(" 肌肉型");
-		 $("ul.xianZ li:nth-child(5)").addClass("on");
+		 $("ul.xianZ li:nth-child(6)").addClass("on");
 		 $(".tiXing").addClass("jirou")
 		$("#ooowewqwqw").attr("src", "../images/tixing6.png");
 		 $(".fenbuRed").addClass("fenbu6");
 	 }
 	 else if(bmi>=18.5 && bmi<23.9 && (zhuirou=="有点赘肉" || zhuirou=="赘肉较多" )){
 		 $(".ppyuyy").html("体重标准 体脂偏高");
-		 $("ul.xianZ li:nth-child(1)").addClass("on");
+		 $("ul.xianZ li:nth-child(2)").addClass("on");
 		 $(".tiXing").addClass("tzPG")
 		 $("#ooowewqwqw").attr("src","../images/tixing2.png");
 		 $(".fenbuRed").addClass("fenbu2");
 	 }
 	 else if(bmi>=18.5 && bmi<23.9 && zhuirou=="没有赘肉") {
 		$(".ppyuyy").html(" 标准身材");
-		 $("ul.xianZ li:nth-child(2)").addClass("on");
+		 $("ul.xianZ li:nth-child(3)").addClass("on");
 		 $(".tiXing").addClass("tzPG")
 		$("#ooowewqwqw").attr("src", "../images/tixing3.png");
 		 $(".fenbuRed").addClass("fenbu3");
 	 }
 	 else if(bmi<18.5) {
 		 $(".ppyuyy").html("偏瘦");
+		 $("ul.xianZ li:nth-child(1)").addClass("on");
 		 $(".tiXing").addClass("pShou")
 		 $("#ooowewqwqw").attr("src", "../images/tixing1.png");
 		 $(".fenbuRed").addClass("fenbu1");
@@ -226,15 +228,7 @@
 	if(yinshi<80 && fenshua>=60){$("#ccc").prev().append("（一般）");$("#biaoqingaaa").attr("src","../images/yiban.png");$("#biaoqingaaa").parent().find(".p3").append("分 (一般) ");}
 	if(yinshi<60){ $(".biaoqing").addClass("buhao");$("#ccc").prev().append("（较低）");$("#biaoqingaaa").attr("src","../images/buhao.png");$("#biaoqingaaa").parent().find(".p3").append("分 (较低) ");}
 	
-	$("body").on("click",".list_dt",function () {
-	$('.list_dd').stop();
-	$(this).siblings("dt").removeAttr("id");
-	if($(this).attr("id")=="open"){
-		$(this).removeAttr("id").siblings("dd").not(".jbs").slideUp();
-	}else{
-		$(this).attr("id","open").next().slideDown().siblings("dd").not(".jbs").slideUp();
-	}
-});
+	
 	/**
 	*  跳转
 	*/
