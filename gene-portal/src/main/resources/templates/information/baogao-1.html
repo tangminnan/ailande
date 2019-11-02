@@ -42,7 +42,7 @@
 		success: function(r){
 			if(r.data!=null){
 				var box="";
-				for(var i=0;i<r.data.length;i++){
+				for(var i=0;i<r.data.length;i++){console.info(r)
 					var d=r.data[i];
 					box+='<div class="box">';
 					box+='<img src="'+d.url+'" alt=""/>';

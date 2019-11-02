@@ -101,7 +101,7 @@
 		  $(".baifen").text(baifen+'%');
 		  $(".baifen").prev().val(baifen);
 	 
-	
+	var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
 	$(".btn").click(function(){
 		var arry=[],flag=false;
 		$(".box").each(function(){
@@ -112,12 +112,22 @@
 				flag=true
 				return false;
 			}
+			if((text.indexOf("年龄")>=0 ||text.indexOf("手机")>=0) && isNaN(bitianneirong)){
+				alert("请输入 数字");
+				flag=true
+				return false;
+			}
 			if(text.indexOf("年龄")>=0 && bitianneirong<18){
 				alert("暂不对18周岁以下的未成年人提供营养服务");
 				flag=true;
 				return false;
 			}
 			
+			if(text.indexOf("手机")>=0 &&  !myreg.test(bitianneirong)){
+				alert("请输入正确的手机号码");
+				flag=true;
+				return false;
+			}
 			var customerPaperId=$(this).find("[name='customerPaperId']").val();
 			var questionId=$(this).find("[name='questionId']").val();
 			var tiankonganswer=$(this).find("[name='tiankonganswer']").val();

@@ -2,6 +2,7 @@ package com.gene.information.service.impl;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -49,13 +50,17 @@ public class PaperServiceImpl implements PaperService{
 		String timeString= (String)request.getSession().getAttribute("timeString");
 		List<ProductDO> list=paperDao.getAllProduct();
 		for(ProductDO productDO :list){
+			productDO.setIfCheck(0);//未检测
 			ProductpaperDO productpaperDO = new ProductpaperDO();
 			productpaperDO.setUser(request.getSession().getId()+timeString);
 			productpaperDO.setProduct(productDO.getId());
-			if(paperDao.listProductPaperDO(productpaperDO).size()>0)
-				productDO.setIfCheck(1);//已检测
-			else
-				productDO.setIfCheck(0);//未检测
+			List<ProductpaperDO> productpaperDOList = paperDao.listProductPaperDO(productpaperDO);
+			if(productpaperDOList.size()>0){
+				if("0".equals(productpaperDOList.get(0).getStatus()))
+					productDO.setIfCheck(0);//未检测
+				else
+					productDO.setIfCheck(1);//已检测
+			}
 		}
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("code", 0);
@@ -70,7 +75,8 @@ public class PaperServiceImpl implements PaperService{
 	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
 	public void saveChoosedProduct(Integer[] products,HttpServletRequest request) {
-		
+		if(request.getSession().getAttribute("productpaper")==null)
+			request.getSession().setAttribute("productpaper",new ArrayList<Integer>());
 		String timeString= (String)request.getSession().getAttribute("timeString");
 	
 		for(int i=0;i<products.length;i++){
@@ -79,7 +85,7 @@ public class PaperServiceImpl implements PaperService{
 				ProductpaperDO productpaperDO=new ProductpaperDO();
 				productpaperDO.setPaper(productDO.getPaperId());
 				productpaperDO.setProduct(products[i]);
-				productpaperDO.setStatus("0");//未完成
+				productpaperDO.setStatus("0");//未答完题
 				productpaperDO.setAnswerTime(new Date());
 				productpaperDO.setRemark("用户答题");
 				productpaperDO.setUser(request.getSession().getId()+timeString);
@@ -88,9 +94,8 @@ public class PaperServiceImpl implements PaperService{
 			    	continue;
 			    }
 			    else{
-			    	List<Integer> list = new ArrayList<Integer>();
 			    	paperDao.saveProductPaperDO(productpaperDO);
-			    	
+			    	List<Integer> list = (List<Integer>) request.getSession().getAttribute("productpaper");
 			    	list.add(productpaperDO.getId());
 			    	request.getSession().setAttribute("productpaper", list);
 			    }
@@ -124,12 +129,14 @@ public class PaperServiceImpl implements PaperService{
 	@Override
 	public R saveWenJuan(String objs, HttpServletRequest request) {
 		JSONArray jsonArray = JSON.parseArray(objs);
+		String fenleifenlei="";
 		for(int i=0;i<jsonArray.size();i++){
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 			Integer choiceId=jsonObject.getInteger("choiceId");//选项ID
 			Integer questionId=jsonObject.getInteger("questionId");//题目ID
 			Integer customerPaperId=jsonObject.getInteger("customerPaperId");//问卷ID
 			String fenlei=jsonObject.getString("fenlei");
+			fenleifenlei=fenlei;
 			String tiankonganswer=jsonObject.getString("tiankonganswer");
 			String contenw=jsonObject.getString("contenw");
 			String ifStop=jsonObject.getString("ifStop");
@@ -176,8 +183,13 @@ public class PaperServiceImpl implements PaperService{
 				}
 				/***************以下的代码有点垃圾，执行效率慢，时间紧张，有空的时候优化下*****/
 				paperDao.saveAnswerDO(answerDO);
-				
 			}
+		}
+		List<Integer> list=  (List<Integer>) request.getSession().getAttribute("productpaper");
+		for(int j=0;j<list.size();j++){
+			if(!"JIBEN_XINXI".equals(fenleifenlei)){
+				paperDao.updateproductpaperDOStstus(list.get(j));
+			}	
 		}
 		return R.ok();
 	}
@@ -214,7 +226,7 @@ public class PaperServiceImpl implements PaperService{
 	 */
 	@Override
 	public int getgetQuestionDOSize(Integer[] products) {
-		Set<Integer> set = new HashSet<Integer>();
+		/*Set<Integer> set = new HashSet<Integer>();
 		for(int i=0;i<products.length;i++){
 			ProductDO productDO=paperDao.getProductByProductId(products[i]);
 			set.add(productDO.getPaperId());
@@ -224,7 +236,20 @@ public class PaperServiceImpl implements PaperService{
 			count+=paperDao.countPaperQuestion(i);
 		}
 		
-		return count;
+		return count;*/
+		
+		List<String> fenleiList = Arrays.asList("JIBEN_XINXI","SHENTI_ZHUANG","SHANSHI_XIGUAN","SHENGHUO_FANGSHI","SHUIMIAN_XIGUAN","YUNDONG_XIGUANG");
+		Map<Integer,QuestionDO> map = new HashMap<Integer,QuestionDO>();
+		for(int i=0;i<products.length;i++){
+			for(String flag :fenleiList){
+				List<QuestionDO> questionDOList = paperDao.getQuestionDOType(products[i],flag);
+				for(QuestionDO questionDO :questionDOList){
+					map.put(questionDO.getId(), questionDO);
+				}
+			}
+		}
+		List<QuestionDO> list =new ArrayList<QuestionDO>(map.values());
+		return list.size(); 
 	}
 
 	/**

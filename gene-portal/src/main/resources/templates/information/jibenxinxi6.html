@@ -13,7 +13,7 @@
 <script type="text/javascript" src="../js/Font.js"></script>
 <style type="text/css">
 	.imgChoose{border:.04rem solid #228DCD;}
-	
+	.ziti{font-size:.32rem };
 </style>
 </head>
 <body class="bg-cc">
@@ -59,6 +59,22 @@
 	<input id="index" th:value="${index}" type="hidden">
 	
 	<script type="text/javascript">
+		$(".bianbian").each(function(){
+			var text=$(this).find("h3").text();
+			var lkuohao=text.indexOf("（"),rkuohao=text.indexOf("）");
+			if(lkuohao>=0 && rkuohao>=0){//带括号的题目  需要处理
+			    
+				var text1=text.substring(0,lkuohao+1);
+				var ktext=text.substring(lkuohao+1,rkuohao);
+				var text2=text.substring(rkuohao);
+				$(this).find("h3").html("");
+				$(this).find("h3").append(text1).append("<em class='ziti'>"+ktext+"</em>").append(text2);
+				
+			}
+		});
+	
+	
+	
 			var questionArry=[], arry=[];
 			  var countb=$("#count").val();
 			  var index=$("#index").val();

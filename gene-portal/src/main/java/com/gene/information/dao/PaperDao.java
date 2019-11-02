@@ -81,6 +81,12 @@ public interface PaperDao {
 	List<QuestionDO> getQuestionDOType(@Param("product") Integer product,@Param("flag") String flag);
 
 	ProductpaperDO getProductPaperDO33(ProductpaperDO productpaperDO2);
+
+	/**
+	 * 修改状态
+	 * @param integer
+	 */
+	void updateproductpaperDOStstus(Integer integer);
     
 
 }

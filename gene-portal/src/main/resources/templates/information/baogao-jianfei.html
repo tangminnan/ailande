@@ -83,7 +83,7 @@
 		<div class="sideMenu">
 			
 			<div class="jbs">
-				<div class="center">
+				<div class="center" id="xinzengjiadeidzhi">
   	   				<img id="biaoqingaaa" src="../images/henhao.png" alt=""/>
   	  				<p class="p2">饮食与生活习惯得分</p>
   	  				<p class="p3"><span th:text="${yinshi60}"></span></p>
@@ -237,7 +237,7 @@
 	  $("#baogao-jianfei").hide();
 	 $("body").addClass("yemiantiaozhuan");
 	 //跳转到页面的某处
-      window.location.hash = "#changdaoxianzhuang";
+      window.location.hash = "#tixingxianzhuang";
   });
 	
 	 $("#ccc").click(function(){
@@ -245,7 +245,7 @@
 		  $("#baogao-jianfei").hide();
 		 $("body").addClass("yemiantiaozhuan");
 		 //跳转到页面的某处
-	      window.location.hash = "#changdaoxianzhuang";
+	      window.location.hash = "#xinzengjiadeidzhi";
 	  });
 	 
 	//饮食原则跳转
@@ -279,11 +279,11 @@ $(".fotNav li:nth-child(4)").click(function(){
   
 //鼠标悬浮放大
 
-$(".fotNav li").mouseenter(function(){
+/* $(".fotNav li").mouseenter(function(){
 	 $(this).css("font-size",".36rem");
 }).mouseout(function(){
 	  $(this).css("font-size","");
-}); 
+});  */
   
   $.ajax({
 		type : "GET",
@@ -337,7 +337,7 @@ $(".fotNav li").mouseenter(function(){
 				else if(key=='SHENGHUO_FANGSHI')
 					$("#SHENGHUO_FANGSHI").after($(l));
 				else if(key=='SHENTI_ZHUANG'){
-					$(".sideMenu").prepend($(l));
+					/* $(".sideMenu").prepend($(l)); */
 				}
 				else if(key=='SHUIMIAN_XIGUAN')
 					$("#SHUIMIAN_XIGUAN").after($(l));

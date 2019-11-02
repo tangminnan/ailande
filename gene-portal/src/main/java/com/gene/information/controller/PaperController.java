@@ -1,5 +1,7 @@
 package com.gene.information.controller;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +30,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.gene.common.annotation.Log;
 import com.gene.common.utils.R;
 import com.gene.common.utils.StringUtils;
+import com.gene.information.domain.AccessToken;
 import com.gene.information.domain.ChoiceProductDO;
 import com.gene.information.domain.CustomerPaperDO;
 import com.gene.information.domain.ProductpaperDO;
 import com.gene.information.domain.QuestionDO;
+import com.gene.information.domain.WechatOAConfig;
 import com.gene.information.service.PaperService;
 
 @Controller
@@ -352,4 +357,58 @@ public class PaperController {
 	    }
 	    return map;
 	}
+	
+	
+	 /**
+     * 微信授权登录
+     * */
+    @Log("微信授权登录")
+    @GetMapping("/weChatLogin")
+    public void wx_denglu(HttpServletRequest request, HttpServletResponse response){
+		String url = urlEncodeUTF8("http://qinzi.jingtu99.com/weCahtCallBack"); //回调页面的路径
+    	
+    		try {
+    			String uri = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+WechatOAConfig.APP_ID+"&redirect_uri="+url+"&response_type=code&scope=snsapi_base#wechat_redirect";
+	    		response.sendRedirect(uri);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		
+    }
+	
+	 /**
+     * 回调
+     * */
+    @Log("微信登录回调")
+    @GetMapping("/weCahtCallBack")
+    /*public Map<String, Object> getAccessToken(HttpServletRequest request, HttpServletResponse response)throws Exception{
+    	String code = request.getParameter("code");
+    	String access_token = null;
+    	String openid = null;
+    	if(StringUtils.isNotBlank(code)){
+    		AccessToken accessToken = WechatOAConfig.getAccessTokenss(code);
+        	if(accessToken == null || StringUtils.isBlank(accessToken.getOpenid())){
+        		return R.error(40001,"微信授权失败");
+    		}
+        	access_token = accessToken.getAccess_token();
+    		openid = accessToken.getOpenid();
+    	}
+		return null;	
+    }*/
+    
+    /**
+     * URL编码（utf-8）
+     * 
+     * @param source
+     * @return
+     */
+    public static String urlEncodeUTF8(String source) {
+        String result = source;
+         try {
+             result = java.net.URLEncoder.encode(source, "utf-8");
+         } catch (UnsupportedEncodingException e) {
+             e.printStackTrace();
+         }
+         return result;
+     }
 }

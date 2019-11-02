@@ -58,11 +58,12 @@
 		<div class="ztai center">
 			<img src="../images/bao-cw.png" alt=""/>
 			<p>您的肠道现状</p>
-			<ul class="xianZ">
+			<!-- <ul class="xianZ">
 				<li>不大好</li>
 				<li class="on">一般般</li>
 				<li>很舒服</li>
-			</ul>
+			</ul> -->
+			<div class="txXZ space ppyuyy23" style="background: #248dce;"></div>
 		</div>
 		<div class="sideMenu">
 			<dt class="">
@@ -71,7 +72,7 @@
 				<i class="list_dt_icon"></i>
 			</dt>
 			<dd class="jbs">
-  	  			<div class="center">
+  	  			<div class="center" id="yinshiheshenghuoxiguan">
   	   				<img id="biaoqingaaa" src="../images/henhao.png" alt=""/>
   	  				<p class="p2">饮食与生活习惯得分</p>
   	  				<p class="p3"><span th:text="${yinshi60}"></span><span class="yyy">分（一般）</span></p>
@@ -150,9 +151,9 @@
 	<script type="text/javascript">
 	
 	var fenshua  = $("#shenti80").val();
-	if(fenshua>=80) $("ul.xianZ li:nth-child(3)").addClass("on").siblings().removeClass("on");
-	if(fenshua<80 && fenshua>=60) $("ul.xianZ li:nth-child(2)").addClass("on").siblings().removeClass("on");
-	if(fenshua<60) $("ul.xianZ li:nth-child(1)").addClass("on").siblings().removeClass("on");
+	if(fenshua>=80) /* $("ul.xianZ li:nth-child(3)").addClass("on").siblings().removeClass("on"); */$(".ppyuyy23").text("很舒服");
+	if(fenshua<80 && fenshua>=60) /* $("ul.xianZ li:nth-child(2)").addClass("on").siblings().removeClass("on"); */$(".ppyuyy23").text("一般般");
+	if(fenshua<60) /* $("ul.xianZ li:nth-child(1)").addClass("on").siblings().removeClass("on"); */$(".ppyuyy23").text("不大好");
 	
 	
 	var yinshi = $("#yinshi60").val();
@@ -185,7 +186,7 @@
 		  $("#baogao-3").hide();
 		 $("body").addClass("yemiantiaozhuan");
 		 //跳转到页面的某处
-	      window.location.hash = "#changdaoxianzhuang";
+	      window.location.hash = "#yinshiheshenghuoxiguan";
 	  });
 	 
 	//饮食原则跳转
@@ -219,11 +220,11 @@ $(".zhidao input").last().click(function(){
   
   //鼠标悬浮放大
   
-  $(".fotNav li").mouseenter(function(){
+  /* $(".fotNav li").mouseenter(function(){
 	 $(this).css("font-size",".36rem");
   }).mouseout(function(){
 	  $(this).css("font-size","");
-  });
+  }); */
   
   $.ajax({
 		type : "GET",

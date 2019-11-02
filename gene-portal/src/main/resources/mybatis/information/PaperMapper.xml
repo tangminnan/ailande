@@ -280,6 +280,10 @@ FROM
 		select count(1) from qu_question where paper_id=#{value}
 	</select>
 	
+	<update id="updateproductpaperDOStstus">
+		update qu_product_paper set status=1 where id=#{value}
+	</update>
+	
 	<select id="getSingleJiBenXinxi" resultType="float">
 					SELECT
 				b.tiankonganswer
