@@ -365,11 +365,10 @@ public class PaperController {
     @Log("微信授权登录")
     @GetMapping("/weChatLogin")
     public void wx_denglu(HttpServletRequest request, HttpServletResponse response){
-		String url = urlEncodeUTF8("http://qinzi.jingtu99.com/weCahtCallBack"); //回调页面的路径
-    	
-    		try {
+		String url = urlEncodeUTF8("http://ailaide.jingtu99.com/weCahtCallBack"); //回调页面的路径
+    	try {
     			String uri = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+WechatOAConfig.APP_ID+"&redirect_uri="+url+"&response_type=code&scope=snsapi_base#wechat_redirect";
-	    		response.sendRedirect(uri);
+    			response.sendRedirect(uri);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -381,20 +380,16 @@ public class PaperController {
      * */
     @Log("微信登录回调")
     @GetMapping("/weCahtCallBack")
-    /*public Map<String, Object> getAccessToken(HttpServletRequest request, HttpServletResponse response)throws Exception{
+    public Map<String, Object> getAccessToken(HttpServletRequest request, HttpServletResponse response)throws Exception{
+    	Map<String,Object> map = new HashMap<String,Object>();
     	String code = request.getParameter("code");
-    	String access_token = null;
     	String openid = null;
     	if(StringUtils.isNotBlank(code)){
-    		AccessToken accessToken = WechatOAConfig.getAccessTokenss(code);
-        	if(accessToken == null || StringUtils.isBlank(accessToken.getOpenid())){
-        		return R.error(40001,"微信授权失败");
-    		}
-        	access_token = accessToken.getAccess_token();
-    		openid = accessToken.getOpenid();
+    		openid = WechatOAConfig.getAccessToken(code);
+        	map.put("openid", openid);
     	}
-		return null;	
-    }*/
+		return map;
+    }
     
     /**
      * URL编码（utf-8）

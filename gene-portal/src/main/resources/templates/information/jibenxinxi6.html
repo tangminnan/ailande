@@ -104,11 +104,18 @@
 			$(".imgChoose").each(function(){
 				var chooseId=$(this).children("[name='choseID']").text();//选项id
 				var questionId=$(this).children("[name='questionID']").text();//问题id
-				var questionId=$(this).children("[name='questionID']").text();//问题id
+				
 				var customerPaperId=$(this).children("[name='customerPaperId']").text();
 				var fenlei=$(".name").find("[name='category']").val();//分类
 				var ifStop=$(".name").find("[name='ifStop']").val();//分类
 				var obj={'choiceId':chooseId,'questionId':questionId,'customerPaperId':customerPaperId,'fenlei':fenlei,'ifStop':ifStop};
+				  if(arry.length>0){
+					for(var k =0;k<arry.length;k++){
+						var obj1=arry[k];
+						if (obj1.questionId==questionId)
+							 arry.splice(k,1);
+					}
+				}  
 				arry.push(obj);
 			});
 			var count=$("#allQuestion").children().length;
