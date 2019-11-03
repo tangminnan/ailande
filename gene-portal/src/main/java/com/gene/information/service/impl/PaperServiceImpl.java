@@ -218,7 +218,41 @@ public class PaperServiceImpl implements PaperService{
 	 */
 	@Override
 	public Integer getAllChoicedScores(Integer productpaper,Integer product, String fenlei) {
-		return paperDao.getAllChoicedScores(productpaper,product,fenlei);
+		int max=0;//要返回的最高分
+		List<QuestionDO> questionDOList = paperDao.getQuestionDOType(product,fenlei);//分类下的所有题目
+		if(questionDOList==null || questionDOList.size()==0) return 0;
+		for(QuestionDO questionDO :questionDOList){
+			List<ChoiceDO> choiceDOList = questionDO.getChoiceList();//题目下的所有选项
+			List<Integer> cmaxList = new ArrayList<Integer>();
+			for(ChoiceDO choiceDO :choiceDOList){
+				
+				ChoiceProductDO choiceProductDO = choiceDO.getChoiceProductList().get(0);//选项下的所有分值  我靠
+				Integer cmax=0; 
+				Integer score = choiceProductDO.getScore();
+				Integer scores = choiceProductDO.getScores();
+				score= score==null?0:score;
+				scores=scores==null?0:scores;
+				cmax=score>scores ? score:scores;
+				cmaxList.add(cmax);
+				//获取最大的分值
+			}
+			max+=getMaxFenInList(cmaxList);
+		}  
+		
+		return max;
+	}
+	
+	/**
+	 * 获取最大的分值
+	 */
+	private Integer getMaxFenInList(List<Integer> list){
+		if(list==null || list.size()==0)  return 0;
+		int max=list.get(0);
+		for(int i=1;i<list.size();i++){
+			if(list.get(i)>max)
+				max=list.get(i);
+		}
+		return max;
 	}
 	
 	/**

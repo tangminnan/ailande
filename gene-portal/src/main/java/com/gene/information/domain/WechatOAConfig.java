@@ -20,6 +20,8 @@ public class WechatOAConfig {
 
 	public static final String APP_ID = "wxe23f18d7b8947aa6";
 	public static final String secret = "889ef7319d78c271e75b8d858bb2b5f1";
+    public static final String BQEGIN_ANSWER= "http://ailaide.jingtu99.com/paper/index";
+    public static final String READ_REPORT = "http://ailaide.jingtu99.com/paper/getReportPage";
 		
 	private static Logger logger = LoggerFactory.getLogger(WechatOAConfig.class);
 	

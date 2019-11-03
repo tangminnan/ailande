@@ -102,8 +102,8 @@
 			<div class="zhanbi space center" id="buchongjifangantiaozhuan">补充剂方案</div>
 			<p class="yuanze space">综合评估您的饮食生活习惯、肠胃健康现状、环境污染、食物中营养素流失等因素，营养专家为您推荐以下补充剂方案。</p>
 			<div class="jieshao"><img src="../images/jieshao.png" alt=""/></div>
-			<p class="jianyi center"><span>建议您补充3种补充剂</span></p>
-			<div class="jyiBox">
+			<p class="jianyi center" id="jjjdddd"><span>建议您补充3种补充剂</span></p>
+			<!-- <div class="jyiBox">
 				<img class="jsBg" src="../images/goumai.png" alt=""/>
 				<p class="name space"><span>速七活力益生菌胶囊</span>200亿以上活菌，<br/>Lab4专利菌群配方，<br/>快速改善腹泻便秘。</p>
 				<img class="yaoM" src="../images/lei1.png" alt=""/>
@@ -120,14 +120,14 @@
 				<p class="name space"><span>安益胶囊</span>修复肠粘膜，温和调理肠胃菌群，改善消化不良引起的腹痛腹胀。</p>
 				<img class="yaoM" src="../images/lei3.png" alt=""/>
 				<input type="button" value="点击购买" onclick="goumai('https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843200179')"/>
-			</div>
-			<p class="jianyi center"><span>您还可以选择</span></p>
-			<div class="jyiBox">
+			</div> -->
+			<p class="jianyi center" id="swsws"><span>您还可以选择</span></p>
+			<!-- <div class="jyiBox">
 				<img class="jsBg" src="../images/goumai.png" alt=""/>
 				<p class="name space"><span>低聚果糖益生元粉</span>益生元，帮助肠道有益菌增长，促进肠蠕动，改善便秘腹泻。</p>
 				<img class="yaoM" src="../images/lei4.png" alt=""/>
 				<input type="button" value="点击购买" onclick="goumai('https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59844980179')"/>
-			</div>
+			</div> -->
 		</div><!-- sideMenu End -->
 	</div>
 
@@ -225,11 +225,15 @@ $(".zhidao input").last().click(function(){
   }).mouseout(function(){
 	  $(this).css("font-size","");
   }); */
-  
+ 
+  var paibianpinlvxingzhuang=[]; //排便频率  便便形状
+  var paibianpinlvshucaishuiguoculiang=[];//排便频率 蔬菜  水果  粗粮
+  var futongfuzhangfansuanwixhangjibbing=[];//有没有腹胀、腹痛、反酸（最近1个月）有没有较严重胃肠道疾病或病史（肠炎、胃炎、肿瘤等）
   $.ajax({
 		type : "GET",
 		url : "/paper/getMyReportData",
 		data:{product:$("#product").val()},
+		async : false,
 		success : function(r) {console.info(r)
 			  for(var key in r){
 				var datas=r[key],l="";
@@ -268,11 +272,25 @@ $(".zhidao input").last().click(function(){
 						l+='<td class="rLine">营养补充剂建议</td>';
 						l+='<td>'+cdata.tadjianyi+'</td>';
 						l+=	'</tr>';
+						var cc=data.content;
+						var text=data.content+"："+cdata.choicecontent;
+						if(cc.indexOf("排便频率")>=0 || cc.indexOf("便便形状")>=0){
+							paibianpinlvxingzhuang.push(text); 
+						}
+						if(cc.indexOf("排便频率")>=0 || cc.indexOf("蔬菜摄入") >=0|| cc.indexOf("水果摄入")>=0 || cc.indexOf("粗粮摄入")>=0){
+							 paibianpinlvshucaishuiguoculiang.push(text);
+						}
+						if(cc.indexOf("腹胀")>=0 || cc.indexOf("疾病史")>=0){
+							futongfuzhangfansuanwixhangjibbing.push(text);
+						} 
+						
 					}
+				
 					l+='</tbody>';
 					l+='</table>';
 					l+='</dd>';
 				}
+				
 				if(key=='SHANSHI_XIGUAN') 
 					$("#SHANSHI_XIGUAN").after($(l));
 				else if(key=='SHENGHUO_FANGSHI')
@@ -287,12 +305,127 @@ $(".zhidao input").last().click(function(){
 			}	 
 		}
 	});
+ 
 
   //购买链接
   function goumai(url){
 	 window.location.href=url; 
   }
  
+  /***************产品推荐逻辑*******************/
+
+ var tuijianarry=[],//建议补充
+ haikexuanze=[];//还可选择
+ flag=false;
+//判断速七活力益生菌胶囊                                                   
+var jianyibuchong=["排便频率：大于3次/天","排便频率：有便秘倾向","便便形状：不成型软便","便便形状：硬块","便便形状：软硬掺杂","便便形状：水状"];
+for(var i=0;i<paibianpinlvxingzhuang.length;i++){
+	 var l = paibianpinlvxingzhuang[i];
+	 for(var j=0;j<jianyibuchong.length;j++){
+		 if(l==jianyibuchong[j]){
+			 flag=true;
+			 break;
+		 }
+	 }
+	 if(flag==true)
+		 break;
+ }
+ if(flag==true){
+	 flag=false;
+	 var obj={'title':'速七活力益生菌胶囊','images':'../images/suqichangdao.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=66585330179'};
+	 tuijianarry.push(obj);
+ } 
+ 
+ //判断每日活力益生菌
+ 
+  var manzu={};
+ jianyibuchong=["便便形状：香蕉型","排便频率：1-3次/天","便便形状：成型软便"]
+ for(var i=0;i< paibianpinlvxingzhuang.length;i++){
+	 var l = paibianpinlvxingzhuang[i];
+	 for(var j=0;j<jianyibuchong.length;j++){
+		 if(l==jianyibuchong[j]){
+			 manzu[l]=1;
+		 }
+	 }
+ }
+ var num=0;
+ for(var k in manzu){
+	 num++;
+ }
+ if(num>=2){
+	 var obj={'title':'每日活力益生菌','images':'','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843270179'};
+	 tuijianarry.push(obj);
+ }
+ 
+ //判断低聚果糖益生元粉
+ 
+ 															   
+ var jianyibuchong=["排便频率: 有便秘倾向","排便频率：大于3次/天","蔬菜摄入量：平均小于1拳/天","蔬菜摄入量：平均1-3拳/天","水果摄入量：平均小于1拳/天","粗粮摄入量：平均小于0.5拳头/天"];
+ for(var i=0;i< paibianpinlvshucaishuiguoculiang.length;i++){//console.info(paibianpinlvshucaishuiguoculiang[i]);
+	 var l = paibianpinlvshucaishuiguoculiang[i];
+	 for(var j=0;j<jianyibuchong.length;j++){
+		 if(l==jianyibuchong[j]){
+			 flag=true;
+		 	 break;
+		 }
+	 }
+	 if(flag==true)
+		 break;
+ }
+ if(flag==true){
+	 flag=false;
+	 var obj={'title':'低聚果糖益生元粉','images':'../images/dijuguotangchangdao.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843200179'};
+	 tuijianarry.push(obj);
+ }
+ 
+ //判断榆树养胃胶囊
+ var jianyibuchong=["腹胀、腹痛、反酸：经常有","胃肠道疾病史：有"];
+ for(var i=0;i< paibianpinlvshucaishuiguoculiang.length;i++){
+	 var l = paibianpinlvshucaishuiguoculiang[i];
+	 for(var j=0;j<jianyibuchong.length;j++){
+		 if(l==jianyibuchong[j]){
+			 flag=true;
+		 	 break;
+		 }
+	 }
+ }
+ if(flag==true){
+	 flag=false;
+	 var obj={'title':'榆树养胃胶囊','images':'../images/yushuyangweichangdao.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59842960179'};
+	 tuijianarry.push(obj);
+ }
+ 
+ //您还可以选择   安益胶囊
+ for(var i=0;i< paibianpinlvshucaishuiguoculiang.length;i++){
+	 var l = paibianpinlvshucaishuiguoculiang[i];
+	 for(var j=0;j<jianyibuchong.length;j++){
+		 if(l==jianyibuchong[j]){
+			 paibianpinlvshucaishuiguoculiang.splice(i,1);
+		 }
+	 }
+}
+ 
+ 
+if(paibianpinlvshucaishuiguoculiang.length>=0){
+	 var obj={'title':'安益胶囊','images':'../images/anyijiaonangchangdao.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59844980179'};
+	 haikexuanze.push(obj);
+}
+
+
+$("#jjjdddd").children("span").text("建议您补充"+ tuijianarry.length+"种补充剂");
+var div='';
+for(var i=0;i< tuijianarry.length;i++){
+	 div+= '<p class="center"><a href="'+tuijianarry[i].url+'"><img   src="'+tuijianarry[i].images+'" alt=""/></a></p>'
+}         
+$("#jjjdddd").after(div);
+
+div='';
+for(var i=0;i<haikexuanze.length;i++){
+	div+= '<p class="center"><a href="'+haikexuanze[i].url+'"><img   src="'+haikexuanze[i].images+'" alt=""/></a></p>'
+}
+
+$("#swsws").after(div);
+ /***************产品推荐逻辑*******************/
 </script>
 </body>
 </html>

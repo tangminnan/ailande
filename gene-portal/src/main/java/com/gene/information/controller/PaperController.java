@@ -46,9 +46,24 @@ public class PaperController {
 
 	@Log("跳转首页")
 	@GetMapping("/index")
-	public String index(HttpServletRequest request){
+	public String index(HttpServletRequest request,HttpServletResponse response,Model model){
 		String str= new SimpleDateFormat("yyyyMMddhhMmss").format(new Date());//请求时间戳
 		request.getSession().setAttribute("timeString", str);
+		
+		
+		String code = request.getParameter("code");
+    	String openid = "";
+    	if(StringUtils.isNotBlank(code)){
+    		try {
+				openid = WechatOAConfig.getAccessToken(code);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	model.addAttribute("openid", openid);
+    	}
+    	
+    	
 		return "information/index";
 	}
 	
