@@ -58,6 +58,11 @@
 	<input id="count" th:value="${count}" type="hidden">
 	<input id="index" th:value="${index}" type="hidden">
 	<input id="openid" th:value="${openid}" type="hidden">
+	
+	<input id="username" th:value="${username}" type="hidden">
+	<input id="phone" th:value="${phone}" type="hidden">
+	<input id="sex" th:value="${sex}" type="hidden">
+	<input id="age" th:value="${age}" type="hidden">
 </body>
 
 <script type="text/javascript">
@@ -88,8 +93,8 @@
 		$(".box").each(function(){
 			var text=$(this).children("span").text();
 			var bitianneirong=$(this).children("[name='tiankonganswer']").val();
-			if(bitianneirong=="" || isNaN(bitianneirong)){
-				alert("请输入 数字");
+			if(text.indexOf("身高")>=0 &&( bitianneirong=="" || isNaN(bitianneirong))){
+				alert("身高请输入 数字");
 				flag=true
 				return false;
 			}
@@ -98,6 +103,21 @@
 				flag=true;
 				return false;
 			}
+			
+			 if(text.indexOf("体重")>=0){
+				var tt = bitianneirong+"";
+				var num = tt.indexOf(".");
+				
+					var str = tt.substring(num).length;
+					if(str>2){
+						alert("体重最多只能输入一位小数");
+						flag=true;
+						return false;
+					}
+				
+			} 
+			
+			
 			
 			var customerPaperId=$(this).find("[name='customerPaperId']").val();
 			var questionId=$(this).find("[name='questionId']").val();
@@ -109,21 +129,29 @@
 		
 		
 	
+		var high,weight;	
+		$(".box").each(function(){
+			var name=$(this).children("span").text();
+			var value=$(this).children("[name='tiankonganswer']").val();
 			
-			
+			if(name.indexOf("身高")>=0)       high=value;
+			else  if(name.indexOf("体重")>=0) weight=value;
+		});
 			 
-			 /* index++;
-			 countb=$("#count").val();
-			 baifen = Math.floor(index*100/countb);
-			 $(".baifen").text(baifen+'%');
-			 $(".baifen").prev().val(baifen); */
+			 
 		
-		if(!flag){console.info(arry);
-		var openid=$("#openid").val();
+		if(!flag){
+			
+			var openid=$("#openid").val();
+			var username=$("#username").val();
+			var phone=$("#phone").val();
+			var sex=$("#sex").val();
+			var age=$("#age").val();
+		
 			$.ajax({
 				type : "POST",
 				url : "/paper/saveWenJuan",
-				data : {objs:JSON.stringify(arry),openid:openid},// 你的formid
+				data : {openid:openid,username:username,phone:phone,sex:sex,age:age,high:high,weight:weight},// 你的formid
 				async : false,
 				success : function(data) {
 					if(data.code==0)

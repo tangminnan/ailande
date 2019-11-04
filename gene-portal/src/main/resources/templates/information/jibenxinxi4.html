@@ -42,13 +42,13 @@
 		<!-- <div class="box"><span>姓名</span><input type="text" placeholder=""/></div>
 		<div class="box"><span>年龄</span><input type="text" placeholder=""/></div>
 		<div class="box"><span>手机</span><input type="text" placeholder=""/></div>-->
-		<div class=" ppyuy" style="display: none;">
+		
+	</div>
+	<div class=" ppyuy" style="display: none;">
 			<span>性别</span>
 			<p><em>男</em><input type="radio" value="男" name="1"></p>
 			<p><em>女</em><input type="radio" value="女" name="1"></p>
 		</div> 
-	</div>
-	
 	<div class="linshicunfangde" style="display: none;"></div>
 	<input id="count" th:value="${count}" type="hidden">
 	<input id="index" th:value="${index}" type="hidden">
@@ -103,6 +103,10 @@
 		  $(".baifen").prev().val(baifen);
 	 
 	var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+	var sex="";
+	var age="";
+	var phone="";
+	var username="";
 	$(".btn").click(function(){
 		var arry=[],flag=false;
 		$(".box").each(function(){
@@ -129,37 +133,48 @@
 				flag=true;
 				return false;
 			}
-			var customerPaperId=$(this).find("[name='customerPaperId']").val();
-			var questionId=$(this).find("[name='questionId']").val();
-			var tiankonganswer=$(this).find("[name='tiankonganswer']").val();
-			 if(text.indexOf("性别")>=0)
-				tiankonganswer=$(this).find(":checked").val();
-			var contenw=$(this).find("span").text();
-		    var obj={'questionId':questionId,'tiankonganswer':tiankonganswer,'fenlei':'JIBEN_XINXI','customerPaperId':customerPaperId,'contenw':contenw};
-			arry.push(obj);
+			
+			
+			
+			if(text.indexOf("年龄")>=0) age=bitianneirong;
+			else if(text.indexOf("手机")>=0) phone=bitianneirong;
+			else if(text.indexOf("姓名")>=0) username=bitianneirong;
+		    else if(text.indexOf("性别")>=0) sex=$(this).find(":checked").val(); 
+			
+			
+		
+		 /*    var obj={'questionId':questionId,'tiankonganswer':tiankonganswer,'fenlei':'JIBEN_XINXI','customerPaperId':customerPaperId,'contenw':contenw};
+			arry.push(obj); */
 		});
 		
 		
-	
-			
-			
-			 
-			
 		
-		if(!flag){console.info(arry);
+			
+		/* $(".box").each(function(){
+			var name=$(this).children("span").text();
+			var value=$(this).children("[name='tiankonganswer']").val();
+			
+			if(name.indexOf("姓名")) username=value;
+			else  if(name.indexOf("性别")) sex=value;
+			else  if(name.indexOf("年龄")) age=value;
+			else  if(name.indexOf("手机")) phone=value;
+		}); */
+	
+		if(!flag){
 		 var openid=$("#openid").val();
-			$.ajax({
-				type : "POST",
-				url : "/paper/saveWenJuan",
-				data : {objs:JSON.stringify(arry),openid:openid},// 你的formid
-				async : false,
-				success : function(data) {
-					if(data.code==0)
-						window.location.href="/paper/saveYourName?flag=1&index="+index+"&count="+countb+"&openid="+openid;
-					else
-						alert(data.msg);
-				}
-			});
+//			$.ajax({
+//				type : "POST",
+//				url : "/paper/saveWenJuan",
+//				data : {username:username,sex:sex,age:age,phone:phone,openid:openid},// 你的formid
+//				async : false,
+//				success : function(data) {
+//					if(data.code==0)
+						
+						window.location.href="/paper/saveYourName?flag=1&index="+index+"&count="+countb+"&openid="+openid+"&username="+username+"&sex="+sex+"&age="+age+"&phone="+phone;
+//					else
+//						alert(data.msg);
+//				}
+//			});
 		}
 	});
 	

@@ -26,6 +26,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.gene.common.utils.R;
+import com.gene.common.utils.ShiroUtils;
 import com.gene.common.utils.StringUtils;
 import com.gene.information.dao.PaperDao;
 import com.gene.information.domain.AnswerDO;
@@ -56,7 +57,7 @@ public class PaperServiceImpl implements PaperService{
 		List<ProductDO> list=paperDao.getAllProduct();
 		for(ProductDO productDO :list){
 			productDO.setIfCheck(0);//未检测   默认的状态
-			Integer product = productDO.getId();
+			Integer product = productDO.getId();			   
 			List<ProductpaperDO> productpaperDOList = paperDao.listProductPaperDOByOpenIdAndProduct(openid,product);
 			if(productpaperDOList.size()>0)
 					productDO.setIfCheck(1);//已检测
@@ -152,25 +153,6 @@ public class PaperServiceImpl implements PaperService{
 			String tiankonganswer=jsonObject.getString("tiankonganswer");
 			String contenw=jsonObject.getString("contenw");
 			String ifStop=jsonObject.getString("ifStop");
-			if(contenw!=null){
-				if(contenw.contains("身高")){
-					hightem = tiankonganswer;
-					udo123.setHigh(tiankonganswer);
-					request.getSession().setAttribute("total", tiankonganswer);
-					System.out.println("hightem======================================="+hightem);
-				} 
-				if(contenw.contains("体重")){
-					weighttmp= tiankonganswer;
-					request.getSession().setAttribute("weight",tiankonganswer );
-					udo123.setWeight(Integer.parseInt(tiankonganswer));
-					System.out.println("weighttmp======================================="+weighttmp);
-				} 
-				if(contenw.contains("姓名")){
-					request.getSession().setAttribute("name",tiankonganswer );
-					udo123.setUsername(tiankonganswer);
-					System.out.println("姓名======================================="+tiankonganswer);
-				} 
-				} 
 			udo123.setOpenid(openid);
 			
 			System.out.println("openid======================================="+openid);
@@ -217,9 +199,10 @@ public class PaperServiceImpl implements PaperService{
 				if(productpaperDO!=null && !"JIBEN_XINXI".equals(fenlei)){
 					Integer product = productpaperDO.getProduct();
 					ChoiceProductDO choiceProductDO = paperDao.getChoiceProductDO(product,answerDO.getChoiceId());
-					float high = Float.parseFloat((String) hightem);
-					float weight=  Float.parseFloat((String) weighttmp);
-					DecimalFormat df = new DecimalFormat("0.0");
+					CustomerPaperDO udo1 = paperDao.getLatestCustomerPaperDO(openid,product);
+					DecimalFormat df = new DecimalFormat("0.0");  
+					Integer high = udo1.getHigh();
+					float weight=  udo1.getWeight();  
 					String bmi=  df.format(weight/high/high*10000);
 					if(choiceProductDO!=null){
 						if("YUN_DONG".equals(ifStop)){
@@ -246,6 +229,11 @@ public class PaperServiceImpl implements PaperService{
 		}*/
 		
 		if(!"JIBEN_XINXI".equals(fenleifenlei)){
+			System.out.println("执行到此");
+			System.out.println("执行到此");
+			System.out.println("执行到此");
+			System.out.println("执行到此");
+			System.out.println("执行到此");
 			
 			paperDao.updateproductpaperDOStstus(cwid);
 			if(ssid>0){
@@ -256,14 +244,14 @@ public class PaperServiceImpl implements PaperService{
 		if("JIBEN_XINXI".equals(fenleifenlei)){
 			
 
-			if(chanpin1>0){
+			/*if(chanpin1>0){
 				udo123.setAge(chanpin1);
 				 paperDao.saveCustomerPaperDO(udo123);
 			}
 			if(chanpin2>0){
 				udo123.setAge(chanpin2);
 				 paperDao.saveCustomerPaperDO(udo123);
-			}	
+			}	*/
 		}
 		return R.ok();
 	}
@@ -386,6 +374,16 @@ public class PaperServiceImpl implements PaperService{
 	@Override
 	public List<ProductpaperDO> getNewProductpaperDO(String openid, Integer product) {
 		return paperDao.getNewProductpaperDO(openid,product);
+	}
+
+	@Override
+	public R saveCustomerPaperDO(CustomerPaperDO customerPaperDO) {
+		
+		if(paperDao.saveCustomerPaperDO(customerPaperDO)>0){
+			return R.ok();
+		}
+			
+		return R.error();
 	}
 
 	

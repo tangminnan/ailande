@@ -76,6 +76,12 @@ public class PaperController {
 	@GetMapping("/getAllProduct")
 	@ResponseBody
 	public Map<String,Object> getAllProduct(String openid){
+		System.out.println("openid-------------------------"+openid);
+		System.out.println("openid-------------------------"+openid);
+		System.out.println("openid-------------------------"+openid);
+		System.out.println("openid-------------------------"+openid);
+		System.out.println("openid-------------------------"+openid);
+		System.out.println("openid-------------------------"+openid);
 		return paperService.getAllProduct(openid);
 	}
 	
@@ -84,6 +90,7 @@ public class PaperController {
 	@Log("保存选择的产品")
 	@GetMapping("/saveChoosedProduct")
 	public String saveChoosedProduct( Integer[] products,HttpServletRequest request,String openid,Model model){
+	//	openid="ocqxT5xl5XAidygc01PGGQngKV4Q";
 		request.getSession().setAttribute("products", products);
 		paperService.saveChoosedProduct(products,request,openid);
 		model.addAttribute("openid", openid);
@@ -99,11 +106,22 @@ public class PaperController {
 		model.addAttribute("index", 0);
 		return "information/jibenxinxi";
 	}*/
+
+	
+		
     
 	@Log("保存")
 	@GetMapping("/saveYourName")
-	public String saveYourName(String name,String openid, Integer index,Integer count,HttpServletRequest request,Model model){
-		model.addAttribute("name", request.getSession().getAttribute("name"));
+	public String saveYourName(
+							   Integer index,Integer count,
+							   String sex, Integer age,
+							   String phone, String username,
+							   String openid,
+							  Model model){
+		model.addAttribute("name",username);
+		model.addAttribute("phone",phone);
+		model.addAttribute("sex",sex);
+		model.addAttribute("age",age);
 		model.addAttribute("index",index);
 		model.addAttribute("count", count);
 		model.addAttribute("openid", openid);
@@ -128,6 +146,12 @@ public class PaperController {
 	public String beginAnswer(Integer flag,
 							 @RequestParam(value="count",required=false) Integer count,
 							 @RequestParam(value="index",required=false) Integer index,
+							 @RequestParam(value="username",required=false) String username,
+							 @RequestParam(value="phone",required=false) String phone,
+							 @RequestParam(value="sex",required=false) String sex,
+							 @RequestParam(value="age",required=false) Integer age,
+							 @RequestParam(value="high",required=false) Integer high,
+							 @RequestParam(value="weight",required=false) Float weight,
 							 String openid,
 							 Model model,
 							 HttpServletRequest request){
@@ -151,6 +175,10 @@ public class PaperController {
 			list=paperService.getQuestionDOType(products,"JIBEN_XINXI");
 			model.addAttribute("list",list);
 			model.addAttribute("LEI","JIBEN_XINXI");
+			model.addAttribute("username",username);
+			model.addAttribute("phone","phone");
+			model.addAttribute("sex",sex);
+			model.addAttribute("age",age);
 			return "information/jibenxinxi44";
 		}
 		else if(flag==2){//身体状况  膳食习惯 生活方式 睡眠与压力 运动习惯
@@ -170,6 +198,7 @@ public class PaperController {
 	
 	@GetMapping("/getReportPage")
 	public String getReportPage(HttpServletRequest request,HttpServletResponse response,Model model){
+		
 		String code = request.getParameter("code");
     	String openid = "";
     	if(StringUtils.isNotBlank(code)){
@@ -201,13 +230,40 @@ public class PaperController {
 	@Log("保存问卷答题")
 	@PostMapping("/saveWenJuan")
 	@ResponseBody
-	public R saveWenJuan(String objs,HttpServletRequest request,String openid){
-		return paperService.saveWenJuan(objs,request,openid);
+	public R saveWenJuan(@RequestParam(value="objs",required=false) String objs,HttpServletRequest request,String openid,
+						 @RequestParam(value="username",required=false) String username,
+						 @RequestParam(value="phone",required=false) String phone,
+						 @RequestParam(value="sex",required=false) String sex,
+						 @RequestParam(value="age",required=false) Integer age,
+						 @RequestParam(value="high",required=false) Integer high,
+						 @RequestParam(value="weight",required=false) Float weight){
+		if(objs!=null)
+			return paperService.saveWenJuan(objs,request,openid);
+		else{
+			Integer[] products = (Integer[]) request.getSession().getAttribute("products");
+			System.out.println("products===="+products.length);
+			for(int i : products){
+				CustomerPaperDO customerPaperDO = new CustomerPaperDO();
+				customerPaperDO.setCreateTime(new Date());
+				customerPaperDO.setAge(age);
+				customerPaperDO.setSex(sex);
+				customerPaperDO.setPhone(phone);
+				customerPaperDO.setWeight(weight);
+				customerPaperDO.setHigh(high);
+				customerPaperDO.setUsername(username);
+				customerPaperDO.setOpenid(openid);
+				customerPaperDO.setProductId(i);
+				paperService.saveCustomerPaperDO(customerPaperDO);
+			}
+			
+			return R.ok();
+		}
 	}
 	
 	@Log("查看报告")
 	@GetMapping("/lookCheckLog")
 	public String lookCheckLog(Integer product,String name,String openid, Model model,HttpServletRequest request){
+//		openid="ocqxT5xl5XAidygc01PGGQngKV4Q";
 		System.out.println("送到页面的openid====================="+openid);
 		System.out.println("送到页面的openid====================="+openid);
 		
@@ -371,7 +427,7 @@ public class PaperController {
 		
 		CustomerPaperDO udo1 = paperService.getLatestCustomerPaperDO(openid,product);
 		   
-		float high = Float.parseFloat((String) udo1.getHigh());
+		Integer high = udo1.getHigh();
 		float weight=  Float.parseFloat( udo1.getWeight()+"");  
 		String bmi=  df.format(weight/high/high*10000);
 		model.addAttribute("high",high);
@@ -398,7 +454,7 @@ public class PaperController {
 		 DecimalFormat df = new DecimalFormat("0.0");
 		 System.out.println("====openid对不对----==="+openid);
 		CustomerPaperDO udo1 = paperService.getLatestCustomerPaperDO(openid,product);
-		float high = Float.parseFloat((String) udo1.getHigh());
+		float high = udo1.getHigh();
 		float weight=  Float.parseFloat( udo1.getWeight()+"");  
 		float bmi=  Float.parseFloat(df.format(weight/high/high*10000));
 		String timeString= (String)request.getSession().getAttribute("timeString");

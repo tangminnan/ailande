@@ -38,7 +38,9 @@
 			weight,
 			openid,
 			age,
-  			create_time
+			sex,
+  			create_time,
+  			product_id
 		)
 		values(
 			#{username},
@@ -46,7 +48,9 @@
 			#{weight},
 			#{openid},
 			#{age},
-			#{createTime}
+			#{sex},
+			#{createTime},
+			#{productId}
 		)
 	</insert>
 	
@@ -143,7 +147,7 @@
 	
 	<select id="getLatestCustomerPaperDO" resultType="com.gene.information.domain.CustomerPaperDO">
 	
-	   select * from  biz_customer_paper where  openid =#{openid} and age=#{product} order by id desc limit 1;
+	   select * from  biz_customer_paper where  openid =#{openid} and product_id=#{product} order by id desc limit 1;
 	</select>
 	
 	

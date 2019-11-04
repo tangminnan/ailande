@@ -31,7 +31,7 @@
 </body>
 <input type="hidden" id="openid" th:value="${openid}">
 <script type="text/javascript" >
- if($("#openid").val()==''){
+  if($("#openid").val()==''){
 	var callback = encodeURIComponent("http://ailaide.jingtu99.com/paper/index");
 	window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe19dc53508118a28&redirect_uri="+callback+"&response_type=code&scope=snsapi_base#wechat_redirect";
 } 

@@ -64,5 +64,7 @@ public interface PaperService {
 	 */
 	List<ProductpaperDO> getNewProductpaperDO(String openid, Integer product);
 
+	R saveCustomerPaperDO(CustomerPaperDO customerPaperDO);
+
 	
 }

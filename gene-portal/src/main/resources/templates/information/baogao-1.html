@@ -35,10 +35,10 @@
 </body>
 	<script type="text/javascript">
 	
-	if($("#openid").val()==''){
+	 if($("#openid").val()==''){
 		var callback = encodeURIComponent("http://ailaide.jingtu99.com/paper/getReportPage");
 		window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe19dc53508118a28&redirect_uri="+callback+"&response_type=code&scope=snsapi_base#wechat_redirect";
-	} 
+	}  
 	
 	
 	
@@ -46,6 +46,7 @@
 	 * 获取所有的方案 
 	 */
 	 var openid=$("#openid").val();
+/* 	openid='ocqxT5xl5XAidygc01PGGQngKV4Q' */
 	$.ajax({
 		url: "/paper/getAllProduct",
 		type: "GET",

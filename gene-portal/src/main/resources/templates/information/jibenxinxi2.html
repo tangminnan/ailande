@@ -28,16 +28,25 @@
 	<img class="miqi" src="../images/miqi.png" alt=""/>
 	<input id="count" th:value="${count}" type="hidden">
 	<input id="index" th:value="${index}" type="hidden">
+	<input id="sex" th:value="${sex}" type="hidden">
+	<input id="age" th:value="${age}" type="hidden">
+	<input id="phone" th:value="${phone}" type="hidden">
+	<input id="name" th:value="${name}" type="hidden">
 	<input id="openid" th:value="${openid}" type="hidden">
+	
 	<script type="text/javascript">
 	  var countb=$("#count").val();
 	  var index=$("#index").val();
+	  var sex=$("#sex").val();
+	  var age=$("#age").val();
+	  var phone=$("#phone").val();
+	  var username=$("#name").val();
 	  var baifen = Math.floor(index*100/countb);
 	  $(".baifen").text(baifen+'%');
 	  $(".baifen").prev().val(baifen);
 	  var openid=$("#openid").val();
-	  window.setTimeout("window.location.href='/paper/beginAnswer?flag=1&index="+index+"&count="+countb+"&openid="+openid+"'",1500);
-	
+	  window.setTimeout("window.location.href='/paper/beginAnswer?flag=1&index="+index+"&count="+countb+"&openid="+openid+"&username="+username+"&sex="+sex+"&age="+age+"&phone="+phone+"'",1500);
+	 
 		  
 	
 	</script>

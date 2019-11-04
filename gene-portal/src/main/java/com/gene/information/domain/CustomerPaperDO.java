@@ -24,9 +24,9 @@ public class CustomerPaperDO implements Serializable {
 	//性别
 	private String sex;
 	//身高
-	private String high;
+	private Integer high;
 	//体重
-	private Integer weight;
+	private Float weight;
 	//邮箱
 	private String email;
 	//邮箱
@@ -38,6 +38,9 @@ public class CustomerPaperDO implements Serializable {
 	//创建时间
 	private Date createTime;
 	private Integer bmi;
+	
+	//年龄
+	private Integer productId;
 	
 	private List<Integer> list = new ArrayList<Integer>();
 	/**
@@ -63,6 +66,13 @@ public class CustomerPaperDO implements Serializable {
 	 */
 	public String getUsername() {
 		return username;
+	}
+	
+	public Integer getProductId() {
+		return productId;
+	}
+	public void setProductId(Integer productId) {
+		this.productId = productId;
 	}
 	/**
 	 * 设置：性别
@@ -113,16 +123,16 @@ public class CustomerPaperDO implements Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	public String getHigh() {
+	public Integer getHigh() {
 		return high;
 	}
-	public void setHigh(String high) {
+	public void setHigh(Integer high) {
 		this.high = high;
 	}
-	public Integer getWeight() {
+	public Float getWeight() {
 		return weight;
 	}
-	public void setWeight(Integer weight) {
+	public void setWeight(Float weight) {
 		this.weight = weight;
 	}
 	public String getEmail() {
