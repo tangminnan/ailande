@@ -17,15 +17,17 @@
 	<div class="box space">
 		<p>欢迎阅读BioCare营养健康专家团队为您量身定制的《肠胃调理方案》。</p>
 		<p>BioCare是英国老字号营养保健品牌，有<span class="sp1">30余年</span>临床营养专业知识及经验，致力于为消费者提高品质全方位的专业营养解决方案。</p>
-		<p><span class="sp2">BioCare的专家</span>团队由来自剑桥、牛津、北大的中英两国人才构成，包括自然医学、生物学、营养学领域的专家</p>
+		<p>BioCare的专家团队由来自<span class="sp2">剑桥、牛津、北大</span>的中英两国人才构成，包括自然医学、生物学、营养学领域的专家。</p>
 		<input style="width:100%; margin-bottom:0;" class="btn" type="button" value="点击阅读"/>
 	</div>
 	<input type="hidden" name="product" th:value="${product}">
 	<input type="hidden" name="name" th:value="${name}">
+	<input type="hidden" id="openid" th:value="${openid}">
 	<script type="text/javascript">
+	    var openid=$("#openid").val();
 		$(".btn").click(function(){
 			var name=$("[name='name']").val();
-			window.location.href="/paper/readMyReport?product="+$("[name='product']").val()+"&name="+name;
+			window.location.href="/paper/readMyReport?product="+$("[name='product']").val()+"&name="+name+"&openid="+openid;
 		});
 	</script>
 </body>

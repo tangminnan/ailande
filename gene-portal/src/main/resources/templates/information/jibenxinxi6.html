@@ -57,8 +57,16 @@
 	</div>
 	<input id="count" th:value="${count}" type="hidden">
 	<input id="index" th:value="${index}" type="hidden">
-	
+	<input id="openid" th:value="${openid}" type="hidden">
 	<script type="text/javascript">
+	
+	//在页面未加载完毕之前显示的loading Html自定义内容
+	var _LoadingHtml = '<div id="loadingDiv" style="display: none; "><div id="over" style=" position: absolute;top: 0;left: 0; width: 100%;height: 100%; background-color: #f5f5f5;opacity:0.5;z-index: 1000;"></div><div id="layout" style="position: absolute;top: 40%; left: 40%;width: 20%; height: 20%;  z-index: 1001;text-align:center;"><img src="/js/plugins/layer/skin/default/loading-0.gif" /></div></div>';
+	//呈现loading效果
+	document.write(_LoadingHtml);
+	 
+		
+	
 		$(".bianbian").each(function(){
 			var text=$(this).find("h3").text();
 			var lkuohao=text.indexOf("（"),rkuohao=text.indexOf("）");
@@ -138,14 +146,17 @@
 			}
 			//触发ajax请求
 			else{
+				var openid=$("#openid").val();
+				//alert("提交中，请稍后!");
+				document.getElementById("loadingDiv").style.display="block";
 				$.ajax({
 					type : "POST",
 					url : "/paper/saveWenJuan",
 					traditional:true,
-					data:{objs:JSON.stringify(arry),'index':index},
+					data:{objs:JSON.stringify(arry),'index':index,openid:openid},
 					success : function(data) {
 						if(data.code==0){
-						
+							document.getElementById("loadingDiv").style.display="none";
 							window.location.href="/paper/getReportPage";
 						}
 						else

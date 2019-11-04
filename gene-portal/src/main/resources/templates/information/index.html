@@ -29,14 +29,19 @@
 		<div class="center"><a id="jixu">继续</a></div>
 	</div>
 </body>
+<input type="hidden" id="openid" th:value="${openid}">
 <script type="text/javascript" >
-var callback = encodeURIComponent("http://ailaide.jingtu99.com/paper/index");
-window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe23f18d7b8947aa6&redirect_uri="+callback+"&response_type=code&scope=snsapi_base#wechat_redirect"
+ if($("#openid").val()==''){
+	var callback = encodeURIComponent("http://ailaide.jingtu99.com/paper/index");
+	window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe19dc53508118a28&redirect_uri="+callback+"&response_type=code&scope=snsapi_base#wechat_redirect";
+} 
 /**
  * 获取所有的方案
  */
+ var openid=$("#openid").val();
 $.ajax({
 	url: "/paper/getAllProduct",
+	data:{openid :openid},
 	type: "GET",
 	async : false,
 	success: function(r){
@@ -72,7 +77,8 @@ $("#jixu").click(function(){
 		alert("要先选择一个或多个产品");
 		return;
 	}
-	window.location.href="/paper/saveChoosedProduct?products="+products;
+	
+	window.location.href="/paper/saveChoosedProduct?products="+products+"&openid="+openid;
 });
 </script>
 </html>

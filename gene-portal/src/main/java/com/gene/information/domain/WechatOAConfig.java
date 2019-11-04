@@ -29,7 +29,7 @@ public class WechatOAConfig {
 	public static String getAccessToken(String code) throws Exception {
 		String openid = "";
 		String url = "https://api.weixin.qq.com/sns/oauth2/access_token";
-		String para = "appid=wxe23f18d7b8947aa6&secret=889ef7319d78c271e75b8d858bb2b5f1&code="+code+"&grant_type=authorization_code";
+		String para = "appid=wxe19dc53508118a28&secret=a435980bbe9c7731dda0dee1cf21ab9c&code="+code+"&grant_type=authorization_code";
 		String res = sendGet(url, para);
 		Map<String, String> map = new HashMap<String, String>();
 		map=JSON.parseObject(res, Map.class);

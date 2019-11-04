@@ -18,6 +18,10 @@ public class ProductpaperDO {
     private Date answerTime;
     //备注
     private String remark;
+    //微信openid
+    private String openid;
+    //答题记录
+    private Integer answerStatus;
 	public Integer getId() {
 		return id;
 	}
@@ -59,6 +63,18 @@ public class ProductpaperDO {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public String getOpenid() {
+		return openid;
+	}
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
+	public Integer getAnswerStatus() {
+		return answerStatus;
+	}
+	public void setAnswerStatus(Integer answerStatus) {
+		this.answerStatus = answerStatus;
 	} 
     
  

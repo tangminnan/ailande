@@ -13,17 +13,20 @@
 <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="../js/Font.js"></script>
 <style type="text/css">
-	.yemiantiaozhuan{padding:.4rem .54rem};
+/* 	.yemiantiaozhuan{padding:.4rem .54rem} */
+	td {
+  white-space: pre-line;
+ }
 </style>
 </head>
-<body class="bg-cc">
+<body class="bg-cc" >
 	<div id="baogao-3" >
 		<div class="Healthy">
 		<div class="boxes center">
 			<p>您的肠道现状</p>
 			<ul class="xianZ">
 				<li>不大好</li>
-				<li class="on">一般般</li>
+				<li>一般般</li>
 				<li>很舒服</li>
 			</ul>
 			<a id="test">查看详情</a>
@@ -52,7 +55,7 @@
 	</div>
 	</div>
 	
-	<div id="baogao-4" style="display: none">
+	<div id="baogao-4" style="display: none;padding: .4rem 7%">
 		<!--肠道现状-->
 	<div id="changdaoxianzhuang" class="cdxzBox">
 		<div class="ztai center">
@@ -75,7 +78,7 @@
   	  			<div class="center" id="yinshiheshenghuoxiguan">
   	   				<img id="biaoqingaaa" src="../images/henhao.png" alt=""/>
   	  				<p class="p2">饮食与生活习惯得分</p>
-  	  				<p class="p3"><span th:text="${yinshi60}"></span><span class="yyy">分（一般）</span></p>
+  	  				<p class="p3"><span th:text="${yinshi60}"></span><span class="yyy"></span></p>
   	 			</div>
   	 			<p class="zhanbi space center">影响肠胃健康的因素</p>
   	  			<ul class="zhanbi-lt center">
@@ -147,13 +150,13 @@
 	<input id="product" type="hidden" th:value="${product}">
 	<input id="shenti80" type="hidden" th:value="${shenti80}">
 	<input id="yinshi60" type="hidden" th:value="${yinshi60}">
-	
+	<input id="openid" type="hidden" th:value="${openid}">
 	<script type="text/javascript">
 	
 	var fenshua  = $("#shenti80").val();
-	if(fenshua>=80) /* $("ul.xianZ li:nth-child(3)").addClass("on").siblings().removeClass("on"); */$(".ppyuyy23").text("很舒服");
-	if(fenshua<80 && fenshua>=60) /* $("ul.xianZ li:nth-child(2)").addClass("on").siblings().removeClass("on"); */$(".ppyuyy23").text("一般般");
-	if(fenshua<60) /* $("ul.xianZ li:nth-child(1)").addClass("on").siblings().removeClass("on"); */$(".ppyuyy23").text("不大好");
+	if(fenshua>=80) { $("ul.xianZ li:nth-child(3)").addClass("on"); $(".ppyuyy23").text("很舒服");}
+	if(fenshua<80 && fenshua>=60) { $("ul.xianZ li:nth-child(2)").addClass("on");$(".ppyuyy23").text("一般般");}
+	if(fenshua<60) {$("ul.xianZ li:nth-child(1)").addClass("on");$(".ppyuyy23").text("不大好");}
 	
 	
 	var yinshi = $("#yinshi60").val();
@@ -229,10 +232,11 @@ $(".zhidao input").last().click(function(){
   var paibianpinlvxingzhuang=[]; //排便频率  便便形状
   var paibianpinlvshucaishuiguoculiang=[];//排便频率 蔬菜  水果  粗粮
   var futongfuzhangfansuanwixhangjibbing=[];//有没有腹胀、腹痛、反酸（最近1个月）有没有较严重胃肠道疾病或病史（肠炎、胃炎、肿瘤等）
+  var openid=$("#openid").val();
   $.ajax({
 		type : "GET",
 		url : "/paper/getMyReportData",
-		data:{product:$("#product").val()},
+		data:{product:$("#product").val(),openid:openid},
 		async : false,
 		success : function(r) {console.info(r)
 			  for(var key in r){
@@ -332,7 +336,7 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
  }
  if(flag==true){
 	 flag=false;
-	 var obj={'title':'速七活力益生菌胶囊','images':'../images/suqichangdao.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=66585330179'};
+	 var obj={'title':'速七活力益生菌胶囊','images':'../images/JF-suqihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=66585330179'};
 	 tuijianarry.push(obj);
  } 
  
@@ -353,7 +357,7 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
 	 num++;
  }
  if(num>=2){
-	 var obj={'title':'每日活力益生菌','images':'','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843270179'};
+	 var obj={'title':'每日活力益生菌','images':'../images/JF-meirihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843270179'};
 	 tuijianarry.push(obj);
  }
  
@@ -374,7 +378,7 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
  }
  if(flag==true){
 	 flag=false;
-	 var obj={'title':'低聚果糖益生元粉','images':'../images/dijuguotangchangdao.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843200179'};
+	 var obj={'title':'低聚果糖益生元粉','images':'../images/JF-dijuguotang.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843200179'};
 	 tuijianarry.push(obj);
  }
  
@@ -391,7 +395,7 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
  }
  if(flag==true){
 	 flag=false;
-	 var obj={'title':'榆树养胃胶囊','images':'../images/yushuyangweichangdao.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59842960179'};
+	 var obj={'title':'榆树养胃胶囊','images':'../images/JF-yushuyangwei.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59842960179'};
 	 tuijianarry.push(obj);
  }
  
@@ -407,7 +411,7 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
  
  
 if(paibianpinlvshucaishuiguoculiang.length>=0){
-	 var obj={'title':'安益胶囊','images':'../images/anyijiaonangchangdao.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59844980179'};
+	 var obj={'title':'安益胶囊','images':'../images/JF-anyijiaonang.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59844980179'};
 	 haikexuanze.push(obj);
 }
 
@@ -415,13 +419,13 @@ if(paibianpinlvshucaishuiguoculiang.length>=0){
 $("#jjjdddd").children("span").text("建议您补充"+ tuijianarry.length+"种补充剂");
 var div='';
 for(var i=0;i< tuijianarry.length;i++){
-	 div+= '<p class="center"><a href="'+tuijianarry[i].url+'"><img   src="'+tuijianarry[i].images+'" alt=""/></a></p>'
+	 div+= '<div class="ulBox"><a href="'+tuijianarry[i].url+'"><img  class="jsBg" src="'+tuijianarry[i].images+'" alt=""/></a></div>'
 }         
 $("#jjjdddd").after(div);
 
 div='';
 for(var i=0;i<haikexuanze.length;i++){
-	div+= '<p class="center"><a href="'+haikexuanze[i].url+'"><img   src="'+haikexuanze[i].images+'" alt=""/></a></p>'
+	div+= '<div class="ulBox"><a href="'+haikexuanze[i].url+'"><img class="jsBg"  src="'+haikexuanze[i].images+'" alt=""/></a></div>'
 }
 
 $("#swsws").after(div);

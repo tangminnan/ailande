@@ -18,24 +18,34 @@
   			user,
   			status,
   			answer_time,
-  			remark
+  			remark,
+  			openid
 		)values(
 			#{paper},
   			#{product},
   			#{user},
   			#{status},
   			#{answerTime},
-  			#{remark}
+  			#{remark},
+  			#{openid}
 		)
 	</insert>
 	
 	<insert id="saveCustomerPaperDO" parameterType="com.gene.information.domain.CustomerPaperDO" useGeneratedKeys="true" keyProperty="id">
 		insert into biz_customer_paper(
 			username,
+			high,
+			weight,
+			openid,
+			age,
   			create_time
 		)
 		values(
 			#{username},
+			#{high},
+			#{weight},
+			#{openid},
+			#{age},
 			#{createTime}
 		)
 	</insert>
@@ -66,6 +76,12 @@
   			#{tiankonganswer}
   		)
 	</insert>
+	
+	<select id="listProductPaperDOByOpenIdAndProduct" resultType="com.gene.information.domain.ProductpaperDO">
+	  select id,paper,product,user,status,answer_time,remark,openid from qu_product_paper
+	  where product=#{product} and openid =#{openid} and answer_status=1 order by id desc; 
+	
+	</select>
 	
 	<resultMap type="com.gene.information.domain.QuestionDO" id="paperMap">
 		 
@@ -113,6 +129,26 @@
              </collection>
        
 	</resultMap>
+	
+	
+	
+	<!-- 查询有效的答题 -->
+	<select id="getProductpaperDOByOpenId" resultType="com.gene.information.domain.ProductpaperDO">
+	
+	 select id,paper,product,user,status,answer_time,remark,openid from qu_product_paper
+	  where openid =#{openid} and answer_status=0 order by id desc;
+	
+	</select>
+	
+	
+	<select id="getLatestCustomerPaperDO" resultType="com.gene.information.domain.CustomerPaperDO">
+	
+	   select * from  biz_customer_paper where  openid =#{openid} and age=#{product} order by id desc limit 1;
+	</select>
+	
+	
+	
+	
 	
 	<select id="getQuestionDOType" resultMap="paperMap"> 
 	
@@ -188,6 +224,12 @@ FROM
 		
 	</select>
 	
+	<select id="getProductPaperDObyOpenid" resultType="com.gene.information.domain.ProductpaperDO">
+		select  * from qu_product_paper where openid=#{openid} and product=#{product} and answer_status=1 order by id desc limit 1
+		
+	</select>
+	
+	
 	<resultMap type="com.gene.information.domain.QuestionDO" id="questionMap">
 		 	 <id column="qpid" property="id"/>
          	 <result column="qpcontent" property="content"/>
@@ -253,6 +295,8 @@ FROM
 		select sum(score) from biz_answer where productpaper=#{productpaper} and fenlei=#{fenlei}
 	</select>
 	
+	
+	
 	<select id="getAllChoicedScores" resultType="int">
 				SELECT
 			sum(ifnull(qp.score,0))
@@ -281,7 +325,7 @@ FROM
 	</select>
 	
 	<update id="updateproductpaperDOStstus">
-		update qu_product_paper set status=1 where id=#{value}
+		update qu_product_paper set answer_status=1 where id=#{value}
 	</update>
 	
 	<select id="getSingleJiBenXinxi" resultType="float">
@@ -301,11 +345,11 @@ FROM
 	
 	<select id="getChoosedContent" resultType="string">
 					select c.content from biz_answer b,qu_question q,qu_choice c,qu_product_paper qp
-			where b.question_id=q.id and q.content like concat('%', #{string},'%')
+			where b.question_id=q.id and q.contenw like concat('%', #{string},'%')
 			
 			AND b.choice_id = c.id
 			AND b.productpaper = qp.id
-			AND qp.product = #{product} AND qp.user=#{user}
+			AND qp.product = #{product} AND qp.openid=#{openid} and qp.answer_status =1 ORDER BY qp.id desc limit 1 
 	</select>
 	
 	<select id="getQuestionByProduct" resultType="com.gene.information.domain.QuestionDO">
@@ -322,5 +366,10 @@ FROM
 	
 	<select id="getProductDO" resultType="com.gene.information.domain.ProductpaperDO">
 		select * from qu_product_paper where id=#{value}
+	</select>
+	
+	<select id="getNewProductpaperDO" resultType="com.gene.information.domain.ProductpaperDO">
+		select  id,paper,product,user  from qu_product_paper  where  answer_time=(select max(answer_time) from qu_product_paper where product=#{product} and openid=#{openid}
+		and answer_status=1) and product=#{product} and openid=#{openid}
 	</select>
 </mapper>

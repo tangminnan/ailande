@@ -51,6 +51,8 @@ public interface PaperDao {
 
 	List<ProductpaperDO> getProductPaperDO2(@Param("user") String user,@Param("product") Integer product);
 	
+	List<ProductpaperDO> getProductPaperDObyOpenid(@Param("openid") String openid,@Param("product") Integer product);
+	
 	/**
 	 * 按题目的分类查询用户答题及答案
 	 */
@@ -73,7 +75,7 @@ public interface PaperDao {
 	/**
 	 * 查询用户选择的内容
 	 */
-	List<String> getChoosedContent(@Param("user") String user,@Param("product") Integer product,@Param("string") String string);
+	List<String> getChoosedContent(@Param("openid") String id,@Param("product") Integer product,@Param("string") String string);
 
 	/**
 	 * 根据产品查询题目
@@ -87,6 +89,22 @@ public interface PaperDao {
 	 * @param integer
 	 */
 	void updateproductpaperDOStstus(Integer integer);
+
+	/**
+	 * 根据微信id和产品去拿最新的检测结果
+	 */
+	List<ProductpaperDO> getNewProductpaperDO(@Param("openid") String openid,@Param("product") Integer product);
+	/**
+	 * openid  
+	 * @param openid
+	 * @param product
+	 * @return
+	 */
+	List<ProductpaperDO> listProductPaperDOByOpenIdAndProduct(@Param("openid") String openid,@Param("product") Integer product);
+
+	List<ProductpaperDO> getProductpaperDOByOpenId(String openid);
+
+	CustomerPaperDO getLatestCustomerPaperDO(@Param("openid")String openid,@Param("product")Integer product);
     
 
 }

@@ -29,6 +29,8 @@ public class CustomerPaperDO implements Serializable {
 	private Integer weight;
 	//邮箱
 	private String email;
+	//邮箱
+	private String openid;
 	//年龄
 	private Integer age;
 	//联系方式
@@ -73,6 +75,13 @@ public class CustomerPaperDO implements Serializable {
 	 */
 	public String getSex() {
 		return sex;
+	}
+	
+	public String getOpenid() {
+		return openid;
+	}
+	public void setOpenid(String openid) {
+		this.openid = openid;
 	}
 	/**
 	 * 设置：年龄

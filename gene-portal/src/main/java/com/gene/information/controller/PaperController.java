@@ -50,7 +50,11 @@ public class PaperController {
 		String str= new SimpleDateFormat("yyyyMMddhhMmss").format(new Date());//请求时间戳
 		request.getSession().setAttribute("timeString", str);
 		
-		
+		System.out.println("回调执行");
+		System.out.println("回调执行");
+		System.out.println("回调执行");
+		System.out.println("回调执行");
+		System.out.println("回调执行");
 		String code = request.getParameter("code");
     	String openid = "";
     	if(StringUtils.isNotBlank(code)){
@@ -60,9 +64,10 @@ public class PaperController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-        	model.addAttribute("openid", openid);
+    		
+        	
     	}
-    	
+    	model.addAttribute("openid", openid);
     	
 		return "information/index";
 	}
@@ -70,17 +75,18 @@ public class PaperController {
 	@Log("获取所有的产品")
 	@GetMapping("/getAllProduct")
 	@ResponseBody
-	public Map<String,Object> getAllProduct(HttpServletRequest request){
-		return paperService.getAllProduct(request);
+	public Map<String,Object> getAllProduct(String openid){
+		return paperService.getAllProduct(openid);
 	}
 	
 	
 	
 	@Log("保存选择的产品")
 	@GetMapping("/saveChoosedProduct")
-	public String saveChoosedProduct( Integer[] products,HttpServletRequest request){
+	public String saveChoosedProduct( Integer[] products,HttpServletRequest request,String openid,Model model){
 		request.getSession().setAttribute("products", products);
-		paperService.saveChoosedProduct(products,request);
+		paperService.saveChoosedProduct(products,request,openid);
+		model.addAttribute("openid", openid);
 		return "information/yinshixiguan";
 	}
 	
@@ -96,10 +102,11 @@ public class PaperController {
     
 	@Log("保存")
 	@GetMapping("/saveYourName")
-	public String saveYourName(String name,Integer index,Integer count,HttpServletRequest request,Model model){
+	public String saveYourName(String name,String openid, Integer index,Integer count,HttpServletRequest request,Model model){
 		model.addAttribute("name", request.getSession().getAttribute("name"));
 		model.addAttribute("index",index);
 		model.addAttribute("count", count);
+		model.addAttribute("openid", openid);
 		return "information/jibenxinxi2";
 	}
 	
@@ -121,9 +128,11 @@ public class PaperController {
 	public String beginAnswer(Integer flag,
 							 @RequestParam(value="count",required=false) Integer count,
 							 @RequestParam(value="index",required=false) Integer index,
+							 String openid,
 							 Model model,
 							 HttpServletRequest request){
 		Integer[] products = (Integer[])request.getSession().getAttribute("products");
+		model.addAttribute("openid",openid);
 		if(count==null){
 			 count = paperService.getgetQuestionDOSize(products);
 		}
@@ -160,7 +169,18 @@ public class PaperController {
 	 */
 	
 	@GetMapping("/getReportPage")
-	public String getReportPage(){
+	public String getReportPage(HttpServletRequest request,HttpServletResponse response,Model model){
+		String code = request.getParameter("code");
+    	String openid = "";
+    	if(StringUtils.isNotBlank(code)){
+    		try {
+				openid = WechatOAConfig.getAccessToken(code);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}	
+        	model.addAttribute("openid", openid);
 		return "information/baogao-1";
 	}
 	
@@ -181,17 +201,25 @@ public class PaperController {
 	@Log("保存问卷答题")
 	@PostMapping("/saveWenJuan")
 	@ResponseBody
-	public R saveWenJuan(String objs,HttpServletRequest request){
-		return paperService.saveWenJuan(objs,request);
+	public R saveWenJuan(String objs,HttpServletRequest request,String openid){
+		return paperService.saveWenJuan(objs,request,openid);
 	}
 	
 	@Log("查看报告")
 	@GetMapping("/lookCheckLog")
-	public String lookCheckLog(Integer product,String name, Model model,HttpServletRequest request){
+	public String lookCheckLog(Integer product,String name,String openid, Model model,HttpServletRequest request){
+		System.out.println("送到页面的openid====================="+openid);
+		System.out.println("送到页面的openid====================="+openid);
 		
-		model.addAttribute("userName",request.getSession().getAttribute("name"));
+		CustomerPaperDO udo1 = paperService.getLatestCustomerPaperDO(openid,product);
+		   System.out.println(	"11111111111111======="+udo1.getHigh());
+		   System.out.println(	"11111111111111======="+udo1.getWeight());
+		   System.out.println(	"11111111111111======="+udo1.getUsername());
+		
+		model.addAttribute("userName",udo1.getUsername());
 		model.addAttribute("product", product);
 		model.addAttribute("name",name);
+		model.addAttribute("openid",openid);
 		if("肠胃调理".equals(name))
 			return"information/baogao-2";
 		if("科学瘦身".equals(name))
@@ -202,13 +230,20 @@ public class PaperController {
 	
 	@Log("阅读检测报告--肠胃调理")
 	@GetMapping("/readMyReport")
-	public String readMyReport(Model model,Integer product,String name,HttpServletRequest request){
+	public String readMyReport(Model model,Integer product,String name,HttpServletRequest request,String openid){
 		String timeString= (String)request.getSession().getAttribute("timeString");
-		List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId()+timeString,product);
-		ProductpaperDO productpaperDO=productpaperDOList.get(0);
+//		List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId()+timeString,product);
+//		ProductpaperDO productpaperDO=productpaperDOList.get(0);
 	    Map<String,Integer> mapD  = new HashMap<String,Integer>();
 	    Map<String,Integer> mapT = new HashMap<String,Integer>();
 	    DecimalFormat df = new DecimalFormat("0.0");
+	   /**
+	    * 根据openid  产品去拿最新的检测结果
+	    */
+	    
+	    List<ProductpaperDO> productpaperDOList = paperService.getNewProductpaperDO(openid,product);
+	    ProductpaperDO productpaperDO=productpaperDOList.get(0);
+	    
 	    if(productpaperDO!=null){//统计分值
 	    	Integer productpaper = productpaperDO.getId();
 	    	List<String> fenleiList = Arrays.asList("SHENTI_ZHUANG","SHANSHI_XIGUAN","SHENGHUO_FANGSHI","SHUIMIAN_XIGUAN","YUNDONG_XIGUANG");//身体状况  膳食习惯  生活方式  睡眠压力  运动习惯
@@ -257,16 +292,25 @@ public class PaperController {
 	    		}
 	    	}
 	    }
+	    model.addAttribute("openid", openid);
 		model.addAttribute("product", product);
 	    return "information/baogao-3";
 	}
 	
 	@Log("阅读检测报告--科学瘦身")
 	@GetMapping("/kexueshoushens")
-	public String kexueshoushen(Model model,Integer product,String name,HttpServletRequest request) {
+	public String kexueshoushen(Model model,Integer product,String name,HttpServletRequest request,String openid) {
+		System.out.println("科学瘦身================================"+openid);
+		System.out.println("科学瘦身================================"+openid);
+		System.out.println("科学瘦身================================"+openid);
+		System.out.println("科学瘦身================================"+openid);
+		System.out.println("科学瘦身================================"+openid);
+		System.out.println("科学瘦身================================"+openid);
 		String timeString= (String)request.getSession().getAttribute("timeString");
-		List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId()+timeString,product);
-		ProductpaperDO productpaperDO = productpaperDOList.get(0);
+	/*	List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId()+timeString,product);
+		ProductpaperDO productpaperDO = productpaperDOList.get(0);*/
+		 List<ProductpaperDO> productpaperDOList = paperService.getNewProductpaperDO(openid,product);
+		 ProductpaperDO productpaperDO=productpaperDOList.get(0);
 		Map<String,Integer> mapD  = new HashMap<String,Integer>();
 	    Map<String,Integer> mapT = new HashMap<String,Integer>();
 	    DecimalFormat df = new DecimalFormat("0.0");
@@ -324,8 +368,11 @@ public class PaperController {
 		/**
 		 * 计算bmi
 		 */
-		float high = paperService.getSingleJiBenXinxi(request.getSession().getId()+timeString,product, "身高").get(0);
-		float weight =paperService.getSingleJiBenXinxi(request.getSession().getId()+timeString,product, "体重").get(0);
+		
+		CustomerPaperDO udo1 = paperService.getLatestCustomerPaperDO(openid,product);
+		   
+		float high = Float.parseFloat((String) udo1.getHigh());
+		float weight=  Float.parseFloat( udo1.getWeight()+"");  
 		String bmi=  df.format(weight/high/high*10000);
 		model.addAttribute("high",high);
 		model.addAttribute("weight",weight);
@@ -334,8 +381,9 @@ public class PaperController {
 		 * 是否有赘肉
 		 */
 		
-		List<String> str  = paperService.getChoosedContent(request.getSession().getId()+timeString,product,"赘肉");
+		List<String> str  = paperService.getChoosedContent(openid,product,"赘肉");
 			
+		model.addAttribute("openid", openid);
 		model.addAttribute("zhuirou",str.size()>0?str.get(0):"没有赘肉");
 		return "information/baogao-jianfei";
 	}
@@ -346,10 +394,16 @@ public class PaperController {
 	@Log("获取检测的数据")
 	@GetMapping("/getMyReportData")
 	@ResponseBody
-	public Map<String,List<QuestionDO>> getMyReportData(Integer product,HttpServletRequest request){
-		float bmi=  Float.parseFloat((String) request.getSession().getAttribute("bmi"));
+	public Map<String,List<QuestionDO>> getMyReportData(Integer product,HttpServletRequest request,String openid){
+		 DecimalFormat df = new DecimalFormat("0.0");
+		 System.out.println("====openid对不对----==="+openid);
+		CustomerPaperDO udo1 = paperService.getLatestCustomerPaperDO(openid,product);
+		float high = Float.parseFloat((String) udo1.getHigh());
+		float weight=  Float.parseFloat( udo1.getWeight()+"");  
+		float bmi=  Float.parseFloat(df.format(weight/high/high*10000));
 		String timeString= (String)request.getSession().getAttribute("timeString");
-		List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId()+timeString,product);
+		List<ProductpaperDO> productpaperDOList = paperService.getProductpaperDOByOpenId(openid,product);
+		System.out.println("===productpaperDOList======"+productpaperDOList.get(0).getOpenid());
 		ProductpaperDO productpaperDO = productpaperDOList.get(0);
 	    Map<String,List<QuestionDO>> map  = new HashMap<String,List<QuestionDO>>();
 	    if(productpaperDO!=null){
@@ -360,6 +414,7 @@ public class PaperController {
 	    		for(QuestionDO questionDO :list){
 	    			if("YUN_DONG".equals(questionDO.getIfStop()) && bmi<29){
 	    				questionDO.setTiaozheng(questionDO.getChoiceProductDOList().get(0).getTadfs());
+	    				questionDO.getChoiceProductDOList().get(0).setTads(questionDO.getChoiceProductDOList().get(0).getTadss());
 	    				questionDO.getChoiceProductDOList().get(0).setTadreason(questionDO.getChoiceProductDOList().get(0).getTadreasons());
 	    				questionDO.getChoiceProductDOList().get(0).setTadjianyi(questionDO.getChoiceProductDOList().get(0).getTadjianyis());
 	    			}

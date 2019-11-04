@@ -12,7 +12,7 @@
 <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="../js/Font.js"></script>
 </head>
-<body class="bg-cc">
+<body class="bg-cc" >
 	<div class="care">
 		<img class="logo logoImg" src="../images/logo.png" alt=""/>
 		<img class="txtImg" src="../images/fangan.png" alt=""/>
@@ -30,15 +30,27 @@
 		</div> -->
 	</div>	
 	<input type="hidden" id="count" th:value="${count}">
+	<input type="hidden" id="openid" th:value="${openid}">
+	
 </body>
 	<script type="text/javascript">
+	
+	if($("#openid").val()==''){
+		var callback = encodeURIComponent("http://ailaide.jingtu99.com/paper/getReportPage");
+		window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe19dc53508118a28&redirect_uri="+callback+"&response_type=code&scope=snsapi_base#wechat_redirect";
+	} 
+	
+	
+	
 	/**
-	 * 获取所有的方案
+	 * 获取所有的方案 
 	 */
+	 var openid=$("#openid").val();
 	$.ajax({
 		url: "/paper/getAllProduct",
 		type: "GET",
 		async : false,
+		data:{openid:openid},
 		success: function(r){
 			if(r.data!=null){
 				var box="";
@@ -71,23 +83,24 @@
 			 $(this).children("img").attr("src","../images/shoushen-jiance.png"); 
 	});
 	
+	
 	$("body").on("click","input.blue",function(){
 		if($(this).val()=="点击检测"){
 			var product=$(this).parent().find("[name='id']").val();
 			var products=new Array();
 			products.push(product);
 			var countb=$("#count").val();
-			window.setTimeout("window.location.href='/paper/saveChoosedProduct?products="+products+"'",1500);
+			window.setTimeout("window.location.href='/paper/saveChoosedProduct?products="+products+"&openid="+openid+"'",1500);
 		}
 			
 		if($(this).val()=="点击查看"){
 			var product=$(this).parent().find("[name='id']").val();
 			var name=$(this).parent().find("[name='productName']").val();
-			window.location.href="/paper/lookCheckLog?product="+product+"&name="+name;
+			window.location.href="/paper/lookCheckLog?product="+product+"&name="+name+"&openid="+openid;
 		}
 	});
 	
-	$("body").on("click","")
+	
 	</script>
 </html>
 

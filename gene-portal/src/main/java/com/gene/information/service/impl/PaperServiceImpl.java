@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -41,29 +42,27 @@ import com.gene.information.service.PaperService;
 public class PaperServiceImpl implements PaperService{
 
 	@Autowired
-	private PaperDao paperDao;
+	 PaperDao paperDao;
+	 String hightem = "";
+	 String weighttmp = "";
+	 Integer chanpin1 = 0;
+	 Integer chanpin2 = 0;
+	 CustomerPaperDO udo123 = new CustomerPaperDO();
 	/**
 	 * 获取所有的产品
 	 */
 	@Override
-	public Map<String, Object> getAllProduct(HttpServletRequest request) {
-		String timeString= (String)request.getSession().getAttribute("timeString");
+	public Map<String, Object> getAllProduct(String openid) {
 		List<ProductDO> list=paperDao.getAllProduct();
 		for(ProductDO productDO :list){
-			productDO.setIfCheck(0);//未检测
-			ProductpaperDO productpaperDO = new ProductpaperDO();
-			productpaperDO.setUser(request.getSession().getId()+timeString);
-			productpaperDO.setProduct(productDO.getId());
-			List<ProductpaperDO> productpaperDOList = paperDao.listProductPaperDO(productpaperDO);
-			if(productpaperDOList.size()>0){
-				if("0".equals(productpaperDOList.get(0).getStatus()))
-					productDO.setIfCheck(0);//未检测
-				else
+			productDO.setIfCheck(0);//未检测   默认的状态
+			Integer product = productDO.getId();
+			List<ProductpaperDO> productpaperDOList = paperDao.listProductPaperDOByOpenIdAndProduct(openid,product);
+			if(productpaperDOList.size()>0)
 					productDO.setIfCheck(1);//已检测
+			
 			}
-		}
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("code", 0);
 		map.put("msg", "success");
 		map.put("data",list);
 		return map;
@@ -74,10 +73,10 @@ public class PaperServiceImpl implements PaperService{
 	 */
 	@Transactional(propagation=Propagation.REQUIRED)
 	@Override
-	public void saveChoosedProduct(Integer[] products,HttpServletRequest request) {
-		if(request.getSession().getAttribute("productpaper")==null)
+	public void saveChoosedProduct(Integer[] products,HttpServletRequest request,String openid) {
+		/*if(request.getSession().getAttribute("productpaper")==null)
 			request.getSession().setAttribute("productpaper",new ArrayList<Integer>());
-		String timeString= (String)request.getSession().getAttribute("timeString");
+		String timeString= (String)request.getSession().getAttribute("timeString");*/
 	
 		for(int i=0;i<products.length;i++){
 			ProductDO productDO=paperDao.getProductByProductId(products[i]);
@@ -85,20 +84,22 @@ public class PaperServiceImpl implements PaperService{
 				ProductpaperDO productpaperDO=new ProductpaperDO();
 				productpaperDO.setPaper(productDO.getPaperId());
 				productpaperDO.setProduct(products[i]);
-				productpaperDO.setStatus("0");//未答完题
+				productpaperDO.setStatus("0");
 				productpaperDO.setAnswerTime(new Date());
 				productpaperDO.setRemark("用户答题");
-				productpaperDO.setUser(request.getSession().getId()+timeString);
-			    List<ProductpaperDO> listaa = paperDao.getProductPaperDO2(request.getSession().getId()+timeString, products[i]);
-			    if(listaa.size()>0){
-			    	continue;
-			    }
-			    else{
+				productpaperDO.setAnswerStatus(1);//要答题
+			/*	productpaperDO.setUser(request.getSession().getId()+timeString);*/
+				productpaperDO.setOpenid(openid);
+//			    List<ProductpaperDO> listaa = paperDao.getProductPaperDO2(request.getSession().getId()+timeString, products[i]);
+//			    if(listaa.size()>0){
+//			    	continue;
+//			    }
+//			    else{
 			    	paperDao.saveProductPaperDO(productpaperDO);
-			    	List<Integer> list = (List<Integer>) request.getSession().getAttribute("productpaper");
-			    	list.add(productpaperDO.getId());
-			    	request.getSession().setAttribute("productpaper", list);
-			    }
+//			    	List<Integer> list = (List<Integer>) request.getSession().getAttribute("productpaper");
+//			    	list.add(productpaperDO.getId());
+//			    	request.getSession().setAttribute("productpaper", list);
+//			    }
 				
 			}
 		}
@@ -110,6 +111,15 @@ public class PaperServiceImpl implements PaperService{
 		paperDao.updateCustomerPaperDO(customerPaperDO);
 	}
 
+	
+	
+	@Override
+	public CustomerPaperDO getLatestCustomerPaperDO(String openid,Integer product) {
+		return paperDao.getLatestCustomerPaperDO(openid,product);
+		
+	}
+	
+	 
 	/**
 	 * 查询题目
 	 */
@@ -127,9 +137,11 @@ public class PaperServiceImpl implements PaperService{
 	}
 
 	@Override
-	public R saveWenJuan(String objs, HttpServletRequest request) {
+	public R saveWenJuan(String objs, HttpServletRequest request,String openid) {
 		JSONArray jsonArray = JSON.parseArray(objs);
 		String fenleifenlei="";
+		Integer cwid = 0 ;
+		Integer ssid = 0 ;
 		for(int i=0;i<jsonArray.size();i++){
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 			Integer choiceId=jsonObject.getInteger("choiceId");//选项ID
@@ -141,18 +153,59 @@ public class PaperServiceImpl implements PaperService{
 			String contenw=jsonObject.getString("contenw");
 			String ifStop=jsonObject.getString("ifStop");
 			if(contenw!=null){
-				if(contenw.contains("身高")) request.getSession().setAttribute("total", tiankonganswer);
-				if(contenw.contains("体重")) request.getSession().setAttribute("weight",tiankonganswer );
-				if(contenw.contains("姓名")) request.getSession().setAttribute("name",tiankonganswer );
-				if(contenw.contains("手机号")) request.getSession().setAttribute("phone",tiankonganswer );}
-			List<Integer> list=  (List<Integer>) request.getSession().getAttribute("productpaper");
-			for(int j=0;j<list.size();j++){
-				ProductpaperDO productpaperDO2 = paperDao.getProductpaperDO(list.get(j));
+				if(contenw.contains("身高")){
+					hightem = tiankonganswer;
+					udo123.setHigh(tiankonganswer);
+					request.getSession().setAttribute("total", tiankonganswer);
+					System.out.println("hightem======================================="+hightem);
+				} 
+				if(contenw.contains("体重")){
+					weighttmp= tiankonganswer;
+					request.getSession().setAttribute("weight",tiankonganswer );
+					udo123.setWeight(Integer.parseInt(tiankonganswer));
+					System.out.println("weighttmp======================================="+weighttmp);
+				} 
+				if(contenw.contains("姓名")){
+					request.getSession().setAttribute("name",tiankonganswer );
+					udo123.setUsername(tiankonganswer);
+					System.out.println("姓名======================================="+tiankonganswer);
+				} 
+				} 
+			udo123.setOpenid(openid);
+			
+			System.out.println("openid======================================="+openid);
+			/*List<Integer> list=  ( List<Integer>) request.getSession().getAttribute("productpaper");*/
+			List<ProductpaperDO> productpaperDOList = paperDao.getProductpaperDOByOpenId(openid);
+			List<ProductpaperDO> productpaperDOListTmp = new  ArrayList<ProductpaperDO>();
+			System.out.println("idiididid====="+productpaperDOList.get(0).getId());
+			if(productpaperDOList.size()>1){
+				if(productpaperDOList.get(0).getProduct() == productpaperDOList.get(1).getProduct()){
+					productpaperDOListTmp.add(productpaperDOList.get(0));
+						cwid = productpaperDOList.get(0).getId();
+						chanpin1=productpaperDOList.get(0).getProduct();
+				}else{
+					if(	productpaperDOList.get(0).getId()-productpaperDOList.get(1).getId() > 1){
+						productpaperDOListTmp.add(productpaperDOList.get(0));
+						cwid = productpaperDOList.get(0).getId();
+						chanpin1=productpaperDOList.get(0).getProduct();
+					}else{
+						productpaperDOListTmp.add(productpaperDOList.get(0));
+						productpaperDOListTmp.add(productpaperDOList.get(1));	
+							cwid = productpaperDOList.get(0).getId();
+							ssid = productpaperDOList.get(1).getId();
+							chanpin1=productpaperDOList.get(0).getProduct();
+							chanpin2=productpaperDOList.get(1).getProduct();
+					}
+					
+				}
+			}
+			for(ProductpaperDO productpaperDO2 :productpaperDOListTmp){
 				ChoiceProductDO choiceProductDO2 = paperDao.getChoiceProductDO(productpaperDO2.getProduct(), choiceId);
 				if(choiceProductDO2!=null && choiceProductDO2.getScore()==null && !"JIBEN_XINXI".equals(fenlei))
 					continue;
 				AnswerDO answerDO = new AnswerDO();
-				answerDO.setProductpaper(list.get(j));//记录的ID
+				System.out.println("记录id======"+productpaperDO2.getId());
+				answerDO.setProductpaper(productpaperDO2.getId());//记录的ID
 				
 				answerDO.setChoiceId(choiceId);//选项ID
 				answerDO.setCustomerPaperId(customerPaperId);//问卷ID
@@ -164,11 +217,10 @@ public class PaperServiceImpl implements PaperService{
 				if(productpaperDO!=null && !"JIBEN_XINXI".equals(fenlei)){
 					Integer product = productpaperDO.getProduct();
 					ChoiceProductDO choiceProductDO = paperDao.getChoiceProductDO(product,answerDO.getChoiceId());
-					float high = Float.parseFloat((String) request.getSession().getAttribute("total"));
-					float weight=  Float.parseFloat((String) request.getSession().getAttribute("weight"));
+					float high = Float.parseFloat((String) hightem);
+					float weight=  Float.parseFloat((String) weighttmp);
 					DecimalFormat df = new DecimalFormat("0.0");
 					String bmi=  df.format(weight/high/high*10000);
-					request.getSession().setAttribute("bmi", bmi);
 					if(choiceProductDO!=null){
 						if("YUN_DONG".equals(ifStop)){
 							if(Float.parseFloat(bmi)<29)
@@ -182,13 +234,35 @@ public class PaperServiceImpl implements PaperService{
 					}
 				}
 				/***************以下的代码有点垃圾，执行效率慢，时间紧张，有空的时候优化下*****/
+			
 				paperDao.saveAnswerDO(answerDO);
 			}
 		}
-		List<Integer> list=  (List<Integer>) request.getSession().getAttribute("productpaper");
+	/*	List<Integer> list=  (List<Integer>) request.getSession().getAttribute("productpaper");
 		for(int j=0;j<list.size();j++){
 			if(!"JIBEN_XINXI".equals(fenleifenlei)){
 				paperDao.updateproductpaperDOStstus(list.get(j));
+			}	
+		}*/
+		
+		if(!"JIBEN_XINXI".equals(fenleifenlei)){
+			
+			paperDao.updateproductpaperDOStstus(cwid);
+			if(ssid>0){
+				paperDao.updateproductpaperDOStstus(ssid);
+			}
+			
+		}
+		if("JIBEN_XINXI".equals(fenleifenlei)){
+			
+
+			if(chanpin1>0){
+				udo123.setAge(chanpin1);
+				 paperDao.saveCustomerPaperDO(udo123);
+			}
+			if(chanpin2>0){
+				udo123.setAge(chanpin2);
+				 paperDao.saveCustomerPaperDO(udo123);
 			}	
 		}
 		return R.ok();
@@ -198,8 +272,12 @@ public class PaperServiceImpl implements PaperService{
 	public List<ProductpaperDO> getProductPaperDO2(String user, Integer product) {
 		return paperDao.getProductPaperDO2(user,product);
 	}
-
 	
+
+	@Override
+	public List<ProductpaperDO> getProductpaperDOByOpenId(String openid, Integer product) {
+		return paperDao.getProductPaperDObyOpenid(openid,product);
+	}
 
 	@Override
 	public List<QuestionDO> getQuestionDOList(Integer productpaper, String fenlei) {
@@ -301,4 +379,14 @@ public class PaperServiceImpl implements PaperService{
 	public List<String> getChoosedContent(String id, Integer product, String string) {
 		return paperDao.getChoosedContent(id,product,string);
 	}
+
+	/**
+	 *根据openid和产品去拿最新的检测结果
+	 */
+	@Override
+	public List<ProductpaperDO> getNewProductpaperDO(String openid, Integer product) {
+		return paperDao.getNewProductpaperDO(openid,product);
+	}
+
+	
 }

@@ -57,7 +57,7 @@
 	
 	<input id="count" th:value="${count}" type="hidden">
 	<input id="index" th:value="${index}" type="hidden">
-	
+	<input id="openid" th:value="${openid}" type="hidden">
 </body>
 
 <script type="text/javascript">
@@ -119,14 +119,15 @@
 			 $(".baifen").prev().val(baifen); */
 		
 		if(!flag){console.info(arry);
+		var openid=$("#openid").val();
 			$.ajax({
 				type : "POST",
 				url : "/paper/saveWenJuan",
-				data : {objs:JSON.stringify(arry)},// 你的formid
+				data : {objs:JSON.stringify(arry),openid:openid},// 你的formid
 				async : false,
 				success : function(data) {
 					if(data.code==0)
-						window.location.href="/paper/beginAnswer?flag=2&index="+index+"&count="+countb;
+						window.location.href="/paper/beginAnswer?flag=2&index="+index+"&count="+countb+"&openid="+openid ;
 					else
 						alert(data.msg);
 				}

@@ -20,10 +20,11 @@
 		<span class="space">*问卷与方案以《中国居民膳食指南》为基础。</span>
 	</div>
 	<input class="btn" type="button" value="开始答题"/>
-	
+	<input type="hidden" id="openid" th:value="${openid}">
 	<script type="text/javascript">
+		var openid=$("#openid").val();
 		$(":button").click(function(){
-			window.location.href="/paper/beginAnswer?flag=0"
+			window.location.href="/paper/beginAnswer?flag=0&openid="+openid;
 		})
 	</script>
 </body>

@@ -16,9 +16,9 @@ public interface PaperService {
     /**
      * 获取所有的产品
      */
-	Map<String, Object> getAllProduct(HttpServletRequest request);
+	Map<String, Object> getAllProduct(String openid);
 
-	void saveChoosedProduct(Integer[] products,HttpServletRequest request);
+	void saveChoosedProduct(Integer[] products,HttpServletRequest request,String openid);
     /**
      * 保存用户的基本信息
      */
@@ -31,15 +31,16 @@ public interface PaperService {
 	/**
 	 *保存问卷答题
 	 */
-	R saveWenJuan(String objs, HttpServletRequest request);
+	R saveWenJuan(String objs, HttpServletRequest request,String openid);
 
 	/**
 	 *获取记录
 	 */
 	List<ProductpaperDO> getProductPaperDO2(String user, Integer product);
 	
+	List<ProductpaperDO> getProductpaperDOByOpenId(String openid, Integer product);
 	
-	
+	CustomerPaperDO getLatestCustomerPaperDO(String openid,Integer product);
 
 	List<QuestionDO> getQuestionDOList(Integer productpaper, String fenlei);
 	/**
@@ -59,4 +60,9 @@ public interface PaperService {
 	 */
 	List<String> getChoosedContent(String id, Integer product, String string);
 
+	/**根据openid和产品去拿最新的检测结果
+	 */
+	List<ProductpaperDO> getNewProductpaperDO(String openid, Integer product);
+
+	
 }
