@@ -68,8 +68,12 @@ public class CustomerPaperDO implements Serializable {
 	private String content;
 	private String tiankonganswer;
 	private String userId;
-	
-	
+	//产品名称
+	private String productName;
+	//问卷名称
+	private String paperName;
+	//是否完成  0=未完成   1=已完成
+	private Integer answersStatus;
 	
 	public String getContent() {
 		return content;
@@ -364,5 +368,17 @@ public class CustomerPaperDO implements Serializable {
 	 */
 	public String getAddress() {
 		return address;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public String getPaperName() {
+		return paperName;
+	}
+	public void setPaperName(String paperName) {
+		this.paperName = paperName;
 	}
 }

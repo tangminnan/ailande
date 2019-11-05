@@ -1,11 +1,11 @@
 
 var prefix = "/information/customerPaper"
 $(function() {
-	//load();
-	load2();
+	load();
+//	load2();
 });
 
-function load2() {
+/*function load2() {
     $('#exampleTable').bootstrapTable({
         ajax: function (request) {
             $.ajax({
@@ -17,10 +17,10 @@ function load2() {
                 success: function (json) {
                 	console.info(json);
                     var dynamicHeader = [];
-                    /*dynamicHeader.push({
+                    dynamicHeader.push({
                         field: "state",
                         check: true
-                    });*/
+                    });
 
                     for (var i = 0; i<(Object.keys(json[0])).length; i++) {
                         var property = (Object.keys(json[0]))[i];
@@ -81,9 +81,9 @@ function load2() {
         }
     });
 }
+*/
 
-
-/*function load() {
+function load() {
 	$('#exampleTable')
 			.bootstrapTable(
 					{
@@ -126,15 +126,15 @@ function load2() {
 								{
 									checkbox : true
 								},
-																{
+																/*{
 									field : 'code', 
 									title : '检测码' 
-								},
+								},*/
 								
-																{
+																/*{
 									field : 'id', 
 									title : '客户ID' 
-								},
+								},*/
 																{
 									field : 'username', 
 									title : '姓名' 
@@ -145,15 +145,7 @@ function load2() {
 								},
 																{
 									field : 'sex', 
-									title : '性别' ,
-									formatter : function(value, row, index) {
-									    if(value == '1'){
-									    	return '<span class="label">男</span>';
-									    }else if(value == '2'){
-									    	return '<span class="label">女</span>';
-									    	
-									    }
-									}	
+									title : '性别' 
 								},
 																{
 									field : 'weight', 
@@ -163,63 +155,73 @@ function load2() {
 									field : 'age', 
 									title : '年龄' 
 								},
-																{
+																/*{
 									field : 'status', 
 									title : '状态（0未完成 1已完成）' 
-								},
-																{
+								},*/
+																/*{
 									field : 'createBy', 
 									title : '创建者' 
-								},
+								},*/
 																{
 									field : 'createTime', 
-									title : '创建时间' 
+									title : '检测时间' 
 								},
-																{
+								/*{
+									field : 'createTime', 
+									title : '是否完成' ,
+									formatter : function(value, row, index) {
+										if(value==0)
+											return "未完成";
+										if(value==1)
+											return "已完成";
+									}
+								},*/
+																/*{
 									field : 'updateBy', 
 									title : '更新者' 
-								},
-																{
+								},*/
+																/*{
 									field : 'updateTime', 
 									title : '更新时间' 
-								},
-																{
+								},*/
+																/*{
 									field : 'remark', 
 									title : '备注' 
-								},
-																{
+								},*/
+																/*{
 									field : 'delFlag', 
 									title : '删除标志（0代表存在 2代表删除）' 
-								},
+								},*/
 																{
-									field : 'productId', 
-									title : '产品ID' 
+									field : 'productName', 
+									title : '产品名称' 
 								},
-																{
+															/*	{
 									field : 'paperId', 
 									title : '问卷ID' 
-								},
-																{
+								},*/
+																/*{
 									field : 'source', 
 									title : '渠道来源' 
-								},
-																{
+								},*/
+																/*{
 									field : 'bmi', 
 									title : 'BMI' 
-								},
+								},*/
 																{
 									field : 'phone', 
 									title : '联系方式' 
-								},
-																{
+								}
+																/*{
 									field : 'email', 
 									title : '邮箱' 
-								},
-																{
+								},*/
+																/*{
 									field : 'address', 
 									title : '地址' 
-								},
-																{
+								},*/
+																/*{
 									title : '操作',
 									field : 'id',
 									align : 'center',
@@ -235,9 +237,9 @@ function load2() {
 												+ '\')"><i class="fa fa-key"></i></a> ';
 										return e + d + f;
 									}
-								} ]
+								}*/ ]
 					});
-}*/
+}
 function reLoad() {
 	$('#exampleTable').bootstrapTable('refresh');
 }
