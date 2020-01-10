@@ -18,8 +18,8 @@ import com.alibaba.fastjson.JSONObject;
 
 public class WechatOAConfig {
 
-	public static final String APP_ID = "wxe23f18d7b8947aa6";
-	public static final String secret = "889ef7319d78c271e75b8d858bb2b5f1";
+	public static final String APP_ID = "wx97f1fcb270792eeb";
+	public static final String secret = "11caa9c520890dee540be6c636989c48";
     public static final String BQEGIN_ANSWER= "http://ailaide.jingtu99.com/paper/index";
     public static final String READ_REPORT = "http://ailaide.jingtu99.com/paper/getReportPage";
 		
@@ -29,7 +29,7 @@ public class WechatOAConfig {
 	public static String getAccessToken(String code) throws Exception {
 		String openid = "";
 		String url = "https://api.weixin.qq.com/sns/oauth2/access_token";
-		String para = "appid=wxe19dc53508118a28&secret=a435980bbe9c7731dda0dee1cf21ab9c&code="+code+"&grant_type=authorization_code";
+		String para = "appid=wx97f1fcb270792eeb&secret=11caa9c520890dee540be6c636989c48&code="+code+"&grant_type=authorization_code";
 		String res = sendGet(url, para);
 		Map<String, String> map = new HashMap<String, String>();
 		map=JSON.parseObject(res, Map.class);
