@@ -376,4 +376,28 @@ FROM
 		select  id,paper,product,user  from qu_product_paper  where  answer_time=(select max(answer_time) from qu_product_paper where product=#{product} and openid=#{openid}
 		and answer_status=1) and product=#{product} and openid=#{openid}
 	</select>
+	
+	<select id="getLatestProductpaperDO" resultType="com.gene.information.domain.ProductpaperDO">
+						SELECT
+	id,
+	paper,
+	product,
+answer_time,
+openid
+	
+FROM
+	qu_product_paper
+WHERE
+	answer_time = (
+		SELECT
+			max(answer_time)
+		FROM
+			qu_product_paper
+		WHERE
+			openid = #{openid}
+		
+	)
+AND answer_status = 0
+AND openid = #{openid}
+	</select>
 </mapper>
