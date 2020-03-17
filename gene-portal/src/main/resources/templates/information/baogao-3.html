@@ -27,7 +27,7 @@
 			<ul class="xianZ">
 				<li>不大好</li>
 				<li>一般般</li>
-				<li>很舒服</li>
+				<li>比较好</li>
 			</ul>
 			<a id="test">查看详情</a>
 		</div>
@@ -38,9 +38,9 @@
 			<a id="ccc">查看详情</a>
 		</div>
 		
-		<div class="boxes">
-			<h3>您的饮食和营养补充指导</h3>
-			<ul class="zhidao">
+		 <div class="boxes">
+			<p style="font-size: .30rem;">您的肠道现状比较理想，作为日常保养，可以选择以下补充剂</p>
+			<!-- <ul class="zhidao">
 				<li>
 					<img src="../images/yinshi.png" alt=""/>
 					<input type="button" value="> 饮食原则"/>
@@ -49,9 +49,32 @@
 					<img src="../images/buchongji.png" alt=""/>
 					<input type="button" value="> 补充剂方案"/>
 				</li>
-			</ul>
+			</ul> -->
 		</div>
-		
+		<!-- 营养补充剂方案 -->
+		<div class="zhanbi space center">补充剂方案</div>
+			<p class="yuanze space">综合评估您的饮食生活习惯、肠胃健康现状、环境污染、食物中营养素流失等因素，营养专家为您推荐以下补充剂方案。</p>
+			<div class="jieshao"><img src="../images/jieshao.png" alt=""/></div>
+			<p class="jianyi center jjjdddd"><span>建议您补充3种补充剂</span></p>
+			<!-- <div class="jyiBox">
+				<img class="jsBg" src="../images/goumai.png" alt=""/>
+				<p class="name space"><span>速七活力益生菌胶囊</span>200亿以上活菌，<br/>Lab4专利菌群配方，<br/>快速改善腹泻便秘。</p>
+				<img class="yaoM" src="../images/lei1.png" alt=""/>
+				<input type="button" value="点击购买" onclick="goumai('https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=66585330179')"/>
+			</div>
+			<div class="jyiBox">
+				<img class="jsBg" src="../images/goumai.png" alt=""/>
+				<p class="name space"><span>榆树养胃胶囊</span>修复胃粘膜，提高胃动力，调理消化酶分泌，改善消化不良引起的胃痛胃胀。</p>
+				<img class="yaoM" src="../images/lei2.png" alt=""/>
+				<input type="button" value="点击购买" onclick="goumai('https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843270179')"/>
+			</div>
+			<div class="jyiBox">
+				<img class="jsBg" src="../images/goumai.png" alt=""/>
+				<p class="name space"><span>安益胶囊</span>修复肠粘膜，温和调理肠胃菌群，改善消化不良引起的腹痛腹胀。</p>
+				<img class="yaoM" src="../images/lei3.png" alt=""/>
+				<input type="button" value="点击购买" onclick="goumai('https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843200179')"/>
+			</div> -->
+			<p class="jianyi center swsws"><span>您还可以选择</span></p>
 	</div>
 	</div>
 	
@@ -105,7 +128,7 @@
 			<div class="zhanbi space center" id="buchongjifangantiaozhuan">补充剂方案</div>
 			<p class="yuanze space">综合评估您的饮食生活习惯、肠胃健康现状、环境污染、食物中营养素流失等因素，营养专家为您推荐以下补充剂方案。</p>
 			<div class="jieshao"><img src="../images/jieshao.png" alt=""/></div>
-			<p class="jianyi center" id="jjjdddd"><span>建议您补充3种补充剂</span></p>
+			<p class="jianyi center jjjdddd"><span>建议您补充3种补充剂</span></p>
 			<!-- <div class="jyiBox">
 				<img class="jsBg" src="../images/goumai.png" alt=""/>
 				<p class="name space"><span>速七活力益生菌胶囊</span>200亿以上活菌，<br/>Lab4专利菌群配方，<br/>快速改善腹泻便秘。</p>
@@ -124,7 +147,7 @@
 				<img class="yaoM" src="../images/lei3.png" alt=""/>
 				<input type="button" value="点击购买" onclick="goumai('https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843200179')"/>
 			</div> -->
-			<p class="jianyi center" id="swsws"><span>您还可以选择</span></p>
+			<p class="jianyi center swsws"><span>您还可以选择</span></p>
 			<!-- <div class="jyiBox">
 				<img class="jsBg" src="../images/goumai.png" alt=""/>
 				<p class="name space"><span>低聚果糖益生元粉</span>益生元，帮助肠道有益菌增长，促进肠蠕动，改善便秘腹泻。</p>
@@ -154,7 +177,7 @@
 	<script type="text/javascript">
 	
 	var fenshua  = $("#shenti80").val();
-	if(fenshua>=80) { $("ul.xianZ li:nth-child(3)").addClass("on"); $(".ppyuyy23").text("很舒服");}
+	if(fenshua>=80) { $("ul.xianZ li:nth-child(3)").addClass("on"); $(".ppyuyy23").text("比较好");}
 	if(fenshua<80 && fenshua>=60) { $("ul.xianZ li:nth-child(2)").addClass("on");$(".ppyuyy23").text("一般般");}
 	if(fenshua<60) {$("ul.xianZ li:nth-child(1)").addClass("on");$(".ppyuyy23").text("不大好");}
 	
@@ -342,7 +365,7 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
  
  //判断每日活力益生菌
  
-  var manzu={};
+ var manzu={};
  jianyibuchong=["便便形状：香蕉型","排便频率：1-3次/天","便便形状：成型软便"]
  for(var i=0;i< paibianpinlvxingzhuang.length;i++){
 	 var l = paibianpinlvxingzhuang[i];
@@ -361,10 +384,8 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
 	 tuijianarry.push(obj);
  }
  
- //判断低聚果糖益生元粉
- 
- 															   
- var jianyibuchong=["排便频率: 有便秘倾向","排便频率：大于3次/天","蔬菜摄入量：平均小于1拳/天","蔬菜摄入量：平均1-3拳/天","水果摄入量：平均小于1拳/天","粗粮摄入量：平均小于0.5拳头/天"];
+ //判断低聚果糖益生元粉											  									       
+ var jianyibuchong=["排便频率: 有便秘倾向","排便频率：大于3次/天","蔬菜摄入量：平均小于1拳/天","蔬菜摄入量：平均1-3拳/天","新鲜水果摄入量：平均小于1拳头/天","粗粮摄入量：平均小于0.5拳头/天"];
  for(var i=0;i< paibianpinlvshucaishuiguoculiang.length;i++){//console.info(paibianpinlvshucaishuiguoculiang[i]);
 	 var l = paibianpinlvshucaishuiguoculiang[i];
 	 for(var j=0;j<jianyibuchong.length;j++){
@@ -376,16 +397,33 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
 	 if(flag==true)
 		 break;
  }
- if(flag==true){
+  if(flag==true){
 	 flag=false;
 	 var obj={'title':'低聚果糖益生元粉','images':'../images/JF-dijuguotang.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843200179'};
 	 tuijianarry.push(obj);
  }
  
- //判断榆树养胃胶囊
- var jianyibuchong=["腹胀、腹痛、反酸：经常有","胃肠道疾病史：有"];
- for(var i=0;i< paibianpinlvshucaishuiguoculiang.length;i++){
+ 
+//您还可以选择   低聚果糖益生元粉
+  var shengxiade=[];
+  for(var i=0;i< paibianpinlvshucaishuiguoculiang.length;i++){
 	 var l = paibianpinlvshucaishuiguoculiang[i];
+	 for(var j=0;j<jianyibuchong.length;j++){
+		 if(l==jianyibuchong[j]){
+			 shengxiade.push(l);
+		 }
+	 }
+}
+if(shengxiade.length==0 && paibianpinlvshucaishuiguoculiang.length>0){
+//	 var obj={'title':'安益胶囊','images':'../images/JF-anyijiaonang.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59844980179'};
+	  var obj={'title':'低聚果糖益生元粉','images':'../images/JF-dijuguotang.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843200179'};
+	 haikexuanze.push(obj);
+}
+ 
+ //Permatrol®肠胃安益胶囊     Polyzyme Forte®复合消化酶胶囊
+ var jianyibuchong=["腹痛腹胀：经常有","疾病史：有"];
+ for(var i=0;i< futongfuzhangfansuanwixhangjibbing.length;i++){
+	 var l = futongfuzhangfansuanwixhangjibbing[i];
 	 for(var j=0;j<jianyibuchong.length;j++){
 		 if(l==jianyibuchong[j]){
 			 flag=true;
@@ -395,12 +433,14 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
  }
  if(flag==true){
 	 flag=false;
-	 var obj={'title':'榆树养胃胶囊','images':'../images/JF-yushuyangwei.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59842960179'};
+	 var obj={'title':'Permatrol®肠胃安益胶囊','images':'../images/Permatrol®.jpg','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59844980179'};
+	 tuijianarry.push(obj);
+	 var obj={'title':'Polyzyme Forte®复合消化酶胶囊','images':'../images/Polyzyme Forte®.jpg','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202278530179'};
 	 tuijianarry.push(obj);
  }
  
  //您还可以选择   安益胶囊
- for(var i=0;i< paibianpinlvshucaishuiguoculiang.length;i++){
+ /* for(var i=0;i< paibianpinlvshucaishuiguoculiang.length;i++){
 	 var l = paibianpinlvshucaishuiguoculiang[i];
 	 for(var j=0;j<jianyibuchong.length;j++){
 		 if(l==jianyibuchong[j]){
@@ -413,22 +453,29 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
 if(paibianpinlvshucaishuiguoculiang.length>=0){
 	 var obj={'title':'安益胶囊','images':'../images/JF-anyijiaonang.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59844980179'};
 	 haikexuanze.push(obj);
+} */
+
+if(tuijianarry.length==0){//默认
+	 var obj={'title':'速七活力益生菌胶囊','images':'../images/JF-suqihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=66585330179'};
+	 tuijianarry.push(obj);
 }
 
-
-$("#jjjdddd").children("span").text("建议您补充"+ tuijianarry.length+"种补充剂");
+$(".jjjdddd").children("span").text("建议您补充"+ tuijianarry.length+"种补充剂");
 var div='';
 for(var i=0;i< tuijianarry.length;i++){
 	 div+= '<div class="ulBox"><a href="'+tuijianarry[i].url+'"><img  class="jsBg" src="'+tuijianarry[i].images+'" alt=""/></a></div>'
 }         
-$("#jjjdddd").after(div);
+$(".jjjdddd").after(div);
 
-div='';
-for(var i=0;i<haikexuanze.length;i++){
-	div+= '<div class="ulBox"><a href="'+haikexuanze[i].url+'"><img class="jsBg"  src="'+haikexuanze[i].images+'" alt=""/></a></div>'
-}
-
-$("#swsws").after(div);
+	if(haikexuanze.length==0){
+		$(".swsws").hide();
+	}else{
+		div='';
+		for(var i=0;i<haikexuanze.length;i++){
+			div+= '<div class="ulBox"><a href="'+haikexuanze[i].url+'"><img class="jsBg"  src="'+haikexuanze[i].images+'" alt=""/></a></div>'
+		}
+		$(".swsws").after(div);
+	}
  /***************产品推荐逻辑*******************/
 </script>
 </body>
