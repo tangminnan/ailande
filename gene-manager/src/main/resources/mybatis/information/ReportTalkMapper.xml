@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gene.information.dao.ReportTalkDao">
+
+	<select id="get" resultType="com.gene.information.domain.ReportTalkDO">
+		select `id`,`talk_name`,`score_big`,`score_little`,`talk_content`,`add_time`,`update_time`,`status`,`talk_type` from sys_report_talk where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.gene.information.domain.ReportTalkDO">
+		select `id`,`talk_name`,`score_big`,`score_little`,`talk_content`,`add_time`,`update_time`,`status`,`talk_type` from sys_report_talk
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="talkName != null and talkName != ''"> and talk_name = #{talkName} </if>
+		  		  <if test="scoreBig != null and scoreBig != ''"> and score_big = #{scoreBig} </if>
+		  		  <if test="scoreLittle != null and scoreLittle != ''"> and score_little = #{scoreLittle} </if>
+		  		  <if test="talkContent != null and talkContent != ''"> and talk_content = #{talkContent} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="talkType != null and talkType != ''"> and talk_type = #{talkType} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from sys_report_talk
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="talkName != null and talkName != ''"> and talk_name = #{talkName} </if>
+		  		  <if test="scoreBig != null and scoreBig != ''"> and score_big = #{scoreBig} </if>
+		  		  <if test="scoreLittle != null and scoreLittle != ''"> and score_little = #{scoreLittle} </if>
+		  		  <if test="talkContent != null and talkContent != ''"> and talk_content = #{talkContent} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="talkType != null and talkType != ''"> and talk_type = #{talkType} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.gene.information.domain.ReportTalkDO" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_report_talk
+		(
+			`talk_name`, 
+			`score_big`, 
+			`score_little`, 
+			`talk_content`, 
+			`add_time`, 
+			`update_time`, 
+			`status`, 
+			`talk_type`
+		)
+		values
+		(
+			#{talkName}, 
+			#{scoreBig}, 
+			#{scoreLittle}, 
+			#{talkContent}, 
+			#{addTime}, 
+			#{updateTime}, 
+			#{status}, 
+			#{talkType}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.gene.information.domain.ReportTalkDO">
+		update sys_report_talk 
+		<set>
+			<if test="talkName != null">`talk_name` = #{talkName}, </if>
+			<if test="scoreBig != null">`score_big` = #{scoreBig}, </if>
+			<if test="scoreLittle != null">`score_little` = #{scoreLittle}, </if>
+			<if test="talkContent != null">`talk_content` = #{talkContent}, </if>
+			<if test="addTime != null">`add_time` = #{addTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="talkType != null">`talk_type` = #{talkType}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from sys_report_talk where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from sys_report_talk where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

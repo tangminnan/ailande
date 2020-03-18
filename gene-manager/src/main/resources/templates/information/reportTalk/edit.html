@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<input id="id" name="id" th:value="${reportTalk.id}"
+								type="hidden">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">话术名称：</label>
+								<div class="col-sm-8">
+									<input id="talkName" name="talkName"
+										th:value="${reportTalk.talkName}" class="form-control"
+										type="text" readonly="readonly">
+								</div>
+							</div>
+							<!-- <div class="form-group">
+								<label class="col-sm-3 control-label">较大的范围数：</label>
+								<div class="col-sm-8">
+									<input id="scoreBig" name="scoreBig"
+										th:value="${reportTalk.scoreBig}" class="form-control"
+										type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">较小的范围数：</label>
+								<div class="col-sm-8">
+									<input id="scoreLittle" name="scoreLittle"
+										th:value="${reportTalk.scoreLittle}" class="form-control"
+										type="text">
+								</div>
+							</div> -->
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label">饮食生活习惯得分：</label>
+								<div class="col-sm-2">
+									<input id="scoreLittle" name="scoreLittle"
+										th:value="${reportTalk.scoreLittle}" class="form-control"
+										type="text">
+								</div>
+								<label class="col-sm-1" style="width:2.8%;">---</label>
+								<div class="col-sm-2">
+									<input id="scoreBig" name="scoreBig"
+										th:value="${reportTalk.scoreBig}" class="form-control"
+										type="text">
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label">话术内容：</label>
+								<div class="col-sm-8">
+									<!-- <input id="talkContent" name="talkContent"
+										th:value="${reportTalk.talkContent}" class="form-control"
+										type="text"> -->
+									<textarea rows="6" cols="200" id="talkContent" name="talkContent"
+										th:text="${reportTalk.talkContent}" class="form-control"></textarea>
+								</div>
+							</div>
+							<!-- <div class="form-group">
+								<label class="col-sm-3 control-label">添加时间：</label>
+								<div class="col-sm-8">
+									<input id="addTime" name="addTime"
+										th:value="${reportTalk.addTime}" class="form-control"
+										type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">更新时间：</label>
+								<div class="col-sm-8">
+									<input id="updateTime" name="updateTime"
+										th:value="${reportTalk.updateTime}" class="form-control"
+										type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">状态（1正常2禁止）：</label>
+								<div class="col-sm-8">
+									<input id="status" name="status"
+										th:value="${reportTalk.status}" class="form-control"
+										type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">话术类型（肠胃--CHANGWEI，，体型--TIXING）：</label>
+								<div class="col-sm-8">
+									<input id="talkType" name="talkType"
+										th:value="${reportTalk.talkType}" class="form-control"
+										type="text">
+								</div>
+							</div> -->
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript"
+		src="/js/appjs/information/reportTalk/edit.js">
+		
+	</script>
+</body>
+</html>
