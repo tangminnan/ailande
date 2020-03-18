@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,7 +57,7 @@ public class PaperController {
 		System.out.println("回调执行");
 		System.out.println("回调执行");
 		String code = request.getParameter("code");
-    	String openid = "";
+    	String openid = "o85JHw-iXn1_uxz7SgHxdJQf30LU";//暂定写死，之前是空字符串
     	if(StringUtils.isNotBlank(code)){
     		try {
 				openid = WechatOAConfig.getAccessToken(code);
@@ -155,7 +156,14 @@ public class PaperController {
 							 String openid,
 							 Model model,
 							 HttpServletRequest request){
-		Integer[] products = (Integer[])request.getSession().getAttribute("products");
+		List<ProductpaperDO> lp = paperService.getLatestProductpaperDO(openid);
+		List<Integer> l = lp.stream().map(ProductpaperDO::getProduct).collect(Collectors.toList());
+		Integer[] products=new Integer[l.size()];
+		l.toArray(products);
+		System.out.println("选择的产品============="+Arrays.toString(products));
+		System.out.println("选择的产品============="+Arrays.toString(products));
+		System.out.println("选择的产品============="+Arrays.toString(products));
+//		Integer[] products = (Integer[])request.getSession().getAttribute("products");
 		model.addAttribute("openid",openid);
 		if(count==null){
 			 count = paperService.getgetQuestionDOSize(products);
@@ -200,7 +208,7 @@ public class PaperController {
 	public String getReportPage(HttpServletRequest request,HttpServletResponse response,Model model){
 		
 		String code = request.getParameter("code");
-    	String openid = "";
+    	String openid = "o85JHw-iXn1_uxz7SgHxdJQf30LU";//暂定写死，之前是空字符串
     	if(StringUtils.isNotBlank(code)){
     		try {
 				openid = WechatOAConfig.getAccessToken(code);
@@ -491,7 +499,7 @@ public class PaperController {
     @Log("微信授权登录")
     @GetMapping("/weChatLogin")
     public void wx_denglu(HttpServletRequest request, HttpServletResponse response){
-		String url = urlEncodeUTF8("http://ailaide.jingtu99.com/weCahtCallBack"); //回调页面的路径
+		String url = urlEncodeUTF8("http://wenjuan.biocareuk.com/weCahtCallBack"); //回调页面的路径
     	try {
     			String uri = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+WechatOAConfig.APP_ID+"&redirect_uri="+url+"&response_type=code&scope=snsapi_base#wechat_redirect";
     			response.sendRedirect(uri);

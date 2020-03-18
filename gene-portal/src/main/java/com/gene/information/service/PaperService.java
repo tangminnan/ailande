@@ -65,6 +65,10 @@ public interface PaperService {
 	List<ProductpaperDO> getNewProductpaperDO(String openid, Integer product);
 
 	R saveCustomerPaperDO(CustomerPaperDO customerPaperDO);
+	/**
+	 * 获取最新选择的产品
+	 */
+	List<ProductpaperDO> getLatestProductpaperDO(String openid);
 
 	
 }

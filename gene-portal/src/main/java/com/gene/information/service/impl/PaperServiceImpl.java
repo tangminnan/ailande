@@ -78,7 +78,7 @@ public class PaperServiceImpl implements PaperService{
 		/*if(request.getSession().getAttribute("productpaper")==null)
 			request.getSession().setAttribute("productpaper",new ArrayList<Integer>());
 		String timeString= (String)request.getSession().getAttribute("timeString");*/
-	
+		Date date = new Date();	
 		for(int i=0;i<products.length;i++){
 			ProductDO productDO=paperDao.getProductByProductId(products[i]);
 			if(productDO!=null){
@@ -86,7 +86,7 @@ public class PaperServiceImpl implements PaperService{
 				productpaperDO.setPaper(productDO.getPaperId());
 				productpaperDO.setProduct(products[i]);
 				productpaperDO.setStatus("0");
-				productpaperDO.setAnswerTime(new Date());
+				productpaperDO.setAnswerTime(date);
 				productpaperDO.setRemark("用户答题");
 				productpaperDO.setAnswerStatus(1);//要答题
 			/*	productpaperDO.setUser(request.getSession().getId()+timeString);*/
@@ -384,6 +384,13 @@ public class PaperServiceImpl implements PaperService{
 		}
 			
 		return R.error();
+	}
+	/**
+	 * 获取最新选择的产品
+	 */
+	@Override
+	public List<ProductpaperDO> getLatestProductpaperDO(String openid) {
+		return paperDao.getLatestProductpaperDO(openid);
 	}
 
 	
