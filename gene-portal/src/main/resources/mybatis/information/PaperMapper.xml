@@ -411,4 +411,31 @@ AND openid = #{openid}
 	<update id="updateProductPaper" parameterType="com.gene.information.domain.ProductpaperDO">
 		update qu_product_paper set user=#{user} where id=#{id}
 	</update>
+	
+	<!-- 报告话术 -->
+	<select id="listReportTalk" resultType="com.gene.information.domain.ReportTalkDO">
+		select `id`,`talk_name`,`score_big`,`score_little`,`talk_content`,`add_time`,`update_time`,`status`,`talk_type` from sys_report_talk
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="talkName != null and talkName != ''"> and talk_name = #{talkName} </if>
+		  		  <if test="scoreBig != null and scoreBig != ''"> and score_big = #{scoreBig} </if>
+		  		  <if test="scoreLittle != null and scoreLittle != ''"> and score_little = #{scoreLittle} </if>
+		  		  <if test="talkContent != null and talkContent != ''"> and talk_content = #{talkContent} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="talkType != null and talkType != ''"> and talk_type = #{talkType} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
 </mapper>

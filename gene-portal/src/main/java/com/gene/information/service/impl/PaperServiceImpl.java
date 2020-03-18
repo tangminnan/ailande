@@ -36,6 +36,7 @@ import com.gene.information.domain.CustomerPaperDO;
 import com.gene.information.domain.ProductDO;
 import com.gene.information.domain.ProductpaperDO;
 import com.gene.information.domain.QuestionDO;
+import com.gene.information.domain.ReportTalkDO;
 import com.gene.information.service.PaperService;
 
 @Service
@@ -401,6 +402,15 @@ public class PaperServiceImpl implements PaperService{
 	@Override
 	public void updateProductPaper(ProductpaperDO productpaperDO) {
 		paperDao.updateProductPaper(productpaperDO);
+	}
+
+	/**
+	 * 查询报告话术
+	 */
+	@Override
+	public List<ReportTalkDO> listReportTalk(HashMap<String, Object> hashMap) {
+		
+		return paperDao.listReportTalk(hashMap);
 	}
 
 	

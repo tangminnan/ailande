@@ -1,6 +1,7 @@
 package com.gene.information.dao;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -12,6 +13,7 @@ import com.gene.information.domain.CustomerPaperDO;
 import com.gene.information.domain.ProductDO;
 import com.gene.information.domain.ProductpaperDO;
 import com.gene.information.domain.QuestionDO;
+import com.gene.information.domain.ReportTalkDO;
 
 @Mapper
 public interface PaperDao {
@@ -113,6 +115,8 @@ public interface PaperDao {
 	ProductpaperDO getLatestProductPaper(@Param("openid") String openid,@Param("product") int i);
 
 	void updateProductPaper(ProductpaperDO productpaperDO);
+
+	List<ReportTalkDO> listReportTalk(HashMap<String, Object> hashMap);
     
 
 }

@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +38,7 @@ import com.gene.information.domain.ChoiceProductDO;
 import com.gene.information.domain.CustomerPaperDO;
 import com.gene.information.domain.ProductpaperDO;
 import com.gene.information.domain.QuestionDO;
+import com.gene.information.domain.ReportTalkDO;
 import com.gene.information.domain.WechatOAConfig;
 import com.gene.information.service.PaperService;
 
@@ -299,7 +301,7 @@ public class PaperController {
 		return "";
 		
 	}
-	
+	String talkName="";
 	@Log("阅读检测报告--肠胃调理")
 	@GetMapping("/readMyReport")
 	public String readMyReport(Model model,Integer product,String name,HttpServletRequest request,String openid){
@@ -343,6 +345,29 @@ public class PaperController {
 	    	}
 	    	int yinshi60 =(int)((float)defen/zongfen*100);
     		model.addAttribute("yinshi60",yinshi60);
+    		/**
+    		 * 统计话术
+    		 */
+    		
+    		if(shenti80>=80) {
+    			talkName="比较好";
+    		}
+    		if(shenti80<80 && shenti80>=60) {
+    			talkName="一般般";
+    		}
+    		if(shenti80<60) {
+    			talkName="不太好";
+    		}
+    		List<ReportTalkDO> reportTalkDOs = paperService.listReportTalk(new HashMap<String,Object>());
+    		List<ReportTalkDO> l=  reportTalkDOs.stream().filter(a -> "CHANGWEI".equals(a.getTalkType()))
+    							  .filter(c -> talkName.equals(c.getTalkName()))
+    							  .filter(b -> b.getScoreLittle()<=yinshi60 && b.getScoreBig() >= yinshi60)
+    							  .collect(Collectors.toList());
+    		if(l.size()>0){
+    			  model.addAttribute("huashu",l.get(0).getTalkContent());
+    		}					  
+    		
+    		
 	    	/**
 	    	 * 计算各个分类得分占比
 	    	 */
@@ -368,7 +393,7 @@ public class PaperController {
 		model.addAttribute("product", product);
 	    return "information/baogao-3";
 	}
-	
+	int yinshi600=0;
 	@Log("阅读检测报告--科学瘦身")
 	@GetMapping("/kexueshoushens")
 	public String kexueshoushen(Model model,Integer product,String name,HttpServletRequest request,String openid) {
@@ -411,9 +436,9 @@ public class PaperController {
 	    			zongfen+=mapT.get(fenlei);
 	    		}
 	    	}
-	    	int yinshi60 =(int)((float)defen/zongfen*100);
+	    	int yinshi60 =(int)((float)defen/zongfen*100);yinshi600=yinshi60;
     		model.addAttribute("yinshi60",yinshi60);
-	    	/**
+    		/**
 	    	 * 计算各个分类得分占比
 	    	 */
 	    	Integer zongfenzhanbi=0;
@@ -457,6 +482,39 @@ public class PaperController {
 			
 		model.addAttribute("openid", openid);
 		model.addAttribute("zhuirou",str.size()>0?str.get(0):"没有赘肉");
+		/**
+		 * 统计话术
+		 */
+		
+		 double bbmmii =Double.parseDouble(bmi);
+		 String zzhhuuiirroouu  = str.size()>0?str.get(0):"没有赘肉";
+		 if(bbmmii>=24 && zzhhuuiirroouu.equals("赘肉较多")){
+			talkName="脂肪型肥胖";
+		 }
+		 else if(bbmmii>=24 && zzhhuuiirroouu.equals("有点赘肉")){
+			 talkName="混合型肥胖";
+		 }
+		 else if(bbmmii>=24 && zzhhuuiirroouu.equals("没有赘肉")){
+			talkName="肌肉型";
+		 }
+		 else if(bbmmii>=18.5 && bbmmii<23.9 && (zzhhuuiirroouu.equals("有点赘肉") || zzhhuuiirroouu.equals("赘肉较多"))){
+			 talkName="体重标准体脂偏高";
+		 }
+		 else if(bbmmii>=18.5 && bbmmii<23.9 && zzhhuuiirroouu.equals("没有赘肉")) {
+			talkName="标准体型";
+		 }
+		 else if(bbmmii<18.5) {
+			talkName="偏瘦";
+		 }
+		 List<ReportTalkDO> reportTalkDOs = paperService.listReportTalk(new HashMap<String,Object>());
+ 		 List<ReportTalkDO> l=  reportTalkDOs.stream().filter(a -> "TIXING".equals(a.getTalkType()))
+ 							  .filter(c -> talkName.equals(c.getTalkName()))
+ 							  .filter(b -> b.getScoreLittle()<=yinshi600 && b.getScoreBig() >= yinshi600)
+ 							  .collect(Collectors.toList());
+ 		if(l.size()>0){
+ 			  model.addAttribute("huashu",l.get(0).getTalkContent());
+ 		}					  
+		
 		return "information/baogao-jianfei";
 	}
 

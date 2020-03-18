@@ -1,5 +1,6 @@
 package com.gene.information.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import com.gene.information.domain.ChoiceProductDO;
 import com.gene.information.domain.CustomerPaperDO;
 import com.gene.information.domain.ProductpaperDO;
 import com.gene.information.domain.QuestionDO;
+import com.gene.information.domain.ReportTalkDO;
 
 public interface PaperService {
     /**
@@ -73,6 +75,8 @@ public interface PaperService {
 	ProductpaperDO getLatestProductPaper(String openid, int i);
 	
 	void updateProductPaper(ProductpaperDO productpaperDO);
+
+	List<ReportTalkDO> listReportTalk(HashMap<String, Object> hashMap);
 
 	
 }
