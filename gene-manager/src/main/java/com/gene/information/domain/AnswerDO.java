@@ -35,7 +35,40 @@ public class AnswerDO implements Serializable {
 	private String remark;
 	//删除标志（0代表存在 2代表删除）
 	private String delFlag;
+	//题目内容
+	private String quentContent;
+	//选项内容
+	private String chooseContent;
+	//调整方向
+	private String tadf;
+	//具体的建议
+	private String tadjianyi;
 
+	
+	public String getQuentContent() {
+		return quentContent;
+	}
+	public void setQuentContent(String quentContent) {
+		this.quentContent = quentContent;
+	}
+	public String getChooseContent() {
+		return chooseContent;
+	}
+	public void setChooseContent(String chooseContent) {
+		this.chooseContent = chooseContent;
+	}
+	public String getTadf() {
+		return tadf;
+	}
+	public void setTadf(String tadf) {
+		this.tadf = tadf;
+	}
+	public String getTadjianyi() {
+		return tadjianyi;
+	}
+	public void setTadjianyi(String tadjianyi) {
+		this.tadjianyi = tadjianyi;
+	}
 	/**
 	 * 设置：ID
 	 */

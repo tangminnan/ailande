@@ -109,6 +109,10 @@ public interface PaperDao {
 	 * 获取最新选择的产品
 	 */
 	List<ProductpaperDO> getLatestProductpaperDO(String openid);
+
+	ProductpaperDO getLatestProductPaper(@Param("openid") String openid,@Param("product") int i);
+
+	void updateProductPaper(ProductpaperDO productpaperDO);
     
 
 }

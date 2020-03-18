@@ -70,5 +70,9 @@ public interface PaperService {
 	 */
 	List<ProductpaperDO> getLatestProductpaperDO(String openid);
 
+	ProductpaperDO getLatestProductPaper(String openid, int i);
+	
+	void updateProductPaper(ProductpaperDO productpaperDO);
+
 	
 }

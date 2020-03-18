@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gene.common.utils.Query;
 import com.gene.information.dao.CustomerPaperDao;
+import com.gene.information.domain.AnswerDO;
 import com.gene.information.domain.CustomerPaperDO;
 import com.gene.information.service.CustomerPaperService;
 
@@ -88,6 +90,17 @@ public class CustomerPaperServiceImpl implements CustomerPaperService {
 		return list2;				
 		
 	}
+
+	@Override
+	public List<AnswerDO> listAnswerDO(Map<String, Object> map) {
+		return customerPaperDao.listAnswerDO(map);
+	}
+
+	@Override
+	public int countAnswerDO(Map<String,Object> map) {
+		return customerPaperDao.countAnswerDO(map);
+	}
+
 
 
 	

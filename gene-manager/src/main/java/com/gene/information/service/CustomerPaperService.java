@@ -3,6 +3,8 @@ package com.gene.information.service;
 import java.util.List;
 import java.util.Map;
 
+import com.gene.common.utils.Query;
+import com.gene.information.domain.AnswerDO;
 import com.gene.information.domain.CustomerPaperDO;
 
 /**
@@ -33,5 +35,10 @@ public interface CustomerPaperService{
 	List<CustomerPaperDO> getUserList(String userId);
 				
 	List<Object> userList();
+
+	List<AnswerDO> listAnswerDO(Map<String,Object> map);
+
+	int countAnswerDO(Map<String,Object> map);
+
 	
 }

@@ -17,17 +17,28 @@
 								<i class="fa fa-trash" aria-hidden="true"></i>删除
 							</button> -->
 						</div>
-						<!-- <div class="columns pull-right">
+						 <div class="columns pull-right">
 							<button class="btn btn-success" onclick="reLoad()">查询</button>
 						</div>
 						 <div class="columns pull-right col-md-2 nopadding">
-							<input id="code" type="text" class="form-control"
-								placeholder="检测码">
+							<input id="endTime" type="text" class="form-control"
+								placeholder="查询结束时间">
 						</div> 
 						<div class="columns pull-right col-md-2 nopadding">
-							<input id="searchName" type="text" class="form-control"
+							<input id="startTime" type="text" class="form-control"
+								placeholder="查询开始时间">
+						</div> 
+						<div class="columns pull-right col-md-2 nopadding">
+							<input id="username" type="text" class="form-control"
 								placeholder="姓名">
-						</div> -->
+						</div>
+						<div class="columns pull-right col-md-2 nopadding ">
+							<select class="form-control" name="productId" id="productId" >
+                        		<option value="">产品：</option>
+                        		<option value="22">肠胃调理</option>
+                        		<option value="23">科学瘦身</option>
+                    		</select>
+						</div>
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
 					</table>
@@ -59,7 +70,22 @@
 			</script>
 		</div>
 	</div>
+	
+	
+	
+	
+	
 	<div th:include="include :: footer"></div>
 	<script type="text/javascript" src="/js/appjs/information/customerPaper/customerPaper.js"></script>
+	<script type="text/javascript">
+	laydate.render({
+			elem: '#startTime',
+			type: 'datetime'
+		});
+	laydate.render({
+			elem: '#endTime',
+			type: 'datetime'
+		});
+	</script>
 </body>
 </html>

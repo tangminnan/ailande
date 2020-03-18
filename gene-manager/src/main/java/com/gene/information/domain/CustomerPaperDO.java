@@ -74,7 +74,36 @@ public class CustomerPaperDO implements Serializable {
 	private String paperName;
 	//是否完成  0=未完成   1=已完成
 	private Integer answersStatus;
+	private String openid;
+	private int productPaperId;
+	//检测时间
+	private Date answerTime;
 	
+	
+	public Date getAnswerTime() {
+		return answerTime;
+	}
+	public void setAnswerTime(Date answerTime) {
+		this.answerTime = answerTime;
+	}
+	public int getProductPaperId() {
+		return productPaperId;
+	}
+	public void setProductPaperId(int productPaperId) {
+		this.productPaperId = productPaperId;
+	}
+	public Integer getAnswersStatus() {
+		return answersStatus;
+	}
+	public void setAnswersStatus(Integer answersStatus) {
+		this.answersStatus = answersStatus;
+	}
+	public String getOpenid() {
+		return openid;
+	}
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
 	public String getContent() {
 		return content;
 	}

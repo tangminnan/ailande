@@ -22,6 +22,7 @@ import com.alibaba.fastjson.JSON;
 import com.gene.common.utils.PageUtils;
 import com.gene.common.utils.Query;
 import com.gene.common.utils.R;
+import com.gene.information.domain.AnswerDO;
 import com.gene.information.domain.CustomerPaperDO;
 import com.gene.information.service.CustomerPaperService;
 
@@ -102,6 +103,30 @@ public class CustomerPaperController {
 		return list2;		
 	}
 	
+	
+	/**
+	 * 答题详情
+	 */
+	@GetMapping("/datixiangqing/{id}")
+	String datixiangqing(@PathVariable("id") String id,Model model){
+		model.addAttribute("id", id);
+	    return "information/customerPaper/datixiangqing";
+	}
+	
+	@ResponseBody
+	@GetMapping("/datixiangqinglist")
+	@RequiresPermissions("information:customerPaper:customerPaper")
+	public PageUtils datixiangqinglist(@RequestParam Map<String, Object> params){
+		//查询列表数据
+		List<AnswerDO> list = customerPaperService.listAnswerDO(params);
+		int total = customerPaperService.countAnswerDO(params);
+		PageUtils pageUtils = new PageUtils(list, total);
+		return pageUtils;
+	}
+	
+	/**
+	 * 答题详情
+	 */
 	
 	@GetMapping("/details/{id}")
 	String details(@PathVariable("id") String id,Model model){

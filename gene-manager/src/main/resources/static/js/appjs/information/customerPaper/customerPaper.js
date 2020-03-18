@@ -112,8 +112,10 @@ function load() {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
 								offset:params.offset,
-								code:$('#code').val(),
-					            username:$('#searchName').val()
+								startTime:$('#startTime').val(),
+								endTime:$('#endTime').val(),
+					            username:$('#username').val(),
+					            productId:$("#productId").val()
 							};
 						},
 						// //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
@@ -126,15 +128,6 @@ function load() {
 								{
 									checkbox : true
 								},
-																/*{
-									field : 'code', 
-									title : '检测码' 
-								},*/
-								
-																/*{
-									field : 'id', 
-									title : '客户ID' 
-								},*/
 																{
 									field : 'username', 
 									title : '姓名' 
@@ -155,64 +148,18 @@ function load() {
 									field : 'age', 
 									title : '年龄' 
 								},
-																/*{
-									field : 'status', 
-									title : '状态（0未完成 1已完成）' 
-								},*/
-																/*{
-									field : 'createBy', 
-									title : '创建者' 
-								},*/
 																{
-									field : 'createTime', 
+									field : 'answerTime', 
 									title : '检测时间' 
 								},
-								/*{
-									field : 'createTime', 
-									title : '是否完成' ,
-									formatter : function(value, row, index) {
-										if(value==0)
-											return "未完成";
-										if(value==1)
-											return "已完成";
-									}
-								},*/
-																/*{
-									field : 'updateBy', 
-									title : '更新者' 
-								},*/
-																/*{
-									field : 'updateTime', 
-									title : '更新时间' 
-								},*/
-																/*{
-									field : 'remark', 
-									title : '备注' 
-								},*/
-																/*{
-									field : 'delFlag', 
-									title : '删除标志（0代表存在 2代表删除）' 
-								},*/
 																{
 									field : 'productName', 
 									title : '产品名称' 
 								},
-															/*	{
-									field : 'paperId', 
-									title : '问卷ID' 
-								},*/
 																/*{
-									field : 'source', 
-									title : '渠道来源' 
-								},*/
-																/*{
-									field : 'bmi', 
-									title : 'BMI' 
-								},*/
-																{
 									field : 'phone', 
 									title : '联系方式' 
-								}
+								}*/
 																/*{
 									field : 'email', 
 									title : '邮箱' 
@@ -221,23 +168,23 @@ function load() {
 									field : 'address', 
 									title : '地址' 
 								},*/
-																/*{
+																{
 									title : '操作',
 									field : 'id',
 									align : 'center',
 									formatter : function(value, row, index) {
-										var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="edit(\''
+										/*var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="edit(\''
 												+ row.id
 												+ '\')"><i class="fa fa-edit"></i></a> ';
 										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
 												+ row.id
-												+ '\')"><i class="fa fa-remove"></i></a> ';
-										var f = '<a class="btn btn-success btn-sm" href="#" title="详情"  mce_href="#" onclick="details(\''
-												+ row.id
+												+ '\')"><i class="fa fa-remove"></i></a> ';*/
+										var f = '<a class="btn btn-success btn-sm" href="#" title="答题详情"  mce_href="#" onclick="details(\''
+												+ row.productPaperId
 												+ '\')"><i class="fa fa-key"></i></a> ';
-										return e + d + f;
+										return  f;
 									}
-								}*/ ]
+								} ]
 					});
 }
 function reLoad() {
@@ -270,7 +217,7 @@ function details(id) {
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
 		area : [ '800px', '520px' ],
-		content : prefix + '/details/' + id // iframe的url
+		content : prefix + '/datixiangqing/' + id // iframe的url
 	});
 	layer.full(detailsPage);
 }

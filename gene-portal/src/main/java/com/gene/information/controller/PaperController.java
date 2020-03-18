@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -184,7 +185,7 @@ public class PaperController {
 			model.addAttribute("list",list);
 			model.addAttribute("LEI","JIBEN_XINXI");
 			model.addAttribute("username",username);
-			model.addAttribute("phone","phone");
+			model.addAttribute("phone",phone);
 			model.addAttribute("sex",sex);
 			model.addAttribute("age",age);
 			return "information/jibenxinxi44";
@@ -262,6 +263,13 @@ public class PaperController {
 				customerPaperDO.setOpenid(openid);
 				customerPaperDO.setProductId(i);
 				paperService.saveCustomerPaperDO(customerPaperDO);
+				ProductpaperDO productpaperDO = paperService.getLatestProductPaper(openid, i);
+				int user = customerPaperDO.getId();
+				Optional.ofNullable(productpaperDO).ifPresent(p ->{
+					productpaperDO.setUser(user);
+					paperService.updateProductPaper(productpaperDO);
+				});
+				
 			}
 			
 			return R.ok();

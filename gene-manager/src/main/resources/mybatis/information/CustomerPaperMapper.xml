@@ -35,31 +35,31 @@
 	</select>
 	
 	<select id="list" resultType="com.gene.information.domain.CustomerPaperDO">
-		select  b.id,username,sex,age,high,sex,weight,b.create_time,q.`name` productName   from biz_customer_paper b,biz_product q
-where  b.product_id=q.id
-
+									SELECT
+								b.id,
+								b.username,
+								b.high,
+								b.sex,
+								b.weight,
+								b.age,
+								b.phone,
+								b.product_id,
+								q.answer_time,
+								q.openid,
+								q.id productPaperId,
+								p.name productName
+							FROM
+								biz_customer_paper b
+							JOIN qu_product_paper q ON b.id = q. USER
+							JOIN biz_product p
+							ON b.product_id=p.id
+							AND q.answer_status = 1
 		
         <where>  
-		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="username != null and username != ''"> and username like concat('%', #{username},'%') </if>
-		  		  <if test="high != null and high != ''"> and high = #{high} </if>
-		  		  <if test="sex != null and sex != ''"> and sex = #{sex} </if>
-		  		  <if test="weight != null and weight != ''"> and weight = #{weight} </if>
-		  		  <if test="age != null and age != ''"> and age = #{age} </if>
-		  		 
-		  		
-		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
-		  		
-		  		
-		  		
-		  		
-		  		  <if test="productId != null and productId != ''"> and product_id = #{productId} </if>
-		  		<!--   <if test="paperId != null and paperId != ''"> and paper_id = #{paperId} </if> -->
-		  		 
-		  		 
-		  		 
-		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
-		  		
+		  		   <if test="username != null and username != ''"> and username like concat('%', #{username},'%') </if>
+		  		   <if test="startTime != null and startTime != ''"> and answer_time &gt;= #{startTime} </if>
+		  		   <if test="endTime != null and endTime != ''"> and answer_time &lt;= #{endTime} </if>
+		  		   <if test="productId != null and productId != ''"> and product_id = #{productId} </if>
 		  		 
 		  		</where>
         <choose>
@@ -76,24 +76,19 @@ where  b.product_id=q.id
 	</select>
 	
  	<select id="count" resultType="int">
-		select count(*) from biz_customer_paper
-		 <where>  
-		  		  <if test="id != null and id != ''"> and id = #{id} </if>
-		  		  <if test="username != null and username != ''"> and username = #{username} </if>
-		  		  <if test="high != null and high != ''"> and high = #{high} </if>
-		  		  <if test="sex != null and sex != ''"> and sex = #{sex} </if>
-		  		  <if test="weight != null and weight != ''"> and weight = #{weight} </if>
-		  		  <if test="age != null and age != ''"> and age = #{age} </if>
+			SELECT
+							count(*)
+							FROM
+								biz_customer_paper b
+							JOIN qu_product_paper q ON b.id = q. USER
+							AND q.answer_status = 1
+		
+        <where>  
+		  		   <if test="username != null and username != ''"> and username like concat('%', #{username},'%') </if>
+		  		   <if test="startTime != null and startTime != ''"> and answer_time &gt;= #{startTime} </if>
+		  		   <if test="endTime != null and endTime != ''"> and answer_time &lt;= #{endTime} </if>
+		  		   <if test="productId != null and productId != ''"> and product_id = #{productId} </if>
 		  		 
-		  		
-		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
-		  		
-		  		  <if test="productId != null and productId != ''"> and product_id = #{productId} </if>
-		  		
-		  	
-		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
-		  		 
-		  		
 		  		</where>
 	</select>
 	 
@@ -200,5 +195,48 @@ where  b.product_id=q.id
 	<select id="getChoiceContent" resultType="com.gene.information.domain.CustomerPaperDO">
 		select id,content choiceContent from qu_choice where id = #{id}
 	</select> -->
+	
+	<select id="listAnswerDO" resultType="com.gene.information.domain.AnswerDO">
+								SELECT
+							n.content quentContent,
+							c.id,
+							c.content chooseContent,
+							t.tadf,
+							t.tadjianyi
+						FROM
+							biz_answer b
+						JOIN qu_product_paper q ON b.productpaper = q.id
+						JOIN qu_question n ON b.question_id = n.id
+						JOIN qu_choice c ON b.choice_id = c.id
+						AND q.id = #{productPaper}
+						JOIN qu_choice_product t ON c.id = t.choose
+						AND q.product = t.product
+						<!-- <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id asc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if> -->
+	</select>
+	
+	<select id="countAnswerDO" resultType="int">
+		SELECT
+							count(*)
+						FROM
+							biz_answer b
+						JOIN qu_product_paper q ON b.productpaper = q.id
+						JOIN qu_question n ON b.question_id = n.id
+						JOIN qu_choice c ON b.choice_id = c.id
+						AND q.id = 4440
+						JOIN qu_choice_product t ON c.id = t.choose
+						AND q.product = t.product
+						
+						
+	</select>
 
 </mapper>

@@ -40,7 +40,8 @@
 			age,
 			sex,
   			create_time,
-  			product_id
+  			product_id,
+  			phone
 		)
 		values(
 			#{username},
@@ -50,7 +51,8 @@
 			#{age},
 			#{sex},
 			#{createTime},
-			#{productId}
+			#{productId},
+			#{phone}
 		)
 	</insert>
 	
@@ -400,4 +402,13 @@ WHERE
 AND answer_status = 0
 AND openid = #{openid}
 	</select>
+	
+	<select id="getLatestProductPaper" resultType="com.gene.information.domain.ProductpaperDO">
+		select id,answer_status,openid from qu_product_paper where product=#{product} and openid=#{openid}
+		and answer_status=0 order by id desc limit 1
+	</select>
+	
+	<update id="updateProductPaper" parameterType="com.gene.information.domain.ProductpaperDO">
+		update qu_product_paper set user=#{user} where id=#{id}
+	</update>
 </mapper>

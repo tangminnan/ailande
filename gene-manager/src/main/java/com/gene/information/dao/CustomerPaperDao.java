@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
+import com.gene.information.domain.AnswerDO;
 import com.gene.information.domain.CustomerPaperDO;
 
 /**
@@ -39,5 +42,10 @@ public interface CustomerPaperDao{
 	List<CustomerPaperDO> queryAnswer(String userId);
 	
 	List<CustomerPaperDO> queryUserList();
+
+	List<AnswerDO> listAnswerDO(Map<String, Object> map);
+
+	int countAnswerDO(Map<String, Object> map);
+
 
 }

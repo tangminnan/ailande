@@ -393,5 +393,15 @@ public class PaperServiceImpl implements PaperService{
 		return paperDao.getLatestProductpaperDO(openid);
 	}
 
+	@Override
+	public ProductpaperDO getLatestProductPaper(String openid, int i) {
+		return paperDao.getLatestProductPaper(openid,i);
+	}
+
+	@Override
+	public void updateProductPaper(ProductpaperDO productpaperDO) {
+		paperDao.updateProductPaper(productpaperDO);
+	}
+
 	
 }
