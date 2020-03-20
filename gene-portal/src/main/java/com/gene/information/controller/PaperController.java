@@ -85,7 +85,7 @@ public class PaperController {
 		System.out.println("openid-------------------------"+openid);
 		System.out.println("openid-------------------------"+openid);
 		System.out.println("openid-------------------------"+openid);
-		System.out.println("openid-------------------------"+openid);
+		System.out.println("openid-------------------------"+openid); 
 		return paperService.getAllProduct(openid);
 	}
 	
@@ -111,7 +111,14 @@ public class PaperController {
 		return "information/jibenxinxi";
 	}*/
 
-	
+	@GetMapping("/getHistoryRecord")
+	@ResponseBody
+	public List<ProductpaperDO> getHistoryRecord(String openid,Integer product){
+		/**
+         * 获取检查的历史记录时间
+         */
+       return paperService.getHistoryRecord(openid,product);
+	}
 		
     
 	@Log("保存")
@@ -221,6 +228,8 @@ public class PaperController {
 			}
     	}	
         	model.addAttribute("openid", openid);
+        
+        															  
 		return "information/baogao-1";
 	}
 	
@@ -281,7 +290,23 @@ public class PaperController {
 	@Log("查看报告")
 	@GetMapping("/lookCheckLog")
 	public String lookCheckLog(Integer product,String name,String openid, Model model,HttpServletRequest request){
-//		openid="ocqxT5xl5XAidygc01PGGQngKV4Q";
+		System.out.println("送到页面的openid====================="+openid);
+		System.out.println("送到页面的openid====================="+openid);
+		model.addAttribute("product", product);
+		model.addAttribute("name",name);
+		model.addAttribute("openid",openid);
+		/*if("肠胃调理".equals(name))
+			return"information/baogao-2";
+		if("科学瘦身".equals(name))
+			return "information/baogao-5";
+		return "";*/
+		
+		return "information/lishibaogao";
+		
+	}
+	
+	@GetMapping("/startLOOK")
+	public String startLOOK(Integer product,String name,String openid, Model model,HttpServletRequest request,Date date){
 		System.out.println("送到页面的openid====================="+openid);
 		System.out.println("送到页面的openid====================="+openid);
 		
@@ -294,20 +319,26 @@ public class PaperController {
 		model.addAttribute("product", product);
 		model.addAttribute("name",name);
 		model.addAttribute("openid",openid);
+		model.addAttribute("date",date);
 		if("肠胃调理".equals(name))
 			return"information/baogao-2";
 		if("科学瘦身".equals(name))
 			return "information/baogao-5";
 		return "";
-		
 	}
+	
 	String talkName="";
 	@Log("阅读检测报告--肠胃调理")
 	@GetMapping("/readMyReport")
-	public String readMyReport(Model model,Integer product,String name,HttpServletRequest request,String openid){
+	public String readMyReport(Model model,Integer product,String name,HttpServletRequest request,String openid,Date date){
 		String timeString= (String)request.getSession().getAttribute("timeString");
 //		List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId()+timeString,product);
 //		ProductpaperDO productpaperDO=productpaperDOList.get(0);
+		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 	    Map<String,Integer> mapD  = new HashMap<String,Integer>();
 	    Map<String,Integer> mapT = new HashMap<String,Integer>();
 	    DecimalFormat df = new DecimalFormat("0.0");
@@ -315,7 +346,7 @@ public class PaperController {
 	    * 根据openid  产品去拿最新的检测结果
 	    */
 	    
-	    List<ProductpaperDO> productpaperDOList = paperService.getNewProductpaperDO(openid,product);
+	    List<ProductpaperDO> productpaperDOList = paperService.getNewProductpaperDO(openid,product,date);
 	    ProductpaperDO productpaperDO=productpaperDOList.get(0);
 	    
 	    if(productpaperDO!=null){//统计分值
@@ -391,22 +422,24 @@ public class PaperController {
 	    }
 	    model.addAttribute("openid", openid);
 		model.addAttribute("product", product);
+		model.addAttribute("date",date);
 	    return "information/baogao-3";
 	}
 	int yinshi600=0;
 	@Log("阅读检测报告--科学瘦身")
 	@GetMapping("/kexueshoushens")
-	public String kexueshoushen(Model model,Integer product,String name,HttpServletRequest request,String openid) {
+	public String kexueshoushen(Model model,Integer product,String name,HttpServletRequest request,String openid,Date date) {
 		System.out.println("科学瘦身================================"+openid);
 		System.out.println("科学瘦身================================"+openid);
 		System.out.println("科学瘦身================================"+openid);
 		System.out.println("科学瘦身================================"+openid);
 		System.out.println("科学瘦身================================"+openid);
 		System.out.println("科学瘦身================================"+openid);
+	
 		String timeString= (String)request.getSession().getAttribute("timeString");
 	/*	List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId()+timeString,product);
 		ProductpaperDO productpaperDO = productpaperDOList.get(0);*/
-		 List<ProductpaperDO> productpaperDOList = paperService.getNewProductpaperDO(openid,product);
+		 List<ProductpaperDO> productpaperDOList = paperService.getNewProductpaperDO(openid,product,date);
 		 ProductpaperDO productpaperDO=productpaperDOList.get(0);
 		Map<String,Integer> mapD  = new HashMap<String,Integer>();
 	    Map<String,Integer> mapT = new HashMap<String,Integer>();
@@ -459,6 +492,7 @@ public class PaperController {
 	    		}
 	    	}
 	    }
+	    model.addAttribute("date",date);
 		model.addAttribute("product", product);
 	    
 		
@@ -466,7 +500,7 @@ public class PaperController {
 		 * 计算bmi
 		 */
 		
-		CustomerPaperDO udo1 = paperService.getLatestCustomerPaperDO(openid,product);
+		CustomerPaperDO udo1 = paperService.getCustomerPaperDO(openid,product,date);
 		   
 		Integer high = udo1.getHigh();
 		float weight=  Float.parseFloat( udo1.getWeight()+"");  
@@ -478,7 +512,7 @@ public class PaperController {
 		 * 是否有赘肉
 		 */
 		
-		List<String> str  = paperService.getChoosedContent(openid,product,"赘肉");
+		List<String> str  = paperService.getChoosedContent(openid,product,"赘肉",date);
 			
 		model.addAttribute("openid", openid);
 		model.addAttribute("zhuirou",str.size()>0?str.get(0):"没有赘肉");
@@ -524,15 +558,20 @@ public class PaperController {
 	@Log("获取检测的数据")
 	@GetMapping("/getMyReportData")
 	@ResponseBody
-	public Map<String,List<QuestionDO>> getMyReportData(Integer product,HttpServletRequest request,String openid){
+	public Map<String,List<QuestionDO>> getMyReportData(Integer product,HttpServletRequest request,String openid,Date date){
+		System.out.println("------------------------"+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+		System.out.println("------------------------"+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+		System.out.println("------------------------"+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+		System.out.println("------------------------"+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+		System.out.println("------------------------"+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 		 DecimalFormat df = new DecimalFormat("0.0");
 		 System.out.println("====openid对不对----==="+openid);
-		CustomerPaperDO udo1 = paperService.getLatestCustomerPaperDO(openid,product);
+		CustomerPaperDO udo1 = paperService.getCustomerPaperDO(openid,product,date);
 		float high = udo1.getHigh();
 		float weight=  Float.parseFloat( udo1.getWeight()+"");  
 		float bmi=  Float.parseFloat(df.format(weight/high/high*10000));
 		String timeString= (String)request.getSession().getAttribute("timeString");
-		List<ProductpaperDO> productpaperDOList = paperService.getProductpaperDOByOpenId(openid,product);
+		List<ProductpaperDO> productpaperDOList = paperService.getProductpaperDOByOpenId(openid,product,date);
 		System.out.println("===productpaperDOList======"+productpaperDOList.get(0).getOpenid());
 		ProductpaperDO productpaperDO = productpaperDOList.get(0);
 	    Map<String,List<QuestionDO>> map  = new HashMap<String,List<QuestionDO>>();

@@ -22,6 +22,14 @@ public class ProductpaperDO {
     private String openid;
     //答题记录
     private Integer answerStatus;
+    private String productName;
+    
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
 	public Integer getId() {
 		return id;
 	}

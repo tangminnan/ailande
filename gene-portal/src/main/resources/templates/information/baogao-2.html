@@ -23,11 +23,12 @@
 	<input type="hidden" name="product" th:value="${product}">
 	<input type="hidden" name="name" th:value="${name}">
 	<input type="hidden" id="openid" th:value="${openid}">
+	<input type="hidden" id="date" th:value="${#dates.format(date,'yyyy-MM-dd HH:mm:ss')}">
 	<script type="text/javascript">
 	    var openid=$("#openid").val();
 		$(".btn").click(function(){
 			var name=$("[name='name']").val();
-			window.location.href="/paper/readMyReport?product="+$("[name='product']").val()+"&name="+name+"&openid="+openid;
+			window.location.href="/paper/readMyReport?product="+$("[name='product']").val()+"&name="+name+"&openid="+openid+"&date="+$("#date").val();
 		});
 	</script>
 </body>

@@ -264,8 +264,8 @@ public class PaperServiceImpl implements PaperService{
 	
 
 	@Override
-	public List<ProductpaperDO> getProductpaperDOByOpenId(String openid, Integer product) {
-		return paperDao.getProductPaperDObyOpenid(openid,product);
+	public List<ProductpaperDO> getProductpaperDOByOpenId(String openid, Integer product,Date date) {
+		return paperDao.getProductPaperDObyOpenid(openid,product,date);
 	}
 
 	@Override
@@ -365,16 +365,16 @@ public class PaperServiceImpl implements PaperService{
 	 * 查询用户的选项内容
 	 */
 	@Override
-	public List<String> getChoosedContent(String id, Integer product, String string) {
-		return paperDao.getChoosedContent(id,product,string);
+	public List<String> getChoosedContent(String id, Integer product, String string,Date date) {
+		return paperDao.getChoosedContent(id,product,string,date);
 	}
 
 	/**
 	 *根据openid和产品去拿最新的检测结果
 	 */
 	@Override
-	public List<ProductpaperDO> getNewProductpaperDO(String openid, Integer product) {
-		return paperDao.getNewProductpaperDO(openid,product);
+	public List<ProductpaperDO> getNewProductpaperDO(String openid, Integer product,Date date) {
+		return paperDao.getNewProductpaperDO(openid,product,date);
 	}
 
 	@Override
@@ -411,6 +411,19 @@ public class PaperServiceImpl implements PaperService{
 	public List<ReportTalkDO> listReportTalk(HashMap<String, Object> hashMap) {
 		
 		return paperDao.listReportTalk(hashMap);
+	}
+
+	/**
+	 * 获取检查的历史记录时间
+	 */
+	@Override
+	public List<ProductpaperDO> getHistoryRecord(String openid,Integer product) {
+		return paperDao.getHistoryRecord(openid,product);
+	}
+
+	@Override
+	public CustomerPaperDO getCustomerPaperDO(String openid, Integer product, Date date) {
+		return paperDao.getCustomerPaperDO(openid,product,date);
 	}
 
 	

@@ -174,6 +174,7 @@
 	<input id="shenti80" type="hidden" th:value="${shenti80}">
 	<input id="yinshi60" type="hidden" th:value="${yinshi60}">
 	<input id="openid" type="hidden" th:value="${openid}">
+	<input type="hidden" id="date" th:value="${#dates.format(date,'yyyy-MM-dd HH:mm:ss')}">
 	<script type="text/javascript">
 	
 	var fenshua  = $("#shenti80").val();
@@ -256,10 +257,11 @@ $(".zhidao input").last().click(function(){
   var paibianpinlvshucaishuiguoculiang=[];//排便频率 蔬菜  水果  粗粮
   var futongfuzhangfansuanwixhangjibbing=[];//有没有腹胀、腹痛、反酸（最近1个月）有没有较严重胃肠道疾病或病史（肠炎、胃炎、肿瘤等）
   var openid=$("#openid").val();
+  var date=$("#date").val();
   $.ajax({
 		type : "GET",
 		url : "/paper/getMyReportData",
-		data:{product:$("#product").val(),openid:openid},
+		data:{product:$("#product").val(),openid:openid,date:date},
 		async : false,
 		success : function(r) {console.info(r)
 			  for(var key in r){
@@ -421,6 +423,26 @@ if(shengxiade.length==0 && paibianpinlvshucaishuiguoculiang.length>0){
 }
  
  //Permatrol®肠胃安益胶囊     Polyzyme Forte®复合消化酶胶囊
+ 
+ 
+ 
+ var changweianyijiaonang= '<a href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59844980179">'
+	 					    +'<div class="jyiBox">'
+							+'<img class="jsBg" src="../images/goumai.png" alt=""/>'
+							+'<p class="name space"><span>Permatrol®肠胃安益胶囊</span>修复肠粘膜，温和调理肠胃菌群，改善消化不良引起的腹痛腹胀。</p>'
+							+'<img class="yaoM" src="../images/Permatrol.png" alt=""/>'
+							+'<input type="button" value="点击购买"/>'
+							+'</div>'
+							+'</a>';
+var fuhexiaohuameijiaonang='<a href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202278530179">'
+						   +'<div class="jyiBox">'
+						   +'<img class="jsBg" src="../images/goumai.png" alt=""/>'
+						   +'<p class="name space"><span>Polyzyme Forte®复合消化酶胶囊</span>直接补充消化酶，改善腹胀，消化不良，特殊工艺保障酶效稳定。</p>'
+						   +'<img class="yaoM" src="../images/Polyzyme-Forte.png" alt=""/>'
+						   +'<input type="button" value="点击购买"/>'
+						   +'</div>'
+						   +'</a>';
+ 
  var jianyibuchong=["腹痛腹胀：经常有","疾病史：有"];
  for(var i=0;i< futongfuzhangfansuanwixhangjibbing.length;i++){
 	 var l = futongfuzhangfansuanwixhangjibbing[i];
@@ -433,11 +455,14 @@ if(shengxiade.length==0 && paibianpinlvshucaishuiguoculiang.length>0){
  }
  if(flag==true){
 	 flag=false;
-	 var obj={'title':'Permatrol®肠胃安益胶囊','images':'../images/Permatrol®.jpg','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59844980179'};
+	 var obj={'title':'Permatrol®肠胃安益胶囊','images':'../images/Permatrol®.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59844980179'};
 	 tuijianarry.push(obj);
-	 var obj={'title':'Polyzyme Forte®复合消化酶胶囊','images':'../images/Polyzyme Forte®.jpg','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202278530179'};
+	 var obj={'title':'Polyzyme Forte®复合消化酶胶囊','images':'../images/Polyzyme Forte®.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202278530179'};
 	 tuijianarry.push(obj);
  }
+ 
+ 
+
  
  //您还可以选择   安益胶囊
  /* for(var i=0;i< paibianpinlvshucaishuiguoculiang.length;i++){
@@ -463,7 +488,13 @@ if(tuijianarry.length==0){//默认
 $(".jjjdddd").children("span").text("建议您补充"+ tuijianarry.length+"种补充剂");
 var div='';
 for(var i=0;i< tuijianarry.length;i++){
-	 div+= '<div class="ulBox"><a href="'+tuijianarry[i].url+'"><img  class="jsBg" src="'+tuijianarry[i].images+'" alt=""/></a></div>'
+	if(tuijianarry[i].title=="Permatrol®肠胃安益胶囊"){
+		div+= changweianyijiaonang;
+	}else if(tuijianarry[i].title=="Polyzyme Forte®复合消化酶胶囊"){
+		div+= fuhexiaohuameijiaonang;
+	}else{
+	 	div+= '<div class="ulBox"><a href="'+tuijianarry[i].url+'"><img  class="jsBg" src="'+tuijianarry[i].images+'" alt=""/></a></div>'
+	}
 }         
 $(".jjjdddd").after(div);
 

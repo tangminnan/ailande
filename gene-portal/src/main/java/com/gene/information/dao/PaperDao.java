@@ -1,6 +1,7 @@
 package com.gene.information.dao;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,6 +15,8 @@ import com.gene.information.domain.ProductDO;
 import com.gene.information.domain.ProductpaperDO;
 import com.gene.information.domain.QuestionDO;
 import com.gene.information.domain.ReportTalkDO;
+
+import groovy.transform.PackageScope;
 
 @Mapper
 public interface PaperDao {
@@ -53,7 +56,7 @@ public interface PaperDao {
 
 	List<ProductpaperDO> getProductPaperDO2(@Param("user") String user,@Param("product") Integer product);
 	
-	List<ProductpaperDO> getProductPaperDObyOpenid(@Param("openid") String openid,@Param("product") Integer product);
+	List<ProductpaperDO> getProductPaperDObyOpenid(@Param("openid") String openid,@Param("product") Integer product,@Param("date") Date date);
 	
 	/**
 	 * 按题目的分类查询用户答题及答案
@@ -77,7 +80,7 @@ public interface PaperDao {
 	/**
 	 * 查询用户选择的内容
 	 */
-	List<String> getChoosedContent(@Param("openid") String id,@Param("product") Integer product,@Param("string") String string);
+	List<String> getChoosedContent(@Param("openid") String id,@Param("product") Integer product,@Param("string") String string,@Param("date") Date date);
 
 	/**
 	 * 根据产品查询题目
@@ -95,7 +98,7 @@ public interface PaperDao {
 	/**
 	 * 根据微信id和产品去拿最新的检测结果
 	 */
-	List<ProductpaperDO> getNewProductpaperDO(@Param("openid") String openid,@Param("product") Integer product);
+	List<ProductpaperDO> getNewProductpaperDO(@Param("openid") String openid,@Param("product") Integer product,@Param("date") Date date);
 	/**
 	 * openid  
 	 * @param openid
@@ -117,6 +120,10 @@ public interface PaperDao {
 	void updateProductPaper(ProductpaperDO productpaperDO);
 
 	List<ReportTalkDO> listReportTalk(HashMap<String, Object> hashMap);
-    
+	/**
+	 * 获取检查的历史记录时间
+	 */
+	List<ProductpaperDO> getHistoryRecord(@Param("openid") String openid,@Param("product") Integer product);
 
+	CustomerPaperDO getCustomerPaperDO(@Param("openid") String openid,@Param("product") Integer product,@Param("date") Date date);
 }

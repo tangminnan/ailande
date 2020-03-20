@@ -1,10 +1,13 @@
 package com.gene.information.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.ibatis.annotations.Param;
 
 import com.alibaba.fastjson.JSONObject;
 import com.gene.common.utils.R;
@@ -40,7 +43,7 @@ public interface PaperService {
 	 */
 	List<ProductpaperDO> getProductPaperDO2(String user, Integer product);
 	
-	List<ProductpaperDO> getProductpaperDOByOpenId(String openid, Integer product);
+	List<ProductpaperDO> getProductpaperDOByOpenId(String openid, Integer product,Date date);
 	
 	CustomerPaperDO getLatestCustomerPaperDO(String openid,Integer product);
 
@@ -60,11 +63,11 @@ public interface PaperService {
 	/**\
 	 * 是否有赘肉
 	 */
-	List<String> getChoosedContent(String id, Integer product, String string);
+	List<String> getChoosedContent(String id, Integer product, String string,Date date);
 
 	/**根据openid和产品去拿最新的检测结果
 	 */
-	List<ProductpaperDO> getNewProductpaperDO(String openid, Integer product);
+	List<ProductpaperDO> getNewProductpaperDO(String openid, Integer product,Date date);
 
 	R saveCustomerPaperDO(CustomerPaperDO customerPaperDO);
 	/**
@@ -77,6 +80,12 @@ public interface PaperService {
 	void updateProductPaper(ProductpaperDO productpaperDO);
 
 	List<ReportTalkDO> listReportTalk(HashMap<String, Object> hashMap);
+	/**
+	 * 获取检查的历史记录时间
+	 */
+	List<ProductpaperDO> getHistoryRecord(String openid,Integer product);
+
+	CustomerPaperDO getCustomerPaperDO(String openid, Integer product, Date date);
 
 	
 }

@@ -150,9 +150,20 @@
 	<select id="getLatestCustomerPaperDO" resultType="com.gene.information.domain.CustomerPaperDO">
 	
 	   select * from  biz_customer_paper where  openid =#{openid} and product_id=#{product} order by id desc limit 1;
+ 	   
 	</select>
 	
-	
+	<select id="getCustomerPaperDO" resultType="com.gene.information.domain.CustomerPaperDO">
+			  SELECT
+	b.*
+FROM
+	biz_customer_paper b join
+qu_product_paper p
+on b.id=p.user
+WHERE
+	b.openid = #{openid} and product_id=#{product} and answer_time=#{date}  limit 1;
+		
+	</select>
 	
 	
 	
@@ -231,7 +242,7 @@ FROM
 	</select>
 	
 	<select id="getProductPaperDObyOpenid" resultType="com.gene.information.domain.ProductpaperDO">
-		select  * from qu_product_paper where openid=#{openid} and product=#{product} and answer_status=1 order by id desc limit 1
+		select  * from qu_product_paper where openid=#{openid} and product=#{product} and answer_status=1 and answer_time=#{date} limit 1
 		
 	</select>
 	
@@ -355,7 +366,7 @@ FROM
 			
 			AND b.choice_id = c.id
 			AND b.productpaper = qp.id
-			AND qp.product = #{product} AND qp.openid=#{openid} and qp.answer_status =1 ORDER BY qp.id desc limit 1 
+			AND qp.product = #{product} AND qp.openid=#{openid} and qp.answer_status =1  and qp.answer_time=#{date} limit 1 
 	</select>
 	
 	<select id="getQuestionByProduct" resultType="com.gene.information.domain.QuestionDO">
@@ -375,8 +386,11 @@ FROM
 	</select>
 	
 	<select id="getNewProductpaperDO" resultType="com.gene.information.domain.ProductpaperDO">
-		select  id,paper,product,user  from qu_product_paper  where  answer_time=(select max(answer_time) from qu_product_paper where product=#{product} and openid=#{openid}
-		and answer_status=1) and product=#{product} and openid=#{openid}
+	<!-- 	select  id,paper,product,user  from qu_product_paper  where  answer_time=(select max(answer_time) from qu_product_paper where product=#{product} and openid=#{openid}
+		and answer_status=1) and product=#{product} and openid=#{openid} -->
+		
+		select  id,paper,product,user  from qu_product_paper  where  answer_time= #{date}
+		 and product=#{product} and openid=#{openid}
 	</select>
 	
 	<select id="getLatestProductpaperDO" resultType="com.gene.information.domain.ProductpaperDO">
@@ -437,5 +451,24 @@ AND openid = #{openid}
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
+	</select>
+	<!-- 获取检查的历史记录时间 -->
+	<select id="getHistoryRecord" resultType="com.gene.information.domain.ProductpaperDO">
+															SELECT
+									q.openid,
+									q.product,
+									q.USER,
+									q.answer_status,
+									q.answer_time,
+									b.name productName
+								FROM
+									qu_product_paper q
+								join biz_product b
+								on q.product=b.id
+								WHERE
+									openid = #{openid}
+									and b.id=#{product}
+								AND answer_status = 1
+								order by q.answer_time desc
 	</select>
 </mapper>
