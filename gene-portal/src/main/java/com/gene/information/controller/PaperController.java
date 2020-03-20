@@ -310,7 +310,7 @@ public class PaperController {
 		System.out.println("送到页面的openid====================="+openid);
 		System.out.println("送到页面的openid====================="+openid);
 		
-		CustomerPaperDO udo1 = paperService.getLatestCustomerPaperDO(openid,product);
+		CustomerPaperDO udo1 = paperService.getCustomerPaperDO(openid,product,date);
 		   System.out.println(	"11111111111111======="+udo1.getHigh());
 		   System.out.println(	"11111111111111======="+udo1.getWeight());
 		   System.out.println(	"11111111111111======="+udo1.getUsername());
