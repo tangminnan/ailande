@@ -469,6 +469,6 @@ AND openid = #{openid}
 									openid = #{openid}
 									and b.id=#{product}
 								AND answer_status = 1
-								order by q.answer_time desc
+and q.USER is not null								order by q.answer_time desc
 	</select>
 </mapper>

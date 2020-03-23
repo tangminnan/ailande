@@ -206,7 +206,7 @@ table tr:nth-child(even){background:#eeefef;}
 .jianyi{font-size: .4rem;margin:1rem 0 .35rem;}
 .jianyi span{background:url(../images/redBar.png) no-repeat bottom;-webkit-background-size:100% .2rem;background-size:100% .2rem;}
 
-.jyiBox{background: #fff;border:.04rem solid #231815;border-radius:.3rem;width: 100%;height: 5rem;position: relative;margin-bottom:.36rem;}
+.jyiBox{background: #fff;border:.04rem solid #231815;border-radius:.1rem;width: 100%;height: 5rem;position: relative;margin-bottom:.36rem;}
 .jyiBox .jsBg{width: 3.37rem;height: 2.25rem;position: absolute;left:-5%;top: 0;}
 .jyiBox .name{width: 3.65rem;position: absolute;left:.65rem;top:1.8rem;}
 .jyiBox .name span{font-size: .36rem;display: block;font-weight: bold;}
