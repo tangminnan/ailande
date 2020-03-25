@@ -60,7 +60,7 @@ public class PaperController {
 		System.out.println("回调执行");
 		System.out.println("回调执行");
 		String code = request.getParameter("code");
-    	String openid = "o85JHw-iXn1_uxz7SgHxdJQf30LU";//暂定写死，之前是空字符串
+    	String openid = "";//暂定写死，之前是空字符串
     	if(StringUtils.isNotBlank(code)){
     		try {
 				openid = WechatOAConfig.getAccessToken(code);
@@ -113,11 +113,26 @@ public class PaperController {
 
 	@GetMapping("/getHistoryRecord")
 	@ResponseBody
-	public List<ProductpaperDO> getHistoryRecord(String openid,Integer product){
+	public List<ProductpaperDO> getHistoryRecord(String openid,Integer product,@RequestParam(value="guanjianzi",required=false) String guanjianzi){
 		/**
          * 获取检查的历史记录时间
          */
-       return paperService.getHistoryRecord(openid,product);
+		 List<ProductpaperDO> list  = paperService.getHistoryRecord(openid,product);
+		 if(!StringUtils.isBlank(guanjianzi))
+			 list=list.stream().filter(a->guanjianzi.equals(a.getUsername())).collect(Collectors.toList());
+		 return list;
+	}
+	
+	@GetMapping("/getHistoryRecordByGuanjianzi")
+	@ResponseBody
+	public R getHistoryRecordByGuanjianzi(String openid,Integer product,String guanjianzi){
+		int count = paperService.getOldCouunt(openid,product,guanjianzi);
+		if(count>0){
+			paperService.updateOldOpenId(openid,product,guanjianzi);
+			paperService.updateOldOIpenIdCustomer(openid,product,guanjianzi);
+		}
+		return R.ok(guanjianzi);
+		
 	}
 		
     
@@ -218,7 +233,7 @@ public class PaperController {
 	public String getReportPage(HttpServletRequest request,HttpServletResponse response,Model model){
 		
 		String code = request.getParameter("code");
-    	String openid = "o85JHw-iXn1_uxz7SgHxdJQf30LU";//暂定写死，之前是空字符串
+    	String openid = "";//暂定写死，之前是空字符串
     	if(StringUtils.isNotBlank(code)){
     		try {
 				openid = WechatOAConfig.getAccessToken(code);
@@ -260,9 +275,11 @@ public class PaperController {
 		if(objs!=null)
 			return paperService.saveWenJuan(objs,request,openid);
 		else{
-			Integer[] products = (Integer[]) request.getSession().getAttribute("products");
-			System.out.println("products===="+products.length);
-			for(int i : products){
+			List<ProductpaperDO> plist = paperService.getChoosedProductByOpenId(openid);
+//			Integer[] products = (Integer[]) request.getSession().getAttribute("products");
+//			System.out.println("products===="+products.length);
+			for(ProductpaperDO pro : plist){
+				Integer i = pro.getProduct();
 				CustomerPaperDO customerPaperDO = new CustomerPaperDO();
 				customerPaperDO.setCreateTime(new Date());
 				customerPaperDO.setAge(age);
@@ -274,11 +291,11 @@ public class PaperController {
 				customerPaperDO.setOpenid(openid);
 				customerPaperDO.setProductId(i);
 				paperService.saveCustomerPaperDO(customerPaperDO);
-				ProductpaperDO productpaperDO = paperService.getLatestProductPaper(openid, i);
+//				ProductpaperDO productpaperDO = paperService.getLatestProductPaper(openid, i);
 				int user = customerPaperDO.getId();
-				Optional.ofNullable(productpaperDO).ifPresent(p ->{
-					productpaperDO.setUser(user);
-					paperService.updateProductPaper(productpaperDO);
+				Optional.ofNullable(pro).ifPresent(p ->{
+					pro.setUser(user);
+					paperService.updateProductPaper(pro);
 				});
 				
 			}
@@ -456,7 +473,7 @@ public class PaperController {
 	    	/**
 	    	 * 计算身体现状80分得分
 	    	 */
-	    	int shenti80=(int)((float)mapD.get("SHENTI_ZHUANG")/mapT.get("SHENTI_ZHUANG")*100);
+	        int shenti80=(int)((float)mapD.get("SHENTI_ZHUANG")/mapT.get("SHENTI_ZHUANG")*100);
 	    	model.addAttribute("shenti80", shenti80);
 	    	/**
 	    	 * 计算饮食状况 60分得分

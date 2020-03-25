@@ -426,5 +426,32 @@ public class PaperServiceImpl implements PaperService{
 		return paperDao.getCustomerPaperDO(openid,product,date);
 	}
 
+	/**
+	 * 替换旧的openid
+	 */
+	@Override
+	public void updateOldOpenId(String openid, Integer product, String guanjianzi) {
+		paperDao.updateOldOpenId(openid,product,guanjianzi);
+	}
+
+	@Override
+	public void updateOldOIpenIdCustomer(String openid, Integer product, String guanjianzi) {
+		paperDao.updateOldOIpenIdCustomer(openid,product,guanjianzi);
+	}
+
+	@Override
+	public int getOldCouunt(String openid, Integer product, String guanjianzi) {
+		
+		return paperDao.getOldCouunt(openid,product,guanjianzi);
+	}
+
+	/**
+	 * 获取选择的产品啊
+	 */
+	@Override
+	public List<ProductpaperDO> getChoosedProductByOpenId(String openid) {
+		return paperDao.getChoosedProductByOpenId(openid);
+	}
+
 	
 }

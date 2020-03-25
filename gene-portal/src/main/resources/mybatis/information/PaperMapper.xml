@@ -460,15 +460,35 @@ AND openid = #{openid}
 									q.USER,
 									q.answer_status,
 									q.answer_time,
-									b.name productName
+									b.name productName,
+									bi.username
 								FROM
 									qu_product_paper q
 								join biz_product b
 								on q.product=b.id
+								join biz_customer_paper bi
+								on q.USER = bi.id
 								WHERE
-									openid = #{openid}
+									bi.openid = #{openid}
 									and b.id=#{product}
+								   
 								AND answer_status = 1
 and q.USER is not null								order by q.answer_time desc
+	</select>
+	
+	<update id="updateOldOpenId" >
+			update qu_product_paper set openid=#{openid}
+				where openid!=#{openid} and openid  in(select openid from biz_customer_paper where username=#{guanjianzi})
+	</update>
+	<update id="updateOldOIpenIdCustomer">
+		update biz_customer_paper set openid=#{openid} where openid!=#{openid} and username=#{guanjianzi} and product=#{product}
+	</update>
+	<select id="getOldCouunt" resultType="int">
+		select count(*) from biz_customer_paper where openid!=#{openid} and username=#{guanjianzi} and product_id=#{product}
+	</select>
+	
+	<select id="getChoosedProductByOpenId" resultType="com.gene.information.domain.ProductpaperDO">
+		select id, user,product,answer_time from qu_product_paper where answer_status=0 and openid=#{openid}
+		and answer_time=(select max(answer_time) from qu_product_paper where answer_status=0 and openid=#{openid})
 	</select>
 </mapper>

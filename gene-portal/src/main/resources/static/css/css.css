@@ -236,7 +236,12 @@ table tr:nth-child(even){background:#eeefef;}
 /*=========新增话术20200317============*/
 .huashu{background: #fff;}
 /*=========新增历史记录20200320============*/
-.History li{padding:0 .3rem;line-height: .8rem;font-size:.28rem;margin-bottom:.02rem;background:#fff url(../images/lishi.png) no-repeat 95% center;-webkit-background-size:.17rem .3rem;background-size:.17rem .3rem;}
+.History{margin-top:1rem;}
+.History li{padding:0 .3rem;line-height:1rem;font-size:.3rem;margin-bottom:.02rem;background:#fff url(../images/lishi.png) no-repeat 95% center;-webkit-background-size:.17rem .3rem;background-size:.17rem .3rem;}
 .History li em{margin-left:.2rem;}
+.moreSS{position: fixed;top:0;left:0;height:.8rem;width: 100%;}
+.moreSS input{font-size:.28rem;height: .8rem;float: left;}
+.moreSS .SStxt{width: 80%;background: #fff;padding:0 .1rem;border:1px solid #248dce;}
+.moreSS .SSbtn{width: 20%;background: #248dce;color:#fff;}
 
 

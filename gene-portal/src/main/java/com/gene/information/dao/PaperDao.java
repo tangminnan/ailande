@@ -126,4 +126,14 @@ public interface PaperDao {
 	List<ProductpaperDO> getHistoryRecord(@Param("openid") String openid,@Param("product") Integer product);
 
 	CustomerPaperDO getCustomerPaperDO(@Param("openid") String openid,@Param("product") Integer product,@Param("date") Date date);
+	/**
+	 * 替换旧的openid
+	 */
+	void updateOldOpenId(@Param("openid") String openid,@Param("product") Integer product,@Param("guanjianzi") String guanjianzi);
+
+	void updateOldOIpenIdCustomer(@Param("openid") String openid,@Param("product") Integer product,@Param("guanjianzi") String guanjianzi);
+
+	int getOldCouunt(@Param("openid") String openid,@Param("product") Integer product,@Param("guanjianzi") String guanjianzi);
+
+	List<ProductpaperDO> getChoosedProductByOpenId(String openid);
 }

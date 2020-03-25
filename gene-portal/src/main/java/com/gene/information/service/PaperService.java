@@ -86,6 +86,18 @@ public interface PaperService {
 	List<ProductpaperDO> getHistoryRecord(String openid,Integer product);
 
 	CustomerPaperDO getCustomerPaperDO(String openid, Integer product, Date date);
+	/**
+	 * 替换旧的openid
+	 */
+	void updateOldOpenId(String openid, Integer product, String guanjianzi);
+
+	void updateOldOIpenIdCustomer(String openid, Integer product, String guanjianzi);
+
+	int getOldCouunt(String openid, Integer product, String guanjianzi);
+	/**
+	 * 获取选择的产品啊
+	 */
+	List<ProductpaperDO> getChoosedProductByOpenId(String openid);
 
 	
 }
