@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="../css/css.css" type="text/css">
+<title>历史报告</title>
+<script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="../js/Font.js"></script>
+</head>
+<body class="bg-cc">
+	<input type="hidden" name="product" th:value="${product}">
+	<input type="hidden" name="name" th:value="${name}">
+	<input type="hidden" id="openid" th:value="${openid}">
+	<input type="hidden" id="date" th:value="${date}">
+	<div class="moreSS">
+		<input class="SStxt" type="text" placeholder="请输入搜索关键字/如姓名"/>
+		<input class="SSbtn" type="button" value="搜 索"/>
+	</div>
+	<div class="History">
+		<ul>
+			<!-- <li>2019-10-21 <em>13:23</em></li>
+			<li>2019-01-15 <em>09:38</em></li>
+			<li>2019-10-10 <em>08:10</em></li> -->
+		</ul>
+	</div>
+</body>
+<script type="text/javascript">
+var openid=$("#openid").val();
+var product=$("[name='product']").val();
+var name=$("[name='name']").val();
+var li="";
+$.ajax({
+	url: "/paper/getHistoryRecord",
+	type: "GET",
+	async : false,
+	data:{openid:openid,product:product},
+	success: function(r){
+		li="";
+		for(var i=0;i<r.length;i++){
+			var time=r[i].answerTime;
+			li+='<li>'+time.substring(0,10)+'<em>'+time.substring(11,19)+'</em><input type="hidden" class="time" value="'+r[i].answerTime+'"/></li>';
+		}
+		$("ul").html(li);
+	}
+});
+
+   $("ul").on("click","li", function(){
+	var date=$(this).children(":hidden").val();
+	window.location.href="/paper/startLOOK?product="+product+"&name="+name+"&openid="+openid+"&date="+date;
+})
+
+$(".SSbtn").click(function(){
+	var guanjianzi =  $(".SStxt").val();
+	$.ajax({
+		url: "/paper/getHistoryRecordByGuanjianzi",
+		type: "GET",
+		async : false,
+		data:{openid:openid,product:product,guanjianzi:guanjianzi},
+		success: function(r){
+			var guanjianzi=r.msg;
+			$.ajax({
+				url: "/paper/getHistoryRecord",
+				type: "GET",
+				async : false,
+				data:{openid:openid,product:product,guanjianzi:guanjianzi},
+				success: function(r){console.info(r)
+					li="";
+					for(var i=0;i<r.length;i++){
+						var time=r[i].answerTime;
+						li+='<li>'+time.substring(0,10)+'<em>'+time.substring(11,19)+'</em><input type="hidden" class="time" value="'+r[i].answerTime+'"/></li>';
+					}
+					$("ul").html(li);
+				}
+			});
+		}
+	});
+});
+</script>
+</html>
+
