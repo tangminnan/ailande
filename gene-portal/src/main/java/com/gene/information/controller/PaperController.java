@@ -65,11 +65,8 @@ public class PaperController {
     		try {
 				openid = WechatOAConfig.getAccessToken(code);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-    		
-        	
     	}
     	model.addAttribute("openid", openid);
     	
