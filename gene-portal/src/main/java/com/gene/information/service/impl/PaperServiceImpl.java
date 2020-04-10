@@ -276,7 +276,7 @@ public class PaperServiceImpl implements PaperService{
 	 * 计算得分
 	 */
 	@Override
-	public Integer getChoicedScores(Integer productpaper, String fenlei) {
+	public Double getChoicedScores(Integer productpaper, String fenlei) {
 		return paperDao.getChoicedScores(productpaper,fenlei);
 	}
 
@@ -284,19 +284,19 @@ public class PaperServiceImpl implements PaperService{
 	 * 计算分类总分
 	 */
 	@Override
-	public Integer getAllChoicedScores(Integer productpaper,Integer product, String fenlei) {
-		int max=0;//要返回的最高分
+	public Double getAllChoicedScores(Integer productpaper,Integer product, String fenlei) {
+		double max=0.0;//要返回的最高分
 		List<QuestionDO> questionDOList = paperDao.getQuestionDOType(product,fenlei);//分类下的所有题目
-		if(questionDOList==null || questionDOList.size()==0) return 0;
+		if(questionDOList==null || questionDOList.size()==0) return 0.0;
 		for(QuestionDO questionDO :questionDOList){
 			List<ChoiceDO> choiceDOList = questionDO.getChoiceList();//题目下的所有选项
-			List<Integer> cmaxList = new ArrayList<Integer>();
+			List<Double> cmaxList = new ArrayList<Double>();
 			for(ChoiceDO choiceDO :choiceDOList){
 				
 				ChoiceProductDO choiceProductDO = choiceDO.getChoiceProductList().get(0);//选项下的所有分值  我靠
-				Integer cmax=0; 
-				Integer score = choiceProductDO.getScore();
-				Integer scores = choiceProductDO.getScores();
+				Double cmax=0.0; 
+				Double score = choiceProductDO.getScore();
+				Double scores = choiceProductDO.getScores();
 				score= score==null?0:score;
 				scores=scores==null?0:scores;
 				cmax=score>scores ? score:scores;
@@ -312,9 +312,9 @@ public class PaperServiceImpl implements PaperService{
 	/**
 	 * 获取最大的分值
 	 */
-	private Integer getMaxFenInList(List<Integer> list){
-		if(list==null || list.size()==0)  return 0;
-		int max=list.get(0);
+	private Double getMaxFenInList(List<Double> list){
+		if(list==null || list.size()==0)  return 0.0;
+		double max=list.get(0);
 		for(int i=1;i<list.size();i++){
 			if(list.get(i)>max)
 				max=list.get(i);

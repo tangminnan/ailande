@@ -356,8 +356,8 @@ public class PaperController {
 		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
-	    Map<String,Integer> mapD  = new HashMap<String,Integer>();
-	    Map<String,Integer> mapT = new HashMap<String,Integer>();
+	    Map<String,Double> mapD  = new HashMap<String,Double>();
+	    Map<String,Double> mapT = new HashMap<String,Double>();
 	    DecimalFormat df = new DecimalFormat("0.0");
 	   /**
 	    * 根据openid  产品去拿最新的检测结果
@@ -370,20 +370,20 @@ public class PaperController {
 	    	Integer productpaper = productpaperDO.getId();
 	    	List<String> fenleiList = Arrays.asList("SHENTI_ZHUANG","SHANSHI_XIGUAN","SHENGHUO_FANGSHI","SHUIMIAN_XIGUAN","YUNDONG_XIGUANG");//身体状况  膳食习惯  生活方式  睡眠压力  运动习惯
 	    	for(String fenlei :fenleiList){
-	    		Integer rt=paperService.getChoicedScores(productpaper,fenlei);
-	    		if(rt==null) rt=0;
+	    		Double rt=paperService.getChoicedScores(productpaper,fenlei);
+	    		if(rt==null) rt=0.0;
 	    		mapD.put(fenlei,rt);
 	    		mapT.put(fenlei,paperService.getAllChoicedScores(productpaper,product,fenlei));
 	    	}	
 	    	/**
 	    	 * 计算身体现状80分得分
 	    	 */
-	    	int shenti80=(int)((float)mapD.get("SHENTI_ZHUANG")/mapT.get("SHENTI_ZHUANG")*100);
+	    	int shenti80=(int)(mapD.get("SHENTI_ZHUANG")/mapT.get("SHENTI_ZHUANG")*100);
 	    	model.addAttribute("shenti80", shenti80);
 	    	/**
 	    	 * 计算饮食状况 60分得分
 	    	 */
-	    	Integer defen=0,zongfen=0;
+	    	double defen=0,zongfen=0;
 	    	for(String fenlei :fenleiList){
 	    		
 	    		if(!"SHENTI_ZHUANG".equals(fenlei)){
@@ -391,7 +391,7 @@ public class PaperController {
 	    			zongfen+=mapT.get(fenlei);
 	    		}
 	    	}
-	    	int yinshi60 =(int)((float)defen/zongfen*100);
+	    	int yinshi60 =(int)(defen/zongfen*100);
     		model.addAttribute("yinshi60",yinshi60);
     		/**
     		 * 统计话术
@@ -419,10 +419,10 @@ public class PaperController {
 	    	/**
 	    	 * 计算各个分类得分占比
 	    	 */
-	    	Integer zongfenzhanbi=0;
-	    	Map<String,Integer> mapa = new HashMap<String,Integer>();
+	    	double zongfenzhanbi=0;
+	    	Map<String,Double> mapa = new HashMap<String,Double>();
 	    	for(String fenlei :fenleiList){
-	    		mapa.put(fenlei+"zhanbi",0);
+	    		mapa.put(fenlei+"zhanbi",0.0);
 	    	}
 	    	for(String fenlei :fenleiList){
 	    		if(!"SHENTI_ZHUANG".equals(fenlei)){
@@ -433,7 +433,7 @@ public class PaperController {
 	    	
 	    	for(String fenlei :fenleiList){
 	    		if(!"SHENTI_ZHUANG".equals(fenlei)){
-	    			model.addAttribute(fenlei+"zhanbi",df.format((float)mapa.get(fenlei+"zhanbi")/zongfenzhanbi*100));
+	    			model.addAttribute(fenlei+"zhanbi",df.format(mapa.get(fenlei+"zhanbi")/zongfenzhanbi*100));
 	    		}
 	    	}
 	    }
@@ -458,27 +458,27 @@ public class PaperController {
 		ProductpaperDO productpaperDO = productpaperDOList.get(0);*/
 		 List<ProductpaperDO> productpaperDOList = paperService.getNewProductpaperDO(openid,product,date);
 		 ProductpaperDO productpaperDO=productpaperDOList.get(0);
-		Map<String,Integer> mapD  = new HashMap<String,Integer>();
-	    Map<String,Integer> mapT = new HashMap<String,Integer>();
+		Map<String,Double> mapD  = new HashMap<String,Double>();
+	    Map<String,Double> mapT = new HashMap<String,Double>();
 	    DecimalFormat df = new DecimalFormat("0.0");
 	    if(productpaperDO!=null){//统计分值
 	    	Integer productpaper = productpaperDO.getId();
 	    	List<String> fenleiList = Arrays.asList("SHENTI_ZHUANG","SHANSHI_XIGUAN","SHENGHUO_FANGSHI","SHUIMIAN_XIGUAN","YUNDONG_XIGUANG");//身体状况  膳食习惯  生活方式  睡眠压力  运动习惯
 	    	for(String fenlei :fenleiList){
-	    		Integer rt=paperService.getChoicedScores(productpaper,fenlei);
-	    		if(rt==null) rt=0;
+	    		Double rt=paperService.getChoicedScores(productpaper,fenlei);
+	    		if(rt==null) rt=0.0;
 	    		mapD.put(fenlei,rt);
 	    		mapT.put(fenlei,paperService.getAllChoicedScores(productpaper,product,fenlei));
 	    	}	
 	    	/**
 	    	 * 计算身体现状80分得分
 	    	 */
-	        int shenti80=(int)((float)mapD.get("SHENTI_ZHUANG")/mapT.get("SHENTI_ZHUANG")*100);
+	        int shenti80=(int)(mapD.get("SHENTI_ZHUANG")/mapT.get("SHENTI_ZHUANG")*100);
 	    	model.addAttribute("shenti80", shenti80);
 	    	/**
 	    	 * 计算饮食状况 60分得分
 	    	 */
-	    	Integer defen=0,zongfen=0;
+	    	double defen=0,zongfen=0;
 	    	for(String fenlei :fenleiList){
 	    		
 	    		if(!"SHENTI_ZHUANG".equals(fenlei)){
@@ -486,15 +486,15 @@ public class PaperController {
 	    			zongfen+=mapT.get(fenlei);
 	    		}
 	    	}
-	    	int yinshi60 =(int)((float)defen/zongfen*100);yinshi600=yinshi60;
+	    	int yinshi60 =(int)(defen/zongfen*100);yinshi600=yinshi60;
     		model.addAttribute("yinshi60",yinshi60);
     		/**
 	    	 * 计算各个分类得分占比
 	    	 */
-	    	Integer zongfenzhanbi=0;
-	    	Map<String,Integer> mapa = new HashMap<String,Integer>();
+	    	Double zongfenzhanbi=0.0;
+	    	Map<String,Double> mapa = new HashMap<String,Double>();
 	    	for(String fenlei :fenleiList){
-	    		mapa.put(fenlei+"zhanbi",0);
+	    		mapa.put(fenlei+"zhanbi",0.0);
 	    	}
 	    	for(String fenlei :fenleiList){
 	    		if(!"SHENTI_ZHUANG".equals(fenlei)){
@@ -505,7 +505,7 @@ public class PaperController {
 	    	
 	    	for(String fenlei :fenleiList){
 	    		if(!"SHENTI_ZHUANG".equals(fenlei)){
-	    			model.addAttribute(fenlei+"zhanbi",df.format((float)mapa.get(fenlei+"zhanbi")/zongfenzhanbi*100));
+	    			model.addAttribute(fenlei+"zhanbi",df.format(mapa.get(fenlei+"zhanbi")/zongfenzhanbi*100));
 	    		}
 	    	}
 	    }

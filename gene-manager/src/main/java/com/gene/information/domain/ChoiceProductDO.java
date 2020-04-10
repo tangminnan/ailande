@@ -21,7 +21,7 @@ public class ChoiceProductDO implements Serializable {
     /**
      * 选项分值
      */
-    private Integer score;
+    private Double score;
    
     /**
      * 是否选中
@@ -51,7 +51,7 @@ public class ChoiceProductDO implements Serializable {
     private String bmi;
     private String bmis;
     //选项分值
-  	private Integer scores;
+  	private Double scores;
   	//调整方向1
       private String tadfs;
     //调整方向2
@@ -74,10 +74,10 @@ public class ChoiceProductDO implements Serializable {
 	public void setQuestion(Integer question) {
 		this.question = question;
 	}
-	public Integer getScore() {
+	public Double getScore() {
 		return score;
 	}
-	public void setScore(Integer score) {
+	public void setScore(Double score) {
 		this.score = score;
 	}
 	
@@ -150,10 +150,10 @@ public class ChoiceProductDO implements Serializable {
 	public void setTadjianyi(String tadjianyi) {
 		this.tadjianyi = tadjianyi;
 	}
-	public Integer getScores() {
+	public Double getScores() {
 		return scores;
 	}
-	public void setScores(Integer scores) {
+	public void setScores(Double scores) {
 		this.scores = scores;
 	}
 	public String getTadfs() {

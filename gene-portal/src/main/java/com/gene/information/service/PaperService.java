@@ -51,11 +51,11 @@ public interface PaperService {
 	/**
 	 * 计算提分类得分
 	 */
-	Integer getChoicedScores(Integer productpaper, String fenlei);
+	Double getChoicedScores(Integer productpaper, String fenlei);
 	/**
 	 * 计算分类总分
 	 */
-	Integer getAllChoicedScores(Integer productpaper,Integer product, String fenlei);
+	Double getAllChoicedScores(Integer productpaper,Integer product, String fenlei);
 	
 	int getgetQuestionDOSize(Integer[] products);
 

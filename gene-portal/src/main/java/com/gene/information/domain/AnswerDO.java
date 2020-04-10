@@ -26,7 +26,7 @@ public class AnswerDO implements Serializable {
 	//答案ID
 	private Integer choiceId;
 	//分值 
-	private Integer score;
+	private Double score;
 	//题目分类
 	private String fenlei;
 	//填空题答案
@@ -79,10 +79,10 @@ public class AnswerDO implements Serializable {
 	public Integer getQuestionId() {
 		return questionId;
 	}
-	public Integer getScore() {
+	public Double getScore() {
 		return score;
 	}
-	public void setScore(Integer score) {
+	public void setScore(Double score) {
 		this.score = score;
 	}
 	public Integer getProductpaper() {
