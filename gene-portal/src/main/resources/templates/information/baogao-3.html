@@ -347,7 +347,7 @@ $(".zhidao input").last().click(function(){
  haikexuanze=[];//还可选择
  flag=false;
 //判断速七活力益生菌胶囊                                                   
-var jianyibuchong=["排便频率：大于3次/天","排便频率：有便秘倾向","便便形状：不成型软便","便便形状：硬块","便便形状：软硬掺杂","便便形状：水状"];
+var jianyibuchong=["通常的排便频率？：大于3次/天","通常的排便频率？: 有便秘倾向","大部分时候便便的形态？：不成型软便","大部分时候便便的形态？：硬块","大部分时候便便的形态？：软硬掺杂","大部分时候便便的形态？: 水状"];
 for(var i=0;i<paibianpinlvxingzhuang.length;i++){
 	 var l = paibianpinlvxingzhuang[i];
 	 for(var j=0;j<jianyibuchong.length;j++){
@@ -366,27 +366,43 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
  } 
  
  //判断每日活力益生菌
- var manzu={};
- jianyibuchong=["便便形状：香蕉型","排便频率：1-3次/天","便便形状：成型的软便"]
+ //var manzu={};
+ //jianyibuchong=["便便形状：香蕉型","排便频率：1-3次/天","便便形状：成型的软便"]
+ var flag=false;
  for(var i=0;i< paibianpinlvxingzhuang.length;i++){
 	 var l = paibianpinlvxingzhuang[i];
-	 for(var j=0;j<jianyibuchong.length;j++){
+	  /* for(var j=0;j<jianyibuchong.length;j++){
 		 if(l==jianyibuchong[j]){
 			 manzu[l]=1;
 		 }
-	 }
+	 }  */
+	 if(l=="通常的排便频率？:1-3次/天")
+		 flag=true;
  }
- var num=0;
+ if(flag){
+ 	for(var i=0;i< paibianpinlvxingzhuang.length;i++){
+	 	var l = paibianpinlvxingzhuang[i];
+	 	if(l=="大部分时候便便的形态？：香蕉型" || l=="大部分时候便便的形态？：成型软便"){
+		 	var obj={'title':'每日活力益生菌','images':'../images/JF-meirihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843270179'};
+		 	tuijianarry.push(obj);
+	 	}	 
+ 	}
+ }
+ /* var num=0;
  for(var k in manzu){
 	 num++;
  }
  if(num>=2){
 	 var obj={'title':'每日活力益生菌','images':'../images/JF-meirihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843270179'};
 	 tuijianarry.push(obj);
- }
+ } */
  
- //判断低聚果糖益生元粉											  									       
- var jianyibuchong=["排便频率: 有便秘倾向","排便频率：大于3次/天","蔬菜摄入量：平均小于1拳/天","蔬菜摄入量：平均1-3拳/天","新鲜水果摄入量：平均小于1拳头/天","粗粮摄入量：平均小于0.5拳头/天"];
+ //判断低聚果糖益生元粉
+ console.info("==============================================");
+ console.info(paibianpinlvshucaishuiguoculiang);
+ console.info("==============================================");
+
+ var jianyibuchong=["通常的排便频率？: 有便秘倾向","通常的排便频率？：大于3次/天","蔬菜摄入量：平均小于1拳/天","蔬菜摄入量：平均1-3拳/天","新鲜水果摄入量：平均小于1拳头/天","粗粮摄入量：平均小于0.5拳头/天"];
  for(var i=0;i< paibianpinlvshucaishuiguoculiang.length;i++){//console.info(paibianpinlvshucaishuiguoculiang[i]);
 	 var l = paibianpinlvshucaishuiguoculiang[i];
 	 for(var j=0;j<jianyibuchong.length;j++){
