@@ -37,7 +37,7 @@ public class PaperController {
 		System.out.println("回调执行");
 		System.out.println("回调执行");
 		String code = request.getParameter("code");
-    	String openid = "o85JHw-iXn1_uxz7SgHxdJQf30LU";//暂定写死，之前是空字符串
+    	String openid = "";//暂定写死，之前是空字符串
     	if(StringUtils.isNotBlank(code)){
     		try {
 				openid = WechatOAConfig.getAccessToken(code);
@@ -207,7 +207,7 @@ public class PaperController {
 	public String getReportPage(HttpServletRequest request,HttpServletResponse response,Model model){
 		
 		String code = request.getParameter("code");
-    	String openid = "o85JHw-iXn1_uxz7SgHxdJQf30LU";//暂定写死，之前是空字符串
+    	String openid = "";//暂定写死，之前是空字符串
     	if(StringUtils.isNotBlank(code)){
     		try {
 				openid = WechatOAConfig.getAccessToken(code);

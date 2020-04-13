@@ -51,7 +51,12 @@ $.ajax({
 
    $("ul").on("click","li", function(){
 	var date=$(this).children(":hidden").val();
-	window.location.href="/paper/startLOOK?product="+product+"&name="+name+"&openid="+openid+"&date="+date;
+//	window.location.href="/paper/startLOOK?product="+product+"&name="+name+"&openid="+openid+"&date="+date;
+	if(name=="肠胃调理")
+		window.location.href="/paper/readMyReport?product="+product+"&name="+name+"&openid="+openid+"&date="+date;
+	if(name=="科学瘦身")
+		window.location.href="/paper/kexueshoushens?product="+product+"&name="+name+"&openid="+openid+"&date="+date;
+		
 })
 
 $(".SSbtn").click(function(){
