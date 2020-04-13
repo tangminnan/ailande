@@ -303,10 +303,10 @@ $(".zhidao input").last().click(function(){
 						l+=	'</tr>';
 						var cc=data.content;
 						var text=data.content+"："+cdata.choicecontent;
-						if(cc.indexOf("排便频率")>=0 || cc.indexOf("便便形状")>=0){
+						if(cc.indexOf("通常的排便频率？")>=0 || cc.indexOf("大部分时候便便的形态？")>=0){
 							paibianpinlvxingzhuang.push(text); 
 						}
-						if(cc.indexOf("排便频率")>=0 || cc.indexOf("蔬菜摄入") >=0|| cc.indexOf("水果摄入")>=0 || cc.indexOf("粗粮摄入")>=0){
+						if(cc.indexOf("通常的排便频率？")>=0 || cc.indexOf("平均每天吃几份蔬菜？") >=0|| cc.indexOf("平均每天吃几份水果？")>=0 || cc.indexOf("平均每天吃几份粗粮？")>=0){
 							 paibianpinlvshucaishuiguoculiang.push(text);
 						}
 						if(cc.indexOf("腹胀")>=0 || cc.indexOf("疾病史")>=0){
@@ -342,12 +342,18 @@ $(".zhidao input").last().click(function(){
   }
  
   /***************产品推荐逻辑*******************/
+  console.info(paibianpinlvxingzhuang);
+  console.info("-------------------------------");
+  console.info(paibianpinlvshucaishuiguoculiang);
+  console.info("-------------------------------");
+  console.info(futongfuzhangfansuanwixhangjibbing);
+  console.info("-------------------------------");
 
  var tuijianarry=[],//建议补充
  haikexuanze=[];//还可选择
  flag=false;
 //判断速七活力益生菌胶囊                                                   
-var jianyibuchong=["排便频率：大于3次/天","排便频率：有便秘倾向","便便形状：不成型软便","便便形状：硬块","便便形状：软硬掺杂","便便形状：水状"];
+var jianyibuchong=["通常的排便频率？：大于3次/天","通常的排便频率？: 有便秘倾向","大部分时候便便的形态？：不成型软便","大部分时候便便的形态？：硬块","大部分时候便便的形态？：软硬掺杂","大部分时候便便的形态？: 水状"];
 for(var i=0;i<paibianpinlvxingzhuang.length;i++){
 	 var l = paibianpinlvxingzhuang[i];
 	 for(var j=0;j<jianyibuchong.length;j++){
@@ -366,27 +372,23 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
  } 
  
  //判断每日活力益生菌
- var manzu={};
- jianyibuchong=["便便形状：香蕉型","排便频率：1-3次/天","便便形状：成型的软便"]
+ var flag=false;
  for(var i=0;i< paibianpinlvxingzhuang.length;i++){
 	 var l = paibianpinlvxingzhuang[i];
-	 for(var j=0;j<jianyibuchong.length;j++){
-		 if(l==jianyibuchong[j]){
-			 manzu[l]=1;
-		 }
-	 }
+	 if(l=="通常的排便频率？：1-3次/天")
+		 flag=true;
  }
- var num=0;
- for(var k in manzu){
-	 num++;
+ if(flag){
+ 	for(var i=0;i< paibianpinlvxingzhuang.length;i++){
+	 	var l = paibianpinlvxingzhuang[i];
+	 	if(l=="大部分时候便便的形态？：香蕉型" || l=="大部分时候便便的形态？：成型的软便"){
+		 	var obj={'title':'每日活力益生菌','images':'../images/JF-meirihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843270179'};
+		 	tuijianarry.push(obj);
+	 	}	 
+ 	}
  }
- if(num>=2){
-	 var obj={'title':'每日活力益生菌','images':'../images/JF-meirihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843270179'};
-	 tuijianarry.push(obj);
- }
- 
  //判断低聚果糖益生元粉											  									       
- var jianyibuchong=["排便频率: 有便秘倾向","排便频率：大于3次/天","蔬菜摄入量：平均小于1拳/天","蔬菜摄入量：平均1-3拳/天","新鲜水果摄入量：平均小于1拳头/天","粗粮摄入量：平均小于0.5拳头/天"];
+ var jianyibuchong=["通常的排便频率？: 有便秘倾向","通常的排便频率？：大于3次/天","平均每天吃几份蔬菜？：小于2份","平均每天吃几份蔬菜？：2-3份","平均每天吃几份水果？：小于2份","平均每天吃几份粗粮：几乎不吃","平均每天吃几份粗粮：小于1份"];
  for(var i=0;i< paibianpinlvshucaishuiguoculiang.length;i++){//console.info(paibianpinlvshucaishuiguoculiang[i]);
 	 var l = paibianpinlvshucaishuiguoculiang[i];
 	 for(var j=0;j<jianyibuchong.length;j++){
@@ -442,7 +444,7 @@ var fuhexiaohuameijiaonang='<a style="display:block; padding-left:.3rem;" href="
 						   +'</div>'
 						   +'</a>';
  console.info("======================"+futongfuzhangfansuanwixhangjibbing+"===============================");
- var jianyibuchong=["腹痛腹胀：经常有","疾病史：有","腹痛腹胀：偶尔有"];
+ var jianyibuchong=["通常腹痛、腹胀、胃胀、胃痛、反酸频率？：经常有","胃肠道疾病史：有","通常腹痛、腹胀、胃胀、胃痛、反酸频率？：偶尔有"];
  for(var i=0;i< futongfuzhangfansuanwixhangjibbing.length;i++){
 	 var l = futongfuzhangfansuanwixhangjibbing[i];
 	 for(var j=0;j<jianyibuchong.length;j++){

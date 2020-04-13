@@ -336,10 +336,10 @@ $(".fotNav li:nth-child(4)").click(function(){
 						
 						var cc=data.content;
 						var text=data.content+"："+cdata.choicecontent;
-						if(cc.indexOf("排便频率")>=0 || cc.indexOf("便便形状")>=0){
+						if(cc.indexOf("通常的排便频率？")>=0){
 							paibainpinlv.push(text); 
 						}
-						if(cc.indexOf("排便频率")>=0 || cc.indexOf("蔬菜摄入") >=0|| cc.indexOf("水果摄入")>=0){
+						if(cc.indexOf("通常的排便频率？")>=0 || cc.indexOf("平均每天吃几份蔬菜？") >=0|| cc.indexOf("平均每天吃几份水果？")>=0 || cc.indexOf("平均每天吃几份粗粮？")>=0){
 							paibianpinlvshucaishuiguo.push(text);
 						}
 					}
@@ -375,7 +375,7 @@ $(".fotNav li:nth-child(4)").click(function(){
  flag=false;
  
 //判断速七活力益生菌胶囊                                                   																       
-var jianyibuchong=["排便频率：大于3次/天","排便频率：有便秘倾向","体型现状：脂肪型肥胖","体型现状：体重正常体脂偏高","体型现状：偏瘦"];
+var jianyibuchong=["通常的排便频率？：有便秘倾向","通常的排便频率？：大于3次/天"];
 for(var i=0;i<paibainpinlv.length;i++){
 	 var l = paibainpinlv[i];
 	 for(var j=0;j<jianyibuchong.length;j++){
@@ -395,39 +395,28 @@ for(var i=0;i<paibainpinlv.length;i++){
  
 //判断每日活力益生菌
    var shengxiade=[];
-   var manzu={};
-   var jianyibuchong=["排便频率：1-3次/天","体型现状：脂肪型肥胖","体型现状：体重正常体脂偏高","体型现状：偏瘦"];
+   flag=false
+   var jianyibuchong=["通常的排便频率？:1-3次每天"];
    for(var i=0;i< paibainpinlv.length;i++){
    		var l = paibainpinlv[i];
 	 	for(var j=0;j<jianyibuchong.length;j++){
 		 	if(l==jianyibuchong[j]){
-				 manzu[l]=1;
+				 flag=true;
+				 break;
 			 }
 	 	}
+	 	if(flag==true)
+	 		break;
  	}
- var num=0;
- for(var k in manzu){
-	 num++;
- }
- if(num>=2){
+ if(flag==true){
 	 var obj={'title':'每日活力益生菌','images':'../images/CW-meirihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843270179'};
 	 tuijianarry.push(obj);
-	 shengxiade.push("每日活力益生菌");
  }
- 
- //判断还可选择   每日活力益生菌
- if(shengxiade.length==0 && paibainpinlv.length>0){
-//	 var obj={'title':'安益胶囊','images':'../images/JF-anyijiaonang.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59844980179'};
-	  	 var obj={'title':'每日活力益生菌','images':'../images/CW-meirihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843270179'};
-
-	 haikexuanze.push(obj);
-}
-  
   
  //膳食纤维低聚果糖
  shengxiade=[];
- var jianyibuchong=["排便频率：有便秘倾向","排便频率：大于3次/天","蔬菜摄入量：平均小于1拳/天","蔬菜摄入量：平均1-3拳/天","水果摄入量：平均小于1拳/天","体型现状：脂肪型肥胖","体型现状：体重正常体脂偏高"];
- for(var i=0;i< paibianpinlvshucaishuiguo.length;i++){//console.info(paibianpinlvshucaishuiguoculiang[i]);
+ var jianyibuchong=["通常的排便频率？：有便秘倾向","通常的排便频率？：大于3次/天","平均每天吃几份蔬菜？：小于2份","平均每天吃几份蔬菜？：2-3份","平均每天吃几份水果？：小于2份","体型现状：脂肪型肥胖","体型现状：体重正常体脂偏高","平均每天吃几份粗粮？：几乎不吃","平均每天吃几份粗粮？：小于1份"];
+ for(var i=0;i< paibianpinlvshucaishuiguo.length;i++){
 	 var l = paibianpinlvshucaishuiguo[i];
 	 for(var j=0;j<jianyibuchong.length;j++){
 		 if(l==jianyibuchong[j]){
@@ -463,7 +452,7 @@ for(var i=0;i< tuijianarry.length;i++){
 	
 	 div+= '<div class="ulBox"><a href="'+tuijianarry[i].url+'"><img  class="jsBg" src="'+tuijianarry[i].images+'" alt=""/></a></div>'
 } 
-var obj={'title':'藤黄果提取物','images':'../images/CW-tenghuangguo.png','url':'https://detail.tmall.hk/hk/item.htm?spm=a1z10.3-b.w4011-17792877519.65.2f88b445zSbT0l&id=565509878908&rn=9222ddc0f1f758e79e061d3cfd602cd3&abbucket=9'};
+var obj={'title':'藤黄果提取物','images':'../images/CW-tenghuangguo.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202278430179'};
 div+= '<div class="ulBox"><a href="../tankuang.html"><img  class="jsBg" src="'+obj.images+'" alt=""/></a></div>'
 
 $(".erwewas").after(div);
