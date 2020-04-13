@@ -1,46 +1,23 @@
 package com.gene.information.controller;
 
+import com.gene.common.annotation.Log;
+import com.gene.common.utils.R;
+import com.gene.common.utils.StringUtils;
+import com.gene.information.domain.*;
+import com.gene.information.service.PaperService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collector;
+import java.util.*;
 import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.collections.iterators.ArrayListIterator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.alibaba.fastjson.JSONObject;
-import com.gene.common.annotation.Log;
-import com.gene.common.utils.R;
-import com.gene.common.utils.StringUtils;
-import com.gene.information.domain.AccessToken;
-import com.gene.information.domain.ChoiceProductDO;
-import com.gene.information.domain.CustomerPaperDO;
-import com.gene.information.domain.ProductpaperDO;
-import com.gene.information.domain.QuestionDO;
-import com.gene.information.domain.ReportTalkDO;
-import com.gene.information.domain.WechatOAConfig;
-import com.gene.information.service.PaperService;
 
 @Controller
 @RequestMapping("/paper")
@@ -60,7 +37,7 @@ public class PaperController {
 		System.out.println("回调执行");
 		System.out.println("回调执行");
 		String code = request.getParameter("code");
-    	String openid = "";//暂定写死，之前是空字符串
+    	String openid = "o85JHw-iXn1_uxz7SgHxdJQf30LU";//暂定写死，之前是空字符串
     	if(StringUtils.isNotBlank(code)){
     		try {
 				openid = WechatOAConfig.getAccessToken(code);
@@ -233,7 +210,7 @@ public class PaperController {
 	public String getReportPage(HttpServletRequest request,HttpServletResponse response,Model model){
 		
 		String code = request.getParameter("code");
-    	String openid = "";//暂定写死，之前是空字符串
+    	String openid = "o85JHw-iXn1_uxz7SgHxdJQf30LU";//暂定写死，之前是空字符串
     	if(StringUtils.isNotBlank(code)){
     		try {
 				openid = WechatOAConfig.getAccessToken(code);
