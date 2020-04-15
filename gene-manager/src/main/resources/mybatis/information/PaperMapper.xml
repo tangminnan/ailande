@@ -342,6 +342,7 @@ LEFT JOIN qu_question n ON q.id = n.paper_id
 LEFT JOIN qu_choice c ON n.id = c.question
 LEFT JOIN qu_choice_product t on t.choose=c.id
 where q.id=#{value} and q.del_flag=0
+ORDER BY nsort asc
 	</select>
 
 </mapper>

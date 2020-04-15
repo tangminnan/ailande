@@ -63,7 +63,7 @@ public interface PaperDao {
 	 */
 	List<QuestionDO> getQuestionDOList(@Param("productpaper") Integer productpaper,@Param("fenlei") String fenlei);
 
-	Integer getChoicedScores(@Param("productpaper") Integer productpaper,@Param("fenlei") String fenlei);
+	Double getChoicedScores(@Param("productpaper") Integer productpaper,@Param("fenlei") String fenlei);
 	
 	Integer getAllChoicedScores(@Param("productpaper") Integer productpaper,@Param("product") Integer product,@Param("fenlei") String fenlei);
 	/**

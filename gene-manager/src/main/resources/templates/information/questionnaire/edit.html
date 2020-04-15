@@ -96,6 +96,7 @@
                         <div class="form-group" >
                             <label class="col-sm-1 control-label"><i class="fa fa-arrows"></i></label>
                             <div class="col-sm-6">
+                                <input name="shunxu" id="shunxu" type="text" value="" class="form-control" style="display: none;">
                             	<input name="questionIDID" type="hidden" th:value="${question.id}"/>
                                 <input name="title" type="text" th:value="${question.content}"
                                        class="form-control" placeholder="报告题目内容">
@@ -561,6 +562,7 @@
         <div class="form-group ">
             <label class="col-sm-1 control-label"><i class="fa fa-arrows"></i></label>
             <div class="col-sm-6">
+            	<input name="shunxu" id="shunxu" type="text" value="" class="form-control" style="display: none;">
                 <input name="title" type="text" class="form-control" placeholder="报告题目内容">
             </div>
             <div class="col-sm-2">
@@ -606,7 +608,7 @@
         <div class="form-group">
         	 					<label class="col-sm-1 control-label"><i class="fa fa-arrows"></i></label>
          						<div class="col-sm-6">
-        							<img src="../../img/tousu-pic1.jpg" style="width: 100px;height: 100px;" alt="" name="uploadBtn"/>
+        							<img src="/img/tousu-pic1.jpg" style="width: 100px;height: 100px;" alt="" name="uploadBtn"/>
         						</div>
        					 </div>
         </div>
@@ -618,7 +620,11 @@
 <script type="text/javascript">
 var removedQuestions=[],removedChooses=[];
 var prefix = "/information/questionnaire";
-function getData() {
+function getData() {    
+    var i = 1
+  	 $("input[id='shunxu']").each(function(){
+   		$(this).val(i++)
+  	 })
     var question = new Array();
     $(".draggable .ibox-content").each(function (index, val) {
     	var choice = new Array();
@@ -663,6 +669,7 @@ function getData() {
             type: $(val).find(".question").find("select[name='type']").val(),
             ifStop:$(val).find(".question").find("select[name='ifStop']").val(),
             img:$(val).find(".question").find(".showPic").attr("src"),
+            sort:$(val).find(".question").find("input[name='shunxu']").val(),
             choiceList: choice
         };
         question.push(obj);
@@ -678,6 +685,7 @@ function getData() {
         removedChooses:removedChooses,
         questionList: question
     };
+   
     return JSON.stringify(paper);
 }
 
@@ -879,6 +887,9 @@ function getData() {
                }
            });
      }
+
+     
+     
 </script>
 </body>
 </html>

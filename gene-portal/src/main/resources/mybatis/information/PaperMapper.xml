@@ -308,15 +308,15 @@ FROM
 		AND b.fenlei = #{fenlei}  and p.id=#{productpaper}
 	</select>
 	
-	<select id="getChoicedScores" resultType="int">
+	<select id="getChoicedScores" resultType="double">
 		select sum(score) from biz_answer where productpaper=#{productpaper} and fenlei=#{fenlei}
 	</select>
 	
 	
 	
-	<select id="getAllChoicedScores" resultType="int">
+	<select id="getAllChoicedScores" resultType="double">
 				SELECT
-			sum(ifnull(qp.score,0))
+			sum(ifnull(qp.score,0.0))
 		FROM
 			qu_question qq,
 			qu_choice qc,
