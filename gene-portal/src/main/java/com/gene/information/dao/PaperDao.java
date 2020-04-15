@@ -129,11 +129,11 @@ public interface PaperDao {
 	/**
 	 * 替换旧的openid
 	 */
-	void updateOldOpenId(@Param("openid") String openid,@Param("product") Integer product,@Param("guanjianzi") String guanjianzi);
+	void updateOldOpenId(@Param("openid") String openid,@Param("product") Integer product,@Param("guanjianzi") String guanjianzi,@Param("date") Date date);
 
-	void updateOldOIpenIdCustomer(@Param("openid") String openid,@Param("product") Integer product,@Param("guanjianzi") String guanjianzi);
+	void updateOldOIpenIdCustomer(@Param("openid") String openid,@Param("product") Integer product,@Param("guanjianzi") String guanjianzi,@Param("date") Date date);
 
-	int getOldCouunt(@Param("openid") String openid,@Param("product") Integer product,@Param("guanjianzi") String guanjianzi);
+	int getOldCouunt(@Param("openid") String openid,@Param("product") Integer product,@Param("guanjianzi") String guanjianzi,@Param("date") Date date);
 
 	List<ProductpaperDO> getChoosedProductByOpenId(String openid);
 }

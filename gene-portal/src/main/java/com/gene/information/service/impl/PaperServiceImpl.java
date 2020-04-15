@@ -430,19 +430,19 @@ public class PaperServiceImpl implements PaperService{
 	 * 替换旧的openid
 	 */
 	@Override
-	public void updateOldOpenId(String openid, Integer product, String guanjianzi) {
-		paperDao.updateOldOpenId(openid,product,guanjianzi);
+	public void updateOldOpenId(String openid, Integer product, String guanjianzi,Date date) {
+		paperDao.updateOldOpenId(openid,product,guanjianzi,date);
 	}
 
 	@Override
-	public void updateOldOIpenIdCustomer(String openid, Integer product, String guanjianzi) {
-		paperDao.updateOldOIpenIdCustomer(openid,product,guanjianzi);
+	public void updateOldOIpenIdCustomer(String openid, Integer product, String guanjianzi,Date date) {
+		paperDao.updateOldOIpenIdCustomer(openid,product,guanjianzi,date);
 	}
 
 	@Override
-	public int getOldCouunt(String openid, Integer product, String guanjianzi) {
+	public int getOldCouunt(String openid, Integer product, String guanjianzi,Date date) {
 		
-		return paperDao.getOldCouunt(openid,product,guanjianzi);
+		return paperDao.getOldCouunt(openid,product,guanjianzi,date);
 	}
 
 	/**

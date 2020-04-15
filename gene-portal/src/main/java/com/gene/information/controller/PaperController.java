@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -37,7 +38,7 @@ public class PaperController {
 		System.out.println("回调执行");
 		System.out.println("回调执行");
 		String code = request.getParameter("code");
-    	String openid = "";//暂定写死，之前是空字符串
+    	String openid = "o85JHw-iXn1_uxz7SgHxdJQf30LU";//暂定写死，之前是空字符串
     	if(StringUtils.isNotBlank(code)){
     		try {
 				openid = WechatOAConfig.getAccessToken(code);
@@ -100,10 +101,17 @@ public class PaperController {
 	@GetMapping("/getHistoryRecordByGuanjianzi")
 	@ResponseBody
 	public R getHistoryRecordByGuanjianzi(String openid,Integer product,String guanjianzi){
-		int count = paperService.getOldCouunt(openid,product,guanjianzi);
+		String dateTime="2020-01-10 11:12:00";
+		Date date = null;
+		try {
+			date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(dateTime);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		int count = paperService.getOldCouunt(openid,product,guanjianzi,date);
 		if(count>0){
-			paperService.updateOldOpenId(openid,product,guanjianzi);
-			paperService.updateOldOIpenIdCustomer(openid,product,guanjianzi);
+			paperService.updateOldOpenId(openid,product,guanjianzi,date);
+			paperService.updateOldOIpenIdCustomer(openid,product,guanjianzi,date);
 		}
 		return R.ok(guanjianzi);
 		
@@ -207,7 +215,7 @@ public class PaperController {
 	public String getReportPage(HttpServletRequest request,HttpServletResponse response,Model model){
 		
 		String code = request.getParameter("code");
-    	String openid = "";//暂定写死，之前是空字符串
+    	String openid = "o85JHw-iXn1_uxz7SgHxdJQf30LU";//暂定写死，之前是空字符串
     	if(StringUtils.isNotBlank(code)){
     		try {
 				openid = WechatOAConfig.getAccessToken(code);
