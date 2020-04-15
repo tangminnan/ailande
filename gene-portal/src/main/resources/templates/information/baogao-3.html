@@ -302,7 +302,7 @@ $(".zhidao input").last().click(function(){
 						l+='<td>'+cdata.tadjianyi+'</td>';
 						l+=	'</tr>';
 						var cc=data.content;
-						var text=data.content+"："+cdata.choicecontent;
+						var text=data.content+"："+cdata.choicecontent;	       
 						if(cc.indexOf("通常的排便频率？")>=0 || cc.indexOf("大部分时候便便的形态？")>=0){
 							paibianpinlvxingzhuang.push(text); 
 						}
@@ -353,7 +353,7 @@ $(".zhidao input").last().click(function(){
  haikexuanze=[];//还可选择
  flag=false;
 //判断速七活力益生菌胶囊                                                   
-var jianyibuchong=["通常的排便频率？：大于3次/天","通常的排便频率？: 有便秘倾向","大部分时候便便的形态？：不成型软便","大部分时候便便的形态？：硬块","大部分时候便便的形态？：软硬掺杂","大部分时候便便的形态？: 水状"];
+var jianyibuchong=["通常的排便频率？：大于3次/天","通常的排便频率？: 有便秘倾向","大部分时候便便的形态？：不成型的软便","大部分时候便便的形态？：硬块","大部分时候便便的形态？：软硬掺杂","大部分时候便便的形态？：水状"];
 for(var i=0;i<paibianpinlvxingzhuang.length;i++){
 	 var l = paibianpinlvxingzhuang[i];
 	 for(var j=0;j<jianyibuchong.length;j++){
@@ -379,16 +379,18 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
 		 flag=true;
  }
  if(flag){
+	 flag=false;
  	for(var i=0;i< paibianpinlvxingzhuang.length;i++){
 	 	var l = paibianpinlvxingzhuang[i];
 	 	if(l=="大部分时候便便的形态？：香蕉型" || l=="大部分时候便便的形态？：成型的软便"){
-		 	var obj={'title':'每日活力益生菌','images':'../images/JF-meirihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59843270179'};
+		 	var obj={'title':'每日活力益生菌','images':'../images/JF-meirihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202275920179'};
 		 	tuijianarry.push(obj);
 	 	}	 
  	}
  }
- //判断低聚果糖益生元粉											  									       
- var jianyibuchong=["通常的排便频率？: 有便秘倾向","通常的排便频率？：大于3次/天","平均每天吃几份蔬菜？：小于2份","平均每天吃几份蔬菜？：2-3份","平均每天吃几份水果？：小于2份","平均每天吃几份粗粮：几乎不吃","平均每天吃几份粗粮：小于1份"];
+ //判断低聚果糖益生元粉
+ var shengxiade=[];
+ var jianyibuchong=["通常的排便频率？: 有便秘倾向","通常的排便频率？：大于3次/天","平均每天吃几份蔬菜？ （一份约为1个拳头体积的煮熟的蔬菜，不包括藕、土豆、玉米、山药、芋头，它们是主食，不是蔬菜）：小于2份","平均每天吃几份蔬菜？ （一份约为1个拳头体积的煮熟的蔬菜，不包括藕、土豆、玉米、山药、芋头，它们是主食，不是蔬菜）：2-3份","平均每天吃几份水果？ （1份水果的可食部约为半个拳头的大小，或半个中号苹果大小）：小于2份","平均每天吃几份粗粮？ （一份约为1个拳头体积的煮熟的粗粮，包括全谷物、杂豆类、薯类，例如藕、土豆、玉米、山药、芋头都是主食）：几乎不吃","平均每天吃几份粗粮？ （一份约为1个拳头体积的煮熟的粗粮，包括全谷物、杂豆类、薯类，例如藕、土豆、玉米、山药、芋头都是主食）：小于1份"];
  for(var i=0;i< paibianpinlvshucaishuiguoculiang.length;i++){//console.info(paibianpinlvshucaishuiguoculiang[i]);
 	 var l = paibianpinlvshucaishuiguoculiang[i];
 	 for(var j=0;j<jianyibuchong.length;j++){
@@ -404,19 +406,10 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
 	 flag=false;
 	 var obj={'title':'低聚果糖益生元粉','images':'../images/JF-dijuguotang.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202286020179'};
 	 tuijianarry.push(obj);
+	 shengxiade.push("低聚果糖益生元粉");
  }
  
- 
 //您还可以选择   低聚果糖益生元粉
-  var shengxiade=[];
-  for(var i=0;i< paibianpinlvshucaishuiguoculiang.length;i++){
-	 var l = paibianpinlvshucaishuiguoculiang[i];
-	 for(var j=0;j<jianyibuchong.length;j++){
-		 if(l==jianyibuchong[j]){
-			 shengxiade.push(l);
-		 }
-	 }
-}
 if(shengxiade.length==0 && paibianpinlvshucaishuiguoculiang.length>0){
 //	 var obj={'title':'安益胶囊','images':'../images/JF-anyijiaonang.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59844980179'};
 	  var obj={'title':'低聚果糖益生元粉','images':'../images/JF-dijuguotang.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202286020179'};
@@ -482,7 +475,7 @@ if(paibianpinlvshucaishuiguoculiang.length>=0){
 } */
 
 if(tuijianarry.length==0){//默认
-	 var obj={'title':'速七活力益生菌胶囊','images':'../images/JF-suqihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=66585330179'};
+	 var obj={'title':'速七活力益生菌胶囊','images':'../images/JF-suqihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202279910179'};
 	 tuijianarry.push(obj);
 }
 

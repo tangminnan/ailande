@@ -134,7 +134,11 @@
 				return false;
 			}
 			
-			
+			if(text.indexOf("性别")>=0 &&  $(":checked").val()==undefined){
+				alert("要选择性别");
+				flag=true;
+				return false;
+			}
 			
 			if(text.indexOf("年龄")>=0) age=bitianneirong;
 			else if(text.indexOf("手机")>=0) phone=bitianneirong;

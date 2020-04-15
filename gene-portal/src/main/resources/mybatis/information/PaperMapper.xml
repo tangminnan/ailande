@@ -212,9 +212,10 @@ WHERE
 	t.tadjianyis ttadjianyis,
 	t.choose tchoose
 FROM
- (select * from qu_question   where category=#{flag} and paper_id=(SELECT paper_id FROM biz_product WHERE id=#{product})) n
+ (select * from qu_question   where category=#{flag} and paper_id=(SELECT paper_id FROM biz_product WHERE id=#{product})  order by sort) n
  JOIN qu_choice c ON n.id = c.question
- JOIN (SELECT * FROM qu_choice_product WHERE PRODUCT=#{product}  
+ JOIN (SELECT * FROM qu_choice_product WHERE PRODUCT=#{product}
+
  
  
  <if test="flag != 'JIBEN_XINXI'">and score is not null </if>
