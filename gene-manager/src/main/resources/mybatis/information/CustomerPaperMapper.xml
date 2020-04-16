@@ -60,7 +60,7 @@
 		  		   <if test="startTime != null and startTime != ''"> and answer_time &gt;= #{startTime} </if>
 		  		   <if test="endTime != null and endTime != ''"> and answer_time &lt;= #{endTime} </if>
 		  		   <if test="productId != null and productId != ''"> and product_id = #{productId} </if>
-		  		 
+		  		   <if test="phone != null and phone != ''"> and phone = #{phone} </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -88,7 +88,7 @@
 		  		   <if test="startTime != null and startTime != ''"> and answer_time &gt;= #{startTime} </if>
 		  		   <if test="endTime != null and endTime != ''"> and answer_time &lt;= #{endTime} </if>
 		  		   <if test="productId != null and productId != ''"> and product_id = #{productId} </if>
-		  		 
+		  		   <if test="phone != null and phone != ''"> and phone = #{phone} </if>
 		  		</where>
 	</select>
 	 
