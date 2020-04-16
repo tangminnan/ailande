@@ -115,7 +115,8 @@ function load() {
 								startTime:$('#startTime').val(),
 								endTime:$('#endTime').val(),
 					            username:$('#username').val(),
-					            productId:$("#productId").val()
+					            productId:$("#productId").val(),
+					            phone:$("#phone").val()
 							};
 						},
 						// //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
@@ -156,10 +157,10 @@ function load() {
 									field : 'productName', 
 									title : '产品名称' 
 								},
-																/*{
+																{
 									field : 'phone', 
 									title : '联系方式' 
-								}*/
+								},
 																/*{
 									field : 'email', 
 									title : '邮箱' 
