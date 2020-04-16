@@ -170,10 +170,11 @@ progress::-moz-progress-bar {
 .cdxzBox .ztai img{width: 2.2rem;height: 2.2rem;}
 .cdxzBox .ztai ul{margin:.3rem auto .6rem;}
 .sideMenu{}
-.sideMenu .list_dt{font-size: .36rem;padding:.2rem .15rem;position: relative;overflow: hidden;line-height: .87rem;}
-.sideMenu .list_dt span.fl{font-weight: bold;}
-.sideMenu .list_dt span.fl img{width: .94rem;height: .87rem;vertical-align: middle; }
-.sideMenu .list_dt span.fr{padding: .05rem .32rem;border: .04rem solid #321b3b;border-radius: .5rem;background: #e94a65;color: #fff;margin-top: .1rem;position: absolute;right: .1rem;line-height: normal;}
+.sideMenu .list_dt{padding:.2rem .15rem;position: relative;overflow: hidden;line-height: .87rem;} 
+.sideMenu .list_dt span.fl{font-weight: bold;width:100%;}
+.sideMenu .list_dt span.fl img{width:.94rem;height: .87rem;vertical-align: middle; }
+.sideMenu .list_dt span.fr{padding: .05rem .15rem;border: .04rem solid #321b3b;border-radius: .5rem;background: #e94a65;color: #fff;margin-top: .1rem;position: absolute;right: .1rem;line-height: normal;}
+
 .sideMenu .list_dt span.bgn{background: none;color:#221814;}
 /*.list_dt_icon{position: absolute;right:.2rem;top:0;width:.36rem; height:1.15rem;background:url(../images/sanjiao.png) no-repeat center;-webkit-background-size: contain;background-size: contain;}*/
 #open{border: none;}
@@ -201,7 +202,9 @@ table tr:nth-child(even){background:#eeefef;}
 /*膳食习惯*/
 .shanshi{background: #248dce;}
 .bgn_bg{background-image: url(../images/sanjiao-baichi.png);}
-.list_dt .fl span{width: 55%;display: inline-block;line-height:normal;vertical-align:middle;}
+.list_dt .fl span{width: 50%;display: inline-block;line-height:normal;vertical-align:middle;}
+
+
 .yuanze{line-height: .44rem;margin:.3rem 0;}
 .jianyi{font-size: .4rem;margin:1rem 0 .35rem;}
 .jianyi span{background:url(../images/redBar.png) no-repeat bottom;-webkit-background-size:100% .2rem;background-size:100% .2rem;}
