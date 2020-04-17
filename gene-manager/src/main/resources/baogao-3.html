@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="format-detection" content="telephone=no">
-<link rel="stylesheet" href="../css/css.css" type="text/css">
-<link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"></meta>
+<meta name="apple-mobile-web-app-capable" content="yes"></meta>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"></meta>
+<meta name="format-detection" content="telephone=no"></meta>
+<link rel="stylesheet" href="../css/css.css" type="text/css"></link>
+<link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css"></link>
 <title>检测报告</title>
 <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="../js/Font.js"></script>
@@ -50,8 +50,9 @@
   	  			<p class="txt">肠道的现状除了和基因、自身体质有关外，很大程度上还取决于饮食与生活习惯。接下来是健康专家团队为您量身定制的个性化方案，包括饮食、习惯、作息、运动、情绪压力、营养补充剂等方面。</p>
   	 		</dd>
 			<div class="shanshi space center" id="SHANSHI_XIGUAN">膳食习惯</div>
+				<#if fenlei??>
   					<#list fenlei as itemValue>  
-						<#if mKey=="SHANSHI_XIGUAN">
+						<#if itemValue.category=="SHANSHI_XIGUAN">
    						<dt class="list_dt">
 							<span class="fl"><img src="${itemValue.img}" alt=""/><span>${itemValue.content}</span></span>
 							<span class="fr">${itemValue.tiaozheng}</span><i class="list_dt_icon"></i>
@@ -59,8 +60,7 @@
 						<dd class="list_dd">
 						<table border="1" cellspacing="0" cellpadding="0">
 						<tbody>
-						<#assign it = itemValue.choiceProductDOList>
-						<#list it as f1>
+						<#list itemValue.choiceProductDOList as f1>
 							<tr>
 								<td class="rLine" width="30%">您的情况</td>
 								<td width="70%">${f1.choicecontent}</td>
@@ -83,9 +83,11 @@
 					</dd>
 					</#if>              
 					</#list>
+				</#if>
 			<div class="shanshi space center" id="SHENGHUO_FANGSHI">生活方式</div>
-					<#list fenlei as itemValue>  
-						<#if mKey=="SHANSHI_XIGUAN">
+				<#if fenlei??>
+  					<#list fenlei as itemValue>  
+						<#if itemValue.category=="SHENGHUO_FANGSHI">
    						<dt class="list_dt">
 							<span class="fl"><img src="${itemValue.img}" alt=""/><span>${itemValue.content}</span></span>
 							<span class="fr">${itemValue.tiaozheng}</span><i class="list_dt_icon"></i>
@@ -93,8 +95,7 @@
 						<dd class="list_dd">
 						<table border="1" cellspacing="0" cellpadding="0">
 						<tbody>
-						<#assign it = itemValue.choiceProductDOList>
-						<#list it as f1>
+						<#list itemValue.choiceProductDOList as f1>
 							<tr>
 								<td class="rLine" width="30%">您的情况</td>
 								<td width="70%">${f1.choicecontent}</td>
@@ -117,9 +118,11 @@
 					</dd>
 					</#if>              
 					</#list>
+				</#if>
 			<div class="shanshi space center" id="SHUIMIAN_XIGUAN">睡眠与压力</div>
-					<#list fenlei as itemValue>  
-						<#if mKey=="SHANSHI_XIGUAN">
+				<#if fenlei??>
+  					<#list fenlei as itemValue>  
+						<#if itemValue.category=="SHUIMIAN_XIGUAN">
    						<dt class="list_dt">
 							<span class="fl"><img src="${itemValue.img}" alt=""/><span>${itemValue.content}</span></span>
 							<span class="fr">${itemValue.tiaozheng}</span><i class="list_dt_icon"></i>
@@ -127,8 +130,7 @@
 						<dd class="list_dd">
 						<table border="1" cellspacing="0" cellpadding="0">
 						<tbody>
-						<#assign it = itemValue.choiceProductDOList>
-						<#list it as f1>
+						<#list itemValue.choiceProductDOList as f1>
 							<tr>
 								<td class="rLine" width="30%">您的情况</td>
 								<td width="70%">${f1.choicecontent}</td>
@@ -151,9 +153,11 @@
 					</dd>
 					</#if>              
 					</#list>
+				</#if>
 			<div class="shanshi space center" id="YUNDONG_XIGUANG">运动习惯</div>
-				<#list fenlei as itemValue>  
-						<#if mKey=="SHANSHI_XIGUAN">
+				<#if fenlei??>
+  					<#list fenlei as itemValue>  
+						<#if itemValue.category=="YUNDONG_XIGUANG">
    						<dt class="list_dt">
 							<span class="fl"><img src="${itemValue.img}" alt=""/><span>${itemValue.content}</span></span>
 							<span class="fr">${itemValue.tiaozheng}</span><i class="list_dt_icon"></i>
@@ -161,8 +165,7 @@
 						<dd class="list_dd">
 						<table border="1" cellspacing="0" cellpadding="0">
 						<tbody>
-						<#assign it = itemValue.choiceProductDOList>
-						<#list it as f1>
+						<#list itemValue.choiceProductDOList as f1>
 							<tr>
 								<td class="rLine" width="30%">您的情况</td>
 								<td width="70%">${f1.choicecontent}</td>
@@ -185,6 +188,7 @@
 					</dd>
 					</#if>              
 					</#list>
+				</#if>
 		<!--====饮食原则====-->
 			<div class="zhanbi space center" id="yinshiyuanzetiaozhuan">饮食原则</div>
 			<p class="yuanze space">以下是营养专家总结的胃肠健康饮食大原则，建议您结合本报告“膳食习惯”中的“调整方向”逐渐改善，循序渐进养成习惯。</p>
@@ -211,8 +215,8 @@
 			<li><a href="#buchongjifangantiaozhuan">补充剂方案</a></li>
 		</ul>
 	</div>
-	<input id="shenti80" type="hidden" th:value="${shenti80}">
-	<input id="yinshi60" type="hidden" th:value="${yinshi60}">
+	<input id="shenti80" type="hidden" th:value="${shenti80}"></input>
+	<input id="yinshi60" type="hidden" th:value="${yinshi60}"></input>
 	<script type="text/javascript">
 	
 	var fenshua  = $("#shenti80").val();

@@ -24,7 +24,8 @@ import freemarker.template.Template;
 public class JavaToPdfHtmlFreeMarker {
 	private static final String DEST = "target/HelloWorld_CN_HTML_FREEMARKER.pdf";
     private static final String HTML = "/baogao-3.html";
-    private static final String FONT = "simhei.ttf";
+    private static final String WINDOWS_FONT = "D:/Documents/Downloads/simsun.ttc";
+    private static final String LINUX_FONT="/usr/share/fonts/chiness/simsun.ttc";
     private static Map<String,Object> paramsMap = new HashMap<String,Object>();
     public JavaToPdfHtmlFreeMarker(Map<String,Object> paramsMap){
     	this.paramsMap=paramsMap;
@@ -71,7 +72,11 @@ public class JavaToPdfHtmlFreeMarker {
         document.open();
         // step 4
         XMLWorkerFontProvider fontImp = new XMLWorkerFontProvider(XMLWorkerFontProvider.DONTLOOKFORFONTS);
-        fontImp.register(FONT);
+        if ("linux".equals(getCurrentOperationSystem())) {
+        	fontImp.register(LINUX_FONT);
+        }else{
+        	fontImp.register(WINDOWS_FONT);
+        }
         XMLWorkerHelper.getInstance().parseXHtml(writer, document,
                 new ByteArrayInputStream(content.getBytes()), null, Charset.forName("UTF-8"), fontImp);
         // step 5
@@ -102,6 +107,11 @@ public class JavaToPdfHtmlFreeMarker {
             }
         }
         return null;
+    }
+    
+    private static String getCurrentOperationSystem() {
+        String os = System.getProperty("os.name").toLowerCase();
+        return os;
     }
 }
 
