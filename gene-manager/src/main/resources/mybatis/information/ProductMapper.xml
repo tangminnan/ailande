@@ -140,6 +140,7 @@
 		  `remark`,
 		  `del_flag`
 		from qu_paper
+		where status = 1
 	</select>
 
 </mapper>

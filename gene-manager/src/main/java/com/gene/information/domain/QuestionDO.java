@@ -69,7 +69,17 @@ public class QuestionDO implements Serializable{
     */
     private String required;
     private List<ChoiceDO> choiceList;
+    //用户所选择的选项
+    private List<ChoiceProductDO> choiceProductDOList;
     private String remark;
+    //调整方向（仅供页面展示）
+    private String tiaozheng;
+	public String getTiaozheng() {
+		return tiaozheng;
+	}
+	public void setTiaozheng(String tiaozheng) {
+		this.tiaozheng = tiaozheng;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -184,14 +194,22 @@ public class QuestionDO implements Serializable{
 	public void setProducts(String products) {
 		this.products = products;
 	}
+	
+	public List<ChoiceProductDO> getChoiceProductDOList() {
+		return choiceProductDOList;
+	}
+	public void setChoiceProductDOList(List<ChoiceProductDO> choiceProductDOList) {
+		this.choiceProductDOList = choiceProductDOList;
+	}
 	@Override
 	public String toString() {
 		return "QuestionDO [id=" + id + ", paperId=" + paperId + ", category=" + category + ", content=" + content
-				+ ", contenw=" + contenw + ", type=" + type + ", sort=" + sort + ", delFlag=" + delFlag + ", createBy="
-				+ createBy + ", createTime=" + createTime + ", updateBy=" + updateBy + ", updateTime=" + updateTime
-				+ ", required=" + required + ", choiceList=" + choiceList + ", remark=" + remark + "]";
+				+ ", contenw=" + contenw + ", type=" + type + ", img=" + img + ", sort=" + sort + ", delFlag=" + delFlag
+				+ ", createBy=" + createBy + ", createTime=" + createTime + ", updateBy=" + updateBy + ", updateTime="
+				+ updateTime + ", ifStop=" + ifStop + ", products=" + products + ", required=" + required
+				+ ", choiceList=" + choiceList + ", choiceProductDOList=" + choiceProductDOList + ", remark=" + remark
+				+ ", tiaozheng=" + tiaozheng + "]";
 	}
-	
 	
     
 }

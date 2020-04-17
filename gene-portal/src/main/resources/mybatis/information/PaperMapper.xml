@@ -142,7 +142,7 @@
 	<select id="getProductpaperDOByOpenId" resultType="com.gene.information.domain.ProductpaperDO">
 	
 	 select id,paper,product,user,status,answer_time,remark,openid from qu_product_paper
-	  where openid =#{openid} and answer_status=0 order by id desc;
+	  where openid =#{openid} and user is not null     and answer_status=0 order by id desc;
 	
 	</select>
 	
@@ -212,9 +212,10 @@ WHERE
 	t.tadjianyis ttadjianyis,
 	t.choose tchoose
 FROM
- (select * from qu_question   where category=#{flag} and paper_id=(SELECT paper_id FROM biz_product WHERE id=#{product})) n
+ (select * from qu_question   where category=#{flag} and paper_id=(SELECT paper_id FROM biz_product WHERE id=#{product})  order by sort) n
  JOIN qu_choice c ON n.id = c.question
- JOIN (SELECT * FROM qu_choice_product WHERE PRODUCT=#{product}  
+ JOIN (SELECT * FROM qu_choice_product WHERE PRODUCT=#{product}
+
  
  
  <if test="flag != 'JIBEN_XINXI'">and score is not null </if>
@@ -479,12 +480,13 @@ and q.USER is not null								order by q.answer_time desc
 	<update id="updateOldOpenId" >
 			update qu_product_paper set openid=#{openid}
 				where openid!=#{openid} and openid  in(select openid from biz_customer_paper where username=#{guanjianzi})
+				and answer_time &lt; #{date}
 	</update>
 	<update id="updateOldOIpenIdCustomer">
-		update biz_customer_paper set openid=#{openid} where openid!=#{openid} and username=#{guanjianzi} and product=#{product}
+		update biz_customer_paper set openid=#{openid} where openid!=#{openid} and username=#{guanjianzi} and product_id=#{product} and create_time &lt; #{date}
 	</update>
 	<select id="getOldCouunt" resultType="int">
-		select count(*) from biz_customer_paper where openid!=#{openid} and username=#{guanjianzi} and product_id=#{product}
+		select count(*) from biz_customer_paper where openid!=#{openid} and username=#{guanjianzi} and product_id=#{product} and create_time &lt; #{date}
 	</select>
 	
 	<select id="getChoosedProductByOpenId" resultType="com.gene.information.domain.ProductpaperDO">

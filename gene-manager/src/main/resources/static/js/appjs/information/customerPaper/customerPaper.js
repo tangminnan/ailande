@@ -115,7 +115,8 @@ function load() {
 								startTime:$('#startTime').val(),
 								endTime:$('#endTime').val(),
 					            username:$('#username').val(),
-					            productId:$("#productId").val()
+					            productId:$("#productId").val(),
+					            phone:$("#phone").val()
 							};
 						},
 						// //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
@@ -156,10 +157,10 @@ function load() {
 									field : 'productName', 
 									title : '产品名称' 
 								},
-																/*{
+																{
 									field : 'phone', 
 									title : '联系方式' 
-								}*/
+								},
 																/*{
 									field : 'email', 
 									title : '邮箱' 
@@ -178,11 +179,24 @@ function load() {
 												+ '\')"><i class="fa fa-edit"></i></a> ';
 										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
 												+ row.id
-												+ '\')"><i class="fa fa-remove"></i></a> ';*/
+												+ '\')"><i class="fa fa-remove"></i></a> ';
 										var f = '<a class="btn btn-success btn-sm" href="#" title="答题详情"  mce_href="#" onclick="details(\''
 												+ row.productPaperId
 												+ '\')"><i class="fa fa-key"></i></a> ';
-										return  f;
+										var g = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="PDF导出" onclick="edit(\''
+										+ row.id
+										+ '\')"><i class="fa fa-edit"></i></a> ';
+										*/
+										
+										
+
+										var f = '<a class="btn btn-primary btn-xs" href="#" title="答题详情" onclick="details(\''
+												+ row.productPaperId
+												+ '\')" style="text-decoration: none;">答题性情</a> ';
+										var g = '<a class="btn btn-success btn-xs" href="#" title="PDF导出" onclick="pdfexport(\''
+												+ row.productPaperId
+												+ '\',\''+row.productId+'\',\''+row.productName+'\')" style="text-decoration: none;">PDF导出</a> ';
+										return  f+g;
 									}
 								} ]
 					});
@@ -278,4 +292,9 @@ function batchRemove() {
 	}, function() {
 
 	});
+}
+
+function pdfexport(productPaperId,product,name){
+	
+	window.location.href=prefix+"/exportPDF?productpaper="+productPaperId+"&product="+product+"&name="+name
 }
