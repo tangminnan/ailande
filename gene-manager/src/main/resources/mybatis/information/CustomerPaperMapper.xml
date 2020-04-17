@@ -35,7 +35,7 @@
 	</select>
 	
 	<select id="list" resultType="com.gene.information.domain.CustomerPaperDO">
-									SELECT
+								SELECT
 								b.id,
 								b.username,
 								b.high,
@@ -238,5 +238,252 @@
 						
 						
 	</select>
+	
+	
+	<!-- *************************转PDF***************************************** -->
+	<select id="getNewProductpaperDO" resultType="com.gene.information.domain.ProductpaperDO">
+	<!-- 	select  id,paper,product,user  from qu_product_paper  where  answer_time=(select max(answer_time) from qu_product_paper where product=#{product} and openid=#{openid}
+		and answer_status=1) and product=#{product} and openid=#{openid} -->
+		
+		select  id,paper,product,user  from qu_product_paper  where  answer_time= #{date}
+		 and product=#{product} and openid=#{openid}
+	</select>
+	
+	<select id="getChoicedScores" resultType="double">
+		select sum(score) from biz_answer where productpaper=#{productpaper} and fenlei=#{fenlei}
+	</select>
+	
+	<select id="getQuestionDOType" resultMap="paperMap"> 
+	
 
+
+	SELECT
+	n.id nid,
+	n.category ncategory,
+	n.content ncontent,
+	n.type ntype,
+	n.sort nsort,
+	n.required nrequired,
+	n.create_by ncreateBy,
+	n.create_time ncreateTime,
+	n.update_by nupdateBy,
+	n.update_time nupdateTime,
+	n.remark nremark,
+	n.img nimg,
+	n.contenw ncontenw,
+	n.if_stop nifStop,
+	n.paper_id npaperId,
+ 	c.id cid,
+	c.content ccontent,
+	
+	c.create_by ccreateBy,
+	c.create_time ccreateTime,
+	c.update_by cupdateBy,
+	c.update_time cupdateTime,
+	c.remark cremark,
+	t.id tid,
+	t.product tproduct,
+	t.score tscore,
+	t.tadf ttadf,
+	t.tads ttads,
+	t.tadreason ttadreason,
+	t.tadjianyi ttadjianyi,
+	t.bmi tbmi,
+	t.bmis tbmis,
+	t.scores tscores,
+	t.product_name tproductName,
+	t.tadfs ttadfs,
+	t.tadss ttadss,
+	t.tadreasons ttadreasons,
+	t.tadjianyis ttadjianyis,
+	t.choose tchoose
+FROM
+ (select * from qu_question   where category=#{fenlei} and paper_id=(SELECT paper_id FROM biz_product WHERE id=#{product})  order by sort) n
+ JOIN qu_choice c ON n.id = c.question
+ JOIN (SELECT * FROM qu_choice_product WHERE PRODUCT=#{product}
+
+ 
+ 
+ <if test="fenlei != 'JIBEN_XINXI'">and score is not null </if>
+ ) t on t.choose=c.id
+ 	
+ 	
+ 	
+	</select>
+	
+	<resultMap type="com.gene.information.domain.QuestionDO" id="paperMap">
+		 
+         	 <id column="nid" property="id"/>
+         	 <result column="nifStop" property="ifStop"/>
+             <result column="npaperId" property="paperId"/>
+             <result column="ncategory" property="category"/>
+             <result column="ncontent" property="content"/>
+             <result column="ntype" property="type"/>
+             <result column="nsort" property="sort"/>
+             <result column="nrequired" property="required"/>
+             <result column="ncreateBy" property="createBy"/>
+             <result column="ncreateTime" property="createTime"/>
+             <result column="nupdateBy" property="updateBy"/>
+             <result column="nupdateTime" property="updateTime"/>
+             <result column="nupdateTime" property="updateTime"/>
+             <result column="nimg" property="img"/>
+             <result column="ncontenw" property="contenw"/>
+             <collection property="choiceList" ofType="com.gene.information.domain.ChoiceDO">
+             	<id column="cid" property="id"/>
+         		<result column="ccontent" property="content"/>
+         		<result column="ccreateBy" property="createBy"/>
+         		<result column="ccreateTime" property="createTime"/>
+         		<result column="cupdateBy" property="updateBy"/>
+         		<result column="cupdateTime" property="updateTime"/>
+         		<result column="cremark" property="remark"/>
+         		<collection property="choiceProductList" ofType="com.gene.information.domain.ChoiceProductDO">
+         			<id column="tid" property="id"/>
+         			<result column="tscore" property="score"/>
+         			<result column="tchoose" property="choose"/>
+         			<result column="ttadf" property="tadf"/>
+         			<result column="tproduct" property="product"/>
+         			<result column="tproductName" property="productName"/>
+       				<result column="ttads" property="tads"/>
+         			<result column="ttadreason" property="tadreason"/>
+        			<result column="ttadjianyi" property="tadjianyi"/>
+         			<result column="tbmi" property="bmi"/>
+         			<result column="tbmis" property="bmis"/>
+         			<result column="tscores" property="scores"/>
+        			<result column="ttadfs" property="tadfs"/>
+        		 	<result column="ttadss" property="tadss"/>
+        		 	<result column="ttadreasons" property="tadreasons"/>
+         			<result column="ttadjianyis" property="tadjianyis"/>
+         		</collection>
+             </collection>
+       
+	</resultMap>
+	
+	<select id="listReportTalk" resultType="com.gene.information.domain.ReportTalkDO">
+		select `id`,`talk_name`,`score_big`,`score_little`,`talk_content`,`add_time`,`update_time`,`status`,`talk_type` from sys_report_talk
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="talkName != null and talkName != ''"> and talk_name = #{talkName} </if>
+		  		  <if test="scoreBig != null and scoreBig != ''"> and score_big = #{scoreBig} </if>
+		  		  <if test="scoreLittle != null and scoreLittle != ''"> and score_little = #{scoreLittle} </if>
+		  		  <if test="talkContent != null and talkContent != ''"> and talk_content = #{talkContent} </if>
+		  		  <if test="addTime != null and addTime != ''"> and add_time = #{addTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="talkType != null and talkType != ''"> and talk_type = #{talkType} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="getCustomerPaperDO" resultType="com.gene.information.domain.CustomerPaperDO">
+			  SELECT
+	b.*
+FROM
+	biz_customer_paper b join
+qu_product_paper p
+on b.id=p.user
+WHERE
+	b.openid = #{openid} and product_id=#{product} and answer_time=#{date}  limit 1;
+		
+	</select>
+	
+	<select id="getProductPaperDObyOpenid" resultType="com.gene.information.domain.ProductpaperDO">
+		select  * from qu_product_paper where openid=#{openid} and product=#{product} and answer_status=1 and answer_time=#{date} limit 1
+		
+	</select>
+	<resultMap type="com.gene.information.domain.QuestionDO" id="questionMap">
+		 	 <id column="qpid" property="id"/>
+         	 <result column="qpcontent" property="content"/>
+             <result column="qpcategory" property="category"/>
+             <result column="qpimg" property="img"/>
+             <result column="qpifStop" property="ifStop"/>
+             <collection property="choiceProductDOList" ofType="com.gene.information.domain.ChoiceProductDO">
+             	<id column="qid" property="id"/>
+             	<result column="choicecontent" property="choicecontent"/>
+         		<result column="qscore" property="score"/>
+         		<result column="qtadf" property="tadf"/>
+         		<result column="qtads" property="tads"/>
+         		<result column="qtadreason" property="tadreason"/>
+         		<result column="qtadjianyi" property="tadjianyi"/>
+         		<result column="qbmi" property="bmi"/>
+         		<result column="qbmis" property="bmis"/>
+         		<result column="qscores" property="scores"/>
+         		<result column="qtadfs" property="tadfs"/>
+         		<result column="qtadss" property="tadss"/>
+         		<result column="qtadreasons" property="tadreasons"/>
+         		<result column="qtadjianyis" property="tadjianyis"/>
+		  </collection>
+	</resultMap>
+	<select id="getQuestionDOList" resultMap="questionMap">
+				SELECT
+			q.id qid,
+			q.score qscore,
+			q.tadf qtadf,
+			q.tads qtads,
+			q.tadreason qtadreason,
+			q.tadjianyi qtadjianyi,
+			q.bmi qbmi,
+			q.bmis qbmis,
+			q.scores qscores,
+			q.tadfs qtadfs,
+			q.tadss qtadss,
+			q.tadreasons qtadreasons,
+			q.tadjianyis qtadjianyis,
+			qc.content choicecontent,
+			qp.id qpid,
+			qp.content qpcontent,
+			qp.category qpcategory,
+			qp.img qpimg,
+			qp.if_stop qpifStop
+		FROM
+			qu_question qp,
+			biz_answer b,
+			qu_choice_product q,
+			qu_product_paper p,
+			qu_choice qc
+		WHERE
+			q.choose = b.choice_id
+		AND q.product = p.product
+		AND b.productpaper = p.id
+		AND q.choose=qc.id
+		AND qp.id = b.question_id
+		AND b.fenlei = #{fenlei}  and p.id=#{productpaper}
+	</select>
+	
+	<select id="getChoosedContent" resultType="string">
+					select c.content from biz_answer b,qu_question q,qu_choice c,qu_product_paper qp
+			where b.question_id=q.id and q.contenw like concat('%', #{string},'%')
+			
+			AND b.choice_id = c.id
+			AND b.productpaper = qp.id
+			AND qp.product = #{product} AND qp.openid=#{openid} and qp.answer_status =1  and qp.answer_time=#{date} limit 1 
+	</select>
+
+<select id="getCustomerPaperDOByUser" resultType="com.gene.information.domain.CustomerPaperDO">
+	 SELECT
+	b.*
+FROM
+	biz_customer_paper b join
+qu_product_paper p
+on b.id=p.user
+WHERE
+	p.id=#{productpaper}
+</select>
+<select id="getChoosedContentBySomeString" resultType="string">
+					select c.content from biz_answer b,qu_question q,qu_choice c,qu_product_paper qp
+			where b.question_id=q.id and q.contenw like concat('%', #{string},'%')
+			
+			AND b.choice_id = c.id
+			AND b.productpaper = qp.id
+			AND b.productpaper = #{productpaper}  limit 1 
+	</select>
 </mapper>

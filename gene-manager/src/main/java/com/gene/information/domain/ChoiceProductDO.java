@@ -54,7 +54,13 @@ public class ChoiceProductDO implements Serializable {
   	private Double scores;
   	//调整方向1
       private String tadfs;
-    //调整方向2
+    public String getChoicecontent() {
+		return choicecontent;
+	}
+	public void setChoicecontent(String choicecontent) {
+		this.choicecontent = choicecontent;
+	}
+	//调整方向2
     private String tadss;
     //调整原因
     private String tadreasons;
@@ -62,6 +68,8 @@ public class ChoiceProductDO implements Serializable {
 	private String tadjianyis;
 	//产品名字
 	private String productName;
+	//选项内容
+	private String choicecontent;
 	public Integer getId() {
 		return id;
 	}
