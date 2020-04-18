@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -225,10 +226,10 @@ public class CustomerPaperController {
 	
 	/**********************************导出PDF******************************************/
 	@GetMapping("/exportPDF")
-	public void exportPDF(Integer productpaper,Integer product,String name){
+	public void exportPDF(HttpServletResponse response,Integer productpaper,Integer product,String name){
 		Map<String,Object> resultMap = createMap(productpaper,product,name);
 		JavaToPdfHtmlFreeMarker javaToPdfHtmlFreeMarker=new JavaToPdfHtmlFreeMarker(resultMap);
-		javaToPdfHtmlFreeMarker.exportPDF();
+		javaToPdfHtmlFreeMarker.exportPDF(response);
 	}
 	String talkName="";
 	int yinshi600=0;

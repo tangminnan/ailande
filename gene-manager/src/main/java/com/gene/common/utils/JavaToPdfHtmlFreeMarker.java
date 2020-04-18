@@ -3,11 +3,15 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -22,9 +26,8 @@ import freemarker.template.Template;
  * html转换为pdf导出工具类
  */
 public class JavaToPdfHtmlFreeMarker {
-	private static final String DEST = "target/HelloWorld_CN_HTML_FREEMARKER.pdf";
     private static final String HTML = "/baogao-3.html";
-    private static final String WINDOWS_FONT = "D:/Documents/Downloads/simsun.ttc";
+    private static final String WINDOWS_FONT = "D:/fl/simsun.ttf";
     private static final String LINUX_FONT="/usr/share/fonts/chiness/simsun.ttc";
     private static Map<String,Object> paramsMap = new HashMap<String,Object>();
     public JavaToPdfHtmlFreeMarker(Map<String,Object> paramsMap){
@@ -51,10 +54,10 @@ public class JavaToPdfHtmlFreeMarker {
         JavaToPdfHtmlFreeMarker.createPdf(content,DEST);
     }*/
     
-    public void exportPDF(){
+    public void exportPDF(HttpServletResponse response){
     	  String content = JavaToPdfHtmlFreeMarker.freeMarkerRender(HTML);
           try {
-			JavaToPdfHtmlFreeMarker.createPdf(content,DEST);
+			JavaToPdfHtmlFreeMarker.createPdf(response,content);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (DocumentException e) {
@@ -63,11 +66,17 @@ public class JavaToPdfHtmlFreeMarker {
     }
   
   
-    public static void createPdf(String content,String dest) throws IOException, DocumentException {
+    public static void createPdf(HttpServletResponse response, String content) throws IOException, DocumentException {
+    	System.out.println(content);
         // step 1
         Document document = new Document();
         // step 2
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(dest));
+        String fileName = "ailande.pdf";
+        response.reset();
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+        response.setContentType("application/octet-stream;charset=UTF-8");
+        OutputStream outputStream= response.getOutputStream();
+        PdfWriter writer = PdfWriter.getInstance(document,outputStream);
         // step 3
         document.open();
         // step 4
@@ -81,6 +90,7 @@ public class JavaToPdfHtmlFreeMarker {
                 new ByteArrayInputStream(content.getBytes()), null, Charset.forName("UTF-8"), fontImp);
         // step 5
         document.close();
+        outputStream.close();
   
     }
   
