@@ -1,8 +1,12 @@
 package com.gene.common.utils;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -15,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerFontProvider;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
@@ -29,6 +35,7 @@ public class JavaToPdfHtmlFreeMarker {
     private static final String HTML = "/baogao-3.html";
     private static final String WINDOWS_FONT = "D:/fl/simsun.ttf";
     private static final String LINUX_FONT="/usr/share/fonts/chiness/simsun.ttc";
+    private static final String CSS_RESOURSE="/css.css";
     private static Map<String,Object> paramsMap = new HashMap<String,Object>();
     public JavaToPdfHtmlFreeMarker(Map<String,Object> paramsMap){
     	this.paramsMap=paramsMap;
@@ -68,30 +75,20 @@ public class JavaToPdfHtmlFreeMarker {
   
     public static void createPdf(HttpServletResponse response, String content) throws IOException, DocumentException {
     	System.out.println(content);
-        // step 1
-        Document document = new Document();
-        // step 2
+        Document document = new Document(PageSize.A4, 30, 30, 30, 30);
+        document.setMargins(30, 30, 30, 30);
         String fileName = "ailande.pdf";
         response.reset();
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
         response.setContentType("application/octet-stream;charset=UTF-8");
         OutputStream outputStream= response.getOutputStream();
         PdfWriter writer = PdfWriter.getInstance(document,outputStream);
-        // step 3
         document.open();
-        // step 4
-        XMLWorkerFontProvider fontImp = new XMLWorkerFontProvider(XMLWorkerFontProvider.DONTLOOKFORFONTS);
-        if ("linux".equals(getCurrentOperationSystem())) {
-        	fontImp.register(LINUX_FONT);
-        }else{
-        	fontImp.register(WINDOWS_FONT);
-        }
-        XMLWorkerHelper.getInstance().parseXHtml(writer, document,
-                new ByteArrayInputStream(content.getBytes()), null, Charset.forName("UTF-8"), fontImp);
-        // step 5
+        String cssSource = getURLSource(new File("src/main/resources/"+CSS_RESOURSE));
+        InputStream cssis = new ByteArrayInputStream(cssSource.toString().getBytes());
+        XMLWorkerHelper.getInstance().parseXHtml(writer, document, new ByteArrayInputStream(content.getBytes("UTF-8")),null,Charset.forName("UTF-8"),new AsianFontProvider());
         document.close();
         outputStream.close();
-  
     }
   
     /**
@@ -122,6 +119,83 @@ public class JavaToPdfHtmlFreeMarker {
     private static String getCurrentOperationSystem() {
         String os = System.getProperty("os.name").toLowerCase();
         return os;
+    }
+    /**
+     * 中文字体
+     */
+    static class AsianFontProvider extends XMLWorkerFontProvider {
+    	 
+        @Override
+        public Font getFont(final String fontname, String encoding, float size, final int style) {
+            String fntname = fontname;
+            if (fntname == null) {
+               /*使用的windows里的宋体，可将其文件放资源文件中引入
+                *请确保simsun.ttc字体在windows下支持
+                *我是将simsun.ttc字体打进maven的jar包中使用
+                */
+            	if ("linux".equals(getCurrentOperationSystem())) 
+            		fntname = LINUX_FONT;
+            	else
+            		fntname=WINDOWS_FONT;
+            }
+            if (size == 0) {
+                size = 4;
+            }
+            return super.getFont(fntname, encoding, size, style);
+        }
+    }
+    
+    /**
+     * css
+     */
+    public static String getURLSource(File url)
+    {
+    	InputStream inStream=null;
+    	String htmlSource=null;
+		try {
+			inStream = new FileInputStream(url);
+			// 通过输入流获取html二进制数据
+	    	byte [] data = readInputStream(inStream); // 把二进制数据转化为byte字节数据
+	    	htmlSource = new String(data);
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	
+    	try {
+			inStream.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return htmlSource;
+    }
+    
+    
+    /**
+     * 把二进制流转化为byte字节数组
+     */
+    public static byte [] readInputStream(InputStream instream)
+    {
+    	ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+    	byte [] buffer = new byte[1204];
+    	int len = 0;
+    	try {
+			while ((len = instream.read(buffer)) != -1)
+			{
+				outStream.write(buffer, 0, len);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	try {
+			instream.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return outStream.toByteArray();
     }
 }
 

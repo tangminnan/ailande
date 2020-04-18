@@ -224,6 +224,20 @@
    			<artifactId>itextpdf</artifactId>
     		<version>5.5.11</version>
 		</dependency>
+		
+		 <!-- 支持中文 -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext-asian</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+		
+		 <!-- 支持css样式渲染 -->
+        <dependency>
+            <groupId>org.xhtmlrenderer</groupId>
+            <artifactId>flying-saucer-pdf-itext5</artifactId>
+            <version>9.0.3</version>
+        </dependency>
 
         <!-- xss过滤组件 -->
         <dependency>
