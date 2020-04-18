@@ -33,7 +33,7 @@ import freemarker.template.Template;
  */
 public class JavaToPdfHtmlFreeMarker {
     private static final String HTML = "/baogao-3.html";
-    private static final String WINDOWS_FONT = "D:/fl/simsun.ttf";
+    private static final String WINDOWS_FONT = "D:/Documents/Downloads/simsun.ttf";
     private static final String LINUX_FONT="/usr/share/fonts/chiness/simsun.ttc";
     private static final String CSS_RESOURSE="/css.css";
     private static Map<String,Object> paramsMap = new HashMap<String,Object>();

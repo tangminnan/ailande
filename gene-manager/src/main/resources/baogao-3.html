@@ -17,6 +17,61 @@
 	td {
   white-space: pre-line;
  }
+ /*肠道现状*/
+./* cdxzBox{margin-bottom:1.5rem;}
+.cdxzBox .ztai{overflow: hidden;font-size: .46rem;}
+.cdxzBox .ztai img{width: 2.2rem;height: 2.2rem;}
+.cdxzBox .ztai ul{margin:.3rem auto .6rem;}
+*/
+.sideMenu{}
+.sideMenu .list_dt{padding:.2rem .15rem;position: relative;overflow: hidden;line-height: .87rem;} 
+.sideMenu .list_dt span.fl{font-weight: bold;width:100%;}
+.sideMenu .list_dt span.fl img{width:.94rem;height: .87rem;vertical-align: middle; }
+.sideMenu .list_dt span.fr{padding: .05rem .15rem;border: .04rem solid #321b3b;border-radius: .5rem;background: #e94a65;color: #fff;margin-top: .1rem;position: absolute;right: .1rem;line-height: normal;}
+
+.sideMenu .list_dt span.bgn{background: none;color:#221814;}
+.sideMenu .list_dd{font-size:.28rem;border-bottom:.02rem solid #321b3b;}
+table{width: 100%;}
+table td{padding:.2rem .18rem;}
+table tr:nth-child(odd){background:#dcdddd;}
+table tr:nth-child(even){background:#eeefef;} 
+.rLine{border-right:.03rem dotted #321b3b;font-weight: bold;}
+.jbs img{width: 2.2rem;height: 2.2rem;border:.04rem solid #231815;border-radius:50%;margin:.8rem 0 .2rem;}
+.jbs .p2{font-size: .46rem;}
+.jbs .p3{font-size: .5rem;color:#248dce;}
+.jbs .p3 span{font-size: 1rem;}
+.jbs .p3 span.yyy{font-size:.36rem;}
+/*
+.zhanbi,
+.shanshi{font-size: .4rem;color:#fff;line-height: .7rem;border:.04rem solid #231815;border-radius:.3rem;margin:.8rem 0 .15rem;background: #e94a65;}
+.jbs .zhanbi-lt{background: #fff;border:.03rem solid #231815;border-radius:.3rem;overflow: hidden;padding:.15rem 0;}
+.jbs .zhanbi-lt li{float: left;width: 25%;background:url(../images/bao-js.png) no-repeat center top;-webkit-background-size:.82rem .77rem;background-size:.82rem .77rem;padding-top:.9rem;font-size: .24rem;}
+.jbs .zhanbi-lt li em{font-size: .4rem;}
+.jbs .zhanbi-lt li:nth-child(2){background-image: url(../images/naoling.png);}
+.jbs .zhanbi-lt li:nth-child(3){background-image: url(../images/bao-sm.png);}
+.jbs .zhanbi-lt li:nth-child(4){background-image: url(../images/bao-yd.png);}
+.jbs .txt{padding:.15rem 0;line-height: .44rem;}
+/*膳食习惯*/
+
+.shanshi{text-align:center; color: blue;}
+/*.bgn_bg{background-image: url(../images/sanjiao-baichi.png);}
+.list_dt .fl span{width: 50%;display: inline-block;line-height:normal;vertical-align:middle;}
+
+
+.yuanze{line-height: .44rem;margin:.3rem 0;}
+.jianyi{font-size: .4rem;margin:1rem 0 .35rem;}
+.jianyi span{background:url(../images/redBar.png) no-repeat bottom;-webkit-background-size:100% .2rem;background-size:100% .2rem;}
+
+.jyiBox{background: #fff;border:.04rem solid #231815;border-radius:.1rem;width: 100%;height: 5rem;position: relative;margin-bottom:.36rem;}
+.jyiBox .jsBg{width: 3.37rem;height: 2.25rem;position: absolute;left:-5%;top: 0;}
+.jyiBox .name{width: 3.65rem;position: absolute;left:.65rem;top:1.8rem;}
+.jyiBox .name span{font-size: .36rem;display: block;font-weight: bold;}
+.jyiBox .yaoM{width: 2rem;height: 3.4rem;position: absolute;top:.3rem;right:.1rem;}
+.jyiBox input{background: #248dce;border-radius:.5rem;font-size: .36rem;height: .65rem;color:#fff;width: 2.8rem;border:.03rem solid #231815;position: absolute;bottom:.2rem;left: 50%;margin-left:-1.4rem;}
+.jieshao{text-align: center;}
+.ulBox{margin-bottom:.25rem;}
+.ulBox img{width:6.8rem; display:block; margin:0 auto;}
+  */
 </style>
 </head>
 <body class="bg-cc" style ="font-family:simsun;" >
@@ -37,15 +92,14 @@
 			<dd class="jbs">
   	  			<div class="center" id="yinshiheshenghuoxiguan">
   	   				<img id="biaoqingaaa" src="../images/henhao.png" alt=""/>
-  	  				<p class="p2">饮食与生活习惯得分</p>
-  	  				<p class="p3"><span>${yinshi60}</span><span class="yyy"></span></p>
+  	  				<p class="p2"></p>
+  	  				<p class="p3">饮食与生活习惯得分：<span>${yinshi60}</span><span class="yyy"></span></p>
   	 			</div>
-  	 			<p class="zhanbi space center">影响肠胃健康的因素</p>
   	  			<ul class="zhanbi-lt center">
-  	  				<li>膳食习惯</li>
-  	  				<li>生活方式</li>
-  	  				<li>睡眠与压力</li>
-  	  				<li>运动习惯</li>
+  	  				<li>姓名：<span>${username}</span></li>
+  	  				<li>身高：<span>${high}</span></li>
+  	  				<li>体重：<span>${weight}</span></li>
+  	  				<li>联系方式：<span>${phone}</span></li>
   	  			</ul>
   	  			<p class="txt">肠道的现状除了和基因、自身体质有关外，很大程度上还取决于饮食与生活习惯。接下来是健康专家团队为您量身定制的个性化方案，包括饮食、习惯、作息、运动、情绪压力、营养补充剂等方面。</p>
   	 		</dd>	
@@ -61,7 +115,7 @@
 						<#list itemValue.choiceProductDOList as f1>
 							<tr>
 								<td class="rLine" width="30%">您的情况</td>
-								<td width="70%">${f1.choicecontent}</td>
+								<td  width="70%">${f1.choicecontent}</td>
 							</tr>
 							<tr>
 								<td class="rLine">调整方向</td>

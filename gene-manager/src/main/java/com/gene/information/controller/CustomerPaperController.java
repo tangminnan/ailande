@@ -310,7 +310,10 @@ public class CustomerPaperController {
 		float high = Float.parseFloat(udo1.getHigh());
 		float weight=  Float.parseFloat( udo1.getWeight()+"");  
 		float bmi=  Float.parseFloat(df.format(weight/high/high*10000));
-		
+		resultMap.put("high", high);
+		resultMap.put("weight", weight);
+		resultMap.put("phone", udo1.getPhone());
+		resultMap.put("username", udo1.getUsername());
 	   
 	    List<String> fenleiParamsList = Arrays.asList("SHENTI_ZHUANG","SHANSHI_XIGUAN","SHENGHUO_FANGSHI","SHUIMIAN_XIGUAN","YUNDONG_XIGUANG");//身体状况  膳食习惯  生活方式  睡眠压力  运动习惯
 	    for(String fenlei:fenleiParamsList){
