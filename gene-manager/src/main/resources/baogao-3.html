@@ -80,7 +80,7 @@ table tr:nth-child(even){background:#eeefef;}
 	<div id="changdaoxianzhuang" class="cdxzBox">
 		<div class="ztai center">
 			<img src="../images/bao-cw.png" alt=""/>
-			<p>您的肠道现状</p>
+		<!-- 	<p>您的肠道现状</p> -->
 			<div class="txXZ space ppyuyy23" style="ba ckground: #248dce;"></div>
 		</div>
 		<div class="sideMenu">
@@ -93,16 +93,49 @@ table tr:nth-child(even){background:#eeefef;}
   	  			<div class="center" id="yinshiheshenghuoxiguan">
   	   				<img id="biaoqingaaa" src="../images/henhao.png" alt=""/>
   	  				<p class="p2"></p>
-  	  				<p class="p3">饮食与生活习惯得分：<span>${yinshi60}</span><span class="yyy"></span></p>
+  	  				<p class="p3">饮食与生活习惯得分：<span>${yinshi60}</span></p>
   	 			</div>
   	  			<ul class="zhanbi-lt center">
-  	  				<li>姓名：<span>${username}</span></li>
+  	  				 <li>姓名：<span>${username}</span></li>
   	  				<li>身高：<span>${high}</span></li>
   	  				<li>体重：<span>${weight}</span></li>
   	  				<li>联系方式：<span>${phone}</span></li>
   	  			</ul>
-  	  			<p class="txt">肠道的现状除了和基因、自身体质有关外，很大程度上还取决于饮食与生活习惯。接下来是健康专家团队为您量身定制的个性化方案，包括饮食、习惯、作息、运动、情绪压力、营养补充剂等方面。</p>
+  	  			<!-- <p class="txt">肠道的现状除了和基因、自身体质有关外，很大程度上还取决于饮食与生活习惯。接下来是健康专家团队为您量身定制的个性化方案，包括饮食、习惯、作息、运动、情绪压力、营养补充剂等方面。</p> -->
   	 		</dd>	
+  	 		<div class="shanshi space center" id="SHENTI_ZHUANG">身体现状</div>
+  					<#list SHENTI_ZHUANG as itemValue>  
+   						<dt class="list_dt">
+							<span class="fl"><img src="http://localhost:8066/files/ailande/question/1572518978955.png" alt=""/><span>${itemValue.content}</span></span>
+							<span class="fr">${itemValue.tiaozheng}</span><i class="list_dt_icon"></i>
+						</dt>
+						<dd class="list_dd">
+						<table border="1" cellspacing="0" cellpadding="0">
+						<tbody>
+						<#list itemValue.choiceProductDOList as f1>
+							<tr>
+								<td class="rLine" width="30%">您的情况</td>
+								<td  width="70%">${f1.choicecontent}</td>
+							</tr>
+							<tr>
+								<td class="rLine">调整方向</td>
+								<td>${f1.tads}</td>
+							</tr>
+							<tr>
+								<td class="rLine">调整原因</td>
+								<td class="smlh">${f1.tadreason}</td>
+							</tr>
+							<tr>
+								<td class="rLine">营养补充剂建议</td>
+								<td>${f1.tadjianyi}</td>
+							</tr>
+					</#list>
+					</tbody>
+					</table>
+					</dd>
+					</#list>
+				
+				
 			<div class="shanshi space center" id="SHANSHI_XIGUAN">膳食习惯</div>
   					<#list SHANSHI_XIGUAN as itemValue>  
    						<dt class="list_dt">
@@ -231,24 +264,24 @@ table tr:nth-child(even){background:#eeefef;}
 					</dd>
 					</#list>
 		<!--====饮食原则====-->
-			 <div class="zhanbi space center" id="yinshiyuanzetiaozhuan">饮食原则</div>
+			<!--  <div class="zhanbi space center" id="yinshiyuanzetiaozhuan">饮食原则</div>
 			<p class="yuanze space">以下是营养专家总结的胃肠健康饮食大原则，建议您结合本报告“膳食习惯”中的“调整方向”逐渐改善，循序渐进养成习惯。</p>
 			<div class="yuanze_pic">
 				<img src="../images/zaocan.png" alt=""/>
 				<img src="../images/wucan.png" alt=""/>
 				<img src="../images/wancan.png" alt=""/>
-			</div>
+			</div> -->
 		<!-- 	====补充剂方案====   -->
-			<div class="zhanbi space center" id="buchongjifangantiaozhuan">补充剂方案</div>
+			<!-- <div class="zhanbi space center" id="buchongjifangantiaozhuan">补充剂方案</div>
 			<p class="yuanze space">综合评估您的饮食生活习惯、肠胃健康现状、环境污染、食物中营养素流失等因素，营养专家为您推荐以下补充剂方案。</p>
 			<div class="jieshao"><img src="../images/jieshao.png" alt=""/></div>
 			 <p class="jianyi center jjjdddd"><span>建议您补充3种补充剂</span></p>
-			<p class="jianyi center swsws"><span>您还可以选择</span></p> 
+			<p class="jianyi center swsws"><span>您还可以选择</span></p>  -->
 		</div>
 	</div>
-
+<!-- 
 	<input id="shenti80" type="hidden" th:value="${shenti80}"></input>
-	<input id="yinshi60" type="hidden" th:value="${yinshi60}"></input>
+	<input id="yinshi60" type="hidden" th:value="${yinshi60}"></input> -->
 	 
 </body>
 
