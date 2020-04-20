@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,10 +18,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.xhtmlrenderer.pdf.ITextFontResolver;
+import org.xhtmlrenderer.pdf.ITextRenderer;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerFontProvider;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
@@ -28,14 +33,17 @@ import com.itextpdf.tool.xml.XMLWorkerHelper;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import sun.misc.BASE64Encoder;
 /**
  * html转换为pdf导出工具类
  */
 public class JavaToPdfHtmlFreeMarker {
     private static final String HTML = "/baogao-3.html";
-    private static final String WINDOWS_FONT = "D:/fl/simsun.ttf";
+    private static final String WINDOWS_FONT = "D:/Documents/Downloads/simsun.ttf";
     private static final String LINUX_FONT="/usr/share/fonts/chiness/simsun.ttc";
     private static final String CSS_RESOURSE="/css.css";
+    public static final String PDF_PATH = "D:/xx.pdf";
+
     private static Map<String,Object> paramsMap = new HashMap<String,Object>();
     public JavaToPdfHtmlFreeMarker(Map<String,Object> paramsMap){
     	this.paramsMap=paramsMap;
@@ -77,10 +85,10 @@ public class JavaToPdfHtmlFreeMarker {
     	System.out.println(content);
         Document document = new Document(PageSize.A4, 30, 30, 30, 30);
         document.setMargins(30, 30, 30, 30);
-        String fileName = "ailande.pdf";
+        String fileName = URLEncoder.encode("艾兰德打印文件.pdf", "UTF-8");
         response.reset();
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-        response.setContentType("application/octet-stream;charset=UTF-8");
+        response.setContentType("application/pdf");
         OutputStream outputStream= response.getOutputStream();
         PdfWriter writer = PdfWriter.getInstance(document,outputStream);
         document.open();
@@ -89,6 +97,42 @@ public class JavaToPdfHtmlFreeMarker {
         XMLWorkerHelper.getInstance().parseXHtml(writer, document, new ByteArrayInputStream(content.getBytes("UTF-8")),null,Charset.forName("UTF-8"),new AsianFontProvider());
         document.close();
         outputStream.close();
+    }
+    
+    public static void createPdf2(HttpServletResponse response, String content) throws IOException, DocumentException {
+    	OutputStream os = null;
+        try {
+            Long startTime = System.currentTimeMillis();
+
+            os = new FileOutputStream(PDF_PATH);
+            ITextRenderer renderer = new ITextRenderer();
+            ITextFontResolver fontResolver = renderer.getFontResolver();
+            // 设置中文字体/宋体
+            fontResolver.addFont(WINDOWS_FONT, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            // 获取HTML文件的URL
+        //    String url = new File(HTML).toURI().toURL().toString();
+            // 方式一/URL方式生成PDF
+       //    renderer.setDocument(url);
+            // 方式二/HTML代码字符串方式生成PDF
+            // HTML代码字符串
+            String htmlString = "<html></html>";
+            renderer.setDocumentFromString(content);
+            renderer.layout();
+            renderer.createPDF(os);
+            Long endTime = System.currentTimeMillis();
+            System.out.print("Itext parse Html to Pdf End -> " + (endTime -startTime));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+           if (null != os) {
+               try {
+                   os.close();
+                   
+               } catch (IOException e) {
+                   e.printStackTrace();
+               }
+           }
+        }
     }
   
     /**
@@ -196,6 +240,14 @@ public class JavaToPdfHtmlFreeMarker {
 			e.printStackTrace();
 		}
     	return outStream.toByteArray();
+    }
+    
+    public static String getImageBase64String(File imgFile) throws IOException {
+        InputStream inputStream = new FileInputStream(imgFile);
+        byte[] data = new byte[inputStream.available()];
+        int totalNumberBytes = inputStream.read(data);
+        BASE64Encoder encoder = new BASE64Encoder();
+        return encoder.encode(data);
     }
 }
 
