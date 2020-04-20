@@ -17,20 +17,14 @@
 	td {
   white-space: pre-line;
  }
- /*肠道现状*/
-./* cdxzBox{margin-bottom:1.5rem;}
-.cdxzBox .ztai{overflow: hidden;font-size: .46rem;}
-.cdxzBox .ztai img{width: 2.2rem;height: 2.2rem;}
-.cdxzBox .ztai ul{margin:.3rem auto .6rem;}
-*/
-.sideMenu{}
-.sideMenu .list_dt{padding:.2rem .15rem;position: relative;overflow: hidden;line-height: .87rem;} 
+ul li{list-sytle:none;}
 .sideMenu .list_dt span.fl{font-weight: bold;width:100%;}
 .sideMenu .list_dt span.fl img{width:.94rem;height: .87rem;vertical-align: middle; }
 .sideMenu .list_dt span.fr{padding: .05rem .15rem;border: .04rem solid #321b3b;border-radius: .5rem;background: #e94a65;color: #fff;margin-top: .1rem;position: absolute;right: .1rem;line-height: normal;}
 
 .sideMenu .list_dt span.bgn{background: none;color:#221814;}
 .sideMenu .list_dd{font-size:.28rem;border-bottom:.02rem solid #321b3b;}
+
 table{width: 100%;}
 table td{padding:.2rem .18rem;}
 table tr:nth-child(odd){background:#dcdddd;}
@@ -41,34 +35,8 @@ table tr:nth-child(even){background:#eeefef;}
 .jbs .p3{font-size: .5rem;color:#248dce;}
 .jbs .p3 span{font-size: 1rem;}
 .jbs .p3 span.yyy{font-size:.36rem;}
-/*
-.zhanbi,
-.shanshi{font-size: .4rem;color:#fff;line-height: .7rem;border:.04rem solid #231815;border-radius:.3rem;margin:.8rem 0 .15rem;background: #e94a65;}
-.jbs .zhanbi-lt{background: #fff;border:.03rem solid #231815;border-radius:.3rem;overflow: hidden;padding:.15rem 0;}
-.jbs .zhanbi-lt li{float: left;width: 25%;background:url(../images/bao-js.png) no-repeat center top;-webkit-background-size:.82rem .77rem;background-size:.82rem .77rem;padding-top:.9rem;font-size: .24rem;}
-.jbs .zhanbi-lt li em{font-size: .4rem;}
-.jbs .zhanbi-lt li:nth-child(2){background-image: url(../images/naoling.png);}
-.jbs .zhanbi-lt li:nth-child(3){background-image: url(../images/bao-sm.png);}
-.jbs .zhanbi-lt li:nth-child(4){background-image: url(../images/bao-yd.png);}
-.jbs .txt{padding:.15rem 0;line-height: .44rem;}
-/*膳食习惯*/
-
 .shanshi{text-align:center; color: blue;}
-/*.bgn_bg{background-image: url(../images/sanjiao-baichi.png);}
-.list_dt .fl span{width: 50%;display: inline-block;line-height:normal;vertical-align:middle;}
-.yuanze{line-height: .44rem;margin:.3rem 0;}
-.jianyi{font-size: .4rem;margin:1rem 0 .35rem;}
-.jianyi span{background:url(../images/redBar.png) no-repeat bottom;-webkit-background-size:100% .2rem;background-size:100% .2rem;}
-.jyiBox{background: #fff;border:.04rem solid #231815;border-radius:.1rem;width: 100%;height: 5rem;position: relative;margin-bottom:.36rem;}
-.jyiBox .jsBg{width: 3.37rem;height: 2.25rem;position: absolute;left:-5%;top: 0;}
-.jyiBox .name{width: 3.65rem;position: absolute;left:.65rem;top:1.8rem;}
-.jyiBox .name span{font-size: .36rem;display: block;font-weight: bold;}
-.jyiBox .yaoM{width: 2rem;height: 3.4rem;position: absolute;top:.3rem;right:.1rem;}
-.jyiBox input{background: #248dce;border-radius:.5rem;font-size: .36rem;height: .65rem;color:#fff;width: 2.8rem;border:.03rem solid #231815;position: absolute;bottom:.2rem;left: 50%;margin-left:-1.4rem;}
-.jieshao{text-align: center;}
-.ulBox{margin-bottom:.25rem;}
-.ulBox img{width:6.8rem; display:block; margin:0 auto;}
-  */
+.chanpin{text-align:center; color: red;}
 </style>
 </head>
 <body class="bg-cc" style ="font-family:simsun;" >
@@ -92,14 +60,22 @@ table tr:nth-child(even){background:#eeefef;}
   	  				<p class="p2"></p>
   	  				<p class="p3">饮食与生活习惯得分：<span>${yinshi60}</span></p>
   	 			</div>
-  	  			<ul class="zhanbi-lt center">
+  	  			<ul>
   	  				 <li>姓名：<span>${username}</span></li>
   	  				<li>身高：<span>${high}</span></li>
   	  				<li>体重：<span>${weight}</span></li>
-  	  				<li>联系方式：<span>${phone}</span></li>
+  	  				<li>BMI：<span>${bmi}</span></li>
+  	  				<li style="list-sytle:none">联系方式：<span>${phone}</span></li>
+  	  				<#assign productName="${productName}">
+  	  				<#if "肠胃调理"==productName>
+  	  					<li style="list-sytle:none">您的肠道现状：<span>${talkName}</span></li>
+  	  					<#else> 
+  	  					<li style="list-sytle:none">您的体型现状：<span>${talkName}</span></li>
+  	  				</#if>
+  	  				<li style="list-sytle:none">饮食与生活习惯状况：<span>${yinshi60}</span></li>
   	  			</ul>
-  	  			<!-- <p class="txt">肠道的现状除了和基因、自身体质有关外，很大程度上还取决于饮食与生活习惯。接下来是健康专家团队为您量身定制的个性化方案，包括饮食、习惯、作息、运动、情绪压力、营养补充剂等方面。</p> -->
-  	 		</dd>	
+  	  			<p class="txt">${huashu}</p>
+  	 		</dd>
   	 		<div class="shanshi space center" id="SHENTI_ZHUANG">身体现状</div>
   					<#list SHENTI_ZHUANG as itemValue>  
    						<dt class="list_dt">
@@ -260,25 +236,42 @@ table tr:nth-child(even){background:#eeefef;}
 					</table>
 					</dd>
 					</#list>
-		<!--====饮食原则====-->
-			<!--  <div class="zhanbi space center" id="yinshiyuanzetiaozhuan">饮食原则</div>
-			<p class="yuanze space">以下是营养专家总结的胃肠健康饮食大原则，建议您结合本报告“膳食习惯”中的“调整方向”逐渐改善，循序渐进养成习惯。</p>
-			<div class="yuanze_pic">
-				<img src="../images/zaocan.png" alt=""/>
-				<img src="../images/wucan.png" alt=""/>
-				<img src="../images/wancan.png" alt=""/>
-			</div> -->
-		<!-- 	====补充剂方案====   -->
-			<!-- <div class="zhanbi space center" id="buchongjifangantiaozhuan">补充剂方案</div>
-			<p class="yuanze space">综合评估您的饮食生活习惯、肠胃健康现状、环境污染、食物中营养素流失等因素，营养专家为您推荐以下补充剂方案。</p>
-			<div class="jieshao"><img src="../images/jieshao.png" alt=""/></div>
-			 <p class="jianyi center jjjdddd"><span>建议您补充3种补充剂</span></p>
-			<p class="jianyi center swsws"><span>您还可以选择</span></p>  -->
+			<br/>
+			<div class="chanpin space center" id="YUNDONG_XIGUANG">产品推荐</div>
+			<span>建议补充:</span><br/>
+			<table border="1" cellspacing="0" cellpadding="0">
+					<tr style="text-align: center;">
+						<td style="width: 50%">推荐原因</td>
+						<td style="width: 50%">推荐的产品</td>
+				   </tr>
+				   <#if tuijianarryMap??>
+				   		<#list tuijianarryMap? keys as key>
+							<tr>
+								<td>${key}</td>
+								<td >${tuijianarryMap[key]}</td>
+							</tr>
+						</#list>
+					</#if>
+			</table>
+			<br/>
+			<span>还可选择:</span><br/>
+				<table border="1" cellspacing="0" cellpadding="0">
+					<tr style="text-align: center;">
+						<td style="width: 50%">推荐原因</td>
+						<td style="width: 50%">推荐的产品</td>
+				   </tr>
+				   <#if haikexuanzeMap??>
+				   		<#list haikexuanzeMap ? keys as key>
+							<tr>
+								<td>${key}</td>
+								<td>${haikexuanzeMap[key]}</td>
+							</tr>
+						</#list>
+					</#if>
+			</table>
 		</div>
 	</div>
-<!-- 
-	<input id="shenti80" type="hidden" th:value="${shenti80}"></input>
-	<input id="yinshi60" type="hidden" th:value="${yinshi60}"></input> -->
+
 	 
 </body>
 

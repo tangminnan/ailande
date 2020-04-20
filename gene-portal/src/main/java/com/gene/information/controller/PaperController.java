@@ -38,7 +38,7 @@ public class PaperController {
 		System.out.println("回调执行");
 		System.out.println("回调执行");
 		String code = request.getParameter("code");
-    	String openid = "o85JHw-iXn1_uxz7SgHxdJQf30LU";//暂定写死，之前是空字符串
+    	String openid = "";//暂定写死，之前是空字符串
     	if(StringUtils.isNotBlank(code)){
     		try {
 				openid = WechatOAConfig.getAccessToken(code);
@@ -198,8 +198,11 @@ public class PaperController {
 		}
 		else if(flag==2){//身体状况  膳食习惯 生活方式 睡眠与压力 运动习惯
 			List<String> fenleiList = Arrays.asList("SHENTI_ZHUANG","SHANSHI_XIGUAN","SHENGHUO_FANGSHI","SHUIMIAN_XIGUAN","YUNDONG_XIGUANG");
-			for(String fenlei :fenleiList)
-				list.addAll(paperService.getQuestionDOType(products,fenlei));
+			for(String fenlei :fenleiList){
+				List<QuestionDO> ll = paperService.getQuestionDOType(products,fenlei);
+				ll=ll.stream().sorted(Comparator.comparing(QuestionDO::getSort)).collect(Collectors.toList());
+				list.addAll(ll);
+			}
 			model.addAttribute("list",list);
 		}
 		
@@ -215,7 +218,7 @@ public class PaperController {
 	public String getReportPage(HttpServletRequest request,HttpServletResponse response,Model model){
 		
 		String code = request.getParameter("code");
-    	String openid = "o85JHw-iXn1_uxz7SgHxdJQf30LU";//暂定写死，之前是空字符串
+    	String openid = "";//暂定写死，之前是空字符串
     	if(StringUtils.isNotBlank(code)){
     		try {
 				openid = WechatOAConfig.getAccessToken(code);

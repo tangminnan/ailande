@@ -1,5 +1,5 @@
 ailande:
-  uploadPath: D:/uploaded_files/
+  uploadPath: /var/uploaded_files/
   poiword: www/poiword/
 logging:
   level:

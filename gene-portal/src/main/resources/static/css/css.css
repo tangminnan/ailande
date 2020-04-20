@@ -188,7 +188,7 @@ table tr:nth-child(even){background:#eeefef;}
 .jbs img{width: 2.2rem;height: 2.2rem;border:.04rem solid #231815;border-radius:50%;margin:.8rem 0 .2rem;}
 .jbs .p2{font-size: .46rem;}
 .jbs .p3{font-size: .5rem;color:#248dce;}
-.jbs .p3 span{font-size: 1rem;}
+.jbs .p3 span{font-size: .65rem;}
 .jbs .p3 span.yyy{font-size:.36rem;}
 .zhanbi,
 .shanshi{font-size: .4rem;color:#fff;line-height: .7rem;border:.04rem solid #231815;border-radius:.3rem;margin:.8rem 0 .15rem;background: #e94a65;}

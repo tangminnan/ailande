@@ -256,11 +256,27 @@ public class CustomerPaperController {
     		}
     	}
     	int yinshi60 =(int)(defen/zongfen*100);
-    	resultMap.put("yinshi60",yinshi60);
+    	String yinshizhuangkuang=  "";
+    	if(yinshi60>=80) yinshizhuangkuang="较好";
+    	else if(yinshi60<80 && yinshi60>=60)yinshizhuangkuang="一般";
+    	else if(yinshi60<60) yinshizhuangkuang="较低";
+    	resultMap.put("yinshi60",yinshizhuangkuang);
+    	CustomerPaperDO udo1 = customerPaperService.getCustomerPaperDOByUser(productpaper);
+		    Integer high = Integer.parseInt(udo1.getHigh());
+		float weight=  Float.parseFloat( udo1.getWeight()+"");  
+		DecimalFormat df = new DecimalFormat("0.0");
+		String bmi=  df.format(weight/high/high*10000);
+		resultMap.put("high",high);
+		resultMap.put("weight",weight);
+		resultMap.put("phone", udo1.getPhone());
+		resultMap.put("username", udo1.getUsername());
+		resultMap.put("bmi",bmi);
+		resultMap.put("productName",name);
     	if("肠胃调理".equals(name)){
     		if(shenti80>=80)talkName="比较好";
     		else if(shenti80<80 && shenti80>=60) talkName="一般般";
     		else if(shenti80<60) talkName="不太好";
+    		resultMap.put("talkName", talkName);
     		List<ReportTalkDO> reportTalkDOs = customerPaperService.listReportTalk(new HashMap<String,Object>());
     		List<ReportTalkDO> l=  reportTalkDOs.stream().filter(a -> "CHANGWEI".equals(a.getTalkType()))
 							  .filter(c -> talkName.equals(c.getTalkName()))
@@ -270,15 +286,7 @@ public class CustomerPaperController {
     			resultMap.put("huashu",l.get(0).getTalkContent());
     		}
     	}
-    	if("科学瘦身".equals(name)){
-    		CustomerPaperDO udo1 = customerPaperService.getCustomerPaperDOByUser(productpaper);
- 		    Integer high = Integer.parseInt(udo1.getHigh());
-    		float weight=  Float.parseFloat( udo1.getWeight()+"");  
-    		DecimalFormat df = new DecimalFormat("0.0");
-    		String bmi=  df.format(weight/high/high*10000);
-    		resultMap.put("high",high);
-    		resultMap.put("weight",weight);
-    		resultMap.put("bmi",bmi);
+    	if("科学瘦身".equals(name)){//饮食   较好  一般  较低
     		List<String> str  = customerPaperService.getChoosedContentBySomeString(productpaper,"赘肉");
     		resultMap.put("zhuirou",str.size()>0?str.get(0):"没有赘肉");
     		double bbmmii =Double.parseDouble(bmi);
@@ -289,6 +297,7 @@ public class CustomerPaperController {
     		else if(bbmmii>=18.5 && bbmmii<23.9 && (zzhhuuiirroouu.equals("有点赘肉") || zzhhuuiirroouu.equals("赘肉较多")))talkName="体重标准体脂偏高";
     		else if(bbmmii>=18.5 && bbmmii<23.9 && zzhhuuiirroouu.equals("没有赘肉"))talkName="标准体型";
     		else if(bbmmii<18.5)talkName="偏瘦";
+    	    resultMap.put("talkName", talkName);
     		List<ReportTalkDO> reportTalkDOs = customerPaperService.listReportTalk(new HashMap<String,Object>());
      		List<ReportTalkDO> l=  reportTalkDOs.stream().filter(a -> "TIXING".equals(a.getTalkType()))
      							  .filter(c -> talkName.equals(c.getTalkName()))
@@ -306,17 +315,12 @@ public class CustomerPaperController {
 	 * 获取详细的数据
 	 */
 	public void getMyReportData(Integer productpaper,Map<String,Object> resultMap){
-		
-		DecimalFormat df = new DecimalFormat("0.0");
-		CustomerPaperDO udo1 = customerPaperService.getCustomerPaperDOByUser(productpaper);
-		float high = Float.parseFloat(udo1.getHigh());
-		float weight=  Float.parseFloat( udo1.getWeight()+"");  
-		float bmi=  Float.parseFloat(df.format(weight/high/high*10000));
-		resultMap.put("high", high);
-		resultMap.put("weight", weight);
-		resultMap.put("phone", udo1.getPhone());
-		resultMap.put("username", udo1.getUsername());
-	    resultMap.put("ww",new File("D:/uploaded_files/ailande/question/1572518978955.png"));
+		List<String> paibianpinlvxingzhuang = new ArrayList<String>();
+		List<String> paibianpinlvshucaishuiguoculiang = new ArrayList<String>();
+		List<String> futongfuzhangfansuanwixhangjibbing = new ArrayList<String>();
+		Map<String,String> tuijianarryMap = new HashMap<String,String>();//保存推荐的产品和原因
+    	Map<String,String> haikexuanzeMap = new HashMap<String,String>();//还可选择的产品
+		float bmi =Float.parseFloat((String) resultMap.get("bmi"));
 	    List<String> fenleiParamsList = Arrays.asList("SHENTI_ZHUANG","SHANSHI_XIGUAN","SHENGHUO_FANGSHI","SHUIMIAN_XIGUAN","YUNDONG_XIGUANG");//身体状况  膳食习惯  生活方式  睡眠压力  运动习惯
 	    for(String fenlei:fenleiParamsList){
 	    	List<QuestionDO> list = customerPaperService.getQuestionDOList(productpaper,fenlei);
@@ -328,11 +332,169 @@ public class CustomerPaperController {
 	    			questionDO.getChoiceProductDOList().get(0).setTadjianyi(questionDO.getChoiceProductDOList().get(0).getTadjianyis());
 	    		}else
 	    			questionDO.setTiaozheng(questionDO.getChoiceProductDOList().get(0).getTadf());
+	    		//产品推荐逻辑
+	    		//通常的排便频率？   大部分时候便便的形态？  平均每天吃几份蔬菜？ 平均每天吃几份水果？ 平均每天吃几份粗粮？ 腹胀   疾病史
+	    		String content = questionDO.getContent();
+	    		String text = questionDO.getChoiceProductDOList().get(0).getChoicecontent();
+	    		if(content.indexOf("通常的排便频率？")>=0 || content.indexOf("大部分时候便便的形态？")>=0){
+					paibianpinlvxingzhuang.add(content+"："+text);
+				}
+				if(content.indexOf("通常的排便频率？")>=0 || content.indexOf("平均每天吃几份蔬菜？") >=0|| content.indexOf("平均每天吃几份水果？")>=0 || content.indexOf("平均每天吃几份粗粮？")>=0){
+					 paibianpinlvshucaishuiguoculiang.add(content+"："+text);
+				}
+				if(content.indexOf("腹胀")>=0 || content.indexOf("疾病史")>=0){
+					futongfuzhangfansuanwixhangjibbing.add(content+"："+text);
+				} 
 	    	}
 	    	resultMap.put(fenlei,list);
-	    } 
-	}
-	
-	
-	
+	    }
+	    	String productName = (String) resultMap.get("productName");
+	    	boolean  flag=false;
+	    	String yuanyin="";//推荐原因
+	    	if("肠胃调理".equals(productName)){               
+	    		String[] jianyibuchong={"通常的排便频率？：大于3次/天","通常的排便频率？: 有便秘倾向","大部分时候便便的形态？：不成型的软便","大部分时候便便的形态？：硬块","大部分时候便便的形态？：软硬掺杂","大部分时候便便的形态？：水状"};
+	    		for(int i=0;i<paibianpinlvxingzhuang.size();i++){
+	    			 String l = paibianpinlvxingzhuang.get(i);
+	    			 for(int j=0;j<jianyibuchong.length;j++){
+	    				 if(l.equals(jianyibuchong[j])){
+	    					 flag=true;yuanyin=l;break;
+	    				 }
+	    			 }
+	    			 if(flag==true) break;
+	    		 }
+	    		 if(flag==true){
+	    			 flag=false;
+	    			 tuijianarryMap.put(yuanyin,"速七活力益生菌胶囊");
+	    		 } 
+	    		 flag=false;
+	    		 for(int i=0;i< paibianpinlvxingzhuang.size();i++){
+	    			 String l = paibianpinlvxingzhuang.get(i);
+	    			 if("通常的排便频率？：1-3次/天".equals(l))
+	    				 flag=true;
+	    		 }
+	    		 if(flag){
+	    			 flag=false;
+	    		 	for(int i=0;i< paibianpinlvxingzhuang.size();i++){
+	    			 	String l = paibianpinlvxingzhuang.get(i);
+	    			 	if("大部分时候便便的形态？：香蕉型".equals(l)){
+	    				 	tuijianarryMap.put("通常的排便频率？：1-3次/天,大部分时候便便的形态？：香蕉型","每日活力益生菌");
+	    			 	}else if("大部分时候便便的形态？：成型的软便".equals(l)){
+	    			 		tuijianarryMap.put("通常的排便频率？：1-3次/天,大部分时候便便的形态？：成型的软便","每日活力益生菌"); 
+	    			 	}
+	    		 	}
+	    		 }
+	    		 //判断低聚果糖益生元粉
+	    		 String shengxiade="";
+	    		 jianyibuchong=new String[]{"通常的排便频率？: 有便秘倾向","通常的排便频率？：大于3次/天","平均每天吃几份蔬菜？ （一份约为1个拳头体积的煮熟的蔬菜，不包括藕、土豆、玉米、山药、芋头，它们是主食，不是蔬菜）：小于2份","平均每天吃几份蔬菜？ （一份约为1个拳头体积的煮熟的蔬菜，不包括藕、土豆、玉米、山药、芋头，它们是主食，不是蔬菜）：2-3份","平均每天吃几份水果？ （1份水果的可食部约为半个拳头的大小，或半个中号苹果大小）：小于2份","平均每天吃几份粗粮？ （一份约为1个拳头体积的煮熟的粗粮，包括全谷物、杂豆类、薯类，例如藕、土豆、玉米、山药、芋头都是主食）：几乎不吃","平均每天吃几份粗粮？ （一份约为1个拳头体积的煮熟的粗粮，包括全谷物、杂豆类、薯类，例如藕、土豆、玉米、山药、芋头都是主食）：小于1份"};
+	    		 for(int i=0;i< paibianpinlvshucaishuiguoculiang.size();i++){
+	    			 String l = paibianpinlvshucaishuiguoculiang.get(i);
+	    			 for(int j=0;j<jianyibuchong.length;j++){
+	    				 if(l.equals(jianyibuchong[j])){
+	    					 flag=true;
+	    					 yuanyin=l;
+	    				 	 break;
+	    				 }
+	    			 }
+	    			 if(flag==true)
+	    				 break;
+	    		 }
+	    		  if(flag==true){
+	    			 flag=false;
+	    			 tuijianarryMap.put(yuanyin,"低聚果糖益生元粉");
+	    			 shengxiade="低聚果糖益生元粉";
+	    		 }
+	    		 
+	    		//您还可以选择   低聚果糖益生元粉
+	    		if("".equals(shengxiade)&& paibianpinlvshucaishuiguoculiang.size()>0){
+	    			haikexuanzeMap.put("除常备以外的答案","低聚果糖益生元粉");
+	    		}
+	    		 
+	    		 jianyibuchong=new String[]{"通常腹痛、腹胀、胃胀、胃痛、反酸频率？：经常有","胃肠道疾病史：有","通常腹痛、腹胀、胃胀、胃痛、反酸频率？：偶尔有"};
+	    		 for(int i=0;i< futongfuzhangfansuanwixhangjibbing.size();i++){
+	    			 String l = futongfuzhangfansuanwixhangjibbing.get(i);
+	    			 for(int j=0;j<jianyibuchong.length;j++){
+	    				 if(l.equals(jianyibuchong[j])){
+	    					 flag=true;
+	    					 yuanyin=l;
+	    				 	 break;
+	    				 }
+	    			 }
+	    		 }
+	    		 if(flag==true){
+	    			 flag=false;
+	    			 tuijianarryMap.put(yuanyin,"Permatrol®肠胃安益胶囊    Polyzyme Forte®复合消化酶胶囊");
+	    		 }
+	    	}else{                       																       
+	    		String[] jianyibuchong={"通常的排便频率？：有便秘倾向","通常的排便频率？：大于3次/天"};
+	    		for(int i=0;i<paibianpinlvxingzhuang.size();i++){
+	    			 String l = paibianpinlvxingzhuang.get(i);
+	    			 for(int j=0;j<jianyibuchong.length;j++){
+	    				 if(l.equals(jianyibuchong[j])){
+	    					 flag=true;
+	    					 yuanyin=l;
+	    					 break;
+	    				 }
+	    			 }
+	    			 if(flag==true)
+	    				 break;
+	    		 }
+	    		 if(flag==true){
+	    			 flag=false;
+	    			 tuijianarryMap.put(yuanyin,"速七活力益生菌胶囊");
+	    		 } 
+	    		 
+	    		//判断每日活力益生菌
+	    		   flag=false;
+	    		   jianyibuchong=new String[]{"通常的排便频率？：1-3次/天"};
+	    		   for(int i=0;i< paibianpinlvxingzhuang.size();i++){
+	    		   		String l = paibianpinlvxingzhuang.get(i);
+	    			 	for(int j=0;j<jianyibuchong.length;j++){
+	    				 	if(l.equals(jianyibuchong[j])){
+	    						 flag=true;
+	    						 yuanyin=l;
+	    						 break;
+	    					 }
+	    			 	}
+	    			 	if(flag==true)
+	    			 		break;
+	    		 	}
+	    		 if(flag==true){flag=false;
+	    			 tuijianarryMap.put(yuanyin,"每日活力益生菌");
+	    		 } 
+	    		  
+	    		 //膳食纤维低聚果糖
+	    		  String shengxiades="";
+	    		  jianyibuchong=new String[]{"通常的排便频率？：有便秘倾向","通常的排便频率？：大于3次/天","平均每天吃几份蔬菜？ （一份约为1个拳头体积的煮熟的蔬菜，不包括藕、土豆、玉米、山药、芋头，它们是主食，不是蔬菜）：小于2份","平均每天吃几份蔬菜？ （一份约为1个拳头体积的煮熟的蔬菜，不包括藕、土豆、玉米、山药、芋头，它们是主食，不是蔬菜）：2-3份","平均每天吃几份水果？ （1份水果的可食部约为半个拳头的大小，或半个中号苹果大小）：小于2份","体型现状：脂肪型肥胖","体型现状：体重正常体脂偏高","平均每天吃几份粗粮？ （一份约为1个拳头体积的煮熟的粗粮，包括全谷物、杂豆类、薯类，例如藕、土豆、玉米、山药、芋头都是主食）：几乎不吃","平均每天吃几份粗粮？ （一份约为1个拳头体积的煮熟的粗粮，包括全谷物、杂豆类、薯类，例如藕、土豆、玉米、山药、芋头都是主食）：小于1份"};
+	    		  for(int i=0;i< paibianpinlvshucaishuiguoculiang.size();i++){
+	    			 String l = paibianpinlvshucaishuiguoculiang.get(i);
+	    			 for(int j=0;j<jianyibuchong.length;j++){
+	    				 if(l.equals(jianyibuchong[j])){
+	    					 flag=true;
+	    					 yuanyin=l;
+	    				 	 break;
+	    				 }
+	    			 }
+	    			 if(flag==true)
+	    				 break;
+	    		 }
+	    		 if(flag==true){
+	    			 flag=false;
+	    			 tuijianarryMap.put(yuanyin,"膳食纤维低聚果糖");
+	    			 shengxiades="膳食纤维低聚果糖";
+	    		 }
+	    		 
+
+
+	    		 //判断还可选择   膳食纤维低聚果糖
+	    		 if("".equals(shengxiades) && paibianpinlvshucaishuiguoculiang.size()>0){
+	    			 haikexuanzeMap.put("除常备以外的答案","膳食纤维低聚果糖");
+	    		}
+	    		 
+	    		 tuijianarryMap.put("对所有用户推荐常备","藤黄果提取物");
+	    	}
+	    	
+	    
+	    resultMap.put("tuijianarryMap",tuijianarryMap);
+    	resultMap.put("haikexuanzeMap",haikexuanzeMap);
+	}	
 }

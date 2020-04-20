@@ -39,8 +39,8 @@ import sun.misc.BASE64Encoder;
  */
 public class JavaToPdfHtmlFreeMarker {
     private static final String HTML = "/baogao-3.html";
-    private static final String WINDOWS_FONT = "D:/Documents/Downloads/simsun.ttf";
-    private static final String LINUX_FONT="/usr/share/fonts/chiness/simsun.ttc";
+    private static final String WINDOWS_FONT = "D:/fl/simsun.ttf";
+    private static final String LINUX_FONT="/usr/share/fonts/chiness/simsun.ttf";
     private static final String CSS_RESOURSE="/css.css";
     public static final String PDF_PATH = "D:/xx.pdf";
 
@@ -82,7 +82,6 @@ public class JavaToPdfHtmlFreeMarker {
   
   
     public static void createPdf(HttpServletResponse response, String content) throws IOException, DocumentException {
-    	System.out.println(content);
         Document document = new Document(PageSize.A4, 30, 30, 30, 30);
         document.setMargins(30, 30, 30, 30);
         String fileName = URLEncoder.encode("艾兰德打印文件.pdf", "UTF-8");
@@ -92,8 +91,8 @@ public class JavaToPdfHtmlFreeMarker {
         OutputStream outputStream= response.getOutputStream();
         PdfWriter writer = PdfWriter.getInstance(document,outputStream);
         document.open();
-        String cssSource = getURLSource(new File("src/main/resources/"+CSS_RESOURSE));
-        InputStream cssis = new ByteArrayInputStream(cssSource.toString().getBytes());
+      /*  String cssSource = getURLSource(new File("src/main/resources/"+CSS_RESOURSE));
+        InputStream cssis = new ByteArrayInputStream(cssSource.toString().getBytes());*/
         XMLWorkerHelper.getInstance().parseXHtml(writer, document, new ByteArrayInputStream(content.getBytes("UTF-8")),null,Charset.forName("UTF-8"),new AsianFontProvider());
         document.close();
         outputStream.close();
