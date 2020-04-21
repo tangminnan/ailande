@@ -534,7 +534,7 @@ public class PaperController {
 			talkName="肌肉型";
 		 }
 		 else if(bbmmii>=18.5 && bbmmii<23.9 && (zzhhuuiirroouu.equals("有点赘肉") || zzhhuuiirroouu.equals("赘肉较多"))){
-			 talkName="体重标准体脂偏高";
+			 talkName="体重正常体脂偏高";
 		 }
 		 else if(bbmmii>=18.5 && bbmmii<23.9 && zzhhuuiirroouu.equals("没有赘肉")) {
 			talkName="标准体型";
