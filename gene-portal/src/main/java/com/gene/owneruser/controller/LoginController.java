@@ -151,7 +151,7 @@ public class LoginController extends BaseController {
 		             
 		            request.putQueryParameter("PhoneNumbers", phone);
 		           
-		            request.putQueryParameter("SignName", "新视能");
+		            request.putQueryParameter("SignName", "艾兰德");
 		            
 		            if ("0".equals(type)) {
 		            	request.putQueryParameter("TemplateCode", "SMS_162732611");

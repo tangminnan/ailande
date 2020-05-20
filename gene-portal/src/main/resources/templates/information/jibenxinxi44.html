@@ -12,7 +12,22 @@
 <script type="text/javascript" src="../js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="../js/Font.js"></script>
 <style type="text/css">
-
+	.triangle-right {
+	 	height: 0;
+        border: .15rem solid transparent;
+        border-left-color: red;
+        
+		display: inline-block; 
+        vertical-align: middle;
+        margin-left:.4rem;
+    	}
+		.content1{
+			display:inline-block;
+			width:2.5rem;
+			line-height: .35rem;
+			height: .35rem;/*给内部div设置了高度，该div才会垂直居中*/
+			font-size:.3rem
+			}
 </style>
 </head>
 <body class="bg-cc">
@@ -50,7 +65,12 @@
 		</div> 
 	</div>
 	<div class="nev">
-			<a > 下一题  <i class="xiti">></i></a>
+			<!-- <a > 下一题  <i class="xiti">></i></a> -->
+			<div class="content1">
+				下一题
+				<div class="triangle-right"></div>
+
+			</div>
 			
 		</div>
 	
@@ -88,7 +108,7 @@
 		  $(".baifen").prev().val(baifen);
 	 
 	$
-	$(".nev a").click(function(){
+	$(".content1").click(function(){
 		var arry=[],flag=false;
 		$(".box").each(function(){
 			var text=$(this).children("span").text();

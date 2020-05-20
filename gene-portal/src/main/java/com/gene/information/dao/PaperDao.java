@@ -98,7 +98,7 @@ public interface PaperDao {
 	/**
 	 * 根据微信id和产品去拿最新的检测结果
 	 */
-	List<ProductpaperDO> getNewProductpaperDO(@Param("openid") String openid,@Param("product") Integer product,@Param("date") Date date);
+	List<ProductpaperDO> getNewProductpaperDO(@Param("openid") String openid,@Param("product") Integer product);
 	/**
 	 * openid  
 	 * @param openid

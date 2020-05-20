@@ -226,9 +226,9 @@
 	
 	var yinshi = $("#yinshi60").val();
 	yinshi=parseInt(yinshi);
-	if(yinshi>=80){ $(".biaoqing").addClass("shufu");$("#ccc").prev().append("（较好）");$("#biaoqingaaa").attr("src","../images/henhao.png");$("#yyyy").append("(较好) ");}
-	if(yinshi<80 && yinshi>=60){$("#ccc").prev().append("（一般）");$("#biaoqingaaa").attr("src","../images/yiban.png");$("#yyyy").append("(一般) ");}
-	if(yinshi<60){ $(".biaoqing").addClass("buhao");$("#ccc").prev().append("（较低）");$("#biaoqingaaa").attr("src","../images/buhao.png");$("#yyyy").append("(较低) ");}
+	if(yinshi>=80){ $(".biaoqing").addClass("shufu");$("#ccc").prev().append("（比较好）");$("#biaoqingaaa").attr("src","../images/henhao.png");$("#yyyy").append("(比较好) ");}
+	if(yinshi<80 && yinshi>=60){$("#ccc").prev().append("（一般搬）");$("#biaoqingaaa").attr("src","../images/yiban.png");$("#yyyy").append("(一般搬) ");}
+	if(yinshi<60){ $(".biaoqing").addClass("buhao");$("#ccc").prev().append("（不大好）");$("#biaoqingaaa").attr("src","../images/buhao.png");$("#yyyy").append("(不大好) ");}
 	
 	
 	/**
@@ -379,8 +379,35 @@ $(".fotNav li:nth-child(4)").click(function(){
  console.info(paibianpinlvshucaishuiguo);
  console.info("==============================");
  
+ var suqihuoliyishengjun= '<a style="display:block; padding-left:.3rem;" href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202279910179">'
+	    +'<div class="jyiBox">'
+		+'<img class="jsBg" src="../images/goumai.png" alt=""/>'
+		+'<p class="name space"><span>速七活力益生菌胶囊</span>200亿以上活菌，Lab4专利菌群配方，快速改善便秘、腹泻倾向，降低毒素堆积引起的肥胖风险。</p>'
+		+'<img class="yaoM" src="../images/suqihuoli.jpg" alt=""/>'
+		+'<input type="button" value="点击购买"/>'
+		+'</div>'
+		+'</a>';
+		
+var meirihuoli= '<a style="display:block; padding-left:.3rem;" href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202275920179">'
+	    +'<div class="jyiBox">'
+	+'<img class="jsBg" src="../images/goumai.png" alt=""/>'
+	+'<p class="name space"><span>每日活力益生菌</span>每日100亿Lab4益生菌，可进一步优化及保持良好排便状况。</p>'
+	+'<img class="yaoM" src="../images/meirihuoli.jpg" alt=""/>'
+	+'<input type="button" value="点击购买"/>'
+	+'</div>'
+	+'</a>';
+	
+var sanbaiyiqianghuajiaonang='<a style="display:block; padding-left:.3rem;" href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=75835490179">'
+	  +'<div class="jyiBox">'
+	  +'<img class="jsBg" src="../images/goumai.png" alt=""/>'
+	  +'<p class="name space"><span>300亿强化益生菌胶囊</span>高含量300亿活菌，Lab4专利菌群配方，改善长期的便秘、腹泻，降低毒素堆积引起的肥胖风险。</p>'
+       +'<img class="yaoM" src="../images/sanbaiyi.jpg" alt=""/>'
+       +'<input type="button" value="点击购买"/>'
+       +'</div>'
+       +'</a>';				
+ 
 //判断速七活力益生菌胶囊                                                   																       
-var jianyibuchong=["通常的排便频率？：有便秘倾向","通常的排便频率？：大于3次/天"];
+var jianyibuchong=["通常的排便频率？：有便秘倾向","通常的排便频率？：3次以上/天"];
 for(var i=0;i<paibainpinlv.length;i++){
 	 var l = paibainpinlv[i];
 	 for(var j=0;j<jianyibuchong.length;j++){
@@ -401,7 +428,7 @@ for(var i=0;i<paibainpinlv.length;i++){
 //判断每日活力益生菌
    var shengxiade=[];
    flag=false
-   var jianyibuchong=["通常的排便频率？：1-3次/天"];
+   var jianyibuchong=["通常的排便频率？：1-3次/天","通常的排便频率？：0-1次/天"];
    for(var i=0;i< paibainpinlv.length;i++){
    		var l = paibainpinlv[i];
 	 	for(var j=0;j<jianyibuchong.length;j++){
@@ -416,11 +443,24 @@ for(var i=0;i<paibainpinlv.length;i++){
  if(flag==true){flag=false;
 	 var obj={'title':'每日活力益生菌','images':'../images/CW-meirihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202275920179'};
 	 tuijianarry.push(obj);
+	
  } 
+ 
+ 
+ //300亿强化益生菌胶囊
+ for(var i=0;i< paibainpinlv.length;i++){
+	  var l = paibainpinlv[i];
+	  if(l=="通常的排便频率？：有便秘倾向" || l=="通常的排便频率？：4次及以上/天"){
+		  var obj={'title':'300亿强化益生菌胶囊','images':'../images/sanbaiyi.jpg','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=75835490179'};
+		  haikexuanze.push(obj); 
+		 break;
+	  }
+ 	}
+ 
   
  //膳食纤维低聚果糖
  shengxiade=[];
- var jianyibuchong=["通常的排便频率？：有便秘倾向","通常的排便频率？：大于3次/天","平均每天吃几份蔬菜？ （一份约为1个拳头体积的煮熟的蔬菜，不包括藕、土豆、玉米、山药、芋头，它们是主食，不是蔬菜）：小于2份","平均每天吃几份蔬菜？ （一份约为1个拳头体积的煮熟的蔬菜，不包括藕、土豆、玉米、山药、芋头，它们是主食，不是蔬菜）：2-3份","平均每天吃几份水果？ （1份水果的可食部约为半个拳头的大小，或半个中号苹果大小）：小于2份","体型现状：脂肪型肥胖","体型现状：体重正常体脂偏高","平均每天吃几份粗粮？ （一份约为1个拳头体积的煮熟的粗粮，包括全谷物、杂豆类、薯类，例如藕、土豆、玉米、山药、芋头都是主食）：几乎不吃","平均每天吃几份粗粮？ （一份约为1个拳头体积的煮熟的粗粮，包括全谷物、杂豆类、薯类，例如藕、土豆、玉米、山药、芋头都是主食）：小于1份"];
+ var jianyibuchong=["通常的排便频率？：有便秘倾向","通常的排便频率？：4次及以上/天","平均每天吃几份蔬菜？ （一份约为1个拳头体积的煮熟的蔬菜，不包括藕、土豆、玉米、山药、芋头，它们是主食，不是蔬菜）：几乎不吃","平均每天吃几份蔬菜？ （一份约为1个拳头体积的煮熟的蔬菜，不包括藕、土豆、玉米、山药、芋头，它们是主食，不是蔬菜）：1-2份","平均每天吃几份水果？ （1份水果的可食部约为半个拳头的大小，或半个中号苹果大小）：几乎不吃","体型现状：脂肪型肥胖","体型现状：体重正常体脂偏高","平均每天吃几份粗粮？ （一份约为1个拳头体积的煮熟的粗粮，包括全谷物、杂豆类、薯类，例如藕、土豆、玉米、山药、芋头都是主食）：几乎不吃","平均每天吃几份粗粮？ （一份约为1个拳头体积的煮熟的粗粮，包括全谷物、杂豆类、薯类，例如藕、土豆、玉米、山药、芋头都是主食）：小于1份"];
  for(var i=0;i< paibianpinlvshucaishuiguo.length;i++){
 	 var l = paibianpinlvshucaishuiguo[i];
 	 for(var j=0;j<jianyibuchong.length;j++){
@@ -455,20 +495,32 @@ $(".erwewas").children("span").text("建议您补充"+ (tuijianarry.length)+"种
 var div='';
 for(var i=0;i< tuijianarry.length;i++){
 	
-	 div+= '<div class="ulBox"><a href="'+tuijianarry[i].url+'"><img  class="jsBg" src="'+tuijianarry[i].images+'" alt=""/></a></div>'
+	if(tuijianarry[i].title=="速七活力益生菌胶囊"){
+		div+= suqihuoliyishengjun;
+	}else if(tuijianarry[i].title=="每日活力益生菌"){
+		div+= meirihuoli;
+	}else{
+		div+= '<div class="ulBox"><a href="'+tuijianarry[i].url+'"><img  class="jsBg" src="'+tuijianarry[i].images+'" alt=""/></a></div>'
+	}
+	
 } 
 $(".erwewas").after(div);
   /*********************产品推荐逻辑**************************/
- if(haikexuanze.length==0){
+	 if(haikexuanze.length==0){
 		$(".swsws").hide();
-	}else{
-		div='';
-		for(var i=0;i<haikexuanze.length;i++){
-			div+= '<div class="ulBox"><a href="'+haikexuanze[i].url+'"><img class="jsBg"  src="'+haikexuanze[i].images+'" alt=""/></a></div>'
+	 }
+	 else{	
+	 	div='';
+	 	for(var i=0;i<haikexuanze.length;i++){
+			if(haikexuanze[i].title=="300亿强化益生菌胶囊"){
+				div+= sanbaiyiqianghuajiaonang ;
+			}
+			else{
+				div+= '<div class="ulBox"><a href="'+haikexuanze[i].url+'"><img class="jsBg"  src="'+haikexuanze[i].images+'" alt=""/></a></div>'
+			}
 		}
-		$(".swsws").after(div);
-	}
-  
+	 	$(".swsws").after(div);
+ 	}
 	 
   
 	  

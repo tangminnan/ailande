@@ -92,12 +92,12 @@
 		}
 	});
 	
-	$(".linshicunfangde").prepend(xingbie).prepend(shouji).prepend(nianling).prepend(xingming);
+	$(".linshicunfangde").prepend(xingbie).prepend(nianling);//2020-05-19的一次改版中  客户要求去掉姓名和手机的展示，如果后来还要这个，可以直接prepend即可
 	$(".basicMsg").prepend($(".linshicunfangde").html());
 	$(".linshicunfangde").html('');
 
 		  var countb=$("#count").val(),index=$("#index").val();
-		  index=parseInt(index)+$(".box").length;
+		  index=parseInt(index)+2+$(".box").length;
 		  var baifen = Math.floor(index*100/countb);
 		  $(".baifen").text(baifen+'%');
 		  $(".baifen").prev().val(baifen);
@@ -174,8 +174,10 @@
 //				success : function(data) {
 //					if(data.code==0)
 						
-						window.location.href="/paper/saveYourName?flag=1&index="+index+"&count="+countb+"&openid="+openid+"&username="+username+"&sex="+sex+"&age="+age+"&phone="+phone;
-//					else
+/* 						window.location.href="/paper/saveYourName?flag=1&index="+index+"&count="+countb+"&openid="+openid+"&username="+username+"&sex="+sex+"&age="+age+"&phone="+phone;
+ */					    window.location.href="/paper/beginAnswer?flag=1&index="+index+"&count="+countb+"&openid="+openid+"&username="+username+"&sex="+sex+"&age="+age+"&phone="+phone;
+
+						
 //						alert(data.msg);
 //				}
 //			});

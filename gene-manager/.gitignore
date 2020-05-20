@@ -9,3 +9,5 @@
 .project
 /bin/
 /applog/
+/.idea/
+gene-manager.iml

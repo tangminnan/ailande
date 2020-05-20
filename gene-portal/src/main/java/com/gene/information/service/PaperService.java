@@ -67,7 +67,7 @@ public interface PaperService {
 
 	/**根据openid和产品去拿最新的检测结果
 	 */
-	List<ProductpaperDO> getNewProductpaperDO(String openid, Integer product,Date date);
+	List<ProductpaperDO> getNewProductpaperDO(String openid, Integer product);
 
 	R saveCustomerPaperDO(CustomerPaperDO customerPaperDO);
 	/**

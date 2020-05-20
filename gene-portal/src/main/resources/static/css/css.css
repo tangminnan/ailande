@@ -31,12 +31,12 @@ h1, h2, h3, h4, h5, h6{ font-size:100%;font-weight: normal;}
 /*==============================问卷调查===================================*/
 .bg-cc{background:#f6f6f8;}
 .logo{width: 5.24rem;display: block;margin:1rem auto .6rem;}
-.goon .p-more{font-size: .42rem;line-height:.67rem;margin-bottom:.7rem;}
+.goon .p-more{font-size: .29rem;line-height:.63rem;margin-bottom:.7rem;}
 .goon ul{overflow: hidden;padding:0 6%;}
 .goon li{width:100%;border-bottom:1px solid #221814;overflow: hidden;padding-bottom:.3rem;margin-bottom:.3rem;-webkit-background-size:.47rem .37rem;background-size:.47rem .37rem;}
 .goon li .fr{width: 2.2rem;height: 2.2rem;margin-right:8%;border-radius:50%;}
 .goon li .fl{width: 3.3rem;height: 1.5rem;margin-top:.35rem;}
-.goon li.on .fr{border:.03rem solid #135696;}
+.goon li.on .fr{border:.03rem solid #FF0000;}
 .goon a{font-size: .36rem;text-decoration:underline;background:url(../images/bL.png) no-repeat bottom center;-webkit-background-size:.94rem .12rem;background-size:.94rem .12rem;}
 
 /* 饮 食*/
@@ -234,7 +234,7 @@ table tr:nth-child(even){background:#eeefef;}
 .basicMsg .box p{display:inline-block;position:relative;width: 1.2rem;height: 1.2rem;line-height: 1.2rem;text-align: center;vertical-align: middle;margin:0 4%;}
 .basicMsg input[type="radio"]{position: absolute;left: 0;top: 0;width: 100%;height: 100%;border-radius:50%;}
 .basicMsg .box p em{position: absolute;left: 0;top: 0;width: 100%;height: 100%;border-radius:50%;background: #fff;}
-.basicMsg input:checked{border:.03rem solid #231815;}
+.basicMsg input:checked{border:.03rem solid #FF0000;}
 
 /*=========新增话术20200317============*/
 .huashu{background: #fff;}

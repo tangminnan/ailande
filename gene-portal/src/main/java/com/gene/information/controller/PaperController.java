@@ -136,19 +136,6 @@ public class PaperController {
 		return "information/jibenxinxi2";
 	}
 	
-	/*@Log("跳转答题分类页面")
-	@GetMapping("/fenlei")
-	public String fenlei(@RequestParam(value="products",required=false) Integer[] products,int flag,Integer count,Model model,Integer index,HttpServletRequest request){
-		if(products!=null){
-			request.getSession().setAttribute("products", products);
-			paperService.saveChoosedProduct(products,null,request);
-		}
-		model.addAttribute("flag",flag);
-		model.addAttribute("count", count);
-		model.addAttribute("index", index);
-		return "information/jibenxinxi3";
-	}*/
-	
 	@Log("开始答题")
 	@GetMapping("/beginAnswer")
 	public String beginAnswer(Integer flag,
@@ -233,20 +220,6 @@ public class PaperController {
 		return "information/baogao-1";
 	}
 	
-	/*@Log("保存基本信息")
-	@ResponseBody
-	@PostMapping("/saveJiBenXinxi")
-	public R saveJiBenXinxi(CustomerPaperDO customerPaperDO,HttpServletRequest request){
-		CustomerPaperDO c = (CustomerPaperDO) request.getSession().getAttribute("customerPaperDO");
-		if(c!=null){
-			customerPaperDO.setId(c.getId());
-			paperService.updateCustomerPaperDO(customerPaperDO);
-			return R.ok();
-		}
-		else
-			return R.error("当前页面停留时间太长，请重新进入...");
-	}*/
-	
 	@Log("保存问卷答题")
 	@PostMapping("/saveWenJuan")
 	@ResponseBody
@@ -297,13 +270,13 @@ public class PaperController {
 		model.addAttribute("product", product);
 		model.addAttribute("name",name);
 		model.addAttribute("openid",openid);
-		/*if("肠胃调理".equals(name))
+		if("肠胃调理".equals(name))
 			return"information/baogao-2";
 		if("科学瘦身".equals(name))
 			return "information/baogao-5";
-		return "";*/
+		return "";
 		
-		return "information/lishibaogao";
+//		return "information/lishibaogao";
 		
 	}
 	
@@ -332,15 +305,10 @@ public class PaperController {
 	String talkName="";
 	@Log("阅读检测报告--肠胃调理")
 	@GetMapping("/readMyReport")
-	public String readMyReport(Model model,Integer product,String name,HttpServletRequest request,String openid,Date date){
+	public String readMyReport(Model model,Integer product,String name,HttpServletRequest request,String openid){
 		String timeString= (String)request.getSession().getAttribute("timeString");
 //		List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId()+timeString,product);
 //		ProductpaperDO productpaperDO=productpaperDOList.get(0);
-		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
-		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
-		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
-		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
-		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 	    Map<String,Double> mapD  = new HashMap<String,Double>();
 	    Map<String,Double> mapT = new HashMap<String,Double>();
 	    DecimalFormat df = new DecimalFormat("0.0");
@@ -348,8 +316,14 @@ public class PaperController {
 	    * 根据openid  产品去拿最新的检测结果
 	    */
 	    
-	    List<ProductpaperDO> productpaperDOList = paperService.getNewProductpaperDO(openid,product,date);
+	    List<ProductpaperDO> productpaperDOList = paperService.getNewProductpaperDO(openid,product);
 	    ProductpaperDO productpaperDO=productpaperDOList.get(0);
+	    Date date = productpaperDO.getAnswerTime();
+	    System.out.println("======================================");
+	    System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+	    System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+	    System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+	    System.out.println("=======================================");
 	    
 	    if(productpaperDO!=null){//统计分值
 	    	Integer productpaper = productpaperDO.getId();
@@ -430,7 +404,7 @@ public class PaperController {
 	int yinshi600=0;
 	@Log("阅读检测报告--科学瘦身")
 	@GetMapping("/kexueshoushens")
-	public String kexueshoushen(Model model,Integer product,String name,HttpServletRequest request,String openid,Date date) {
+	public String kexueshoushen(Model model,Integer product,String name,HttpServletRequest request,String openid) {
 		System.out.println("科学瘦身================================"+openid);
 		System.out.println("科学瘦身================================"+openid);
 		System.out.println("科学瘦身================================"+openid);
@@ -438,11 +412,16 @@ public class PaperController {
 		System.out.println("科学瘦身================================"+openid);
 		System.out.println("科学瘦身================================"+openid);
 	
-		String timeString= (String)request.getSession().getAttribute("timeString");
 	/*	List<ProductpaperDO> productpaperDOList = paperService.getProductPaperDO2(request.getSession().getId()+timeString,product);
 		ProductpaperDO productpaperDO = productpaperDOList.get(0);*/
-		 List<ProductpaperDO> productpaperDOList = paperService.getNewProductpaperDO(openid,product,date);
+		 List<ProductpaperDO> productpaperDOList = paperService.getNewProductpaperDO(openid,product);
 		 ProductpaperDO productpaperDO=productpaperDOList.get(0);
+		 Date date = productpaperDO.getAnswerTime();
+		  System.out.println("======================================");
+		    System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+		    System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+		    System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+		    System.out.println("=======================================");
 		Map<String,Double> mapD  = new HashMap<String,Double>();
 	    Map<String,Double> mapT = new HashMap<String,Double>();
 	    DecimalFormat df = new DecimalFormat("0.0");

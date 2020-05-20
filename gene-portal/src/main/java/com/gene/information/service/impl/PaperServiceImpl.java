@@ -373,8 +373,8 @@ public class PaperServiceImpl implements PaperService{
 	 *根据openid和产品去拿最新的检测结果
 	 */
 	@Override
-	public List<ProductpaperDO> getNewProductpaperDO(String openid, Integer product,Date date) {
-		return paperDao.getNewProductpaperDO(openid,product,date);
+	public List<ProductpaperDO> getNewProductpaperDO(String openid, Integer product) {
+		return paperDao.getNewProductpaperDO(openid,product);
 	}
 
 	@Override

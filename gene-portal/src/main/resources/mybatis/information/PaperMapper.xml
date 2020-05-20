@@ -387,11 +387,11 @@ FROM
 	</select>
 	
 	<select id="getNewProductpaperDO" resultType="com.gene.information.domain.ProductpaperDO">
-	<!-- 	select  id,paper,product,user  from qu_product_paper  where  answer_time=(select max(answer_time) from qu_product_paper where product=#{product} and openid=#{openid}
-		and answer_status=1) and product=#{product} and openid=#{openid} -->
+	 	select  id,paper,product,answer_time,user  from qu_product_paper  where  answer_time=(select max(answer_time) from qu_product_paper where product=#{product} and openid=#{openid}
+		and answer_status=1) and product=#{product} and openid=#{openid}
 		
-		select  id,paper,product,user  from qu_product_paper  where  answer_time= #{date}
-		 and product=#{product} and openid=#{openid}
+		<!-- select  id,paper,product,user  from qu_product_paper  where  answer_time= #{date}
+		 and product=#{product} and openid=#{openid} -->
 	</select>
 	
 	<select id="getLatestProductpaperDO" resultType="com.gene.information.domain.ProductpaperDO">

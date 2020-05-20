@@ -97,7 +97,10 @@
 		if($(this).val()=="点击查看"){
 			var product=$(this).parent().find("[name='id']").val();
 			var name=$(this).parent().find("[name='productName']").val();
-			window.location.href="/paper/lookCheckLog?product="+product+"&name="+name+"&openid="+openid;
+			if(name=="科学瘦身")
+				window.location.href="/paper/kexueshoushens?product="+product+"&name="+name+"&openid="+openid;
+			if(name=="肠胃调理")
+				window.location.href="/paper/readMyReport?product="+product+"&name="+name+"&openid="+openid;
 		}
 	});
 	

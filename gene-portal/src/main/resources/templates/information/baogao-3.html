@@ -184,9 +184,9 @@
 	
 	
 	var yinshi = $("#yinshi60").val();
-	if(yinshi>=80){$("#ccc").prev().append(" (较好) ");$("#yyy").text("（较好）");$("#biaoqingaaa").attr("src","../images/henhao.png");}
-	if(yinshi<80 && yinshi>=60){ $("#ccc").prev().append(" (一般) ");$("#yyy").text("（一般）");$("#biaoqingaaa").attr("src","../images/yiban.png");}
-	if(yinshi<60){$("#ccc").prev().append(" (较低) ");$("#yyy").text("（较低）");$("#biaoqingaaa").attr("src","../images/buhao.png");}
+	if(yinshi>=80){$("#ccc").prev().append(" (比较好) ");$("#yyy").text("（比较好）");$("#biaoqingaaa").attr("src","../images/henhao.png");}
+	if(yinshi<80 && yinshi>=60){ $("#ccc").prev().append(" (一般搬) ");$("#yyy").text("（一般搬）");$("#biaoqingaaa").attr("src","../images/yiban.png");}
+	if(yinshi<60){$("#ccc").prev().append(" (不大好) ");$("#yyy").text("（不大好）");$("#biaoqingaaa").attr("src","../images/buhao.png");}
 	
 	/* $("body").on("click",".list_dt",function () {
 	$('.list_dd').stop();
@@ -303,13 +303,13 @@ $(".zhidao input").last().click(function(){
 						l+=	'</tr>';
 						var cc=data.content;
 						var text=data.content+"："+cdata.choicecontent;	       
-						if(cc.indexOf("通常的排便频率？")>=0 || cc.indexOf("大部分时候便便的形态？")>=0){
+						if(cc.indexOf("通常的排便频率？")>=0 || cc.indexOf("通常便便的形态？")>=0){
 							paibianpinlvxingzhuang.push(text); 
 						}
 						if(cc.indexOf("通常的排便频率？")>=0 || cc.indexOf("平均每天吃几份蔬菜？") >=0|| cc.indexOf("平均每天吃几份水果？")>=0 || cc.indexOf("平均每天吃几份粗粮？")>=0){
 							 paibianpinlvshucaishuiguoculiang.push(text);
 						}
-						if(cc.indexOf("腹胀")>=0 || cc.indexOf("疾病史")>=0){
+						if(cc.indexOf("腹胀")>=0 || cc.indexOf("有没有较严重胃肠道疾病或病史？")>=0){
 							futongfuzhangfansuanwixhangjibbing.push(text);
 						} 
 						
@@ -353,7 +353,7 @@ $(".zhidao input").last().click(function(){
  haikexuanze=[];//还可选择
  flag=false;
 //判断速七活力益生菌胶囊                                                   
-var jianyibuchong=["通常的排便频率？：大于3次/天","通常的排便频率？: 有便秘倾向","大部分时候便便的形态？：不成型的软便","大部分时候便便的形态？：硬块","大部分时候便便的形态？：软硬掺杂","大部分时候便便的形态？：水状"];
+var jianyibuchong=["通常的排便频率？：4次及以上/天","通常的排便频率？：有便秘倾向","通常便便的形态？：不成型的软便","通常便便的形态？：硬块","通常便便的形态？：软硬掺杂","大部分时候便便的形态？：水状"];
 for(var i=0;i<paibianpinlvxingzhuang.length;i++){
 	 var l = paibianpinlvxingzhuang[i];
 	 for(var j=0;j<jianyibuchong.length;j++){
@@ -375,22 +375,37 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
  var flag=false;
  for(var i=0;i< paibianpinlvxingzhuang.length;i++){
 	 var l = paibianpinlvxingzhuang[i];
-	 if(l=="通常的排便频率？：1-3次/天")
+	 if(l=="通常的排便频率？：1-3次/天" || l=="通常的排便频率？：0-1次/天")
 		 flag=true;
  }
  if(flag){
 	 flag=false;
  	for(var i=0;i< paibianpinlvxingzhuang.length;i++){
 	 	var l = paibianpinlvxingzhuang[i];
-	 	if(l=="大部分时候便便的形态？：香蕉型" || l=="大部分时候便便的形态？：成型的软便"){
+	 	if(l=="通常便便的形态？：香蕉型" || l=="通常便便的形态？：成型的软便"){
 		 	var obj={'title':'每日活力益生菌','images':'../images/JF-meirihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202275920179'};
 		 	tuijianarry.push(obj);
 	 	}	 
  	}
  }
+ //300亿强化益生菌胶囊
+ for(var i=0;i< paibianpinlvxingzhuang.length;i++){
+	 	var l = paibianpinlvxingzhuang[i];
+	 	if(l=="通常的排便频率？：有便秘倾向" || l=="通常的排便频率？：4次及以上/天"){
+		 	var obj={'title':'300亿强化益生菌胶囊','images':'.../images/sanbaiyi.jpg','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=75835490179'};
+		 	haikexuanze.push(obj);
+		 	break;
+	 	}	 
+ 	}
+ 
+ 
+ 
+ 
+ 
+ 
  //判断低聚果糖益生元粉
  var shengxiade=[];
- var jianyibuchong=["通常的排便频率？: 有便秘倾向","通常的排便频率？：大于3次/天","平均每天吃几份蔬菜？ （一份约为1个拳头体积的煮熟的蔬菜，不包括藕、土豆、玉米、山药、芋头，它们是主食，不是蔬菜）：小于2份","平均每天吃几份蔬菜？ （一份约为1个拳头体积的煮熟的蔬菜，不包括藕、土豆、玉米、山药、芋头，它们是主食，不是蔬菜）：2-3份","平均每天吃几份水果？ （1份水果的可食部约为半个拳头的大小，或半个中号苹果大小）：小于2份","平均每天吃几份粗粮？ （一份约为1个拳头体积的煮熟的粗粮，包括全谷物、杂豆类、薯类，例如藕、土豆、玉米、山药、芋头都是主食）：几乎不吃","平均每天吃几份粗粮？ （一份约为1个拳头体积的煮熟的粗粮，包括全谷物、杂豆类、薯类，例如藕、土豆、玉米、山药、芋头都是主食）：小于1份"];
+ var jianyibuchong=["通常的排便频率？：有便秘倾向","通常的排便频率？：4次及以上/天","平均每天吃几份蔬菜？ ：几乎不吃","平均每天吃几份蔬菜？ ：1-2份","平均每天吃几份水果？ ：几乎不吃"];
  for(var i=0;i< paibianpinlvshucaishuiguoculiang.length;i++){//console.info(paibianpinlvshucaishuiguoculiang[i]);
 	 var l = paibianpinlvshucaishuiguoculiang[i];
 	 for(var j=0;j<jianyibuchong.length;j++){
@@ -436,8 +451,17 @@ var fuhexiaohuameijiaonang='<a style="display:block; padding-left:.3rem;" href="
 						   +'<input type="button" value="点击购买"/>'
 						   +'</div>'
 						   +'</a>';
+
+ var sanbaiyiqianghuajiaonang='<a style="display:block; padding-left:.3rem;" href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=75835490179">'
+  							  +'<div class="jyiBox">'
+  							  +'<img class="jsBg" src="../images/goumai.png" alt=""/>'
+  							  +'<p class="name space"><span>300亿强化益生菌胶囊</span>高含量300亿活菌，Lab4专利菌群配方，改善长期的便秘、腹泻。</p>'
+                              +'<img class="yaoM" src="../images/sanbaiyi.jpg" alt=""/>'
+                              +'<input type="button" value="点击购买"/>'
+                              +'</div>'
+                              +'</a>';						   
  console.info("======================"+futongfuzhangfansuanwixhangjibbing+"===============================");
- var jianyibuchong=["通常腹痛、腹胀、胃胀、胃痛、反酸频率？：经常有","胃肠道疾病史：有","通常腹痛、腹胀、胃胀、胃痛、反酸频率？：偶尔有"];
+ var jianyibuchong=["通常腹痛、腹胀、胃胀、胃痛、反酸频率？：经常有","有没有较严重胃肠道疾病或病史？：有","通常腹痛、腹胀、胃胀、胃痛、反酸频率？：偶尔有"];
  for(var i=0;i< futongfuzhangfansuanwixhangjibbing.length;i++){
 	 var l = futongfuzhangfansuanwixhangjibbing[i];
 	 for(var j=0;j<jianyibuchong.length;j++){
@@ -453,6 +477,9 @@ var fuhexiaohuameijiaonang='<a style="display:block; padding-left:.3rem;" href="
 	 tuijianarry.push(obj);
 	 var obj={'title':'Polyzyme Forte®复合消化酶胶囊','images':'../images/Polyzyme Forte®.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202278530179'};
 	 tuijianarry.push(obj);
+	 
+	 var obj={'title':'榆树养胃胶囊','images':'../images/yushuyangweichangdao.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202286240179'};
+	 haikexuanze.push(obj);
  }
  
  
@@ -491,13 +518,18 @@ for(var i=0;i< tuijianarry.length;i++){
 	}
 }         
 $(".jjjdddd").after(div);
-
 	if(haikexuanze.length==0){
 		$(".swsws").hide();
-	}else{
+	}
+	else{
 		div='';
 		for(var i=0;i<haikexuanze.length;i++){
-			div+= '<div class="ulBox"><a href="'+haikexuanze[i].url+'"><img class="jsBg"  src="'+haikexuanze[i].images+'" alt=""/></a></div>'
+			if(haikexuanze[i].title=="300亿强化益生菌胶囊"){
+				div+= sanbaiyiqianghuajiaonang ;
+			}
+			else{
+				div+= '<div class="ulBox"><a href="'+haikexuanze[i].url+'"><img class="jsBg"  src="'+haikexuanze[i].images+'" alt=""/></a></div>'
+			}
 		}
 		$(".swsws").after(div);
 	}
