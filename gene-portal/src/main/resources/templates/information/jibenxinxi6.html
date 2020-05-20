@@ -227,37 +227,6 @@
 			if(fenlei=="SHUIMIAN_XIGUAN")   return "睡眠与压力";
 			if(fenlei=="YUNDONG_XIGUANG")   return "运动习惯";
 		}
-		
-		//苹果端样式修改
-		(function () {
-
-    try {
-        isIOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
-        if (fn.isIOS) {
-            // window.history.pushState({}, "title", "#");
-            document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-                WeixinJSBridge.call('hideToolbar');        // 隐藏底部状态栏
-                WeixinJSBridge.call('hideOptionMenu');     // 隐藏右上角的三个点的选项
-                console.log('ios');
-                // WeixinJSBridge.call('showToolbar');        // 显示底部状态栏
-                // WeixinJSBridge.call('showOptionMenu');     // 显示右上角的三个点的选项
-            });
-
-        }
-    } catch (e) {
-        
-    }
-
-
-    // document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-    //     WeixinJSBridge.call('hideToolbar');        // 隐藏底部状态栏
-    //     WeixinJSBridge.call('hideOptionMenu');     // 隐藏右上角的三个点的选项
-    //     // WeixinJSBridge.call('showToolbar');        // 显示底部状态栏
-    //     // WeixinJSBridge.call('showOptionMenu');     // 显示右上角的三个点的选项
-    // });
-    ///
-
-})();
 </script>
 </body>
 </html>

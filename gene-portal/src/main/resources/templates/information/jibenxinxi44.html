@@ -119,7 +119,7 @@
 				return false;
 			}
 			if(text.indexOf("身高")>=0 && (bitianneirong>=300 || bitianneirong<=100) ){
-				alert("输入的数值在100到300之间");
+				alert("身高输入的数值在100到300之间");
 				flag=true;
 				return false;
 			}
@@ -175,7 +175,8 @@
 				async : false,
 				success : function(data) {
 					if(data.code==0)
-						window.location.href="/paper/beginAnswer?flag=2&index="+index+"&count="+countb+"&openid="+openid ;
+		//				window.location.href="/paper/beginAnswer?flag=2&index="+index+"&count="+countb+"&openid="+openid ;
+						window.location.replace("/paper/beginAnswer?flag=2&index="+index+"&count="+countb+"&openid="+openid);
 					else
 						alert(data.msg);
 				}

@@ -128,6 +128,12 @@
 				return false;
 			}
 			
+			if(text.indexOf("年龄")>=0 && bitianneirong>150){
+				alert("请输入您的真实年龄");
+				flag=true;
+				return false;
+			}
+			
 			if(text.indexOf("手机")>=0 &&  !myreg.test(bitianneirong)){
 				alert("请输入正确的手机号码");
 				flag=true;
@@ -174,9 +180,8 @@
 //				success : function(data) {
 //					if(data.code==0)
 						
-/* 						window.location.href="/paper/saveYourName?flag=1&index="+index+"&count="+countb+"&openid="+openid+"&username="+username+"&sex="+sex+"&age="+age+"&phone="+phone;
- */					    window.location.href="/paper/beginAnswer?flag=1&index="+index+"&count="+countb+"&openid="+openid+"&username="+username+"&sex="+sex+"&age="+age+"&phone="+phone;
-
+ 	//			    window.location.href="/paper/beginAnswer?flag=1&index="+index+"&count="+countb+"&openid="+openid+"&username="+username+"&sex="+sex+"&age="+age+"&phone="+phone;
+ 						window.location.replace("/paper/beginAnswer?flag=1&index="+index+"&count="+countb+"&openid="+openid+"&username="+username+"&sex="+sex+"&age="+age+"&phone="+phone);
 						
 //						alert(data.msg);
 //				}

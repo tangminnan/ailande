@@ -24,7 +24,8 @@
 	<script type="text/javascript">
 		var openid=$("#openid").val();
 		$(":button").click(function(){
-			window.location.href="/paper/beginAnswer?flag=0&openid="+openid;
+//			window.location.href="/paper/beginAnswer?flag=0&openid="+openid;
+			window.location.replace("/paper/beginAnswer?flag=0&openid="+openid);
 		})
 	</script>
 </body>

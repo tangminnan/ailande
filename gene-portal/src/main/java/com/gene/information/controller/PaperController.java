@@ -5,6 +5,11 @@ import com.gene.common.utils.R;
 import com.gene.common.utils.StringUtils;
 import com.gene.information.domain.*;
 import com.gene.information.service.PaperService;
+
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
