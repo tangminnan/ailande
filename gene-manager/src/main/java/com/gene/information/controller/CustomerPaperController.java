@@ -336,13 +336,13 @@ public class CustomerPaperController {
 	    		//通常的排便频率？   大部分时候便便的形态？  平均每天吃几份蔬菜？ 平均每天吃几份水果？ 平均每天吃几份粗粮？ 腹胀   疾病史
 	    		String content = questionDO.getContent();
 	    		String text = questionDO.getChoiceProductDOList().get(0).getChoicecontent();
-	    		if(content.indexOf("通常的排便频率？")>=0 || content.indexOf("大部分时候便便的形态？")>=0){
+	    		if(content.indexOf("通常的排便频率？")>=0 || content.indexOf("通常便便的形态？")>=0){
 					paibianpinlvxingzhuang.add(content+"："+text);
 				}
 				if(content.indexOf("通常的排便频率？")>=0 || content.indexOf("平均每天吃几份蔬菜？") >=0|| content.indexOf("平均每天吃几份水果？")>=0 || content.indexOf("平均每天吃几份粗粮？")>=0){
 					 paibianpinlvshucaishuiguoculiang.add(content+"："+text);
 				}
-				if(content.indexOf("腹胀")>=0 || content.indexOf("疾病史")>=0){
+				if(content.indexOf("腹胀")>=0 || content.indexOf("有没有较严重胃肠道疾病或病史？")>=0){
 					futongfuzhangfansuanwixhangjibbing.add(content+"："+text);
 				} 
 	    	}
@@ -364,22 +364,25 @@ public class CustomerPaperController {
 	    		 }
 	    		 if(flag==true){
 	    			 flag=false;
-	    			 tuijianarryMap.put(yuanyin,"速七活力益生菌胶囊");
+	    			 tuijianarryMap.put(yuanyin+" ","速七活力益生菌胶囊");
 	    		 } 
 	    		 flag=false;
+	    		 String ll="";
 	    		 for(int i=0;i< paibianpinlvxingzhuang.size();i++){
 	    			 String l = paibianpinlvxingzhuang.get(i);
-	    			 if("通常的排便频率？：1-3次/天".equals(l) || "通常的排便频率？：0-1次/天".equals(l))
+	    			 if("通常的排便频率？：1-3次/天".equals(l) || "通常的排便频率？：0-1次/天".equals(l)){
+	    				 ll=l;
 	    				 flag=true;
+	    				 break;
+	    			 }
 	    		 }
 	    		 if(flag){
 	    			 flag=false;
 	    		 	for(int i=0;i< paibianpinlvxingzhuang.size();i++){
 	    			 	String l = paibianpinlvxingzhuang.get(i);
-	    			 	if("通常便便的形态？：香蕉型".equals(l)){
-	    				 	tuijianarryMap.put("通常的排便频率？：1-3次/天,通常便便的形态？：香蕉型","每日活力益生菌");
-	    			 	}else if("通常便便的形态？：成型的软便".equals(l)){
-	    			 		tuijianarryMap.put("通常的排便频率？：1-3次/天,通常便便的形态？：成型的软便","每日活力益生菌"); 
+	    			 	if("通常便便的形态？：香蕉型".equals(l) || "通常便便的形态？：成型的软便".equals(l)){
+	    				 	tuijianarryMap.put(ll+" " +l,"每日活力益生菌");
+	    				 	break;
 	    			 	}
 	    		 	}
 	    		 }
@@ -387,7 +390,7 @@ public class CustomerPaperController {
 	    		 for(int i=0;i< paibianpinlvxingzhuang.size();i++){
 	    			 	String l = paibianpinlvxingzhuang.get(i);
 	    			 	if("通常的排便频率？：有便秘倾向".equals(l) || "通常的排便频率？：4次及以上/天".equals(l)){
-	    			 		haikexuanzeMap.put(l,"300亿强化益生菌胶囊");
+	    			 		haikexuanzeMap.put(l+"   ","300亿强化益生菌胶囊");
 	    			 	}	 
 	    		 	}
 	    		 
@@ -408,7 +411,7 @@ public class CustomerPaperController {
 	    		 }
 	    		  if(flag==true){
 	    			 flag=false;
-	    			 tuijianarryMap.put(yuanyin,"低聚果糖益生元粉");
+	    			 tuijianarryMap.put(yuanyin+"       ","低聚果糖益生元粉");
 	    			 shengxiade="低聚果糖益生元粉";
 	    		 }
 	    		 
@@ -449,7 +452,7 @@ public class CustomerPaperController {
 	    		 }
 	    		 if(flag==true){
 	    			 flag=false;
-	    			 tuijianarryMap.put(yuanyin,"速七活力益生菌胶囊");
+	    			 tuijianarryMap.put(yuanyin+" ","速七活力益生菌胶囊");
 	    		 } 
 	    		 
 	    		//判断每日活力益生菌
