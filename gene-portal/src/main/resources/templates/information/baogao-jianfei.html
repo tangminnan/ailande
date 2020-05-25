@@ -383,7 +383,7 @@ $(".fotNav li:nth-child(4)").click(function(){
 	    +'<div class="jyiBox">'
 		+'<img class="jsBg" src="../images/goumai.png" alt=""/>'
 		+'<p class="name space"><span>速七活力益生菌胶囊</span>200亿以上活菌，Lab4专利菌群配方，快速改善便秘、腹泻倾向，降低毒素堆积引起的肥胖风险。</p>'
-		+'<img class="yaoM" src="../images/suqihuoli.jpg" alt=""/>'
+		+'<img class="yaoM" src="../images/suqihuoli.png" alt=""/>'
 		+'<input type="button" value="点击购买"/>'
 		+'</div>'
 		+'</a>';
@@ -392,7 +392,7 @@ var meirihuoli= '<a style="display:block; padding-left:.3rem;" href="https://100
 	    +'<div class="jyiBox">'
 	+'<img class="jsBg" src="../images/goumai.png" alt=""/>'
 	+'<p class="name space"><span>每日活力益生菌</span>每日100亿Lab4益生菌，可进一步优化及保持良好排便状况。</p>'
-	+'<img class="yaoM" src="../images/meirihuoli.jpg" alt=""/>'
+	+'<img class="yaoM" src="../images/meirihuoli.png" alt=""/>'
 	+'<input type="button" value="点击购买"/>'
 	+'</div>'
 	+'</a>';
@@ -401,10 +401,27 @@ var sanbaiyiqianghuajiaonang='<a style="display:block; padding-left:.3rem;" href
 	  +'<div class="jyiBox">'
 	  +'<img class="jsBg" src="../images/goumai.png" alt=""/>'
 	  +'<p class="name space"><span>300亿强化益生菌胶囊</span>高含量300亿活菌，Lab4专利菌群配方，改善长期的便秘、腹泻，降低毒素堆积引起的肥胖风险。</p>'
-       +'<img class="yaoM" src="../images/sanbaiyi.jpg" alt=""/>'
+       +'<img class="yaoM" src="../images/sanbaiyi.png" alt=""/>'
        +'<input type="button" value="点击购买"/>'
        +'</div>'
-       +'</a>';				
+       +'</a>';		
+
+     var dijuguotang='<a style="display:block; padding-left:.3rem;" href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202286020179">'
+  		  +'<div class="jyiBox">'
+  		  +'<img class="jsBg" src="../images/goumai.png" alt=""/>'
+  		  +'<p class="name space"><span>膳食纤维低聚果糖</span>吸附肠道内多余脂肪排出体外，减少身体吸收脂肪；平衡肠道菌群，改善便秘腹泻，减少肠道毒素堆积引起的肥胖及营养不良。</p>'
+  	       +'<img class="yaoM" src="../images/dijuguotang.png" alt=""/>'
+  	       +'<input type="button" value="点击购买"/>'
+  	       +'</div>'
+  	       +'</a>';	
+  var tenghuangguo='<a style="display:block; padding-left:.3rem;" href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202278430179">'
+	  +'<div class="jyiBox">'
+	  +'<img class="jsBg" src="../images/goumai.png" alt=""/>'
+	  +'<p class="name space"><span>藤黄果提取物</span>抑制糖类合成脂肪，并促进脂肪燃烧。</p>'
+       +'<img class="yaoM" src="../images/tenghuangguo.png" alt=""/>'
+       +'<input type="button" value="点击购买"/>'
+       +'</div>'
+       +'</a>';		
  
 //判断速七活力益生菌胶囊                                                   																       
 var jianyibuchong=["通常的排便频率？：有便秘倾向","通常的排便频率？：3次以上/天"];
@@ -421,8 +438,8 @@ for(var i=0;i<paibainpinlv.length;i++){
  }
  if(flag==true){
 	 flag=false;
-	 var obj={'title':'速七活力益生菌胶囊','images':'../images/CW-suqihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202279910179'};
-	 tuijianarry.push(obj);
+	 tuijianarry.push("速七活力益生菌胶囊");
+	 $(".erwewas").after(suqihuoliyishengjun);
  } 
  
 //判断每日活力益生菌
@@ -441,9 +458,8 @@ for(var i=0;i<paibainpinlv.length;i++){
 	 		break;
  	}
  if(flag==true){flag=false;
-	 var obj={'title':'每日活力益生菌','images':'../images/CW-meirihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202275920179'};
-	 tuijianarry.push(obj);
-	
+ tuijianarry.push("每日活力益生菌");
+	 $(".erwewas").after(meirihuoli);
  } 
  
  
@@ -451,8 +467,7 @@ for(var i=0;i<paibainpinlv.length;i++){
  for(var i=0;i< paibainpinlv.length;i++){
 	  var l = paibainpinlv[i];
 	  if(l=="通常的排便频率？：有便秘倾向" || l=="通常的排便频率？：4次及以上/天"){
-		  var obj={'title':'300亿强化益生菌胶囊','images':'../images/sanbaiyi.jpg','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=75835490179'};
-		  haikexuanze.push(obj); 
+		  $(".swsws").after(sanbaiyiqianghuajiaonang);
 		 break;
 	  }
  	}
@@ -474,8 +489,9 @@ for(var i=0;i<paibainpinlv.length;i++){
  }
  if(flag==true){
 	 flag=false;
-	 var obj={'title':'膳食纤维低聚果糖','images':'../images/CW-dijuguotang.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202286020179'};
-	 tuijianarry.push(obj);
+	 tuijianarry.push("膳食纤维低聚果糖");
+	 $(".erwewas").after(dijuguotang);
+
 	 shengxiade.push("膳食纤维低聚果糖");
  }
  
@@ -484,47 +500,13 @@ for(var i=0;i<paibainpinlv.length;i++){
  //判断还可选择   膳食纤维低聚果糖
  if(shengxiade.length==0 && paibianpinlvshucaishuiguo.length>0){
 //	 var obj={'title':'安益胶囊','images':'../images/JF-anyijiaonang.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59844980179'};
-	 var obj={'title':'膳食纤维低聚果糖','images':'../images/CW-dijuguotang.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202286020179'};
-
-	 haikexuanze.push(obj);
+	 $(".swsws").after(dijuguotang);
 }
- 
- tuijianarry.push({'title':'藤黄果提取物','images':'../images/CW-tenghuangguo.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202278430179'});
+ tuijianarry.push("藤黄果提取物");
+ $(".erwewas").after(tenghuangguo);
  
 $(".erwewas").children("span").text("建议您补充"+ (tuijianarry.length)+"种补充剂");
-var div='';
-for(var i=0;i< tuijianarry.length;i++){
-	
-	if(tuijianarry[i].title=="速七活力益生菌胶囊"){
-		div+= suqihuoliyishengjun;
-	}else if(tuijianarry[i].title=="每日活力益生菌"){
-		div+= meirihuoli;
-	}else{
-		div+= '<div class="ulBox"><a href="'+tuijianarry[i].url+'"><img  class="jsBg" src="'+tuijianarry[i].images+'" alt=""/></a></div>'
-	}
-	
-} 
-$(".erwewas").after(div);
-  /*********************产品推荐逻辑**************************/
-	 if(haikexuanze.length==0){
-		$(".swsws").hide();
-	 }
-	 else{	
-	 	div='';
-	 	for(var i=0;i<haikexuanze.length;i++){
-			if(haikexuanze[i].title=="300亿强化益生菌胶囊"){
-				div+= sanbaiyiqianghuajiaonang ;
-			}
-			else{
-				div+= '<div class="ulBox"><a href="'+haikexuanze[i].url+'"><img class="jsBg"  src="'+haikexuanze[i].images+'" alt=""/></a></div>'
-			}
-		}
-	 	$(".swsws").after(div);
- 	}
-	 
-  
-	  
-  
+
 </script>
 </body>
 </html>

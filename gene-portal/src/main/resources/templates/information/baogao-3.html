@@ -348,6 +348,70 @@ $(".zhidao input").last().click(function(){
   console.info("-------------------------------");
   console.info(futongfuzhangfansuanwixhangjibbing);
   console.info("-------------------------------");
+  var changweianyijiaonang= '<a style="display:block; padding-left:.3rem;" href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202285630179">'
+	    +'<div class="jyiBox">'
+		+'<img class="jsBg" src="../images/goumai.png" alt=""/>'
+		+'<p class="name space"><span>Permatrol®肠胃安益胶囊</span>修复肠胃粘膜，温和调理肠胃菌群，改善消化不良引起的腹痛腹胀。</p>'
+		+'<img class="yaoM" src="../images/Permatrol.png" alt=""/>'
+		+'<input type="button" value="点击购买"/>'
+		+'</div>'
+		+'</a>';
+var fuhexiaohuameijiaonang='<a style="display:block; padding-left:.3rem;" href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202278530179">'
+	   +'<div class="jyiBox">'
+	   +'<img class="jsBg" src="../images/goumai.png" alt=""/>'
+	   +'<p class="name space"><span>Polyzyme Forte®复合消化酶胶囊</span>直接补充消化酶，改善腹胀，消化不良，特殊工艺保障酶效稳定。</p>'
+	   +'<img class="yaoM" src="../images/Polyzyme-Forte.png" alt=""/>'
+	   +'<input type="button" value="点击购买"/>'
+	   +'</div>'
+	   +'</a>';
+
+var sanbaiyiqianghuajiaonang='<a style="display:block; padding-left:.3rem;" href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=75835490179">'
+		  +'<div class="jyiBox">'
+		  +'<img class="jsBg" src="../images/goumai.png" alt=""/>'
+		  +'<p class="name space"><span>300亿强化益生菌胶囊</span>高含量300亿活菌，Lab4专利菌群配方，改善长期的便秘、腹泻。</p>'
+        +'<img class="yaoM" src="../images/sanbaiyi.png" alt=""/>'
+        +'<input type="button" value="点击购买"/>'
+        +'</div>'
+        +'</a>';
+var suqihuoli='<a style="display:block; padding-left:.3rem;" href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202279910179">'
+			 +'<div class="jyiBox">'
+			 +'<img class="jsBg" src="../images/goumai.png" alt=""/>'
+			 +'<p class="name space"><span>速七活力益生菌胶囊</span>200亿以上活菌，Lab4专利菌群配方，快速改善便秘、腹泻、软便。</p>'
+			                    +'<img class="yaoM" src="../images/suqihuoli.png" alt=""/>'
+			                    +'<input type="button" value="点击购买"/>'
+			                    +'</div>'
+			                    +'</a>';
+            
+var meirihuoli='<a style="display:block; padding-left:.3rem;" href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202275920179">'
+			+'<div class="jyiBox">'
+			+'<img class="jsBg" src="../images/goumai.png" alt=""/>'
+			+'<p class="name space"><span>每日活力益生菌</span>每日100亿LAB4益生菌，可进一步优化排便频率和形态，并保持良好状况。</p>'
+				+'<img class="yaoM" src="../images/meirihuoli.png" alt=""/>'
+				+'<input type="button" value="点击购买"/>'
+				+'</div>'
+				+'</a>';                                 
+            
+            
+var dijuguotang='<a style="display:block; padding-left:.3rem;" href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202286020179">'
+				+'<div class="jyiBox">'
+				 +'<img class="jsBg" src="../images/goumai.png" alt=""/>'
+				 +'<p class="name space"><span>低聚果糖益生元粉</span>益生元帮助肠道有益菌生长增值，促进肠蠕动，改善便秘腹泻，可作为蔬果、粗粮摄入不足时的必要补充。</p>'
+				                    +'<img class="yaoM" src="../images/dijuguotang.png" alt=""/>'
+				                    +'<input type="button" value="点击购买"/>'
+				                    +'</div>'
+				                    +'</a>';
+			                    
+			                    
+			                    
+var yushuyangwei='<a style="display:block; padding-left:.3rem;" href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202286240179">'
+			+'<div class="jyiBox">'
+			+'<img class="jsBg" src="../images/goumai.png" alt=""/>'
+			+'<p class="name space"><span>榆树养胃胶囊</span>修复胃粘膜，提高胃动力，调理消化酶分泌，改善消化不良引起的胃胀胃痛。</p>'
+			+'<img class="yaoM" src="../images/yushuyangwei.png" alt=""/>'
+			+'<input type="button" value="点击购买"/>'
+		 		+'</div>'
+			+'</a>';								                    
+		
 
  var tuijianarry=[],//建议补充
  haikexuanze=[];//还可选择
@@ -367,8 +431,8 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
  }
  if(flag==true){
 	 flag=false;
-	 var obj={'title':'速七活力益生菌胶囊','images':'../images/JF-suqihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202279910179'};
-	 tuijianarry.push(obj);
+	 tuijianarry.push('速七活力益生菌胶囊');
+	 $(".jjjdddd").after(suqihuoli);
  } 
  
  //判断每日活力益生菌
@@ -383,8 +447,8 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
  	for(var i=0;i< paibianpinlvxingzhuang.length;i++){
 	 	var l = paibianpinlvxingzhuang[i];
 	 	if(l=="通常便便的形态？：香蕉型" || l=="通常便便的形态？：成型的软便"){
-		 	var obj={'title':'每日活力益生菌','images':'../images/JF-meirihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202275920179'};
-		 	tuijianarry.push(obj);
+	 		 tuijianarry.push('每日活力益生菌');
+	 		 $(".jjjdddd").after(meirihuoli);
 	 	}	 
  	}
  }
@@ -393,7 +457,7 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
 	 	var l = paibianpinlvxingzhuang[i];
 	 	if(l=="通常的排便频率？：有便秘倾向" || l=="通常的排便频率？：4次及以上/天"){
 		 	var obj={'title':'300亿强化益生菌胶囊','images':'.../images/sanbaiyi.jpg','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=75835490179'};
-		 	haikexuanze.push(obj);
+		 	$(".swsws").after(sanbaiyiqianghuajiaonang);
 		 	break;
 	 	}	 
  	}
@@ -419,48 +483,19 @@ for(var i=0;i<paibianpinlvxingzhuang.length;i++){
  }
   if(flag==true){
 	 flag=false;
-	 var obj={'title':'低聚果糖益生元粉','images':'../images/JF-dijuguotang.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202286020179'};
-	 tuijianarry.push(obj);
+	 tuijianarry.push('低聚果糖益生元粉');
+		 $(".jjjdddd").after(dijuguotang);
 	 shengxiade.push("低聚果糖益生元粉");
  }
  
 //您还可以选择   低聚果糖益生元粉
 if(shengxiade.length==0 && paibianpinlvshucaishuiguoculiang.length>0){
-//	 var obj={'title':'安益胶囊','images':'../images/JF-anyijiaonang.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59844980179'};
-	  var obj={'title':'低聚果糖益生元粉','images':'../images/JF-dijuguotang.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202286020179'};
-	 haikexuanze.push(obj);
+	  $(".swsws").after(dijuguotang);
 }
  
  //Permatrol®肠胃安益胶囊     Polyzyme Forte®复合消化酶胶囊
- 
- 
- 
- var changweianyijiaonang= '<a style="display:block; padding-left:.3rem;" href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202285630179">'
-	 					    +'<div class="jyiBox">'
-							+'<img class="jsBg" src="../images/goumai.png" alt=""/>'
-							+'<p class="name space"><span>Permatrol®肠胃安益胶囊</span>修复肠胃粘膜，温和调理肠胃菌群，改善消化不良引起的腹痛腹胀。</p>'
-							+'<img class="yaoM" src="../images/Permatrol.png" alt=""/>'
-							+'<input type="button" value="点击购买"/>'
-							+'</div>'
-							+'</a>';
-var fuhexiaohuameijiaonang='<a style="display:block; padding-left:.3rem;" href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202278530179">'
-						   +'<div class="jyiBox">'
-						   +'<img class="jsBg" src="../images/goumai.png" alt=""/>'
-						   +'<p class="name space"><span>Polyzyme Forte®复合消化酶胶囊</span>直接补充消化酶，改善腹胀，消化不良，特殊工艺保障酶效稳定。</p>'
-						   +'<img class="yaoM" src="../images/Polyzyme-Forte.png" alt=""/>'
-						   +'<input type="button" value="点击购买"/>'
-						   +'</div>'
-						   +'</a>';
-
- var sanbaiyiqianghuajiaonang='<a style="display:block; padding-left:.3rem;" href="https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=75835490179">'
-  							  +'<div class="jyiBox">'
-  							  +'<img class="jsBg" src="../images/goumai.png" alt=""/>'
-  							  +'<p class="name space"><span>300亿强化益生菌胶囊</span>高含量300亿活菌，Lab4专利菌群配方，改善长期的便秘、腹泻。</p>'
-                              +'<img class="yaoM" src="../images/sanbaiyi.jpg" alt=""/>'
-                              +'<input type="button" value="点击购买"/>'
-                              +'</div>'
-                              +'</a>';						   
- console.info("======================"+futongfuzhangfansuanwixhangjibbing+"===============================");
+								                    
+console.info("======================"+futongfuzhangfansuanwixhangjibbing+"===============================");
  var jianyibuchong=["通常腹痛、腹胀、胃胀、胃痛、反酸频率？：经常有","有没有较严重胃肠道疾病或病史？：有","通常腹痛、腹胀、胃胀、胃痛、反酸频率？：偶尔有"];
  for(var i=0;i< futongfuzhangfansuanwixhangjibbing.length;i++){
 	 var l = futongfuzhangfansuanwixhangjibbing[i];
@@ -473,67 +508,20 @@ var fuhexiaohuameijiaonang='<a style="display:block; padding-left:.3rem;" href="
  }
  if(flag==true){
 	 flag=false;
-	 var obj={'title':'Permatrol®肠胃安益胶囊','images':'../images/Permatrol®.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59844980179'};
-	 tuijianarry.push(obj);
-	 var obj={'title':'Polyzyme Forte®复合消化酶胶囊','images':'../images/Polyzyme Forte®.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202278530179'};
-	 tuijianarry.push(obj);
 	 
-	 var obj={'title':'榆树养胃胶囊','images':'../images/yushuyangweichangdao.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202286240179'};
-	 haikexuanze.push(obj);
+	 tuijianarry.push('Permatrol®肠胃安益胶囊');
+	 $(".jjjdddd").after(changweianyijiaonang);
+	 tuijianarry.push('Polyzyme Forte®复合消化酶胶囊');
+	 $(".jjjdddd").after(fuhexiaohuameijiaonang);
+	  $(".swsws").after(yushuyangwei);
  }
  
- 
-
- 
- //您还可以选择   安益胶囊
- /* for(var i=0;i< paibianpinlvshucaishuiguoculiang.length;i++){
-	 var l = paibianpinlvshucaishuiguoculiang[i];
-	 for(var j=0;j<jianyibuchong.length;j++){
-		 if(l==jianyibuchong[j]){
-			 paibianpinlvshucaishuiguoculiang.splice(i,1);
-		 }
-	 }
-}
- 
- 
-if(paibianpinlvshucaishuiguoculiang.length>=0){
-	 var obj={'title':'安益胶囊','images':'../images/JF-anyijiaonang.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/196623479/goods/detail?id=59844980179'};
-	 haikexuanze.push(obj);
-} */
-
 if(tuijianarry.length==0){//默认
-	 var obj={'title':'速七活力益生菌胶囊','images':'../images/JF-suqihuoli.png','url':'https://100000511479.retail.n.weimob.com/saas/retail/100000511479/0/goods/detail?id=1202279910179'};
-	 tuijianarry.push(obj);
+	 tuijianarry.push('速七活力益生菌胶囊');
+	 $(".jjjdddd").after(changweianyijiaonang);
 }
 
 $(".jjjdddd").children("span").text("建议您补充"+ tuijianarry.length+"种补充剂");
-var div='';
-for(var i=0;i< tuijianarry.length;i++){
-	if(tuijianarry[i].title=="Permatrol®肠胃安益胶囊"){
-		div+= changweianyijiaonang;
-	}else if(tuijianarry[i].title=="Polyzyme Forte®复合消化酶胶囊"){
-		div+= fuhexiaohuameijiaonang;
-	}else{
-	 	div+= '<div class="ulBox"><a href="'+tuijianarry[i].url+'"><img  class="jsBg" src="'+tuijianarry[i].images+'" alt=""/></a></div>'
-	}
-}         
-$(".jjjdddd").after(div);
-	if(haikexuanze.length==0){
-		$(".swsws").hide();
-	}
-	else{
-		div='';
-		for(var i=0;i<haikexuanze.length;i++){
-			if(haikexuanze[i].title=="300亿强化益生菌胶囊"){
-				div+= sanbaiyiqianghuajiaonang ;
-			}
-			else{
-				div+= '<div class="ulBox"><a href="'+haikexuanze[i].url+'"><img class="jsBg"  src="'+haikexuanze[i].images+'" alt=""/></a></div>'
-			}
-		}
-		$(".swsws").after(div);
-	}
- /***************产品推荐逻辑*******************/
 </script>
 </body>
 </html>
